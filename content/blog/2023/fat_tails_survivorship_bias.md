@@ -6,7 +6,7 @@ Nassim Taleb warns us of the dangers in misapplying linear statistical methods (
 
 Consider the following scatter plot comparing people's wealth to their IQ scores. The wealth distribution, which follows a fat-tailed Pareto distribution, is contrasted with the IQ scores, which is normally distributed by design, as in the bell-shaped histograms under the scatter plot.
 
-![Data from https://researchers.wls.wisc.edu/data/survey-data/](img/fat_tails_survivorship_bias_01.png)
+![Data from https://researchers.wls.wisc.edu/data/survey-data/](blog/2023/img/fat_tails_survivorship_bias_01.png)
 
 While overemphasizing the negative tail (e.g. financial risk) can be beneficial, emphasizing the success stories, the "positive tail", can skew our perceptions. For instance, if we substitute IQ with the number of personal development strategies adopted from bestselling books, the principle holds. These strategies, such as early rising, voracious reading habits or rigorous self-discipline, gleaned from studying the ultra-successful, may not translate to wealth for the average person. Yet, we're often told that persistence and patience will lead to a compound growth payoff: slow in the beginning, then skyrockets to capture the top outliers and neglects the "ordinary" data points.
 The concept of compound growth is widely endorsed, even from OpenAI's CEO Sam Altman:
@@ -16,7 +16,7 @@ The concept of compound growth is widely endorsed, even from OpenAI's CEO Sam Al
 
 You may find similar figures in many places, including [one of my favorite book](https://jamesclear.com/):
 
-![](img/fat_tails_survivorship_bias_02.jpg)
+![](blog/2023/img/fat_tails_survivorship_bias_02.jpg)
 
 This pattern is observable across different life choices, from investing to career paths. A foundational knowledge of finance and initial investments can yield more than inaction. However, a deep dive into the complexities of financial news, technical stock analysis, and day trading with options doesn't universally increase success chances, regardless of the few who succeed.
 

@@ -1,76 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="generator" content="Pelican" />
-        <title>Xiang Shi - Xiang Shi</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+
+    <title>Articles by Xiang Shi - Xiang Shi</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+        <meta name="author" content="Xiang Shi" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Xiang Shi" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Xiang Shi"/>
+        <meta property="og:url" content=""/>
+        <meta property="og:description" content="Xiang Shi"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">Xiang Shi</a></h1>
-                <nav><ul>
-                    <li><a href="/category/blog.html">Blog</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Xiang Shi            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="/pages/about-me.html">
+                             About Me
+                          </a></li>
+                        <li >
+                            <a href="/category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/fat-tails-survivorship-bias-and-the-illusion-of-exponential-growth.html">Fat Tails, Survivorship Bias, and the Illusion of Exponential Growth</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2023-12-07T10:20:00-05:00">
-                Published: Thu 07 December 2023
-        </abbr>
+<!-- Banner -->
+<!-- End Banner -->
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/xiang-shi.html">Xiang Shi</a>
-        </address>
-<p>In <a href="/category/blog.html">Blog</a>.</p>
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="/fat-tails-survivorship-bias-and-the-illusion-of-exponential-growth.html">Fat Tails, Survivorship Bias, and the Illusion of Exponential Growth</a></h2>
+                <div class="summary"><p>Nassim Taleb warns us of the dangers in misapplying linear statistical methods (e.g. regression, correlation) to compare a fat-tailed variable (e.g. wealth, income) to a thin-tailed one (e.g. IQ test scores) in his book "<a href="https://arxiv.org/abs/2001.10488">Statistical Consequences of Fat Tails</a>". The fat tails - where the extremes lie and …</p>
+                    <a class="btn btn-default btn-xs" href="/fat-tails-survivorship-bias-and-the-illusion-of-exponential-growth.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
-</footer><!-- /.post-info --><p>Nassim Taleb warns us of the dangers in misapplying linear statistical methods (e.g. regression, correlation) to compare a fat-tailed variable (e.g. wealth, income) to a thin-tailed one (e.g. IQ test scores) in his book "<a href="https://arxiv.org/abs/2001.10488">Statistical Consequences of Fat Tails</a>". The fat tails - where the extremes lie and the outliers that shape our world reside - defy conventional analysis and prediction. While professionals in finance likes linear method and sometimes tends to pretend like financial crises are outliers that can be edited out in their risk models, a process known as "winsorization". In other realms, however, there is a tendency to focus too heavily on these extremes due to survivorship bias, creating a false narrative of non-linear, exponential success.</p>
-<p>Consider the following scatter plot comparing people's wealth to their IQ scores. The wealth distribution, which follows a fat-tailed Pareto distribution, is contrasted with the IQ scores, which is normally distributed by design, as in the bell-shaped histograms under the scatter plot.</p>
-<p><img alt="Data from https://researchers.wls.wisc.edu/data/survey-data/" src="blog/2023/img/fat_tails_survivorship_bias_01.png"></p>
-<p>While overemphasizing the negative tail (e.g. financial risk) can be beneficial, emphasizing the success stories, the "positive tail", can skew our perceptions. For instance, if we substitute IQ with the number of personal development strategies adopted from bestselling books, the principle holds. These strategies, such as early rising, voracious reading habits or rigorous self-discipline, gleaned from studying the ultra-successful, may not translate to wealth for the average person. Yet, we're often told that persistence and patience will lead to a compound growth payoff: slow in the beginning, then skyrockets to capture the top outliers and neglects the "ordinary" data points.
-The concept of compound growth is widely endorsed, even from OpenAI's CEO Sam Altman:</p>
-<blockquote>
-<p>Compounding is magic. Look for it everywhere. Exponential curves are the key to wealth generation.
-A medium-sized business that grows 50% in value every year becomes huge in a very short amount of time. Few businesses in the world have true network effects and extreme scalability. But with technology, more and more will. It's worth a lot of effort to find them and create them.</p>
-</blockquote>
-<p>You may find similar figures in many places, including <a href="https://jamesclear.com/">one of my favorite book</a>:</p>
-<p><img alt="" src="blog/2023/img/fat_tails_survivorship_bias_02.jpg"></p>
-<p>This pattern is observable across different life choices, from investing to career paths. A foundational knowledge of finance and initial investments can yield more than inaction. However, a deep dive into the complexities of financial news, technical stock analysis, and day trading with options doesn't universally increase success chances, regardless of the few who succeed.</p>
-<p>In career terms, "leveraged" positions, like those of authors, YouTubers, or tech startup entrepreneurs, are sold on the premise of high potential. Yet, these fields are often winner-take-all arenas, leading to a highly fat-tailed income distribution (80–20 Pareto distribution or even more extreme) with more obscured failures than visible successes. Starting these careers as a side hustle can be a window to their potential, but fully committing (getting further on the x-axis) doesn't guarantee the high rewards often promised.</p>
-<p>Rob Copeland's recent book "<a href="https://www.amazon.com/Fund-Bridgewater-Associates-Unraveling-Street/dp/1250276934">The Fund: Ray Dalio, Bridgewater Associates, and the Unraveling of a Wall Street Legend</a>" mentioned Ray Dalio's attempt to use personality tests to predict success at Bridgewater Associates. The tests reveal a curious pattern: many employees share similar traits with Dalio himself, a typical outcome of using thin-tailed variables to forecast fat-tailed ones. The "solution" was to craft an ever-growing list of principles, a set of rules to live and work by. Yet even with over 200 principles in play did not translate into exponential performance gains, i.e. as successful as Dailo himself.</p>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="https://getpelican.com/">Pelican</a></li>
-                            <li><a href="https://www.python.org/">Python.org</a></li>
-                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="https://twitter.com/xxiangshi"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+    <li class="list-group-item"><a href="https://www.linkedin.com/in/xiangshi"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+    <li class="list-group-item"><a href="https://github.com/xshi19"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
-                </address><!-- /#about -->
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2023 Xiang Shi
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
 
-                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+
 
 </body>
 </html>

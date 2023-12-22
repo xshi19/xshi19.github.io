@@ -119,7 +119,7 @@ Xiang Shi            </a>
                 </div>
                 <h3>DDP vs GDP</h3>
 <p>I have read an interesting <a href="https://ergodicityeconomics.com/2020/02/26/democratic-domestic-product/">article</a> about the Democratic Domestic Product (DDP)<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. There are many disputes and critiques regarding GDP, so I refer you to the details in this article. The main point is that GDP is not a good measure of individual well-being since its growth is dominated by a few of the richest people, companies, and the government. While Elon Musk may not care about a few billion dollars in profit or loss when <a href="https://www.reuters.com/technology/elon-musk-puts-20-bln-value-twitter-information-2023-03-26/">he acquired Twitter</a>, my personal well-being dramatically declined when my $500 AirPods Pro were stolen before Thanksgiving.</p>
-<p>The solution, as the article proposes, is quite simple -- taking the logarithm, which is almost an instinct for me as a data scientist. Since GDP per capita is simply the average of everyone's spending, why not use the <a href="https://en.wikipedia.org/wiki/Geometric_mean">geometric mean</a> instead? Let ( x_i ) be the spending of an individual. GDP per capita is
+<p>The solution, as the article proposes, is quite simple -- taking the logarithm, which is almost an instinct for me as a data scientist. Since GDP per capita is simply the average of everyone's spending, why not use the <a href="https://en.wikipedia.org/wiki/Geometric_mean">geometric mean</a> instead? Let $x_i$ be the spending of an individual. GDP per capita is
 $$
 \text{GDP} = \frac{1}{n} \sum_{i=1}^n x_i,
 $$
@@ -172,11 +172,11 @@ $$</li>
 <p>Thanks, Nathan, for sharing this on Fat Tony's Discord.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>Based on the geometric Brownian motion model, the gap between (log) GDP and (log) DDP is a linear function of time (\frac{\sigma^2}{2} t). In fact, any Lévy process with a finite and well-defined moment generating function has a linear growth rate over time, based on the <a href="https://en.wikipedia.org/wiki/L%C3%A9vy_process#L%C3%A9vy%E2%80%93Khintchine_representation">Lévy–Khintchine representation</a>:
+<p>Based on the geometric Brownian motion model, the gap between (log) GDP and (log) DDP is a linear function of time $\frac{\sigma^2}{2} t$. In fact, any Lévy process with a finite and well-defined moment generating function has a linear growth rate over time, based on the <a href="https://en.wikipedia.org/wiki/L%C3%A9vy_process#L%C3%A9vy%E2%80%93Khintchine_representation">Lévy–Khintchine representation</a>:
 $$
 \log E[e^{X_t}] = t \left( \mu  - \frac{\sigma^2}{2} + \int (e^{x} - 1 - x 1_{|x|&lt;1}) \nu(dx) \right)
 $$
-where (\nu) is the Lévy measure.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+where $\nu$ is the Lévy measure.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+
+    <title>A Simple Way to Estimate DDP, A Better Alternative to GDP - Xiang Shi</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="/a-simple-way-to-estimate-ddp-a-better-alternative-to-gdp.html">
+
+        <meta name="author" content="Xiang Shi" />
+        <meta name="keywords" content="fat tails,economics" />
+        <meta name="description" content="DDP vs GDP I have read an interesting article about the Democratic Domestic Product (DDP)1. There are many disputes and critiques regarding GDP, so I refer you to the details in this article. The main point is that GDP is not a good measure of individual well-being since its …" />
+
+        <meta property="og:site_name" content="Xiang Shi" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="A Simple Way to Estimate DDP, A Better Alternative to GDP"/>
+        <meta property="og:url" content="/a-simple-way-to-estimate-ddp-a-better-alternative-to-gdp.html"/>
+        <meta property="og:description" content="DDP vs GDP I have read an interesting article about the Democratic Domestic Product (DDP)1. There are many disputes and critiques regarding GDP, so I refer you to the details in this article. The main point is that GDP is not a good measure of individual well-being since its …"/>
+        <meta property="article:published_time" content="2023-12-21" />
+            <meta property="article:section" content="Blog" />
+            <meta property="article:tag" content="fat tails" />
+            <meta property="article:tag" content="economics" />
+            <meta property="article:author" content="Xiang Shi" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Xiang Shi            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="/pages/about-me.html">
+                             About Me
+                          </a></li>
+                        <li class="active">
+                            <a href="/category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/a-simple-way-to-estimate-ddp-a-better-alternative-to-gdp.html"
+                       rel="bookmark"
+                       title="Permalink to A Simple Way to Estimate DDP, A Better Alternative to GDP">
+                        A Simple Way to Estimate DDP, A Better Alternative to GDP
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-12-21T00:00:00-05:00"> Thu 21 December 2023</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/fat-tails.html">fat tails</a>
+        /
+	<a href="/tag/economics.html">economics</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <h3>DDP vs GDP</h3>
+<p>I have read an interesting <a href="https://ergodicityeconomics.com/2020/02/26/democratic-domestic-product/">article</a> about the Democratic Domestic Product (DDP)<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. There are many disputes and critiques regarding GDP, so I refer you to the details in this article. The main point is that GDP is not a good measure of individual well-being since its growth is dominated by a few of the richest people, companies, and the government. While Elon Musk may not care about a few billion dollars in profit or loss when <a href="https://www.reuters.com/technology/elon-musk-puts-20-bln-value-twitter-information-2023-03-26/">he acquired Twitter</a>, my personal well-being dramatically declined when my $500 AirPods Pro were stolen before Thanksgiving.</p>
+<p>The solution, as the article proposes, is quite simple -- taking the logarithm, which is almost an instinct for me as a data scientist. Since GDP per capita is simply the average of everyone's spending, why not use the <a href="https://en.wikipedia.org/wiki/Geometric_mean">geometric mean</a> instead? Let ( x_i ) be the spending of an individual. GDP per capita is
+$$
+\text{GDP} = \frac{1}{n} \sum_{i=1}^n x_i,
+$$
+while DDP is
+$$
+\text{DDP} = \exp \left( \frac{1}{n} \sum_{i=1}^n \log(x_i) \right).
+$$
+The intuition is straightforward: the logarithm emphasizes the smaller numbers and suppresses the extremely large ones. So my AirPods Pro is about $\log(500) = 6.215$, not that far from Elon Musk's 1 billion becomes $\log(10^6) = 20.723$. Most importantly, the logarithm is a natural measure of <a href="https://en.wikipedia.org/wiki/Utility">utility</a>, which was pointed out by <a href="https://en.wikipedia.org/wiki/St._Petersburg_paradox#Expected_utility_theory">Daniel Bernoulli more than 300 years ago</a>.</p>
+<p>Moreover, the logarithm converts multiplication into addition. So, the log improvement of DDP is also the average of an individual's utility improvement:
+$$
+\log \left( \frac{DDP_t}{DDP_{t-1}} \right) = \frac{1}{n} \sum_{i=1}^n \log \left( \frac{x_{i,t}}{x_{i,t-1}} \right).
+$$</p>
+<h3>A Simplified Method for DDP Calculation: GPD per capita and Gini Index</h3>
+<p>However, there are two major problems with DDP:</p>
+<ol>
+<li>It is not easy to compute. In <a href="https://arxiv.org/abs/2009.10451">one paper</a>, the authors used income quantiles to estimate the distribution of $x_i$ and approximate DDP.</li>
+<li>Its relationship to GDP is not obvious. The authors of <a href="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00918.x">the original paper</a> used a geometric Brownian motion<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> to model DDP growth, which, some may argue, is neither continuous nor stationary, and most of all, should be fat-tailed. To understand this, think about someone who just spent ten years' savings to purchase a house.</li>
+</ol>
+<p>Here is a much easier way to compute DDP:</p>
+<ol>
+<li>Assume individual GDP contribution follows the <a href="https://en.wikipedia.org/wiki/Pareto_distribution">Pareto distribution</a>: $X \sim \text{Pareto} (\alpha, x_m)$.</li>
+<li>The Gini index of the Pareto distribution is simply:
+$$
+\text{Gini} = \frac{1}{2\alpha - 1}
+$$</li>
+<li>The average of the Pareto distribution corresponds to the GDP per capita:
+$$
+\text{GDP per capita} = \frac{\alpha}{\alpha - 1} x_m
+$$</li>
+<li>The DDP, or the geometric mean of the Pareto distribution:
+$$
+\text{DDP} = x_m e^{\frac{1}{\alpha}}
+$$</li>
+<li>Finally, putting everything together:
+$$
+\text{DDP} = \text{GDP per capita} \times \left( \frac{1 - \text{Gini}}{1 + \text{Gini}} \right) \cdot e^{\frac{2\text{Gini}}{1 + \text{Gini}}}
+$$</li>
+</ol>
+<p>This formula is simple and clear: it can be viewed as GDP per capita adjusted by a function of the Gini index, which measures inequality. The Gini index adjustment is 1 in the case of full equality and 0 in the case of maximum inequality, as seen in the figure below.</p>
+<p><img alt="DDP vs Gini" src="blog/2023/img/ddp_gini.png"></p>
+<p>Both the Gini Index and GDP per capita data are available from <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD">The World Bank</a>. Here are the historical values of DDP vs GDP for the USA:</p>
+<p><img alt="USA DDP vs GDP" src="blog/2023/img/usa_ddp.png"></p>
+<h3>Final Thoughts</h3>
+<p>Similar to GDP, there are numerous debates about the Gini index's effectiveness as a measure of inequality. The assumption of a Pareto distribution might be overly simplistic. A more nuanced approach could involve applying the generalized Pareto rule and extreme value theory to better fit the tails of wealth and spending distributions, thereby addressing inequality more accurately.</p>
+<p>Ultimately, no single metric can completely encapsulate the complexity of economic activities. Overemphasis on optimizing a single metric can lead to disastrous outcomes. Take DDP as an example: it could be manipulated through a simplistic redistribution of wealth, which might create an illusion of economic growth without any real improvement in economic conditions.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Thanks, Nathan, for sharing this on Fat Tony's Discord.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Based on the geometric Brownian motion model, the gap between (log) GDP and (log) DDP is a linear function of time (\frac{\sigma^2}{2} t). In fact, any Lévy process with a finite and well-defined moment generating function has a linear growth rate over time, based on the <a href="https://en.wikipedia.org/wiki/L%C3%A9vy_process#L%C3%A9vy%E2%80%93Khintchine_representation">Lévy–Khintchine representation</a>:
+$$
+\log E[e^{X_t}] = t \left( \mu  - \frac{\sigma^2}{2} + \int (e^{x} - 1 - x 1_{|x|&lt;1}) \nu(dx) \right)
+$$
+where (\nu) is the Lévy measure.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="https://twitter.com/xxiangshi"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+    <li class="list-group-item"><a href="https://www.linkedin.com/in/xiangshi"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+    <li class="list-group-item"><a href="https://github.com/xshi19"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2023 Xiang Shi
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

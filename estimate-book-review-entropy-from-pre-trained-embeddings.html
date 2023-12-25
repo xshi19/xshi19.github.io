@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+
+    <title>Estimate Book Review Entropy from Pre-trained Embeddings - Xiang Shi</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="/estimate-book-review-entropy-from-pre-trained-embeddings.html">
+
+        <meta name="author" content="Xiang Shi" />
+        <meta name="keywords" content="NLP,machine learning,information theory" />
+        <meta name="description" content="The inspiration for this exploration came from a Twitter (or X) post by Nassim Taleb: In this article, I propose a simple method to quantify this &#34;summary diversity&#34; or &#34;book dimensionality&#34; using natural language processing (NLP) and a bit match approach. The process involves: Collecting book review data. Since it&#39;s …" />
+
+        <meta property="og:site_name" content="Xiang Shi" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Estimate Book Review Entropy from Pre-trained Embeddings"/>
+        <meta property="og:url" content="/estimate-book-review-entropy-from-pre-trained-embeddings.html"/>
+        <meta property="og:description" content="The inspiration for this exploration came from a Twitter (or X) post by Nassim Taleb: In this article, I propose a simple method to quantify this &#34;summary diversity&#34; or &#34;book dimensionality&#34; using natural language processing (NLP) and a bit match approach. The process involves: Collecting book review data. Since it&#39;s …"/>
+        <meta property="article:published_time" content="2023-12-25" />
+            <meta property="article:section" content="Blog" />
+            <meta property="article:tag" content="NLP" />
+            <meta property="article:tag" content="machine learning" />
+            <meta property="article:tag" content="information theory" />
+            <meta property="article:author" content="Xiang Shi" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Xiang Shi            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="/pages/about-me.html">
+                             About Me
+                          </a></li>
+                        <li class="active">
+                            <a href="/category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/estimate-book-review-entropy-from-pre-trained-embeddings.html"
+                       rel="bookmark"
+                       title="Permalink to Estimate Book Review Entropy from Pre-trained Embeddings">
+                        Estimate Book Review Entropy from Pre-trained Embeddings
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-12-25T00:00:00-05:00"> Mon 25 December 2023</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/nlp.html">NLP</a>
+        /
+	<a href="/tag/machine-learning.html">machine learning</a>
+        /
+	<a href="/tag/information-theory.html">information theory</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>The inspiration for this exploration came from a <a href="https://x.com/nntaleb/status/1735647215421411675?s=20">Twitter (or X) post</a> by Nassim Taleb:</p>
+<p><img src="blog/2023/img/nnt_x.png" alt="drawing" width="500"/></p>
+<p>In this article, I propose a simple method to quantify this "summary diversity" or "book dimensionality" using natural language processing (NLP) and a bit match approach. The process involves:</p>
+<ol>
+<li>Collecting book review data. Since it's impractical to have thousands of books summarized by individuals, I utilize Goodreads reviews as a proxy, trading some accuracy for scalability.</li>
+<li>Converting each review into numerical embeddings using pre-trained <a href="https://www.sbert.net/">sentence transformers</a>. For each book, this results in a matrix  $X$ of dimensions $n \times d$ $n$ is the number of reviews and $d$ is the embedding dimension.</li>
+<li>Applying Principal Component Analysis (PCA) or equivalently, <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular Value Decomposition (SVD)</a> to the review embeddings:
+$$
+X = USV
+$$
+where $U$ and $V$ are unitary matrices and $S$ is a diagnoal matrix with singular values $s_1 \geq s_2 \geq \cdots \geq s_m$ with $m=\min(n, d)$.</li>
+<li>Computing the <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">entropy</a> of the singular values:
+$$
+\text{entropy} = -\sum_{i=1}^m p_i \log p_i \text{, where } p_i = \frac{s_i}{\sum_{i=1}^m s_i}
+$$</li>
+</ol>
+<p>The rationale behind this approach is as follows:</p>
+<ul>
+<li>Similar book reviews imply correlated review embeddings $X$, leading to a significant disparity in the singular values of $X$ (i.e. $s_1$ much larger than $s_m$), resulting in low entropy.</li>
+<li>Diversified and independent reviews suggest uncorrelated and orthogonal embeddings $X$ causing the singular values of $X$ to be relatively uniform, leading to high entropy.</li>
+</ul>
+<p>This concept mirrors methods used to <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1358533">measure portfolio diversity</a> in finance.</p>
+<p>The following figure showcases a comparison of "review entropy" for three thousand popular non-fiction books on Goodreads (y-axis) against their average ratings (x-axis). Intriguingly, there is no correlation between review entropy and ratings. Notably, Nassim Taleb's books exhibit high review entropy yet possess average ratings. I wonder if he have employed a similar analysis and saw these results before sending his tweet lol.</p>
+<p><img alt="Book review entropy" src="blog/2023/img/book_review_entropy.png"></p>
+<h3>Code</h3>
+<p>I utilized the <a href="[https://www.kaggle.com/datasets/pypiahmad/goodreads-book-reviews1">Goodreads book review dataset</a> from Kaggle, focusing solely on non-fiction books due to the large data size.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filter_genre</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;non-fiction&#39;</span><span class="p">,</span><span class="s1">&#39;history, historical fiction, biography&#39;</span><span class="p">]</span>
+
+<span class="n">book_genre</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s2">&quot;goodreads_book_genres_initial.json&quot;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">books_filtered</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">book_genre</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">book_genre</span><span class="p">[</span><span class="s1">&#39;genres&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">filter_genre</span><span class="p">),</span> <span class="s1">&#39;book_id&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<p>Then, I processed the reviews through pre-trained sentence transformers to generate numerical embeddings. The <a href="https://huggingface.co/sentence-transformers/all-MiniLM-L12-v1">all-MiniLM-L12-v1 model</a> has an embedding dimension of 384.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s1">&#39;all-MiniLM-L12-v1&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s2">&quot;goodreads_reviews_dedup.json&quot;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">500000</span><span class="p">)):</span>
+    <span class="n">chunk</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;book_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">books_filtered</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;book_id&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;review_text&#39;</span><span class="p">]]</span>
+    <span class="n">chunk</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;review_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span><span class="o">&gt;=</span><span class="mi">100</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">chunk</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">embed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;review_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">show_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;book_id&#39;</span><span class="p">])</span>
+      <span class="n">embed</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">embed</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+      <span class="n">embed</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;book_review_embeddings/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.parquet&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Finally, I computed the SVD for each book, considering those with at least 50 reviews. To ensure fairness, I sampled 50 reviews per book for entropy calculation, as books with larger numbers of reviews (for example 1000) could inherently have higher entropy then the ones with 50-100 reviews.</p>
+<div class="highlight"><pre><span></span><code><span class="n">embed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;C:/Users/soars/Downloads/goodreads/book_review_embeddings&#39;</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;review_count&#39;</span><span class="p">:</span> <span class="n">embed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()})</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">output</span><span class="s1">&#39;review_count&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">50</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">embed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="mi">50</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">s</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">p</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+</code></pre></div>
+
+<h3>Limitations</h3>
+<ul>
+<li>Not all reviews are summaries; some discuss editions or translations, especially for classical books which have many different editions. Some reviews, of a biography for example, focus on characters rather than content. For instance, Walter Isaacson's "Steve Jobs" has a moderate review entropy score (~3.63).</li>
+<li>The general-purpose nature of pre-trained embeddings means they also capture reviewers' styles and emotions, which aren't ideal for information entropy measurement. An example is "The Rape of Nanking: The Forgotten Holocaust of World War II" by Iris Chang. This book deals with the Nanjing Massacre, a tragic and brutal episode during the Second Sino-Japanese War where hundreds of thousands of Chinese civilians and disarmed soldiers were murdered, and numerous women were assaulted by soldiers of the Imperial Japanese Army. The intense emotional impact of the subject matter invariably influence the tone of its reviews, leading to a review entropy of only 3.53.</li>
+<li>The methodology's robustness is impacted by the choice of embedding model, dimension, and number of reviews considered. Randomly selecting a subset of reviews also leads to potential information loss. Advanced approaches like random matrix theory could offer better comparisons between books with varying numbers of reviews, but this is outside this article's scope.</li>
+<li>Ultimately, "review diversity" or "book dimensionality" are subjective concepts. This project is a fun exploration rather than a definitive measure of a book's value, as you many already notice in books highlighted in the previous figure --- there is no "skin in the game".</li>
+</ul>
+<h3>Appendix - books with highest review entropy</h3>
+<table>
+<thead>
+<tr>
+<th>title</th>
+<th>url</th>
+<th>book_id</th>
+<th>rating</th>
+<th>review_count</th>
+<th>entropy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Influence: The Psychology of Persuasion</td>
+<td>https://www.goodreads.com/book/show/28815.Influence</td>
+<td>28815</td>
+<td>4.114754</td>
+<td>183</td>
+<td>3.738005</td>
+</tr>
+<tr>
+<td>Min kamp 1 (Min kamp #1)</td>
+<td>https://www.goodreads.com/book/show/7147831-min-kamp-1</td>
+<td>7147831</td>
+<td>3.662162</td>
+<td>74</td>
+<td>3.736675</td>
+</tr>
+<tr>
+<td>The Universe Doesn't Give a Flying Fuck About You</td>
+<td>https://www.goodreads.com/book/show/13628888-the-universe-doesn-t-give-a-flying-fuck-about-you</td>
+<td>13628888</td>
+<td>3.680556</td>
+<td>72</td>
+<td>3.735819</td>
+</tr>
+<tr>
+<td>Holy Bible: New International Version</td>
+<td>https://www.goodreads.com/book/show/280111.Holy_Bible</td>
+<td>280111</td>
+<td>3.500000</td>
+<td>80</td>
+<td>3.735288</td>
+</tr>
+<tr>
+<td>Tao Te Ching</td>
+<td>https://www.goodreads.com/book/show/67896.Tao_Te_Ching</td>
+<td>67896</td>
+<td>3.807229</td>
+<td>83</td>
+<td>3.734882</td>
+</tr>
+<tr>
+<td>Holy Bible: King James Version</td>
+<td>https://www.goodreads.com/book/show/1923820.Holy_Bible</td>
+<td>1923820</td>
+<td>3.354938</td>
+<td>324</td>
+<td>3.732286</td>
+</tr>
+<tr>
+<td>Weird Things Customers Say in Bookshops</td>
+<td>https://www.goodreads.com/book/show/12640991-weird-things-customers-say-in-bookshops</td>
+<td>12640991</td>
+<td>3.997585</td>
+<td>414</td>
+<td>3.731400</td>
+</tr>
+<tr>
+<td>Beyond Good and Evil</td>
+<td>https://www.goodreads.com/book/show/12321.Beyond_Good_and_Evil</td>
+<td>12321</td>
+<td>3.366337</td>
+<td>101</td>
+<td>3.725606</td>
+</tr>
+<tr>
+<td>The Nicomachean Ethics</td>
+<td>https://www.goodreads.com/book/show/19068.The_Nicomachean_Ethics</td>
+<td>19068</td>
+<td>3.037736</td>
+<td>53</td>
+<td>3.725171</td>
+</tr>
+<tr>
+<td>Chicken Soup for the Soul</td>
+<td>https://www.goodreads.com/book/show/801178.Chicken_Soup_for_the_Soul</td>
+<td>801178</td>
+<td>3.500000</td>
+<td>64</td>
+<td>3.725138</td>
+</tr>
+<tr>
+<td>The Teachings of Don Juan: A Yaqui Way of Knowledge</td>
+<td>https://www.goodreads.com/book/show/78250.The_Teachings_of_Don_Juan</td>
+<td>78250</td>
+<td>3.642857</td>
+<td>84</td>
+<td>3.724613</td>
+</tr>
+<tr>
+<td>Wreck This Journal</td>
+<td>https://www.goodreads.com/book/show/428862.Wreck_This_Journal</td>
+<td>428862</td>
+<td>4.047059</td>
+<td>85</td>
+<td>3.722732</td>
+</tr>
+<tr>
+<td>The Life-Changing Magic of Not Giving a F*ck: How to Stop Spending Time You Don't Have with Peop...</td>
+<td>https://www.goodreads.com/book/show/26200068-the-life-changing-magic-of-not-giving-a-f-ck</td>
+<td>26200068</td>
+<td>3.465347</td>
+<td>202</td>
+<td>3.722119</td>
+</tr>
+<tr>
+<td>The Book of General Ignorance</td>
+<td>https://www.goodreads.com/book/show/410632.The_Book_of_General_Ignorance</td>
+<td>410632</td>
+<td>3.745098</td>
+<td>51</td>
+<td>3.721834</td>
+</tr>
+<tr>
+<td>More Weird Things Customers Say in Bookshops</td>
+<td>https://www.goodreads.com/book/show/16174631-more-weird-things-customers-say-in-bookshops</td>
+<td>16174631</td>
+<td>3.807143</td>
+<td>140</td>
+<td>3.720029</td>
+</tr>
+<tr>
+<td>Steal Like an Artist: 10 Things Nobody Told You About Being Creative</td>
+<td>https://www.goodreads.com/book/show/13099738-steal-like-an-artist</td>
+<td>13099738</td>
+<td>4.087500</td>
+<td>480</td>
+<td>3.719942</td>
+</tr>
+<tr>
+<td>The Secret (The Secret, #1)</td>
+<td>https://www.goodreads.com/book/show/52529.The_Secret</td>
+<td>52529</td>
+<td>2.873807</td>
+<td>943</td>
+<td>3.719174</td>
+</tr>
+<tr>
+<td>Papillon</td>
+<td>https://www.goodreads.com/book/show/6882.Papillon</td>
+<td>6882</td>
+<td>3.993103</td>
+<td>145</td>
+<td>3.718292</td>
+</tr>
+<tr>
+<td>Getting Things Done: The Art of Stress-Free Productivity</td>
+<td>https://www.goodreads.com/book/show/1633.Getting_Things_Done</td>
+<td>1633</td>
+<td>3.697222</td>
+<td>360</td>
+<td>3.717931</td>
+</tr>
+<tr>
+<td>Thus Spoke Zarathustra</td>
+<td>https://www.goodreads.com/book/show/51893.Thus_Spoke_Zarathustra</td>
+<td>51893</td>
+<td>3.514286</td>
+<td>140</td>
+<td>3.716682</td>
+</tr>
+<tr>
+<td>The Monk Who Sold His Ferrari: A Fable About Fulfilling Your Dreams Reaching Your Destiny</td>
+<td>https://www.goodreads.com/book/show/43877.The_Monk_Who_Sold_His_Ferrari</td>
+<td>43877</td>
+<td>3.389610</td>
+<td>308</td>
+<td>3.716322</td>
+</tr>
+<tr>
+<td>The Black Swan: The Impact of the Highly Improbable</td>
+<td>https://www.goodreads.com/book/show/242472.The_Black_Swan</td>
+<td>242472</td>
+<td>3.555184</td>
+<td>299</td>
+<td>3.715842</td>
+</tr>
+<tr>
+<td>How to Live on 24 Hours a Day</td>
+<td>https://www.goodreads.com/book/show/4855.How_to_Live_on_24_Hours_a_Day</td>
+<td>4855</td>
+<td>3.520000</td>
+<td>50</td>
+<td>3.715379</td>
+</tr>
+<tr>
+<td>Whatever You Think, Think the Opposite</td>
+<td>https://www.goodreads.com/book/show/265525.Whatever_You_Think_Think_the_Opposite</td>
+<td>265525</td>
+<td>3.831169</td>
+<td>77</td>
+<td>3.714774</td>
+</tr>
+<tr>
+<td>59 Seconds: Think a Little, Change a Lot</td>
+<td>https://www.goodreads.com/book/show/6340948-59-seconds</td>
+<td>6340948</td>
+<td>3.792453</td>
+<td>53</td>
+<td>3.713075</td>
+</tr>
+<tr>
+<td>It's Not How Good You Are, It's How Good You Want To Be</td>
+<td>https://www.goodreads.com/book/show/114737.It_s_Not_How_Good_You_Are_It_s_How_Good_You_Want_To_Be</td>
+<td>114737</td>
+<td>3.540541</td>
+<td>111</td>
+<td>3.712133</td>
+</tr>
+<tr>
+<td>Gödel, Escher, Bach: An Eternal Golden Braid</td>
+<td>https://www.goodreads.com/book/show/24113.G_del_Escher_Bach</td>
+<td>24113</td>
+<td>3.838095</td>
+<td>105</td>
+<td>3.711328</td>
+</tr>
+<tr>
+<td>Encyclopedia of an Ordinary Life</td>
+<td>https://www.goodreads.com/book/show/39872.Encyclopedia_of_an_Ordinary_Life</td>
+<td>39872</td>
+<td>3.823009</td>
+<td>113</td>
+<td>3.710922</td>
+</tr>
+<tr>
+<td>Ignore Everybody: and 39 Other Keys to Creativity</td>
+<td>https://www.goodreads.com/book/show/6162567-ignore-everybody</td>
+<td>6162567</td>
+<td>3.462687</td>
+<td>67</td>
+<td>3.710877</td>
+</tr>
+<tr>
+<td>The Art of War</td>
+<td>https://www.goodreads.com/book/show/10534.The_Art_of_War</td>
+<td>10534</td>
+<td>3.669291</td>
+<td>508</td>
+<td>3.710865</td>
+</tr>
+<tr>
+<td>Snoop: What Your Stuff Says About You</td>
+<td>https://www.goodreads.com/book/show/1581330.Snoop</td>
+<td>1581330</td>
+<td>3.148148</td>
+<td>81</td>
+<td>3.710645</td>
+</tr>
+<tr>
+<td>The Bhagavad Gita</td>
+<td>https://www.goodreads.com/book/show/99944.The_Bhagavad_Gita</td>
+<td>99944</td>
+<td>3.693333</td>
+<td>75</td>
+<td>3.710421</td>
+</tr>
+<tr>
+<td>The Drama of the Gifted Child: The Search for the True Self</td>
+<td>https://www.goodreads.com/book/show/4887.The_Drama_of_the_Gifted_Child</td>
+<td>4887</td>
+<td>3.711864</td>
+<td>59</td>
+<td>3.710158</td>
+</tr>
+<tr>
+<td>How to Win Friends and Influence People</td>
+<td>https://www.goodreads.com/book/show/4865.How_to_Win_Friends_and_Influence_People</td>
+<td>4865</td>
+<td>3.862745</td>
+<td>663</td>
+<td>3.709622</td>
+</tr>
+<tr>
+<td>The Subtle Art of Not Giving a F*ck: A Counterintuitive Approach to Living a Good Life</td>
+<td>https://www.goodreads.com/book/show/28257707-the-subtle-art-of-not-giving-a-f-ck</td>
+<td>28257707</td>
+<td>3.742802</td>
+<td>521</td>
+<td>3.709340</td>
+</tr>
+<tr>
+<td>Abundance: The Future Is Better Than You Think</td>
+<td>https://www.goodreads.com/book/show/13187824-abundance</td>
+<td>13187824</td>
+<td>3.987805</td>
+<td>82</td>
+<td>3.709272</td>
+</tr>
+<tr>
+<td>All I Really Need to Know I Learned in Kindergarten</td>
+<td>https://www.goodreads.com/book/show/34760.All_I_Really_Need_to_Know_I_Learned_in_Kindergarten</td>
+<td>34760</td>
+<td>3.625000</td>
+<td>56</td>
+<td>3.709270</td>
+</tr>
+<tr>
+<td>Why Do Men Have Nipples?: Hundreds of Questions You'd Only Ask a Doctor After Your Third Martini</td>
+<td>https://www.goodreads.com/book/show/131529.Why_Do_Men_Have_Nipples_</td>
+<td>131529</td>
+<td>2.793814</td>
+<td>97</td>
+<td>3.708684</td>
+</tr>
+<tr>
+<td>The Art of Thinking Clearly</td>
+<td>https://www.goodreads.com/book/show/16248196-the-art-of-thinking-clearly</td>
+<td>16248196</td>
+<td>3.392157</td>
+<td>102</td>
+<td>3.708681</td>
+</tr>
+<tr>
+<td>Shop Class as Soulcraft: An Inquiry Into the Value of Work</td>
+<td>https://www.goodreads.com/book/show/6261332-shop-class-as-soulcraft</td>
+<td>6261332</td>
+<td>3.383838</td>
+<td>99</td>
+<td>3.707851</td>
+</tr>
+<tr>
+<td>The Communist Manifesto</td>
+<td>https://www.goodreads.com/book/show/30474.The_Communist_Manifesto</td>
+<td>30474</td>
+<td>3.078603</td>
+<td>229</td>
+<td>3.707773</td>
+</tr>
+<tr>
+<td>The Power of Your Subconscious Mind</td>
+<td>https://www.goodreads.com/book/show/68984.The_Power_of_Your_Subconscious_Mind</td>
+<td>68984</td>
+<td>3.520000</td>
+<td>75</td>
+<td>3.707511</td>
+</tr>
+<tr>
+<td>The Art of Social Media: Power Tips for Power Users</td>
+<td>https://www.goodreads.com/book/show/23281903-the-art-of-social-media</td>
+<td>23281903</td>
+<td>3.666667</td>
+<td>54</td>
+<td>3.707500</td>
+</tr>
+<tr>
+<td>Sway: The Irresistible Pull of Irrational Behavior</td>
+<td>https://www.goodreads.com/book/show/2118114.Sway</td>
+<td>2118114</td>
+<td>3.649351</td>
+<td>77</td>
+<td>3.707418</td>
+</tr>
+<tr>
+<td>Tractatus Logico-Philosophicus</td>
+<td>https://www.goodreads.com/book/show/12075.Tractatus_Logico_Philosophicus</td>
+<td>12075</td>
+<td>3.500000</td>
+<td>54</td>
+<td>3.707324</td>
+</tr>
+<tr>
+<td>Lost in Translation: An Illustrated Compendium of Untranslatable Words from Around the World</td>
+<td>https://www.goodreads.com/book/show/20176282-lost-in-translation</td>
+<td>20176282</td>
+<td>4.210526</td>
+<td>76</td>
+<td>3.706830</td>
+</tr>
+<tr>
+<td>What If?: Serious Scientific Answers to Absurd Hypothetical Questions</td>
+<td>https://www.goodreads.com/book/show/21413662-what-if</td>
+<td>21413662</td>
+<td>4.122535</td>
+<td>710</td>
+<td>3.706252</td>
+</tr>
+<tr>
+<td>Originals: How Non-Conformists Move the World</td>
+<td>https://www.goodreads.com/book/show/25614523-originals</td>
+<td>25614523</td>
+<td>3.618056</td>
+<td>144</td>
+<td>3.706107</td>
+</tr>
+<tr>
+<td>Linchpin: Are You Indispensable?</td>
+<td>https://www.goodreads.com/book/show/7155145-linchpin</td>
+<td>7155145</td>
+<td>3.742138</td>
+<td>159</td>
+<td>3.706064</td>
+</tr>
+<tr>
+<td>Think and Grow Rich</td>
+<td>https://www.goodreads.com/book/show/30186948-think-and-grow-rich</td>
+<td>30186948</td>
+<td>3.557377</td>
+<td>61</td>
+<td>3.705275</td>
+</tr>
+</tbody>
+</table>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="https://twitter.com/xxiangshi"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+    <li class="list-group-item"><a href="https://www.linkedin.com/in/xiangshi"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+    <li class="list-group-item"><a href="https://github.com/xshi19"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2023 Xiang Shi
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

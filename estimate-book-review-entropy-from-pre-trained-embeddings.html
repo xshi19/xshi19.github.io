@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    };
-    </script>
-
     <title>Estimate Book Review Entropy from Pre-trained Embeddings - Xiang Shi</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +9,7 @@
 
 
 
-<link rel="canonical" href="/estimate-book-review-entropy-from-pre-trained-embeddings.html">
+<link rel="canonical" href="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html">
 
         <meta name="author" content="Xiang Shi" />
         <meta name="keywords" content="NLP,machine learning,information theory" />
@@ -28,7 +18,7 @@
         <meta property="og:site_name" content="Xiang Shi" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Estimate Book Review Entropy from Pre-trained Embeddings"/>
-        <meta property="og:url" content="/estimate-book-review-entropy-from-pre-trained-embeddings.html"/>
+        <meta property="og:url" content="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html"/>
         <meta property="og:description" content="The inspiration for this exploration came from a Twitter (or X) post by Nassim Taleb: In this article, I propose a simple method to quantify this &#34;summary diversity&#34; or &#34;book dimensionality&#34; using natural language processing (NLP) and a bit match approach. The process involves: Collecting book review data. Since it&#39;s …"/>
         <meta property="article:published_time" content="2023-12-25" />
             <meta property="article:section" content="Blog" />
@@ -40,14 +30,17 @@
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
-    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://xshi19.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://xshi19.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="/theme/css/pygments/native.css" rel="stylesheet">
-    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+    <link href="https://xshi19.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://xshi19.github.io/theme/css/style.css" type="text/css"/>
 
+        <link href="https://xshi19.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Xiang Shi ATOM Feed"/>
 
-
+        <link href="https://xshi19.github.io/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Xiang Shi Blog ATOM Feed"/>
 
 </head>
 <body>
@@ -61,16 +54,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/" class="navbar-brand">
+            <a href="https://xshi19.github.io/" class="navbar-brand">
 Xiang Shi            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                         <li><a href="/pages/about-me.html">
+                    <li><a href="https://xshi19.github.io/normix/">normix</a></li>
+                         <li><a href="https://xshi19.github.io/pages/about-me.html">
                              About Me
                           </a></li>
                         <li class="active">
-                            <a href="/category/blog.html">Blog</a>
+                            <a href="https://xshi19.github.io/category/blog.html">Blog</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -91,7 +85,7 @@ Xiang Shi            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="/estimate-book-review-entropy-from-pre-trained-embeddings.html"
+                    <a href="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html"
                        rel="bookmark"
                        title="Permalink to Estimate Book Review Entropy from Pre-trained Embeddings">
                         Estimate Book Review Entropy from Pre-trained Embeddings
@@ -104,7 +98,7 @@ Xiang Shi            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2023-12-25T00:00:00-05:00"> 周一 25 十二月 2023</time>
+        <i class="fa fa-calendar"></i><time datetime="2023-12-25T00:00:00-05:00"> Mon 25 December 2023</time>
     </span>
 
 
@@ -112,38 +106,39 @@ Xiang Shi            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="/tag/nlp.html">NLP</a>
+	<a href="https://xshi19.github.io/tag/nlp.html">NLP</a>
         /
-	<a href="/tag/machine-learning.html">machine learning</a>
+	<a href="https://xshi19.github.io/tag/machine-learning.html">machine learning</a>
         /
-	<a href="/tag/information-theory.html">information theory</a>
+	<a href="https://xshi19.github.io/tag/information-theory.html">information theory</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
                 <p>The inspiration for this exploration came from a <a href="https://x.com/nntaleb/status/1735647215421411675?s=20">Twitter (or X) post</a> by Nassim Taleb:</p>
-<p><img src="blog/2023/img/nnt_x.png" alt="drawing" width="500"/></p>
+<p><img src="/blog/2023/img/nnt_x.png" alt="drawing" width="500"/></p>
 <p>In this article, I propose a simple method to quantify this "summary diversity" or "book dimensionality" using natural language processing (NLP) and a bit match approach. The process involves:</p>
 <ol>
 <li>Collecting book review data. Since it's impractical to have thousands of books summarized by individuals, I utilize Goodreads reviews as a proxy, trading some accuracy for scalability.</li>
-<li>Converting each review into numerical embeddings using pre-trained <a href="https://www.sbert.net/">sentence transformers</a>. For each book, this results in a matrix  $X$ of dimensions $n \times d$ $n$ is the number of reviews and $d$ is the embedding dimension.</li>
+<li>Converting each review into numerical embeddings using pre-trained <a href="https://www.sbert.net/">sentence transformers</a>. For each book, this results in a matrix  <span class="math">\(X\)</span> of dimensions <span class="math">\(n \times d\)</span> <span class="math">\(n\)</span> is the number of reviews and <span class="math">\(d\)</span> is the embedding dimension.</li>
 <li>Applying Principal Component Analysis (PCA) or equivalently, <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular Value Decomposition (SVD)</a> to the review embeddings:
-$$
+<div class="math">$$
 X = USV
-$$
-where $U$ and $V$ are unitary matrices and $S$ is a diagnoal matrix with singular values $s_1 \geq s_2 \geq \cdots \geq s_m$ with $m=\min(n, d)$.</li>
+$$</div>
+where <span class="math">\(U\)</span> and <span class="math">\(V\)</span> are unitary matrices and <span class="math">\(S\)</span> is a diagnoal matrix with singular values <span class="math">\(s_1 \geq s_2 \geq \cdots \geq s_m\)</span> with <span class="math">\(m=\min(n, d)\)</span>.</li>
 <li>Computing the <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">entropy</a> of the singular values:
-$$
+<div class="math">$$
 \text{entropy} = -\sum_{i=1}^m p_i \log p_i \text{, where } p_i = \frac{s_i}{\sum_{i=1}^m s_i}
-$$</li>
+$$</div>
+</li>
 </ol>
 <p>The rationale behind this approach is as follows:</p>
 <ul>
-<li>Similar book reviews imply correlated review embeddings $X$, leading to a significant disparity in the singular values of $X$ (i.e. $s_1$ much larger than $s_m$), resulting in low entropy.</li>
-<li>Diversified and independent reviews suggest uncorrelated and orthogonal embeddings $X$ causing the singular values of $X$ to be relatively uniform, leading to high entropy.</li>
+<li>Similar book reviews imply correlated review embeddings <span class="math">\(X\)</span>, leading to a significant disparity in the singular values of <span class="math">\(X\)</span> (i.e. <span class="math">\(s_1\)</span> much larger than <span class="math">\(s_m\)</span>), resulting in low entropy.</li>
+<li>Diversified and independent reviews suggest uncorrelated and orthogonal embeddings <span class="math">\(X\)</span> causing the singular values of <span class="math">\(X\)</span> to be relatively uniform, leading to high entropy.</li>
 </ul>
 <p>This concept mirrors methods used to <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1358533">measure portfolio diversity</a> in finance.</p>
 <p>The following figure showcases a comparison of "review entropy" for three thousand popular non-fiction books on Goodreads (y-axis) against their average ratings (x-axis). Intriguingly, there is no correlation between review entropy and ratings. Notably, Nassim Taleb's books exhibit high review entropy yet possess average ratings. I wonder if he have employed a similar analysis and saw these results before sending his tweet lol.</p>
-<p><img alt="Book review entropy" src="blog/2023/img/book_review_entropy.png"></p>
+<p><img alt="Book review entropy" src="/blog/2023/img/book_review_entropy.png"></p>
 <h3>Code</h3>
 <p>I utilized the <a href="[https://www.kaggle.com/datasets/pypiahmad/goodreads-book-reviews1">Goodreads book review dataset</a> from Kaggle, focusing solely on non-fiction books due to the large data size.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filter_genre</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -600,18 +595,69 @@ $$</li>
 </tr>
 </tbody>
 </table>
-            </div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
 
-            <!-- Utterances comments script -->
-            <script src="https://utteranc.es/client.js"
-                repo="xshi19/xshi19.github.io"
-                issue-term="pathname"
-                label="comment"
-                theme="github-light"
-                crossorigin="anonymous"
-                async>
-            </script>
-            
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+            </div>
             <!-- /.entry-content -->
         </article>
     </section>
@@ -657,18 +703,16 @@ $$</li>
       </div>
    </div>
 </footer>
-<script src="/theme/js/jquery.min.js"></script>
+<script src="https://xshi19.github.io/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="/theme/js/bootstrap.min.js"></script>
+<script src="https://xshi19.github.io/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="/theme/js/respond.min.js"></script>
+<script src="https://xshi19.github.io/theme/js/respond.min.js"></script>
 
 
 
 
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Xiang Shi - Blog</title><link href="https://xshi19.github.io/" rel="alternate"/><link href="https://xshi19.github.io/feeds/blog.atom.xml" rel="self"/><id>https://xshi19.github.io/</id><updated>2024-02-17T00:00:00-05:00</updated><entry><title>Yuval Harari's Dataism: Why is it a Bad Idea?</title><link href="https://xshi19.github.io/yuval-hararis-dataism-why-is-it-a-bad-idea.html" rel="alternate"/><published>2024-02-17T00:00:00-05:00</published><updated>2024-02-17T00:00:00-05:00</updated><author><name>Xiang Shi</name></author><id>tag:xshi19.github.io,2024-02-17:/yuval-hararis-dataism-why-is-it-a-bad-idea.html</id><summary type="html">&lt;p&gt;It's been almost six years since I last read Yuval Noah Harari's "Homo Deus: A Brief History of Tomorrow". I remember when a colleague, who had just finished reading Sapiens, asked me if I recommended this sequel. My response was that this book did not leave as lasting an impression …&lt;/p&gt;</summary><content type="html">&lt;p&gt;It's been almost six years since I last read Yuval Noah Harari's "Homo Deus: A Brief History of Tomorrow". I remember when a colleague, who had just finished reading Sapiens, asked me if I recommended this sequel. My response was that this book did not leave as lasting an impression as its predecessor. Indeed, over the past six years, I've nearly forgotten most contents of this book, until a friend sent me &lt;a href="https://www.wired.co.uk/article/yuval-noah-harari-dataism"&gt;this article&lt;/a&gt;, driving me to re-examine Yuval Harari's Dataism.&lt;/p&gt;
+&lt;p&gt;This reevaluation comes at a very good time—the AI trend led by ChatGPT is sweeping the world, with the core of large language models being vast amounts of text data. Everything seems to be developing towards the Dataism Harari described. In this article, I will share my perspective as a data scientist on why Harari's Dataism is problematic and how we can address these issues.&lt;/p&gt;
+&lt;h2&gt;What is Dataism?&lt;/h2&gt;
+&lt;p&gt;I recommend reading the last chapter of "Homo Deus: A Brief History of Tomorrow". According to Harari, Dataism spans multiple disciplines, including:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;[Sociology]&lt;/strong&gt; Human society is similar to a huge data center or computer, with each individual acting as a neuron or data processing unit.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[History]&lt;/strong&gt; The historical development of mankind is the improvement of this massive data processing system, capable of generating and managing increasing volumes of information. The books, music, paintings, and math equations created by humans are all equivalent to the input and output of data flow. Societies with better data processing capabilities (capitalism) have eliminated societies with weaker data processing capabilities (communism).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[Biology and Neuroscience]&lt;/strong&gt; The cognitive thinking ability and emotions of human individuals are essentially a kind of algorithm.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[Computer Science]&lt;/strong&gt; The rapid development of the Internet has brought us a large amount of information far beyond our brain's processing capacity. On the other hand, artificial intelligence is surpassing humans in more and more fields: recommendation algorithms may know us better than ourselves.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The primary criticisms of Dataism focus on Harari's challenge to humanism and traditional religions—after all, many people are uncomfortable with the notion that our humanity, rationality, and emotions are merely algorithms and data flows. But for me, such disputes are hard to resolve. Because according to Harari,
+Dataism, like various religions and ideologies, is a kind of "imaginary reality" or a fiction, rather than a falsifiable scientific proposition. In such a situation, the discussion can easily turn into debates about more fundamental philosophical thinking, such as what the nature of human consciousness is, and no conclusion can be drawn. It can only result in everyone holding onto their own opinions, each with its own rationale.&lt;/p&gt;
+&lt;p&gt;What concerns me more are the specific suggestions Harari makes in his book, that is, how a Dataist (believer in Dataism) will put his faith into specific actions. He writes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Like every religion, it has its practical commandments. First and foremost a Dataist ought to maximise data flow by connecting to more and more media, and producing and consuming more and more information. Like other successful religions, Dataism is also missionary. Its second commandment is to link everything to the system, including heretics who don’t want to be plugged in. And ‘everything’ means more than just humans. It means every thing.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;More Connections, Better?&lt;/h2&gt;
+&lt;p&gt;Harari claims Dataism is based on biology and computer science, but the above paragraph shows that Dataism is neither consistent with biology nor computer science.&lt;/p&gt;
+&lt;p&gt;Beginning with biology, humans go through a stage called &lt;a href="https://en.wikipedia.org/wiki/Synaptic_pruning"&gt;synaptic pruning&lt;/a&gt; from birth to adulthood. During this stage,the connections between neurons in the brain are reduced, not increased. Synaptic pruning is widely thought to be related to learning,where the brain acquires new knowledge and skills by eliminating unnecessary connections rather than adding more. This concept is intuitive; for example, you wouldn't want to activate the neurons used to play basketball while reading books.
+On the other hand, some studies suggests that problems with the process of synaptic pruning may be associated with conditions such as schizophrenia.&lt;/p&gt;
+&lt;p&gt;We should be grateful that Mother Nature is not a fanatical Dataist, otherwise your brain might look like this:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="/blog/2024/img/a_lot_of_wires.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Deep neural networks based on computers also follow the same rules. Ilya Sutskever, one of OpenAI's founders who was recently gained significant media attention, is one of the most cited experts in the field of artificial intelligence and machine learning.
+His third most cited paper (cited 48,429 times as of February 2024) is called &lt;a href="https://dl.acm.org/doi/abs/10.5555/2627435.2670313"&gt;"Dropout: a simple way to prevent neural networks from overfitting"&lt;/a&gt;. You don't need to be an expert in artificial intelligence to grasp the essence of this paper. Just looking at the diagram in the paper can make it clear—yes, the neural network model on the right outperforms the one on the left.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="/blog/2024/img/dropout_net.png"&gt;&lt;/p&gt;
+&lt;h2&gt;More Connections, More Information?&lt;/h2&gt;
+&lt;p&gt;Not only biology and computer science, but Dataists who are keen to increase "links" may also lack a fundamental understanding of statistics. Some might argue, doesn't the Law of Large Numbers, the foundation of statistics, suggest that more data is better? As we accumulate more data, the answers we get become more accurate, eventually infinitely converging to the truth.&lt;/p&gt;
+&lt;p&gt;But the Law of Large Numbers has a key prerequisite: the data must be independently and identically distributed. When all humans are interconnected via electronic devices and networks, their independence vanishes.
+There are already many polarized views on the Internet today, people either passionately support or oppose certain views. Statistically speaking, ten thousand random variables with a correlation of 1 or -1 carry no more information than a single random variable.
+Of course, some people will say that in some conditions, such as ergodic and bounded correlation, the Law of Large Numbers will still converge, but the convergence speed is obviously much slower than that of independently and identically distributed variables.&lt;/p&gt;
+&lt;p&gt;Harari is not unaware of this. When discussing the historical view of Dataism, he writes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The greater the number and variety of processors, the harder it is to freely connect them.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Perhaps he optimistically believes in the possibility of maximizing connections without sacrificing diversity.&lt;/p&gt;
+&lt;p&gt;However, increasing connections not only reduces information and increases data noise, but also significantly increases tail risks brought by contagion. Modern transportation allowed COVID to spread globally in a very short time. Similarly, a piece of misinformation can spread quickly on social networks like a virus. Time was originally the best antidote to misinformation,
+ss Lincoln famously said:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You can fool all the people some of the time, and some of the people all the time, but you cannot fool all the people all the time.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;But by the time people realize they've been fooled, the falsehoods that have rapidly spreaded worldwide through the internet may have already caused great damage.&lt;/p&gt;
+&lt;h2&gt;One bit data is not one bit data&lt;/h2&gt;
+&lt;p&gt;I recently finished reading Dr. Robert Lustig's book &lt;a href="https://www.amazon.com/Metabolical-Processed-Nutrition-Modern-Medicine/dp/B08LP21JLQ/"&gt;"Metabolical"&lt;/a&gt;, where his assertion of "a calorie is not a calorie" was impressive. As a data scientist, I immediately think of the same analogy for data: one bit data is not one bit data.&lt;/p&gt;
+&lt;p&gt;For simplicity, I divide data into two types: data processed by the human brain and data processed by computers (of course, with the development of artificial intelligence, the former is gradually becoming a subset of the latter). I use food—that is, "data" processed by the human digestive system—as an analogy:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Food (processed by human digestive system)&lt;/th&gt;
+&lt;th style="text-align: center;"&gt;Data (processed by human brain)&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Data (processed by computer)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Toxic food/junk food: transfat, over-processed food&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;Harmful information/false information: extreme thoughts, cults and conspiracy theories&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;Wrong data/biased data: inputting these data will only lead to absurd results, so-called &lt;a href="https://en.wikipedia.org/wiki/Garbage_in,_garbage_out"&gt;GIGO (garbage in, garbage out)&lt;/a&gt; in machine learning field&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Useless food: food additives, fructose, alcohol. Human can survive without these substances, and long-term consumption may have potential risks.&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;Useless information: various news media, especially financial news&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;Noise in data: daily stock market fluctuations, which contain a lot of randomness and irrational factors.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nutrition: essential substances like vitamins, proteins, fats, etc.&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;Knowledge: science, philosophy, and various experiences learned in life&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;Models: Whether it's statistics or machine learning, model is a kind of compression of (cleaned) data, extracting signals from noise&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Excessive intake of nutrients: Even water can harm or kill if taken in excess.&lt;/td&gt;
+&lt;td style="text-align: center;"&gt;Excessive knowledge: over-specialization in academics, what Taleb calls &lt;a href="https://medium.com/incerto/the-intellectual-yet-idiot-13211e2d0577"&gt;IYI (intellectual yet idiot)&lt;/a&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;Overfitting of models: the model performs exceptionally well on the training data, but is outrageously wrong in real-world applications.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Thus, the reality may be far more complex than Dataists assume: not all data is equal, and one bit of data is not just one bit of data. The worship of data itself is more like the past obsession with vitamin C—believing that consuming large amounts of vitamin C can cure various diseases, and drinks labeled "rich in vitamin C" are considered healthy.&lt;/p&gt;
+&lt;h2&gt;Information and Freedom&lt;/h2&gt;
+&lt;p&gt;Harari believes "Information wants to be free",  suggesting that dataists should liberate "information" and let them flow freely. While this view appears valid, it raises two questions: 1. Is information truly imprisoned? 2. Can humans really decide whether information is free or not?&lt;/p&gt;
+&lt;p&gt;Nassim Taleb has a different perspective:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Information is antifragile; it feeds more on attempts to harm it than it does on efforts to promote it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;He believes that attempts to suppress information only make it spread wider: for example, a banned book may arose people's curiosity, and an attack on a viewpoint may inadvertently promote it, a phenomenon frequently observed on today's internet.&lt;/p&gt;
+&lt;p&gt;In fact, many people, including governments and the media, have recognized that simply banning or refuting information often backfires, and that a better strategy is to use information to defeat information: deliberately creating topics to distract people, using a large amount of other information to flood people's brains, impairing their critical thinking abilities. Harari himself also writes in the book:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In the past, censorship worked by blocking the flow of information.
+In the twenty-first century censorship works by flooding people with irrelevant information.
+We just don't know what to pay attention to, and often spend our time investigating and debating side issues.
+In ancient times having power meant having access to data. Today having power means knowing what to ignore.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So the challenge in modern society is not the lack of freedom of information, but too much free information.&lt;/p&gt;
+&lt;p&gt;In response, Dataism's solution seems to be simple and crude—leaving everything to models and algorithms, as they can handle large amounts of data more effectively than humans. This also addresses our second question: it is not humans who should decide the freedom of information, but sophisticated models and algorithms.&lt;/p&gt;
+&lt;p&gt;Yet, data scientists, statisticians, computer scientists and mathematicians all acknowledge a fundamental truth: "All models are wrong, but some are useful". Given that "all models are wrong",
+it is absurd and ridiculous to idolize them like Dataism. Historical data cannot reflect the future, and all models, essentially summaries of past data, are constrained by the turkey problem. That's why Wall Street's quantitative hedge funds never bet everything on single mathematical model——the last fund to attempt this was called &lt;a href="https://en.wikipedia.org/wiki/Long-Term_Capital_Management"&gt;LTCM&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Lindy Effect&lt;/h2&gt;
+&lt;p&gt;So, how should we view the ever-growing information on the internet and the rapidly developing artificial intelligence models recently? Harari suggests in his book that, like the free market economy, data also has an "invisible hand." Regrettably, he does not elaborate further on this. I believe that, just as the "invisible hand" in economics is bottom-up, the "invisible hand" of data should also be so, rather than following a top-down grand model or algorithm controlled by government bureaucrats or a few large tech corporations.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Lindy_effect"&gt;The Lindy Effect&lt;/a&gt; embodies this "invisible hand." All information and data flows follow the Lindy Effect: information that has withstood the test of time has a longer "expected lifespan." Books, music, and paintings that have been popular for centuries are likely to remain so in the next hundred years. When we expand this time frame, DNA——a code designed for life——also follows this invisible hand of Lindy. Contrary to common misconceptions, the Lindy Effect does not imply immortality but serves as a harsh selection mechanism. Mathematically, the Lindy Effect indicates that the lifespan of information follows a Pareto distribution——most information will be discarded, just like countless bankrupt companies in the capital market and numerous extinct species in biological evolution, with only a few being favored by time. Therefore, what we should preserve is this "invisible hand," not the data and algorithms themselves. Just as we should protect the ecosystem rather than a specific species. Misidentifying the object of protection can lead to catastrophe, allowing companies that should have failed to survive under the guise of being "too big to fail" only amplifies future systemic risks.&lt;/p&gt;
+&lt;h2&gt;In conclusion&lt;/h2&gt;
+&lt;p&gt;Yuval Harari's upcoming book, NEXUS: A Brief History of Information Networks from the Stone Age to AI, seems to be an extension of the last chapter on Dataism in Homo Deus: A Brief History of Tomorrow. I do not know if he will revise his previous arguments or continue to advance in the direction he has set. I have pre-ordered this book and will share my thoughts after reading it.&lt;/p&gt;</content><category term="Blog"/><category term="dataism"/><category term="information"/><category term="data science"/></entry><entry><title>Estimate Book Review Entropy from Pre-trained Embeddings</title><link href="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html" rel="alternate"/><published>2023-12-25T00:00:00-05:00</published><updated>2023-12-25T00:00:00-05:00</updated><author><name>Xiang Shi</name></author><id>tag:xshi19.github.io,2023-12-25:/estimate-book-review-entropy-from-pre-trained-embeddings.html</id><summary type="html">&lt;p&gt;The inspiration for this exploration came from a &lt;a href="https://x.com/nntaleb/status/1735647215421411675?s=20"&gt;Twitter (or X) post&lt;/a&gt; by Nassim Taleb:&lt;/p&gt;
+&lt;p&gt;&lt;img src="/blog/2023/img/nnt_x.png" alt="drawing" width="500"/&gt;&lt;/p&gt;
+&lt;p&gt;In this article, I propose a simple method to quantify this "summary diversity" or "book dimensionality" using natural language processing (NLP) and a bit match approach. The process involves:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Collecting book review data. Since it's …&lt;/li&gt;&lt;/ol&gt;</summary><content type="html">&lt;p&gt;The inspiration for this exploration came from a &lt;a href="https://x.com/nntaleb/status/1735647215421411675?s=20"&gt;Twitter (or X) post&lt;/a&gt; by Nassim Taleb:&lt;/p&gt;
+&lt;p&gt;&lt;img src="/blog/2023/img/nnt_x.png" alt="drawing" width="500"/&gt;&lt;/p&gt;
+&lt;p&gt;In this article, I propose a simple method to quantify this "summary diversity" or "book dimensionality" using natural language processing (NLP) and a bit match approach. The process involves:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Collecting book review data. Since it's impractical to have thousands of books summarized by individuals, I utilize Goodreads reviews as a proxy, trading some accuracy for scalability.&lt;/li&gt;
+&lt;li&gt;Converting each review into numerical embeddings using pre-trained &lt;a href="https://www.sbert.net/"&gt;sentence transformers&lt;/a&gt;. For each book, this results in a matrix  &lt;span class="math"&gt;\(X\)&lt;/span&gt; of dimensions &lt;span class="math"&gt;\(n \times d\)&lt;/span&gt; &lt;span class="math"&gt;\(n\)&lt;/span&gt; is the number of reviews and &lt;span class="math"&gt;\(d\)&lt;/span&gt; is the embedding dimension.&lt;/li&gt;
+&lt;li&gt;Applying Principal Component Analysis (PCA) or equivalently, &lt;a href="https://en.wikipedia.org/wiki/Singular_value_decomposition"&gt;Singular Value Decomposition (SVD)&lt;/a&gt; to the review embeddings:
+&lt;div class="math"&gt;$$
+X = USV
+$$&lt;/div&gt;
+where &lt;span class="math"&gt;\(U\)&lt;/span&gt; and &lt;span class="math"&gt;\(V\)&lt;/span&gt; are unitary matrices and &lt;span class="math"&gt;\(S\)&lt;/span&gt; is a diagnoal matrix with singular values &lt;span class="math"&gt;\(s_1 \geq s_2 \geq \cdots \geq s_m\)&lt;/span&gt; with &lt;span class="math"&gt;\(m=\min(n, d)\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Computing the &lt;a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)"&gt;entropy&lt;/a&gt; of the singular values:
+&lt;div class="math"&gt;$$
+\text{entropy} = -\sum_{i=1}^m p_i \log p_i \text{, where } p_i = \frac{s_i}{\sum_{i=1}^m s_i}
+$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The rationale behind this approach is as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Similar book reviews imply correlated review embeddings &lt;span class="math"&gt;\(X\)&lt;/span&gt;, leading to a significant disparity in the singular values of &lt;span class="math"&gt;\(X\)&lt;/span&gt; (i.e. &lt;span class="math"&gt;\(s_1\)&lt;/span&gt; much larger than &lt;span class="math"&gt;\(s_m\)&lt;/span&gt;), resulting in low entropy.&lt;/li&gt;
+&lt;li&gt;Diversified and independent reviews suggest uncorrelated and orthogonal embeddings &lt;span class="math"&gt;\(X\)&lt;/span&gt; causing the singular values of &lt;span class="math"&gt;\(X\)&lt;/span&gt; to be relatively uniform, leading to high entropy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This concept mirrors methods used to &lt;a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1358533"&gt;measure portfolio diversity&lt;/a&gt; in finance.&lt;/p&gt;
+&lt;p&gt;The following figure showcases a comparison of "review entropy" for three thousand popular non-fiction books on Goodreads (y-axis) against their average ratings (x-axis). Intriguingly, there is no correlation between review entropy and ratings. Notably, Nassim Taleb's books exhibit high review entropy yet possess average ratings. I wonder if he have employed a similar analysis and saw these results before sending his tweet lol.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Book review entropy" src="/blog/2023/img/book_review_entropy.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Code&lt;/h3&gt;
+&lt;p&gt;I utilized the &lt;a href="[https://www.kaggle.com/datasets/pypiahmad/goodreads-book-reviews1"&gt;Goodreads book review dataset&lt;/a&gt; from Kaggle, focusing solely on non-fiction books due to the large data size.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;filter_genre&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="nb"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;non-fiction&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;history, historical fiction, biography&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;book_genre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_json&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;goodreads_book_genres_initial.json&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;orient&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;records&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;books_filtered&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;book_genre&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;book_genre&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;genres&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filter_genre&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;book_id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, I processed the reviews through pre-trained sentence transformers to generate numerical embeddings. The &lt;a href="https://huggingface.co/sentence-transformers/all-MiniLM-L12-v1"&gt;all-MiniLM-L12-v1 model&lt;/a&gt; has an embedding dimension of 384.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sentence_transformers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SentenceTransformer&lt;/span&gt;
+
+&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SentenceTransformer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;all-MiniLM-L12-v1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chunk&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;enumerate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_json&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;goodreads_reviews_dedup.json&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;orient&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;records&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chunksize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;500000&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+    &lt;span class="n"&gt;chunk&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;book_id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;books_filtered&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;book_id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rating&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;review_text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+    &lt;span class="n"&gt;chunk&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;review_text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="n"&gt;embed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;review_text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tolist&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;show_progress_bar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;book_id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+      &lt;span class="n"&gt;embed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;embed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;astype&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="n"&gt;embed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_parquet&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;book_review_embeddings/&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;.parquet&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, I computed the SVD for each book, considering those with at least 50 reviews. To ensure fairness, I sampled 50 reviews per book for entropy calculation, as books with larger numbers of reviews (for example 1000) could inherently have higher entropy then the ones with 50-100 reviews.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;embed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_parquet&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;C:/Users/soars/Downloads/goodreads/book_review_embeddings&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;review_count&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;embed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value_counts&lt;/span&gt;&lt;span class="p"&gt;()})&lt;/span&gt;
+&lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;review_count&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;tqdm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linalg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;svd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;embed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;:])&lt;/span&gt;
+    &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;entropy&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Limitations&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Not all reviews are summaries; some discuss editions or translations, especially for classical books which have many different editions. Some reviews, of a biography for example, focus on characters rather than content. For instance, Walter Isaacson's "Steve Jobs" has a moderate review entropy score (~3.63).&lt;/li&gt;
+&lt;li&gt;The general-purpose nature of pre-trained embeddings means they also capture reviewers' styles and emotions, which aren't ideal for information entropy measurement. An example is "The Rape of Nanking: The Forgotten Holocaust of World War II" by Iris Chang. This book deals with the Nanjing Massacre, a tragic and brutal episode during the Second Sino-Japanese War where hundreds of thousands of Chinese civilians and disarmed soldiers were murdered, and numerous women were assaulted by soldiers of the Imperial Japanese Army. The intense emotional impact of the subject matter invariably influence the tone of its reviews, leading to a review entropy of only 3.53.&lt;/li&gt;
+&lt;li&gt;The methodology's robustness is impacted by the choice of embedding model, dimension, and number of reviews considered. Randomly selecting a subset of reviews also leads to potential information loss. Advanced approaches like random matrix theory could offer better comparisons between books with varying numbers of reviews, but this is outside this article's scope.&lt;/li&gt;
+&lt;li&gt;Ultimately, "review diversity" or "book dimensionality" are subjective concepts. This project is a fun exploration rather than a definitive measure of a book's value, as you many already notice in books highlighted in the previous figure --- there is no "skin in the game".&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Appendix - books with highest review entropy&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;title&lt;/th&gt;
+&lt;th&gt;url&lt;/th&gt;
+&lt;th&gt;book_id&lt;/th&gt;
+&lt;th&gt;rating&lt;/th&gt;
+&lt;th&gt;review_count&lt;/th&gt;
+&lt;th&gt;entropy&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Influence: The Psychology of Persuasion&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/28815.Influence&lt;/td&gt;
+&lt;td&gt;28815&lt;/td&gt;
+&lt;td&gt;4.114754&lt;/td&gt;
+&lt;td&gt;183&lt;/td&gt;
+&lt;td&gt;3.738005&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Min kamp 1 (Min kamp #1)&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/7147831-min-kamp-1&lt;/td&gt;
+&lt;td&gt;7147831&lt;/td&gt;
+&lt;td&gt;3.662162&lt;/td&gt;
+&lt;td&gt;74&lt;/td&gt;
+&lt;td&gt;3.736675&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Universe Doesn't Give a Flying Fuck About You&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/13628888-the-universe-doesn-t-give-a-flying-fuck-about-you&lt;/td&gt;
+&lt;td&gt;13628888&lt;/td&gt;
+&lt;td&gt;3.680556&lt;/td&gt;
+&lt;td&gt;72&lt;/td&gt;
+&lt;td&gt;3.735819&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Holy Bible: New International Version&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/280111.Holy_Bible&lt;/td&gt;
+&lt;td&gt;280111&lt;/td&gt;
+&lt;td&gt;3.500000&lt;/td&gt;
+&lt;td&gt;80&lt;/td&gt;
+&lt;td&gt;3.735288&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tao Te Ching&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/67896.Tao_Te_Ching&lt;/td&gt;
+&lt;td&gt;67896&lt;/td&gt;
+&lt;td&gt;3.807229&lt;/td&gt;
+&lt;td&gt;83&lt;/td&gt;
+&lt;td&gt;3.734882&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Holy Bible: King James Version&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/1923820.Holy_Bible&lt;/td&gt;
+&lt;td&gt;1923820&lt;/td&gt;
+&lt;td&gt;3.354938&lt;/td&gt;
+&lt;td&gt;324&lt;/td&gt;
+&lt;td&gt;3.732286&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Weird Things Customers Say in Bookshops&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/12640991-weird-things-customers-say-in-bookshops&lt;/td&gt;
+&lt;td&gt;12640991&lt;/td&gt;
+&lt;td&gt;3.997585&lt;/td&gt;
+&lt;td&gt;414&lt;/td&gt;
+&lt;td&gt;3.731400&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Beyond Good and Evil&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/12321.Beyond_Good_and_Evil&lt;/td&gt;
+&lt;td&gt;12321&lt;/td&gt;
+&lt;td&gt;3.366337&lt;/td&gt;
+&lt;td&gt;101&lt;/td&gt;
+&lt;td&gt;3.725606&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Nicomachean Ethics&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/19068.The_Nicomachean_Ethics&lt;/td&gt;
+&lt;td&gt;19068&lt;/td&gt;
+&lt;td&gt;3.037736&lt;/td&gt;
+&lt;td&gt;53&lt;/td&gt;
+&lt;td&gt;3.725171&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Chicken Soup for the Soul&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/801178.Chicken_Soup_for_the_Soul&lt;/td&gt;
+&lt;td&gt;801178&lt;/td&gt;
+&lt;td&gt;3.500000&lt;/td&gt;
+&lt;td&gt;64&lt;/td&gt;
+&lt;td&gt;3.725138&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Teachings of Don Juan: A Yaqui Way of Knowledge&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/78250.The_Teachings_of_Don_Juan&lt;/td&gt;
+&lt;td&gt;78250&lt;/td&gt;
+&lt;td&gt;3.642857&lt;/td&gt;
+&lt;td&gt;84&lt;/td&gt;
+&lt;td&gt;3.724613&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Wreck This Journal&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/428862.Wreck_This_Journal&lt;/td&gt;
+&lt;td&gt;428862&lt;/td&gt;
+&lt;td&gt;4.047059&lt;/td&gt;
+&lt;td&gt;85&lt;/td&gt;
+&lt;td&gt;3.722732&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Life-Changing Magic of Not Giving a F*ck: How to Stop Spending Time You Don't Have with Peop...&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/26200068-the-life-changing-magic-of-not-giving-a-f-ck&lt;/td&gt;
+&lt;td&gt;26200068&lt;/td&gt;
+&lt;td&gt;3.465347&lt;/td&gt;
+&lt;td&gt;202&lt;/td&gt;
+&lt;td&gt;3.722119&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Book of General Ignorance&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/410632.The_Book_of_General_Ignorance&lt;/td&gt;
+&lt;td&gt;410632&lt;/td&gt;
+&lt;td&gt;3.745098&lt;/td&gt;
+&lt;td&gt;51&lt;/td&gt;
+&lt;td&gt;3.721834&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;More Weird Things Customers Say in Bookshops&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/16174631-more-weird-things-customers-say-in-bookshops&lt;/td&gt;
+&lt;td&gt;16174631&lt;/td&gt;
+&lt;td&gt;3.807143&lt;/td&gt;
+&lt;td&gt;140&lt;/td&gt;
+&lt;td&gt;3.720029&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Steal Like an Artist: 10 Things Nobody Told You About Being Creative&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/13099738-steal-like-an-artist&lt;/td&gt;
+&lt;td&gt;13099738&lt;/td&gt;
+&lt;td&gt;4.087500&lt;/td&gt;
+&lt;td&gt;480&lt;/td&gt;
+&lt;td&gt;3.719942&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Secret (The Secret, #1)&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/52529.The_Secret&lt;/td&gt;
+&lt;td&gt;52529&lt;/td&gt;
+&lt;td&gt;2.873807&lt;/td&gt;
+&lt;td&gt;943&lt;/td&gt;
+&lt;td&gt;3.719174&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Papillon&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/6882.Papillon&lt;/td&gt;
+&lt;td&gt;6882&lt;/td&gt;
+&lt;td&gt;3.993103&lt;/td&gt;
+&lt;td&gt;145&lt;/td&gt;
+&lt;td&gt;3.718292&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Getting Things Done: The Art of Stress-Free Productivity&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/1633.Getting_Things_Done&lt;/td&gt;
+&lt;td&gt;1633&lt;/td&gt;
+&lt;td&gt;3.697222&lt;/td&gt;
+&lt;td&gt;360&lt;/td&gt;
+&lt;td&gt;3.717931&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Thus Spoke Zarathustra&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/51893.Thus_Spoke_Zarathustra&lt;/td&gt;
+&lt;td&gt;51893&lt;/td&gt;
+&lt;td&gt;3.514286&lt;/td&gt;
+&lt;td&gt;140&lt;/td&gt;
+&lt;td&gt;3.716682&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Monk Who Sold His Ferrari: A Fable About Fulfilling Your Dreams Reaching Your Destiny&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/43877.The_Monk_Who_Sold_His_Ferrari&lt;/td&gt;
+&lt;td&gt;43877&lt;/td&gt;
+&lt;td&gt;3.389610&lt;/td&gt;
+&lt;td&gt;308&lt;/td&gt;
+&lt;td&gt;3.716322&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Black Swan: The Impact of the Highly Improbable&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/242472.The_Black_Swan&lt;/td&gt;
+&lt;td&gt;242472&lt;/td&gt;
+&lt;td&gt;3.555184&lt;/td&gt;
+&lt;td&gt;299&lt;/td&gt;
+&lt;td&gt;3.715842&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;How to Live on 24 Hours a Day&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/4855.How_to_Live_on_24_Hours_a_Day&lt;/td&gt;
+&lt;td&gt;4855&lt;/td&gt;
+&lt;td&gt;3.520000&lt;/td&gt;
+&lt;td&gt;50&lt;/td&gt;
+&lt;td&gt;3.715379&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Whatever You Think, Think the Opposite&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/265525.Whatever_You_Think_Think_the_Opposite&lt;/td&gt;
+&lt;td&gt;265525&lt;/td&gt;
+&lt;td&gt;3.831169&lt;/td&gt;
+&lt;td&gt;77&lt;/td&gt;
+&lt;td&gt;3.714774&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;59 Seconds: Think a Little, Change a Lot&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/6340948-59-seconds&lt;/td&gt;
+&lt;td&gt;6340948&lt;/td&gt;
+&lt;td&gt;3.792453&lt;/td&gt;
+&lt;td&gt;53&lt;/td&gt;
+&lt;td&gt;3.713075&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;It's Not How Good You Are, It's How Good You Want To Be&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/114737.It_s_Not_How_Good_You_Are_It_s_How_Good_You_Want_To_Be&lt;/td&gt;
+&lt;td&gt;114737&lt;/td&gt;
+&lt;td&gt;3.540541&lt;/td&gt;
+&lt;td&gt;111&lt;/td&gt;
+&lt;td&gt;3.712133&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Gödel, Escher, Bach: An Eternal Golden Braid&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/24113.G_del_Escher_Bach&lt;/td&gt;
+&lt;td&gt;24113&lt;/td&gt;
+&lt;td&gt;3.838095&lt;/td&gt;
+&lt;td&gt;105&lt;/td&gt;
+&lt;td&gt;3.711328&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Encyclopedia of an Ordinary Life&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/39872.Encyclopedia_of_an_Ordinary_Life&lt;/td&gt;
+&lt;td&gt;39872&lt;/td&gt;
+&lt;td&gt;3.823009&lt;/td&gt;
+&lt;td&gt;113&lt;/td&gt;
+&lt;td&gt;3.710922&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ignore Everybody: and 39 Other Keys to Creativity&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/6162567-ignore-everybody&lt;/td&gt;
+&lt;td&gt;6162567&lt;/td&gt;
+&lt;td&gt;3.462687&lt;/td&gt;
+&lt;td&gt;67&lt;/td&gt;
+&lt;td&gt;3.710877&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Art of War&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/10534.The_Art_of_War&lt;/td&gt;
+&lt;td&gt;10534&lt;/td&gt;
+&lt;td&gt;3.669291&lt;/td&gt;
+&lt;td&gt;508&lt;/td&gt;
+&lt;td&gt;3.710865&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Snoop: What Your Stuff Says About You&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/1581330.Snoop&lt;/td&gt;
+&lt;td&gt;1581330&lt;/td&gt;
+&lt;td&gt;3.148148&lt;/td&gt;
+&lt;td&gt;81&lt;/td&gt;
+&lt;td&gt;3.710645&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Bhagavad Gita&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/99944.The_Bhagavad_Gita&lt;/td&gt;
+&lt;td&gt;99944&lt;/td&gt;
+&lt;td&gt;3.693333&lt;/td&gt;
+&lt;td&gt;75&lt;/td&gt;
+&lt;td&gt;3.710421&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Drama of the Gifted Child: The Search for the True Self&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/4887.The_Drama_of_the_Gifted_Child&lt;/td&gt;
+&lt;td&gt;4887&lt;/td&gt;
+&lt;td&gt;3.711864&lt;/td&gt;
+&lt;td&gt;59&lt;/td&gt;
+&lt;td&gt;3.710158&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;How to Win Friends and Influence People&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/4865.How_to_Win_Friends_and_Influence_People&lt;/td&gt;
+&lt;td&gt;4865&lt;/td&gt;
+&lt;td&gt;3.862745&lt;/td&gt;
+&lt;td&gt;663&lt;/td&gt;
+&lt;td&gt;3.709622&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Subtle Art of Not Giving a F*ck: A Counterintuitive Approach to Living a Good Life&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/28257707-the-subtle-art-of-not-giving-a-f-ck&lt;/td&gt;
+&lt;td&gt;28257707&lt;/td&gt;
+&lt;td&gt;3.742802&lt;/td&gt;
+&lt;td&gt;521&lt;/td&gt;
+&lt;td&gt;3.709340&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Abundance: The Future Is Better Than You Think&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/13187824-abundance&lt;/td&gt;
+&lt;td&gt;13187824&lt;/td&gt;
+&lt;td&gt;3.987805&lt;/td&gt;
+&lt;td&gt;82&lt;/td&gt;
+&lt;td&gt;3.709272&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;All I Really Need to Know I Learned in Kindergarten&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/34760.All_I_Really_Need_to_Know_I_Learned_in_Kindergarten&lt;/td&gt;
+&lt;td&gt;34760&lt;/td&gt;
+&lt;td&gt;3.625000&lt;/td&gt;
+&lt;td&gt;56&lt;/td&gt;
+&lt;td&gt;3.709270&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Why Do Men Have Nipples?: Hundreds of Questions You'd Only Ask a Doctor After Your Third Martini&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/131529.Why_Do_Men_Have_Nipples_&lt;/td&gt;
+&lt;td&gt;131529&lt;/td&gt;
+&lt;td&gt;2.793814&lt;/td&gt;
+&lt;td&gt;97&lt;/td&gt;
+&lt;td&gt;3.708684&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Art of Thinking Clearly&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/16248196-the-art-of-thinking-clearly&lt;/td&gt;
+&lt;td&gt;16248196&lt;/td&gt;
+&lt;td&gt;3.392157&lt;/td&gt;
+&lt;td&gt;102&lt;/td&gt;
+&lt;td&gt;3.708681&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Shop Class as Soulcraft: An Inquiry Into the Value of Work&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/6261332-shop-class-as-soulcraft&lt;/td&gt;
+&lt;td&gt;6261332&lt;/td&gt;
+&lt;td&gt;3.383838&lt;/td&gt;
+&lt;td&gt;99&lt;/td&gt;
+&lt;td&gt;3.707851&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Communist Manifesto&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/30474.The_Communist_Manifesto&lt;/td&gt;
+&lt;td&gt;30474&lt;/td&gt;
+&lt;td&gt;3.078603&lt;/td&gt;
+&lt;td&gt;229&lt;/td&gt;
+&lt;td&gt;3.707773&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Power of Your Subconscious Mind&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/68984.The_Power_of_Your_Subconscious_Mind&lt;/td&gt;
+&lt;td&gt;68984&lt;/td&gt;
+&lt;td&gt;3.520000&lt;/td&gt;
+&lt;td&gt;75&lt;/td&gt;
+&lt;td&gt;3.707511&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Art of Social Media: Power Tips for Power Users&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/23281903-the-art-of-social-media&lt;/td&gt;
+&lt;td&gt;23281903&lt;/td&gt;
+&lt;td&gt;3.666667&lt;/td&gt;
+&lt;td&gt;54&lt;/td&gt;
+&lt;td&gt;3.707500&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sway: The Irresistible Pull of Irrational Behavior&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/2118114.Sway&lt;/td&gt;
+&lt;td&gt;2118114&lt;/td&gt;
+&lt;td&gt;3.649351&lt;/td&gt;
+&lt;td&gt;77&lt;/td&gt;
+&lt;td&gt;3.707418&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tractatus Logico-Philosophicus&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/12075.Tractatus_Logico_Philosophicus&lt;/td&gt;
+&lt;td&gt;12075&lt;/td&gt;
+&lt;td&gt;3.500000&lt;/td&gt;
+&lt;td&gt;54&lt;/td&gt;
+&lt;td&gt;3.707324&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Lost in Translation: An Illustrated Compendium of Untranslatable Words from Around the World&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/20176282-lost-in-translation&lt;/td&gt;
+&lt;td&gt;20176282&lt;/td&gt;
+&lt;td&gt;4.210526&lt;/td&gt;
+&lt;td&gt;76&lt;/td&gt;
+&lt;td&gt;3.706830&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;What If?: Serious Scientific Answers to Absurd Hypothetical Questions&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/21413662-what-if&lt;/td&gt;
+&lt;td&gt;21413662&lt;/td&gt;
+&lt;td&gt;4.122535&lt;/td&gt;
+&lt;td&gt;710&lt;/td&gt;
+&lt;td&gt;3.706252&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Originals: How Non-Conformists Move the World&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/25614523-originals&lt;/td&gt;
+&lt;td&gt;25614523&lt;/td&gt;
+&lt;td&gt;3.618056&lt;/td&gt;
+&lt;td&gt;144&lt;/td&gt;
+&lt;td&gt;3.706107&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Linchpin: Are You Indispensable?&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/7155145-linchpin&lt;/td&gt;
+&lt;td&gt;7155145&lt;/td&gt;
+&lt;td&gt;3.742138&lt;/td&gt;
+&lt;td&gt;159&lt;/td&gt;
+&lt;td&gt;3.706064&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Think and Grow Rich&lt;/td&gt;
+&lt;td&gt;https://www.goodreads.com/book/show/30186948-think-and-grow-rich&lt;/td&gt;
+&lt;td&gt;30186948&lt;/td&gt;
+&lt;td&gt;3.557377&lt;/td&gt;
+&lt;td&gt;61&lt;/td&gt;
+&lt;td&gt;3.705275&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="Blog"/><category term="NLP"/><category term="machine learning"/><category term="information theory"/></entry><entry><title>A Simple Way to Estimate DDP, A Better Alternative to GDP</title><link href="https://xshi19.github.io/a-simple-way-to-estimate-ddp-a-better-alternative-to-gdp.html" rel="alternate"/><published>2023-12-21T00:00:00-05:00</published><updated>2023-12-21T00:00:00-05:00</updated><author><name>Xiang Shi</name></author><id>tag:xshi19.github.io,2023-12-21:/a-simple-way-to-estimate-ddp-a-better-alternative-to-gdp.html</id><summary type="html">&lt;h3&gt;DDP vs GDP&lt;/h3&gt;
+&lt;p&gt;I have read an interesting &lt;a href="https://ergodicityeconomics.com/2020/02/26/democratic-domestic-product/"&gt;article&lt;/a&gt; about the Democratic Domestic Product (DDP)&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt;. There are many disputes and critiques regarding GDP, so I refer you to the details in this article. The main point is that GDP is not a good measure of individual well-being since its …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;DDP vs GDP&lt;/h3&gt;
+&lt;p&gt;I have read an interesting &lt;a href="https://ergodicityeconomics.com/2020/02/26/democratic-domestic-product/"&gt;article&lt;/a&gt; about the Democratic Domestic Product (DDP)&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt;. There are many disputes and critiques regarding GDP, so I refer you to the details in this article. The main point is that GDP is not a good measure of individual well-being since its growth is dominated by a few of the richest people, companies, and the government. While Elon Musk may not care about a few billion dollars in profit or loss when &lt;a href="https://www.reuters.com/technology/elon-musk-puts-20-bln-value-twitter-information-2023-03-26/"&gt;he acquired Twitter&lt;/a&gt;, my personal well-being dramatically declined when my $500 AirPods Pro were stolen before Thanksgiving.&lt;/p&gt;
+&lt;p&gt;The solution, as the article proposes, is quite simple -- taking the logarithm, which is almost an instinct for me as a data scientist. Since GDP per capita is simply the average of everyone's spending, why not use the &lt;a href="https://en.wikipedia.org/wiki/Geometric_mean"&gt;geometric mean&lt;/a&gt; instead? Let &lt;span class="math"&gt;\(x_i\)&lt;/span&gt; be the spending of an individual. GDP per capita is
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\text{GDP} = \frac{1}{n} \sum_{i=1}^n x_i,
+$$&lt;/div&gt;
+&lt;p&gt;
+while DDP is
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\text{DDP} = \exp \left( \frac{1}{n} \sum_{i=1}^n \log(x_i) \right).
+$$&lt;/div&gt;
+&lt;p&gt;
+The intuition is straightforward: the logarithm emphasizes the smaller numbers and suppresses the extremely large ones. So my AirPods Pro is about &lt;span class="math"&gt;\(\log(500) = 6.215\)&lt;/span&gt;, not that far from Elon Musk's 1 billion becomes &lt;span class="math"&gt;\(\log(10^6) = 20.723\)&lt;/span&gt;. Most importantly, the logarithm is a natural measure of &lt;a href="https://en.wikipedia.org/wiki/Utility"&gt;utility&lt;/a&gt;, which was pointed out by &lt;a href="https://en.wikipedia.org/wiki/St._Petersburg_paradox#Expected_utility_theory"&gt;Daniel Bernoulli more than 300 years ago&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Moreover, the logarithm converts multiplication into addition. So, the log improvement of DDP is also the average of an individual's utility improvement:
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\log \left( \frac{DDP_t}{DDP_{t-1}} \right) = \frac{1}{n} \sum_{i=1}^n \log \left( \frac{x_{i,t}}{x_{i,t-1}} \right).
+$$&lt;/div&gt;
+&lt;h3&gt;A Simplified Method for DDP Calculation: GPD per capita and Gini Index&lt;/h3&gt;
+&lt;p&gt;However, there are two major problems with DDP:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;It is not easy to compute. In &lt;a href="https://arxiv.org/abs/2009.10451"&gt;one paper&lt;/a&gt;, the authors used income quantiles to estimate the distribution of &lt;span class="math"&gt;\(x_i\)&lt;/span&gt; and approximate DDP.&lt;/li&gt;
+&lt;li&gt;Its relationship to GDP is not obvious. The authors of &lt;a href="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00918.x"&gt;the original paper&lt;/a&gt; used a geometric Brownian motion&lt;sup id="fnref:2"&gt;&lt;a class="footnote-ref" href="#fn:2"&gt;2&lt;/a&gt;&lt;/sup&gt; to model DDP growth, which, some may argue, is neither continuous nor stationary, and most of all, should be fat-tailed. To understand this, think about someone who just spent ten years' savings to purchase a house.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Here is a much easier way to compute DDP:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Assume individual GDP contribution follows the &lt;a href="https://en.wikipedia.org/wiki/Pareto_distribution"&gt;Pareto distribution&lt;/a&gt;: &lt;span class="math"&gt;\(X \sim \text{Pareto} (\alpha, x_m)\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;The Gini index of the Pareto distribution is simply:
+&lt;div class="math"&gt;$$
+\text{Gini} = \frac{1}{2\alpha - 1}
+$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;The average of the Pareto distribution corresponds to the GDP per capita:
+&lt;div class="math"&gt;$$
+\text{GDP per capita} = \frac{\alpha}{\alpha - 1} x_m
+$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;The DDP, or the geometric mean of the Pareto distribution:
+&lt;div class="math"&gt;$$
+\text{DDP} = x_m e^{\frac{1}{\alpha}}
+$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;Finally, putting everything together:
+&lt;div class="math"&gt;$$
+\text{DDP} = \text{GDP per capita} \times \left( \frac{1 - \text{Gini}}{1 + \text{Gini}} \right) \cdot e^{\frac{2\text{Gini}}{1 + \text{Gini}}}
+$$&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This formula is simple and clear: it can be viewed as GDP per capita adjusted by a function of the Gini index, which measures inequality. The Gini index adjustment is 1 in the case of full equality and 0 in the case of maximum inequality, as seen in the figure below.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="DDP vs Gini" src="/blog/2023/img/ddp_gini.png"&gt;&lt;/p&gt;
+&lt;p&gt;Both the Gini Index and GDP per capita data are available from &lt;a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD"&gt;The World Bank&lt;/a&gt;. Here are the historical values of DDP vs GDP for the USA:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="USA DDP vs GDP" src="/blog/2023/img/usa_ddp.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Final Thoughts&lt;/h3&gt;
+&lt;p&gt;Similar to GDP, there are numerous debates about the Gini index's effectiveness as a measure of inequality. The assumption of a Pareto distribution might be overly simplistic. A more nuanced approach could involve applying the generalized Pareto rule and extreme value theory to better fit the tails of wealth and spending distributions, thereby addressing inequality more accurately.&lt;/p&gt;
+&lt;p&gt;Ultimately, no single metric can completely encapsulate the complexity of economic activities. Overemphasis on optimizing a single metric can lead to disastrous outcomes. Take DDP as an example: it could be manipulated through a simplistic redistribution of wealth, which might create an illusion of economic growth without any real improvement in economic conditions.&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Thanks, Nathan, for sharing this on &lt;a href="https://x.com/FatTonysPodcast?s=20"&gt;Fat Tony&lt;/a&gt;'s Discord.&amp;#160;&lt;a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;Based on the geometric Brownian motion model, the gap between (log) GDP and (log) DDP is a linear function of time &lt;span class="math"&gt;\(\frac{\sigma^2}{2} t\)&lt;/span&gt;. In fact, any Lévy process with a finite and well-defined moment generating function has a linear growth rate over time, based on the &lt;a href="https://en.wikipedia.org/wiki/L%C3%A9vy_process#L%C3%A9vy%E2%80%93Khintchine_representation"&gt;Lévy–Khintchine representation&lt;/a&gt;:
+&lt;div class="math"&gt;$$
+\log E[e^{X_t}] = t \left( \mu  - \frac{\sigma^2}{2} + \int (e^{x} - 1 - x 1_{|x|&amp;lt;1}) \nu(dx) \right)
+$$&lt;/div&gt;
+where &lt;span class="math"&gt;\(\nu\)&lt;/span&gt; is the Lévy measure.&amp;#160;&lt;a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="Blog"/><category term="fat tails"/><category term="economics"/></entry><entry><title>Fat Tails, Survivorship Bias, and the Illusion of Exponential Growth</title><link href="https://xshi19.github.io/fat-tails-survivorship-bias-and-the-illusion-of-exponential-growth.html" rel="alternate"/><published>2023-12-07T10:20:00-05:00</published><updated>2023-12-07T10:20:00-05:00</updated><author><name>Xiang Shi</name></author><id>tag:xshi19.github.io,2023-12-07:/fat-tails-survivorship-bias-and-the-illusion-of-exponential-growth.html</id><summary type="html">&lt;p&gt;Nassim Taleb warns us of the dangers in misapplying linear statistical methods (e.g. regression, correlation) to compare a fat-tailed variable (e.g. wealth, income) to a thin-tailed one (e.g. IQ test scores) in his book "&lt;a href="https://arxiv.org/abs/2001.10488"&gt;Statistical Consequences of Fat Tails&lt;/a&gt;". The fat tails - where the extremes lie and …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Nassim Taleb warns us of the dangers in misapplying linear statistical methods (e.g. regression, correlation) to compare a fat-tailed variable (e.g. wealth, income) to a thin-tailed one (e.g. IQ test scores) in his book "&lt;a href="https://arxiv.org/abs/2001.10488"&gt;Statistical Consequences of Fat Tails&lt;/a&gt;". The fat tails - where the extremes lie and the outliers that shape our world reside - defy conventional analysis and prediction. While professionals in finance likes linear method and sometimes tends to pretend like financial crises are outliers that can be edited out in their risk models, a process known as "winsorization". In other realms, however, there is a tendency to focus too heavily on these extremes due to survivorship bias, creating a false narrative of non-linear, exponential success.&lt;/p&gt;
+&lt;p&gt;Consider the following scatter plot comparing people's wealth to their IQ scores. The wealth distribution, which follows a fat-tailed Pareto distribution, is contrasted with the IQ scores, which is normally distributed by design, as in the bell-shaped histograms under the scatter plot.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Unreal exponential growth curve based on survivorship bias. IQ-wealth data source: https://researchers.wls.wisc.edu/data/survey-data/" src="/blog/2023/img/fat_tails_survivorship_bias_01.png"&gt;&lt;/p&gt;
+&lt;p&gt;Survivorship bias shines a light on the top achievers—the red dots indicating the wealthiest 1% within each IQ category — skewing the perceived growth curve sharply upward. This contrasts with the more gradual blue curve, representing all the data points.&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;While overemphasizing the negative tail (e.g. financial risk) can be beneficial, emphasizing the success stories, the "positive tail", can skew our perceptions. For instance, if we substitute IQ with the number of personal development strategies adopted from bestselling books, the principle holds. These strategies, such as early rising, voracious reading habits or rigorous self-discipline, gleaned from studying the ultra-successful, may not translate to wealth for the average person. Yet, we're often told that persistence and patience will lead to a compound growth payoff: slow in the beginning, then skyrockets to capture the top outliers and neglects the "ordinary" data points.&lt;/p&gt;
+&lt;p&gt;The concept of compound growth is widely endorsed, even from OpenAI's CEO Sam Altman:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Compounding is magic. Look for it everywhere. Exponential curves are the key to wealth generation.
+A medium-sized business that grows 50% in value every year becomes huge in a very short amount of time. Few businesses in the world have true network effects and extreme scalability. But with technology, more and more will. It's worth a lot of effort to find them and create them.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You may find similar figures in many places, including &lt;a href="https://jamesclear.com/"&gt;one of my favorite book&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src="/blog/2023/img/fat_tails_survivorship_bias_02.jpg" alt="drawing" width="500"/&gt;&lt;/p&gt;
+&lt;p&gt;This pattern is observable across different life choices, from investing to career paths. A foundational knowledge of finance and initial investments can yield more than inaction. However, a deep dive into the complexities of financial news, technical stock analysis, and day trading with options doesn't universally increase success chances, regardless of the few who succeed.&lt;/p&gt;
+&lt;p&gt;In career terms, "leveraged" positions, like those of authors, YouTubers, or tech startup entrepreneurs, are sold on the premise of high potential. Yet, these fields are often winner-take-all arenas, leading to a highly fat-tailed income distribution (80–20 Pareto distribution or even more extreme) with more obscured failures than visible successes. Starting these careers as a side hustle can be a window to their potential, but fully committing (getting further on the x-axis) doesn't guarantee the high rewards often promised.&lt;/p&gt;
+&lt;p&gt;Rob Copeland's recent book "&lt;a href="https://www.amazon.com/Fund-Bridgewater-Associates-Unraveling-Street/dp/1250276934"&gt;The Fund: Ray Dalio, Bridgewater Associates, and the Unraveling of a Wall Street Legend&lt;/a&gt;" mentioned Ray Dalio's attempt to use personality tests to predict success at Bridgewater Associates. The tests reveal a curious pattern: many employees share similar traits with Dalio himself, a typical outcome of using thin-tailed variables to forecast fat-tailed ones. The "solution" was to craft an ever-growing list of principles, a set of rules to live and work by. Yet even with over 200 principles in play did not translate into exponential performance gains, i.e. as successful as Dailo himself.&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Both curves are exponential curves fitted by OLS: &lt;span class="math"&gt;\(\log(y) = \alpha + \beta x\)&lt;/span&gt;.&amp;#160;&lt;a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="Blog"/><category term="fat tails"/><category term="survivorship bias"/><category term="personal development"/></entry></feed>

@@ -239,35 +239,3 @@ figure.floatcenter, .align-center {
 .gap-left {
   margin-left: 10px;
 }
-
-.spoiler {
-    background-color: black;
-    color: black;
-    transition: color 0.3s ease-in-out;
-}
-
-.spoiler:hover,
-.spoiler:focus,
-.spoiler:active {
-    color: inherit;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-th {
-    background-color: #f2f2f2;
-    color: black;
-}
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-tr:hover {
-    background-color: #f1f1f1;
-}

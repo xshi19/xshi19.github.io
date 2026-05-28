@@ -1,0 +1,22 @@
+:root {
+  --pst-color-primary: #1b365d;
+  --pst-color-link: #1b365d;
+  --pst-color-link-hover: #7a2e2e;
+}
+
+body {
+  background: #f5f4ed;
+}
+
+.bd-main .bd-content .bd-article-container {
+  max-width: 920px;
+}
+
+dl.py {
+  border-left: 3px solid #d8d2c2;
+  padding-left: 1rem;
+}
+
+.sig-name {
+  color: #1b365d;
+}

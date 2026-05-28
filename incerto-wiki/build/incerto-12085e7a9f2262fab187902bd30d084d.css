@@ -1,0 +1,603 @@
+/*
+  incerto.css - Kami-derived theme overrides for Incerto Wiki.
+  See docs/design/VISUAL_STYLE.md for the design contract.
+*/
+
+:root {
+  --incerto-page: #f5f4ed;
+  --incerto-surface: #faf9f5;
+  --incerto-sand: #e8e6dc;
+  --incerto-ink: #141413;
+  --incerto-muted: #6b6a64;
+  --incerto-accent: #1b365d;
+  --incerto-accent-light: #2d5a8a;
+  --incerto-rule: #d8d4c8;
+  --incerto-green: #28724f;
+  --incerto-umber: #8f5a2a;
+  --incerto-brick: #9b3a34;
+  --incerto-violet: #6d597a;
+  --incerto-teal: #2f6f73;
+  --incerto-gold: #a98324;
+  --incerto-code-surface: #f0eee6;
+  --incerto-link-visited: #4b506f;
+  --incerto-measure: 74ch;
+}
+
+html.dark {
+  --incerto-page: #1b1a17;
+  --incerto-surface: #24221e;
+  --incerto-sand: #343028;
+  --incerto-ink: #f3efe4;
+  --incerto-muted: #b8afa0;
+  --incerto-accent: #9eb6d8;
+  --incerto-accent-light: #c2d1e7;
+  --incerto-rule: #4a453b;
+  --incerto-code-surface: #2d2a24;
+  --incerto-link-visited: #c3b6d7;
+}
+
+html,
+body {
+  background: var(--incerto-page) !important;
+  color: var(--incerto-ink) !important;
+}
+
+html {
+  scroll-padding-top: 76px;
+}
+
+body {
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.58;
+  letter-spacing: normal;
+}
+
+a,
+.link {
+  color: var(--incerto-accent);
+  text-decoration-color: rgba(27, 54, 93, 0.35);
+  text-underline-offset: 0.18em;
+}
+
+html.dark a,
+html.dark .link {
+  text-decoration-color: rgba(158, 182, 216, 0.45);
+}
+
+a:hover,
+.link:hover {
+  color: var(--incerto-accent-light) !important;
+  text-decoration-color: currentColor;
+}
+
+a:visited {
+  color: var(--incerto-link-visited);
+}
+
+code,
+pre,
+kbd,
+samp,
+.myst-code,
+.myst-code code,
+.jupyter-output,
+.myst-jp-stream-output {
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace !important;
+}
+
+/* Top chrome */
+.myst-top-nav {
+  background: rgba(245, 244, 237, 0.94) !important;
+  border-bottom: 1px solid var(--incerto-rule);
+  box-shadow: none !important;
+  backdrop-filter: blur(12px);
+}
+
+html.dark .myst-top-nav {
+  background: rgba(27, 26, 23, 0.94) !important;
+}
+
+.myst-home-link,
+.myst-home-link span {
+  color: var(--incerto-ink) !important;
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: normal !important;
+}
+
+.myst-search-bar {
+  background: var(--incerto-surface) !important;
+  border: 1px solid var(--incerto-rule) !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  color: var(--incerto-muted) !important;
+}
+
+.myst-search-bar:hover,
+.myst-search-bar:focus-visible {
+  border-color: var(--incerto-accent) !important;
+  box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.12) !important;
+}
+
+.myst-search-text-placeholder,
+.myst-search-shortcut,
+.myst-search-shortcut kbd {
+  color: var(--incerto-muted) !important;
+}
+
+.myst-search-shortcut kbd,
+kbd {
+  background: var(--incerto-code-surface) !important;
+  border: 1px solid var(--incerto-rule) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+.myst-theme-button {
+  background: var(--incerto-surface) !important;
+  border: 1px solid var(--incerto-rule) !important;
+  color: var(--incerto-muted) !important;
+  box-shadow: none !important;
+}
+
+.myst-theme-button:hover {
+  background: var(--incerto-sand) !important;
+  color: var(--incerto-accent) !important;
+}
+
+/* Side navigation */
+.myst-primary-sidebar-pointer {
+  background: var(--incerto-page);
+  border-right: 1px solid var(--incerto-rule);
+}
+
+.myst-primary-sidebar-nav {
+  scrollbar-color: var(--incerto-rule) transparent;
+}
+
+.myst-toc,
+.myst-toc a,
+.myst-toc-item {
+  color: var(--incerto-muted) !important;
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Georgia, serif;
+  letter-spacing: normal;
+}
+
+.myst-toc-item {
+  border-radius: 6px !important;
+}
+
+.myst-toc-item:hover {
+  background: rgba(27, 54, 93, 0.07) !important;
+  color: var(--incerto-accent) !important;
+}
+
+html.dark .myst-toc-item:hover {
+  background: rgba(158, 182, 216, 0.12) !important;
+}
+
+.myst-toc-item-exact {
+  background: rgba(27, 54, 93, 0.1) !important;
+  border-left: 2px solid var(--incerto-accent);
+}
+
+html.dark .myst-toc-item-exact {
+  background: rgba(158, 182, 216, 0.15) !important;
+}
+
+.myst-toc-item-exact a,
+.myst-toc a.active,
+.myst-toc [aria-current="page"] {
+  color: var(--incerto-accent) !important;
+  font-weight: 600 !important;
+}
+
+.myst-made-with-myst {
+  color: var(--incerto-muted) !important;
+}
+
+/* Main reading surface */
+main.article-grid,
+article.content {
+  background: var(--incerto-page);
+}
+
+article.content {
+  color: var(--incerto-ink);
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Georgia, serif;
+}
+
+article.content p,
+article.content li {
+  max-width: var(--incerto-measure);
+}
+
+article.content h1,
+article.content h2,
+article.content h3,
+article.content h4,
+article.content h5,
+article.content h6,
+.myst-fm-block-title,
+.myst-bibliography-header {
+  color: var(--incerto-ink) !important;
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Georgia, serif;
+  font-weight: 500 !important;
+  letter-spacing: normal !important;
+}
+
+.myst-fm-block-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.08;
+}
+
+article.content h2 {
+  margin-top: 2.2rem;
+  padding-top: 0.2rem;
+  border-top: 1px solid var(--incerto-rule);
+}
+
+article.content h3 {
+  margin-top: 1.7rem;
+}
+
+article.content blockquote {
+  max-width: var(--incerto-measure);
+  margin: 1.4rem 0;
+  padding: 0.1rem 0 0.1rem 1rem;
+  color: var(--incerto-muted);
+  border-left: 3px solid var(--incerto-accent);
+  background: transparent;
+}
+
+article.content hr {
+  border: 0;
+  border-top: 1px solid var(--incerto-rule);
+  margin: 2rem 0;
+}
+
+.heading-text + a,
+article.content h1 a,
+article.content h2 a,
+article.content h3 a {
+  color: var(--incerto-muted) !important;
+}
+
+/* Right table of contents */
+.col-margin-right nav {
+  color: var(--incerto-muted);
+  font-size: 0.9rem;
+}
+
+.col-margin-right nav a {
+  color: var(--incerto-muted);
+  text-decoration: none;
+}
+
+.col-margin-right nav a:hover,
+.col-margin-right nav a[aria-current="true"] {
+  color: var(--incerto-accent) !important;
+}
+
+/* Tables and dataframe-like output */
+article.content table {
+  width: 100%;
+  max-width: 100%;
+  margin: 1.25rem 0 1.6rem;
+  border-collapse: collapse;
+  color: var(--incerto-ink);
+  font-size: 0.94em;
+  font-variant-numeric: tabular-nums;
+}
+
+article.content th,
+article.content td {
+  padding: 0.45rem 0.6rem;
+  vertical-align: top;
+  border: 0;
+  border-bottom: 1px solid var(--incerto-rule);
+}
+
+article.content th {
+  background: var(--incerto-surface);
+  color: var(--incerto-ink);
+  font-weight: 600;
+  border-bottom: 1.5px solid var(--incerto-rule);
+}
+
+article.content td {
+  background: transparent;
+}
+
+article.content tbody tr:hover td {
+  background: rgba(232, 230, 220, 0.45);
+}
+
+html.dark article.content tbody tr:hover td {
+  background: rgba(52, 48, 40, 0.65);
+}
+
+@media (max-width: 720px) {
+  article.content table {
+    max-width: calc(100vw - 1.5rem);
+    display: block;
+    overflow-x: auto;
+    contain: layout paint;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+}
+
+/* Code cells, code blocks, and outputs */
+article.content :not(pre) > code {
+  padding: 0.08em 0.28em;
+  color: var(--incerto-ink);
+  background: var(--incerto-code-surface);
+  border: 1px solid var(--incerto-rule);
+  border-radius: 4px;
+}
+
+.myst-code,
+article.content pre,
+.jupyter-output,
+div[data-name="safe-output-stream"] pre {
+  background: var(--incerto-code-surface) !important;
+  border: 1px solid var(--incerto-rule) !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  color: var(--incerto-ink) !important;
+}
+
+.myst-code {
+  border-left: 3px solid var(--incerto-accent) !important;
+}
+
+.myst-code-body,
+.myst-code-body pre,
+.myst-code-body code {
+  background: transparent !important;
+}
+
+.myst-code-copy-icon {
+  color: var(--incerto-muted) !important;
+}
+
+.myst-code-copy-icon:hover,
+.myst-code-copy-icon:focus {
+  color: var(--incerto-accent) !important;
+}
+
+div[data-name="outputs-container"] {
+  margin-top: -0.4rem;
+}
+
+div[data-name="safe-output-image"] img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  background: var(--incerto-surface);
+  border: 1px solid var(--incerto-rule);
+  border-radius: 6px;
+}
+
+div[data-name="safe-output-stream"] pre,
+.jupyter-output {
+  padding: 0.7rem 0.85rem !important;
+  color: var(--incerto-muted) !important;
+}
+
+/* Proof-like blocks and admonitions */
+article.content .admonition,
+article.content .proof,
+article.content .definition,
+article.content .theorem,
+article.content .lemma,
+article.content .corollary {
+  max-width: var(--incerto-measure);
+  margin: 1.4rem 0;
+  padding: 0.8rem 1rem;
+  background: var(--incerto-surface);
+  border: 1px solid var(--incerto-rule);
+  border-left: 3px solid var(--incerto-accent);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+article.content .warning,
+article.content .caution,
+article.content .danger {
+  border-left-color: var(--incerto-brick);
+}
+
+article.content .note,
+article.content .tip,
+article.content .important {
+  border-left-color: var(--incerto-green);
+}
+
+/* Widgets and embedded explainers */
+.incerto-widget {
+  max-width: var(--incerto-measure);
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--incerto-surface);
+  border: 1px solid var(--incerto-rule);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.incerto-widget label,
+.incerto-widget .widget-label {
+  color: var(--incerto-muted);
+  font-size: 0.92rem;
+}
+
+.incerto-widget input,
+.incerto-widget select,
+.incerto-widget button {
+  min-height: 36px;
+  border: 1px solid var(--incerto-rule);
+  border-radius: 6px;
+  background: var(--incerto-surface);
+  color: var(--incerto-ink);
+}
+
+.incerto-widget button {
+  padding: 0 0.75rem;
+}
+
+.incerto-widget button:hover,
+.incerto-widget button:focus-visible {
+  border-color: var(--incerto-accent);
+  color: var(--incerto-accent);
+}
+
+.lln-preasymptotic-frame iframe,
+iframe.lln-preasymptotic-frame,
+.hill-estimator-frame iframe,
+iframe.hill-estimator-frame {
+  width: 100%;
+  min-height: 660px;
+  border: 1px solid var(--incerto-rule);
+  border-radius: 6px;
+  background: var(--incerto-surface);
+}
+
+.incerto-plot-grid line {
+  stroke: var(--incerto-sand);
+  stroke-width: 1;
+}
+
+.incerto-plot-axis {
+  stroke: var(--incerto-muted);
+  stroke-width: 1.2;
+}
+
+.incerto-plot-line {
+  fill: none;
+  stroke: var(--incerto-green);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.incerto-plot-label {
+  fill: var(--incerto-muted);
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+}
+
+/* Bibliography and previous/next cards */
+.myst-bibliography-list {
+  color: var(--incerto-muted) !important;
+  font-size: 0.85rem !important;
+}
+
+.myst-footer-link {
+  background: var(--incerto-surface) !important;
+  border: 1px solid var(--incerto-rule) !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  color: var(--incerto-muted) !important;
+}
+
+.myst-footer-link:hover {
+  border-color: var(--incerto-accent) !important;
+  color: var(--incerto-accent) !important;
+  box-shadow: none !important;
+}
+
+.myst-footer-link-group {
+  color: var(--incerto-muted) !important;
+}
+
+/* Print path */
+@media print {
+  :root,
+  html.dark {
+    --incerto-page: #ffffff;
+    --incerto-surface: #ffffff;
+    --incerto-code-surface: #f7f7f4;
+    --incerto-ink: #000000;
+    --incerto-muted: #55524d;
+    --incerto-rule: #c8c4b8;
+    --incerto-accent: #1b365d;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+  }
+
+  .myst-top-nav,
+  .myst-primary-sidebar,
+  .myst-fm-block-header,
+  .myst-footer-links,
+  .myst-code-copy-icon,
+  .myst-jp-nb-block-spinner,
+  .myst-jp-nb-block > .sticky,
+  .myst-made-with-myst,
+  .incerto-widget input,
+  .incerto-widget select,
+  .incerto-widget button {
+    display: none !important;
+  }
+
+  main.article-grid,
+  article.content {
+    display: block !important;
+    background: #ffffff !important;
+  }
+
+  article.content p,
+  article.content li,
+  article.content blockquote,
+  article.content .admonition,
+  article.content .proof,
+  article.content .definition,
+  article.content .theorem,
+  article.content .lemma,
+  article.content .corollary {
+    max-width: none;
+  }
+
+  article.content h2 {
+    break-after: avoid;
+  }
+
+  article.content table,
+  article.content pre,
+  .myst-code,
+  .jupyter-output,
+  div[data-name="safe-output-image"],
+  div[data-name="safe-output-image"] img,
+  article.content .admonition,
+  article.content .proof,
+  article.content .definition,
+  article.content .theorem,
+  article.content .lemma,
+  article.content .corollary,
+  .incerto-widget {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  article.content a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    color: var(--incerto-muted);
+    font-size: 0.88em;
+  }
+
+  article.content table {
+    display: table;
+    white-space: normal;
+  }
+
+  div[data-name="safe-output-image"] img {
+    border-color: #b8b4aa;
+  }
+}

@@ -1,0 +1,182 @@
+---
+kernelspec:
+  name: python3
+  display_name: Python 3
+---
+
+# Normal Variance Mixture
+
+## Statement
+
+A normal variance mixture is a random variable of the form
+
+$$
+X=\sqrt{V}\,Z,
+$$
+
+where $Z\sim N(0,1)$ and $V>0$ is an independent random scale or variance
+factor.  Conditional on $V=v$, the distribution is normal with variance $v$.
+
+The simple mixture used in the Chapter 4 notebook takes
+
+$$
+V_a=
+\begin{cases}
+1-a, & \text{with probability }1/2,\\
+1+a, & \text{with probability }1/2,
+\end{cases}
+\qquad 0\le a<1.
+$$
+
+Its density is
+
+$$
+f_a(x)
+=
+\frac12\phi_{\sqrt{1-a}}(x)
++
+\frac12\phi_{\sqrt{1+a}}(x),
+$$
+
+where $\phi_\sigma$ is the density of $N(0,\sigma^2)$.  This distribution has
+
+$$
+\mathbb E[X]=0,\qquad \operatorname{Var}(X)=1,
+$$
+
+but its fourth moment is
+
+$$
+\mathbb E[X^4]=3(1+a^2).
+$$
+
+Thus the excess kurtosis is $3a^2$ even though the variance is held fixed.
+
+## Intuition
+
+Mixing variances is the smallest way to leave the single-Gaussian world without
+leaving normal conditional behavior.  Most observations may come from ordinary
+scales, but some come from a wider Gaussian component.  The combined
+distribution keeps the same center and variance while putting more mass near
+the center and in the shoulders.
+
+This is a mild fat-tail mechanism.  It can make Gaussian diagnostics look too
+optimistic, but it is not a Pareto or regularly varying tail.  The far tail is
+eventually controlled by the largest Gaussian variance in the mixture.
+
+## Proof
+
+The density formula follows from conditioning on $V_a$:
+
+$$
+f_a(x)
+=
+\mathbb E[f_{X\mid V_a}(x\mid V_a)]
+=
+\frac12\phi_{\sqrt{1-a}}(x)
++
+\frac12\phi_{\sqrt{1+a}}(x).
+$$
+
+Because $Z$ has mean zero and is independent of $V_a$,
+
+$$
+\mathbb E[X]=\mathbb E[\sqrt{V_a}]\,\mathbb E[Z]=0.
+$$
+
+The variance is
+
+$$
+\operatorname{Var}(X)
+=
+\mathbb E[V_a Z^2]
+=
+\mathbb E[V_a]\mathbb E[Z^2]
+=
+\frac{(1-a)+(1+a)}2
+=1.
+$$
+
+For the fourth moment, use $\mathbb E[Z^4]=3$:
+
+$$
+\mathbb E[X^4]
+=
+\mathbb E[V_a^2]\mathbb E[Z^4]
+=
+3\frac{(1-a)^2+(1+a)^2}{2}
+=3(1+a^2).
+$$
+
+Finally, for fixed $a>0$, the component with variance $1+a$ dominates the
+absolute far tail.  Relative to the standard normal density $\phi_1$,
+
+$$
+\frac{f_a(x)}{\phi_1(x)}
+\sim
+\frac{1}{2\sqrt{1+a}}
+\exp\left(\frac{a x^2}{2(1+a)}\right)
+$$
+
+as $|x|\to\infty$.  The ratio diverges, but the density still decays like
+$\exp[-x^2/(2(1+a))]$ up to a constant factor, so it is lighter than a
+power-law tail.
+
+## Python
+
+The implementation lives in `incerto.distributions.simple_normal_mixture`.
+
+```{code-cell} python
+:label: normal-mixture-python-check
+
+import numpy as np
+from scipy.stats import norm
+
+from incerto.distributions import simple_normal_mixture
+
+a = 0.8
+x = np.array([0.0, 2.0, 4.0, 6.0])
+
+mixture_pdf = simple_normal_mixture.pdf(x, a)
+normal_pdf = norm.pdf(x)
+density_ratio = np.round(mixture_pdf / normal_pdf, 3)
+mean = float(simple_normal_mixture.mean(a))
+variance = float(simple_normal_mixture.var(a))
+fourth_moment = 3 * (1 + a**2)
+
+print(f"Density ratio f_a(x)/phi(x) at x={x.tolist()}: {density_ratio}")
+print(f"Mean: {mean:.1f}")
+print(f"Variance: {variance:.1f}")
+print(f"Fourth moment: {fourth_moment:.3f}")
+```
+
+The density ratio is not monotone near the center, but it grows rapidly in the
+far tail.  The mean and variance remain fixed while the fourth moment rises
+with the variance-mixing parameter.
+
+## Caveats
+
+- A finite normal mixture has light tails in the strict asymptotic sense.  It is
+  heavier than a reference Gaussian, not regularly varying.
+- The simple two-component mixture requires $0\le a<1$.  At $a=1$, one
+  component degenerates at zero and the ordinary density description changes.
+- High kurtosis in a normal mixture can come from variance heterogeneity rather
+  than from a Pareto tail.  Do not infer a power law from kurtosis alone.
+- Real stochastic-volatility models usually use a continuous mixing
+  distribution and dependence across time.  This page isolates the iid one-step
+  distribution.
+
+## References
+
+- Barndorff-Nielsen, Kent, and Sorensen, "Normal Variance-Mean Mixtures and
+  z Distributions" [@barndorff1982normal].
+- Taleb, *Statistical Consequences of Fat Tails*, Chapter 4
+  [@taleb2020scoft].
+
+## Backlinks
+
+- Depends on: the canonical density and moment notation in
+  [Notation](../../notation/index.md).
+- Used by: [Variance Gamma Distribution](variance-gamma.md),
+  [Body, Shoulders, and Tails](../methods/body-shoulder-tail.md), and the
+  planned Chapter 4 reading guide.

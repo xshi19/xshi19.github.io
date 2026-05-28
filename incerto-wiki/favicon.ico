@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Incerto Wiki">
+  <rect width="64" height="64" rx="12" fill="#F5F4ED"/>
+  <path d="M14 42c10-1 13-20 23-20 5 0 8 5 13 5" fill="none" stroke="#1B365D" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="48" cy="27" r="4" fill="#7A3E1D"/>
+  <path d="M16 48h32" stroke="#5F584D" stroke-width="4" stroke-linecap="round"/>
+</svg>

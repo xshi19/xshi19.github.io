@@ -1,0 +1,142 @@
+---
+kernelspec:
+  name: python3
+  display_name: Python 3
+---
+
+# Pre-Asymptotic LLN Behavior
+
+## Statement
+
+This example plots the running mean
+
+$$
+\bar X_n=\frac{S_n}{n}
+$$
+
+for iid Pareto Type I samples with $x_m=1$.  The plot uses log-spaced
+checkpoints up to $10^6$ draws so that early instability and late record shocks
+can be seen on the same scale.
+
+The target contrast is:
+
+- if $\alpha\le1$, [LLN Failure Under Infinite Mean](../theorems/lln-failure.md)
+  says $\bar X_n\to\infty$ almost surely;
+- if $\alpha>1$, the finite-mean law of large numbers says
+  $\bar X_n\to\alpha/(\alpha-1)$, but convergence can still be slow when
+  $\alpha$ is close to 1.
+
+## Intuition
+
+The hard part is not that a heavy-tailed running mean is noisy.  The hard part
+is that the noise does not live on a stable scale.  One large observation can
+move the average after thousands or millions of previous observations, and the
+sample path can look calmer right before the next record arrives.
+
+Compare the infinite-mean region near $\alpha=1$ with the finite-mean region
+just above it.  The plot is not a proof; it is a finite-sample view of why the
+theorem is practically easy to underestimate.
+
+## Proof
+
+The simulation uses the inverse-transform representation of a Pareto Type I
+sample:
+
+$$
+X=(1-U)^{-1/\alpha},\qquad U\sim \operatorname{Uniform}(0,1).
+$$
+
+For each selected $\alpha$, it generates one iid path, computes $S_n/n$ at
+log-spaced checkpoints, and plots the result on log-log axes.  The infinite
+mean claim itself is proved in
+[LLN Failure Under Infinite Mean](../theorems/lln-failure.md); this page is an
+empirical illustration of the finite-sample path.
+
+## Python
+
+The code uses the reusable `running_mean` and `max_to_sum_ratio` helpers from
+`incerto.estimators`.
+
+```{code-cell} python
+:label: lln-preasymptotic-python-check
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+from incerto.distributions import pareto_type1
+from incerto.estimators import max_to_sum_ratio, running_mean
+
+n = 1_000_000
+checkpoints = np.unique(np.geomspace(10, n, 90).astype(int))
+
+fig, ax = plt.subplots(figsize=(7, 4))
+
+for alpha, seed, color in [
+    (0.8, 20260523, "#a34d2d"),
+    (1.3, 20260525, "#28724f"),
+]:
+    rng = np.random.default_rng(seed)
+    sample = pareto_type1.rvs(alpha, size=n, random_state=rng)
+    means = running_mean(sample)
+
+    ax.loglog(
+        checkpoints,
+        means[checkpoints - 1],
+        color=color,
+        lw=2,
+        label=f"alpha={alpha}",
+    )
+
+    final_mean = float(means[-1])
+    max_share = float(max_to_sum_ratio(sample))
+    print(f"Pareto alpha={alpha}:")
+    print(f"  final running mean after {n:,} draws: {final_mean:.3f}")
+    print(f"  largest observation's share of total: {max_share:.3f}")
+
+    if alpha > 1:
+        print(f"  finite theoretical mean: {alpha / (alpha - 1):.3f}")
+        ax.axhline(
+            alpha / (alpha - 1),
+            color=color,
+            ls="--",
+            lw=1.2,
+            alpha=0.8,
+        )
+    else:
+        print("  finite theoretical mean: none")
+
+ax.set_xlabel("sample size n")
+ax.set_ylabel("running mean")
+ax.set_title("Pre-asymptotic running means")
+ax.legend()
+plt.show()
+```
+
+For $\alpha=0.8$, no finite theoretical mean exists.  For $\alpha=1.3$, the
+finite mean exists, but large observations still create visible pre-asymptotic
+jumps.
+
+## Caveats
+
+- One simulated path is not a proof and not an estimator of $\alpha$.
+- The plot uses log axes.  This makes early and late behavior comparable, but
+  it also visually compresses large jumps.
+- A path with $\alpha>1$ can look worse than a path with $\alpha\le1$ over a
+  finite window if it happens to receive an unusually large early draw.
+- Real data adds threshold choice, dependence, measurement limits, and model
+  uncertainty.  The example isolates only the iid Pareto mechanism.
+
+## References
+
+- Taleb, *Statistical Consequences of Fat Tails*, Chapter 4
+  [@taleb2020scoft].
+- Feller, *An Introduction to Probability Theory and Its Applications, Vol. II*
+  [@feller1971introduction].
+- Resnick, *Heavy-Tail Phenomena* [@resnick2007heavy].
+
+## Backlinks
+
+- Depends on: [Pareto Distribution](../distributions/pareto.md) and
+  [LLN Failure Under Infinite Mean](../theorems/lln-failure.md).
+- Used by: [Max-to-Sum Ratio](../methods/max-to-sum-ratio.md) and future
+  finite-sample tail-risk examples.

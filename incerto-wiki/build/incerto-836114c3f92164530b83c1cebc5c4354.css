@@ -1,0 +1,99 @@
+:root {
+  --incerto-page: #f5f4ed;
+  --incerto-surface: #faf9f5;
+  --incerto-sand: #e8e6dc;
+  --incerto-ink: #141413;
+  --incerto-muted: #6b6a64;
+  --incerto-accent: #1b365d;
+  --incerto-accent-light: #2d5a8a;
+  --incerto-rule: #d8d4c8;
+  --incerto-good: #28724f;
+}
+
+html,
+body {
+  background: var(--incerto-page);
+  color: var(--incerto-ink);
+}
+
+body {
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Georgia, serif;
+  line-height: 1.58;
+}
+
+a {
+  color: var(--incerto-accent);
+}
+
+a:hover {
+  color: var(--incerto-accent-light);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-color: var(--incerto-rule);
+}
+
+.incerto-widget {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--incerto-surface);
+  border: 1px solid var(--incerto-rule);
+  border-radius: 8px;
+}
+
+.lln-preasymptotic-frame iframe,
+iframe.lln-preasymptotic-frame {
+  width: 100%;
+  min-height: 650px;
+  border: 0;
+}
+
+.hill-estimator-frame iframe,
+iframe.hill-estimator-frame {
+  width: 100%;
+  min-height: 660px;
+  border: 0;
+}
+
+.incerto-plot-grid line {
+  stroke: var(--incerto-sand);
+  stroke-width: 1;
+}
+
+.incerto-plot-axis {
+  stroke: var(--incerto-muted);
+  stroke-width: 1.2;
+}
+
+.incerto-plot-line {
+  fill: none;
+  stroke: var(--incerto-good);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.incerto-plot-label {
+  fill: var(--incerto-muted);
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+}
+
+@media print {
+  .incerto-widget {
+    break-inside: avoid;
+    background: #ffffff;
+  }
+}

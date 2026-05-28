@@ -1,0 +1,9 @@
+# Chapter 5\n\n_Reading guide stub — links concept atoms once pages are written._
+
+<!-- incerto-provenance:start -->
+:::{div}
+:class: incerto-provenance
+
+**Provenance.** Source: `content/reading-guides/taleb-scoft/ch5.md`. Last verified: 2026-05-24. Checked against cited sources and current concept links.
+:::
+<!-- incerto-provenance:end -->

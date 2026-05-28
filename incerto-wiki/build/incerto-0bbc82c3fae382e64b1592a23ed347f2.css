@@ -1,0 +1,30 @@
+/*
+  incerto.css — Kami-derived theme overrides for Jupyter Book v2
+  Design tokens: https://kami.tw93.fun
+  ---------------------------------------------------------------
+  Stub — to be implemented. Key rules to apply:
+
+  Canvas:
+    --color-page-bg:   #F5F4ED;   /* parchment */
+    --color-surface:   #FAF9F5;   /* ivory — cards, elevated */
+    --color-sand:      #E8E6DC;   /* warm sand — interactive */
+
+  Brand:
+    --color-accent:    #1B365D;   /* ink blue — CTA, quote bar, overline */
+    --color-accent-lt: #2D5A8A;   /* links on dark */
+
+  Neutrals (all warm, R≈G>B):
+    --color-near-black: #141413;
+    --color-dark-warm:  #3D3D3A;
+    --color-olive:      #504E49;
+    --color-stone:      #6B6A64;
+
+  Typography:
+    Body:     Charter (serif), 400, 10pt, lh 1.55
+    Headings: Charter (serif), 500, size-led
+    Code:     JetBrains Mono
+    No synthetic bold (max weight 500)
+
+  Shadows: ring (0 0 0 1pt) or whisper (0 4pt 24pt rgba(0,0,0,0.05)) only.
+  No hard drop shadows.
+*/

@@ -1,0 +1,166 @@
+# Pareto Distribution
+
+## Statement
+
+Let $X$ be a positive random variable with lower cutoff $x_m>0$ and tail
+exponent $\alpha>0$.  The Pareto Type I distribution is defined by the survival
+function
+
+$$
+\bar F(x) = \mathbb P(X>x) =
+\begin{cases}
+1, & 0 \le x < x_m,\\
+\left(\frac{x_m}{x}\right)^\alpha, & x \ge x_m.
+\end{cases}
+$$
+
+For $x \ge x_m$, the CDF, density, and quantile function are
+
+$$
+F(x)=1-\left(\frac{x_m}{x}\right)^\alpha,\qquad
+f(x)=\alpha x_m^\alpha x^{-(\alpha+1)},\qquad
+Q(p)=x_m(1-p)^{-1/\alpha}.
+$$
+
+The raw moment of order $p>0$ is finite exactly when $p<\alpha$:
+
+$$
+\mathbb E[X^p]=\frac{\alpha x_m^p}{\alpha-p},\qquad p<\alpha.
+$$
+
+For $p\ge\alpha$, the moment is infinite.  In particular, the mean exists only
+for $\alpha>1$, and the variance exists only for $\alpha>2$.
+
+## Intuition
+
+The Pareto tail has no characteristic scale.  Multiplying the threshold by a
+fixed factor changes the exceedance probability by a fixed power:
+
+$$
+\frac{\bar F(tx)}{\bar F(x)}=t^{-\alpha},\qquad t>0.
+$$
+
+This is why the exponent $\alpha$ is the central knob.  Smaller $\alpha$ means
+that threshold doublings are punished less severely, so rare observations remain
+large enough to dominate sums, moments, and empirical estimates.
+
+<div class="incerto-widget pareto-alpha-widget" data-incerto-widget="pareto-alpha">
+  <div class="pareto-alpha-controls">
+    <div class="pareto-alpha-control-row">
+      <label for="pareto-alpha">alpha</label>
+      <output data-pareto-alpha-value for="pareto-alpha">1.50</output>
+      <input id="pareto-alpha" data-pareto-alpha type="range" min="0.60" max="5.00" step="0.01" value="1.50">
+    </div>
+  </div>
+  <div class="pareto-alpha-stats" aria-live="polite">
+    <div class="pareto-alpha-stat">
+      <strong>Mean</strong>
+      <span data-pareto-mean></span>
+    </div>
+    <div class="pareto-alpha-stat">
+      <strong>Variance</strong>
+      <span data-pareto-variance></span>
+    </div>
+    <div class="pareto-alpha-stat">
+      <strong>99% quantile</strong>
+      <span data-pareto-top-one></span>
+    </div>
+  </div>
+  <div class="pareto-alpha-plots">
+    <figure class="pareto-alpha-plot">
+      <svg data-pareto-plot="density"></svg>
+      <figcaption>Density</figcaption>
+    </figure>
+    <figure class="pareto-alpha-plot">
+      <svg data-pareto-plot="survival"></svg>
+      <figcaption>Survival</figcaption>
+    </figure>
+    <figure class="pareto-alpha-plot">
+      <svg data-pareto-plot="quantile"></svg>
+      <figcaption>Quantile</figcaption>
+    </figure>
+  </div>
+</div>
+
+<script src="../../../assets/js/interactive.js"></script>
+
+## Proof
+
+For $x\ge x_m$, differentiating the CDF gives the density:
+
+$$
+\frac{d}{dx}\left(1-x_m^\alpha x^{-\alpha}\right)
+=\alpha x_m^\alpha x^{-(\alpha+1)}.
+$$
+
+For $p>0$,
+
+$$
+\mathbb E[X^p]
+=\int_{x_m}^{\infty}x^p\alpha x_m^\alpha x^{-(\alpha+1)}\,dx
+=\alpha x_m^\alpha\int_{x_m}^{\infty}x^{p-\alpha-1}\,dx.
+$$
+
+The final integral converges exactly when $p-\alpha-1<-1$, equivalently
+$p<\alpha$.  Evaluating it gives
+
+$$
+\alpha x_m^\alpha\frac{x_m^{p-\alpha}}{\alpha-p}
+=\frac{\alpha x_m^p}{\alpha-p}.
+$$
+
+The ratio identity follows immediately from the survival function:
+
+$$
+\frac{(x_m/(tx))^\alpha}{(x_m/x)^\alpha}=t^{-\alpha}.
+$$
+
+## Python
+
+The SciPy Pareto parameter `b` is the same shape parameter as the canonical
+$\alpha$ used here.
+
+```python
+import numpy as np
+from scipy.stats import pareto
+
+alpha = 1.16
+x_m = 1.0
+
+x = np.array([1, 2, 4, 8, 16], dtype=float)
+survival = pareto.sf(x, b=alpha, scale=x_m)
+ratio = pareto.sf(2 * x, b=alpha, scale=x_m) / survival
+
+print(survival)
+print(ratio)  # approximately 2 ** (-alpha) at every threshold
+```
+
+The package migration in Phase 1 also includes
+`incerto.distributions.double_pareto`, which uses the same tail exponent on
+both sides of the origin.
+
+## Caveats
+
+- Taleb often writes the tail exponent as $a$; the wiki uses $\alpha$.
+- Empirical data rarely follows an exact Pareto law from its minimum value.  A
+  tail model needs a threshold choice, diagnostic plots, and sensitivity checks.
+- A finite theoretical mean can still be practically hard to estimate when
+  $\alpha$ is close to 1.  The issue is pre-asymptotic behavior, not merely the
+  formal existence of $\mathbb E[X]$.
+- Do not estimate high moments of heavy-tailed samples without checking whether
+  those moments are implied by the fitted tail exponent.
+
+## References
+
+- Taleb, *Statistical Consequences of Fat Tails*, Chapter 3
+  [@taleb2020scoft].
+- Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
+  [@embrechts1997modelling].
+- Resnick, *Heavy-Tail Phenomena* [@resnick2007heavy].
+
+## Backlinks
+
+- Depends on: [Regular Variation](../theorems/regular-variation.md).
+- Used by: [Double Pareto Distribution](double-pareto.md),
+  [Pre-Asymptotic LLN Behavior](../examples/lln-preasymptotic.md), and the
+  [Chapter 3 reading guide](../../reading-guides/taleb-scoft/ch3.md).

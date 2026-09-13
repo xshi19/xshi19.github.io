@@ -62,10 +62,39 @@ The second reading path connects extreme-value limits to diagnostics.
 4. [Body, shoulders, and tails](./incerto-body-shoulder-tail.md) derives local
    density changes under variance mixing. Its curvature boundaries describe
    mixture geometry; choosing a Pareto threshold remains a separate task.
+5. [Iso-density tail geometry](./incerto-iso-density-tail-geometry.md) compares
+   equal and axial splits of a large sum under normal and Cauchy densities.
+   Density at a point and integrated tail probability remain distinct.
 
-These eighteen imported notes retain mathematical arguments and use static
-calculations; they do not execute notebooks during the site build. Shared
-notation, further tail classes, data examples, and reading guides remain planned.
+The third reading path contrasts light-tailed concentration with stable sums
+and infinite-mean averages.
+
+## Sums, stable limits, and thin-tail contrast
+
+1. The [Cramér exponential-moment condition](./incerto-cramer-condition.md)
+   gives a Chernoff bound and separates positive exponential moments from
+   ordinary moment existence.
+2. The [generalized central limit theorem](./incerto-generalized-central-limit-theorem.md)
+   describes stable limits of normalized iid sums, including tail balance and
+   centering at the index-one boundary.
+3. [LLN failure under infinite mean](./incerto-lln-failure.md) proves that
+   averages of nonnegative iid variables with infinite mean diverge almost
+   surely. Capped Pareto means make the truncation argument explicit.
+
+## Tail catalog & indexes
+
+The [tail class catalog](./incerto-tail-class-catalog.md) compares regular
+variation and subexponentiality for Pareto, lognormal, Weibull, exponential,
+and gamma examples. Browse all imported concepts through the
+[theorem](./incerto-theorem-concepts.md), [method](./incerto-method-concepts.md),
+and [distribution](./incerto-distribution-concepts.md) indexes. Mixture and
+variance-gamma theory links to the existing Normix notes.
+
+These twenty-six concept imports comprise twenty-three body notes and three
+indexes, alongside the original counting-exceedances example and this track hub.
+The notes retain mathematical arguments and use static calculations; they do
+not execute notebooks during the site build. Shared notation, data examples,
+reading guides, and dependency-graph navigation remain planned.
 
 The [mixture sample](./normix-conditioning-a-mixture.md) introduces a
 complementary question: how conditioning specifies a model rather than counts

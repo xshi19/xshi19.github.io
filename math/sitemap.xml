@@ -65,6 +65,30 @@
     <loc>http://localhost:3000/incerto-body-shoulder-tail</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/incerto-iso-density-tail-geometry</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-cramer-condition</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-generalized-central-limit-theorem</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-lln-failure</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-tail-class-catalog</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-theorem-concepts</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-method-concepts</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-distribution-concepts</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/information-geometry</loc>
   </url>
   <url>

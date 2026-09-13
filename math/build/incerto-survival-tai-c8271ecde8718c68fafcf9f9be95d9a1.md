@@ -130,9 +130,9 @@ $Q_F(x)\to0$. These are population calculations, not empirical fits.
 
 - Depends on: [Regular Variation](./incerto-regular-variation.md) and
   [Subexponentiality](./incerto-subexponentiality.md).
-- Related catalog: Tail Class Catalog (planned).
+- Related catalog: [Tail Class Catalog](./incerto-tail-class-catalog.md).
 - Related diagnostic: [Max-to-Sum Ratio](./incerto-max-to-sum-ratio.md).
-- Used by: Iso-Density Tail Geometry (planned).
+- Used by: [Iso-Density Tail Geometry](./incerto-iso-density-tail-geometry.md).
 
 ## Source and adaptation
 

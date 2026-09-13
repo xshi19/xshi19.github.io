@@ -163,7 +163,7 @@ population question.
 
 - Depends on: [Pareto Distribution](./incerto-pareto.md) and
   [Karamata's Theorem](./incerto-karamata.md).
-- Used by: LLN Failure Under Infinite Mean (planned),
+- Used by: [LLN Failure Under Infinite Mean](./incerto-lln-failure.md),
   Pre-Asymptotic LLN Behavior (planned), and
   Max-to-Sum Ratio (planned).
 

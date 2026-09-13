@@ -219,7 +219,7 @@ These are exact calculations illustrating the cited theorem.
   notation in Notation (planned).
 - Used by: [Pareto Distribution](./incerto-pareto.md),
   [Pareto Moment Existence](./incerto-pareto-moment-existence.md),
-  LLN Failure Under Infinite Mean (planned),
+  [LLN Failure Under Infinite Mean](./incerto-lln-failure.md),
   Max-to-Sum Ratio (planned), and
   [Hill Estimator](./incerto-hill-estimator.md).
 

@@ -169,9 +169,9 @@ suggest regular variation, but the definition is about the asymptotic limit.
 - Used by: [Pareto Distribution](./incerto-pareto.md),
   Double Pareto Distribution (planned),
   Subexponentiality (planned),
-  Tail Class Catalog (planned),
+  [Tail Class Catalog](./incerto-tail-class-catalog.md),
   [Pareto Moment Existence](./incerto-pareto-moment-existence.md),
-  Generalized Central Limit Theorem (planned),
+  [Generalized Central Limit Theorem](./incerto-generalized-central-limit-theorem.md),
   and [Hill Estimator](./incerto-hill-estimator.md).
 
 ## Source and adaptation

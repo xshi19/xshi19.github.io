@@ -229,7 +229,7 @@ A useful comparison table is:
 | Weibull with shape $0<\beta<1$ | Yes | No |
 | Exponential | No | No |
 
-A broader Tail Class Catalog is planned. The lognormal and stretched
+The [Tail Class Catalog](./incerto-tail-class-catalog.md) gives a broader comparison. The lognormal and stretched
 Weibull entries are cited examples, not consequences of the Pareto proof.
 
 The exponential is an exact nonexample.  If
@@ -308,9 +308,9 @@ subexponential even though $M_n/S_n\to0$ almost surely as $n\to\infty$.
 ## Backlinks
 
 - Depends on: [Regular Variation](./incerto-regular-variation.md).
-- Related catalog: Tail Class Catalog (planned).
+- Related catalog: [Tail Class Catalog](./incerto-tail-class-catalog.md).
 - Related: [Max-to-Sum Ratio](./incerto-max-to-sum-ratio.md).
-- Related to: LLN Failure Under Infinite Mean (planned).
+- Related to: [LLN Failure Under Infinite Mean](./incerto-lln-failure.md).
 
 ## Source and adaptation
 

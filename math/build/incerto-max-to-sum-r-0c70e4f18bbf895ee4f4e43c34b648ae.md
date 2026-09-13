@@ -50,7 +50,7 @@ than $n$ on the scale needed to dominate the sum.
 Fat-tailed samples can look different.  One observation can represent a large
 fraction of all observed mass, especially near or below the Pareto mean
 boundary $\alpha=1$.  This is the same mechanism behind
-LLN Failure Under Infinite Mean (planned), but $R_n$ makes
+[LLN Failure Under Infinite Mean](./incerto-lln-failure.md), but $R_n$ makes
 the dominance visible without plotting the entire running average.  It
 complements the path view in
 Pre-Asymptotic LLN Behavior (planned).
@@ -149,7 +149,7 @@ separate asymptotic results; no Monte Carlo quantiles are reported here.
 ## Backlinks
 
 - Depends on: [Pareto Distribution](./incerto-pareto.md),
-  LLN Failure Under Infinite Mean (planned),
+  [LLN Failure Under Infinite Mean](./incerto-lln-failure.md),
   Pre-Asymptotic LLN Behavior (planned), and the
   canonical max and sum notation in Notation (planned).
 - Related: [Subexponentiality](./incerto-subexponentiality.md).

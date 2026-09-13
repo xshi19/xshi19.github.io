@@ -108,7 +108,7 @@ claim about the finite-sample variance of $\widehat\mu_n$.
 
 For $1<\alpha<2$, the sample mean remains consistent, but its error scale is
 $n^{1/\alpha-1}$. More precisely, the
-generalized central limit theorem (a dedicated page is planned)
+[generalized central limit theorem](./incerto-generalized-central-limit-theorem.md)
 gives a nondegenerate, non-Gaussian $\alpha$-stable limit for
 $n^{1-1/\alpha}(\bar X_n-\mu)$ in this exact Pareto model
 [2007](https://doi.org/10.1007/978-0-387-45024-7). That scale decays more slowly than $n^{-1/2}$.

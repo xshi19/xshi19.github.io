@@ -38,6 +38,33 @@
     <loc>http://localhost:3000/incerto-plug-in-tail-estimation</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/incerto-pickands-balkema-de-haan</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-generalized-extreme-value</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-frechet</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-tail-threshold-selection</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-subexponentiality</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-survival-tail-ratio</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-max-to-sum-ratio</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-double-pareto</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/incerto-body-shoulder-tail</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/information-geometry</loc>
   </url>
   <url>

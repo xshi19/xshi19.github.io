@@ -130,8 +130,8 @@ preserving the marginal law; see
 
 This note covers the full positive-definite covariance model. Factor-analysis
 constructions introduce additional latent variables and different complete-data
-statistics; their theory remains [upstream](https://xshi19.github.io/normix/theory/factor_analysis.html).
-No factor-analysis derivation is imported here.
+statistics; the [factor-analysis note](./normix-factor-analysis.md) derives
+their posterior moments and constrained M-step.
 
 Class naming, storage, constructor recipes, and fitter contracts remain in the
 [upstream mixture design](https://xshi19.github.io/normix/design/mixtures.html),

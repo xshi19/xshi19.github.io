@@ -139,4 +139,19 @@
   <url>
     <loc>http://localhost:3000/normix-normal-mixtures</loc>
   </url>
+  <url>
+    <loc>http://localhost:3000/normix-online-em</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/normix-factor-analysis</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/normix-shrinkage</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/normix-varentropy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/normix-em-framework</loc>
+  </url>
 </urlset>

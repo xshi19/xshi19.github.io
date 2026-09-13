@@ -333,7 +333,10 @@ optimization comparison and [exponential-family core](./normix-exponential-famil
 for the expectation-to-natural map. Runnable fitters remain in the
 [upstream EM guide](https://xshi19.github.io/normix/user_guide/em_fitting.html)
 and [package API](https://xshi19.github.io/normix/api/index.html).
-The deferred [EM framework](https://xshi19.github.io/normix/design/em_framework.html)
+Continue with [online EM](./normix-online-em.md),
+[penalized shrinkage](./normix-shrinkage.md), and the
+[mathematical EM framework](./normix-em-framework.md).
+The [full EM design](https://xshi19.github.io/normix/design/em_framework.html)
 and [Bessel/solver design](https://xshi19.github.io/normix/design/solvers_and_bessel.html)
 remain upstream implementation references.
 

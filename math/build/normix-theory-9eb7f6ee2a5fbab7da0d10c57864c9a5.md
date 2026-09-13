@@ -7,7 +7,7 @@ mixing distributions, and estimation through latent variables. Begin with
 [conditioning a mixture](./normix-conditioning-a-mixture.md), an original
 calculation that fixes independence and moment assumptions explicitly.
 
-The first imported theory batch provides this reading path:
+The first theory batch provides the foundations:
 
 1. [Generalized inverse Gaussian](./normix-generalized-inverse-gaussian.md)
    defines the positive mixing density, its moments, boundary families, and
@@ -37,7 +37,37 @@ normal-mixtures note before the density and estimation derivations. The
 and [ordinary EM entry](./information-geometry-latent-variables-em.md) supply
 the general assumptions and geometry behind the calculations.
 
-The eight imported notes are static mathematical explanations, each retaining
+Continue after batch EM and the optimization comparison with the second batch.
+
+## Sequential and regularized EM
+
+1. [Online EM](./normix-online-em.md) averages posterior sufficient statistics
+   sequentially and derives a Bregman regret identity with its assumptions.
+2. [Shrinkage](./normix-shrinkage.md) derives penalized EM toward a reference
+   distribution and distinguishes joint-KL shrinkage from covariance-only updates.
+3. [EM as sufficient-statistic updates](./normix-em-framework.md) separates
+   aggregation, update rules, and parameter recovery, then composes running
+   averages with Bregman shrinkage.
+
+## Structured covariances
+
+[Factor analysis for GH](./normix-factor-analysis.md) develops low-rank plus
+diagonal dispersion, ten sufficient-statistic blocks, and a constrained
+M-step for a curved exponential family. It connects to the
+[IG exponential-family entry](./information-geometry-exponential-families.md)
+without assuming that ambient moment matching fits a constrained model.
+
+## Information quantities
+
+[Entropy, varentropy, and Rényi entropy](./normix-varentropy.md) derives
+density-power formulas for exponential-family components and joint normal
+mixtures. The [Fisher geometry entry](./information-geometry-fisher-vs-l2.md)
+explains the score covariance appearing in the varentropy formula; the
+[duality entry](./information-geometry-duality.md) supports the EM divergences.
+
+## Notation and implementation
+
+The thirteen imported notes are static mathematical explanations, each retaining
 its pinned source and MIT notice. Their literature mixing variable is called
 $Y$; it corresponds to $W$ in the conditioning introduction. Standard normal
 noise is called $Z$ throughout the overlapping constructions.
@@ -49,5 +79,8 @@ for installation and supported operations. This site does not install or
 vendor that package. Later computational notes should use a tested upstream
 version and map their mathematical convention to its supported API.
 
-Further imports and the later IG/GH research sequence remain planned. Finance,
-online EM, factor-analysis derivations, and implementation design remain upstream.
+The complete [EM implementation framework](https://xshi19.github.io/normix/design/em_framework.html),
+[Bessel and solver design](https://xshi19.github.io/normix/design/solvers_and_bessel.html),
+and [package API](https://xshi19.github.io/normix/api/index.html) remain upstream
+references. Finance theory, remaining tutorials, and research notes are deferred;
+the later IG/GH research sequence remains planned.

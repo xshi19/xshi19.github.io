@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://xshi19.github.io/math/incerto/sitemap.xml

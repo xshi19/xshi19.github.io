@@ -1,157 +1,159 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="http://localhost:3000/sitemap_style.xsl" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://localhost:3000</loc>
+    <loc>https://xshi19.github.io/math/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto</loc>
+    <loc>https://xshi19.github.io/math/notation/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-counting-exceedances</loc>
+    <loc>https://xshi19.github.io/math/incerto/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-pareto</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-body-shoulder-tail/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-regular-variation</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-counting-exceedances/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-karamata</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-cramer-condition/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-pareto-moment-existence</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-distribution-concepts/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-mean-excess-function</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-double-pareto/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-hill-estimator</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-extreme-value-index/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-extreme-value-index</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-frechet/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-generalized-pareto</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-generalized-central-limit-theorem/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-plug-in-tail-estimation</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-generalized-extreme-value/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-pickands-balkema-de-haan</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-generalized-pareto/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-generalized-extreme-value</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-hill-estimator/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-frechet</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-iso-density-tail-geometry/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-tail-threshold-selection</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-karamata/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-subexponentiality</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-lln-failure/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-survival-tail-ratio</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-max-to-sum-ratio/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-max-to-sum-ratio</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-mean-excess-function/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-double-pareto</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-method-concepts/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-body-shoulder-tail</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-pareto-moment-existence/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-iso-density-tail-geometry</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-pareto/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-cramer-condition</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-pickands-balkema-de-haan/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-generalized-central-limit-theorem</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-plug-in-tail-estimation/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-lln-failure</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-regular-variation/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-tail-class-catalog</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-subexponentiality/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-theorem-concepts</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-survival-tail-ratio/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-method-concepts</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-tail-class-catalog/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/incerto-distribution-concepts</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-tail-threshold-selection/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/information-geometry</loc>
+    <loc>https://xshi19.github.io/math/incerto/incerto-theorem-concepts/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/information-geometry-euclidean-to-manifold</loc>
+    <loc>https://xshi19.github.io/math/ig/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/information-geometry-exponential-families</loc>
+    <loc>https://xshi19.github.io/math/ig/information-geometry-conditional-expectation/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/information-geometry-latent-variables-em</loc>
+    <loc>https://xshi19.github.io/math/ig/information-geometry-duality/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/information-geometry-conditional-expectation</loc>
+    <loc>https://xshi19.github.io/math/ig/information-geometry-euclidean-to-manifold/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/information-geometry-fisher-vs-l2</loc>
+    <loc>https://xshi19.github.io/math/ig/information-geometry-exponential-families/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/information-geometry-duality</loc>
+    <loc>https://xshi19.github.io/math/ig/information-geometry-fisher-vs-l2/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-theory</loc>
+    <loc>https://xshi19.github.io/math/ig/information-geometry-latent-variables-em/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-conditioning-a-mixture</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-generalized-inverse-gaussian</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-conditioning-a-mixture/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-generalized-hyperbolic</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-em-algorithm/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-em-algorithm</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-em-framework/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-exponential-family-core</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-exponential-family-core/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-mixture-architecture</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-factor-analysis/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-why-not-gradient-descent</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-generalized-hyperbolic/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-gh-family-tour</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-generalized-inverse-gaussian/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-normal-mixtures</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-gh-family-tour/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-online-em</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-mixture-architecture/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-factor-analysis</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-normal-mixtures/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-shrinkage</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-online-em/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-varentropy</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-shrinkage/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/normix-em-framework</loc>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-varentropy/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/normix-theory/normix-why-not-gradient-descent/</loc>
   </url>
 </urlset>

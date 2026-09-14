@@ -132,8 +132,10 @@ For Bernoulli observations, direct differentiation gives
 The expectation coordinate is the success probability. Natural coordinates
 range over $\mathbb R$, while expectation coordinates range over $(0,1)$.
 
-For a normal distribution with mean $\mu\in\mathbb R$ and standard deviation
-$\sigma>0$, use Lebesgue measure, $h(x)=1$, and
+For the [normal running example](./information-geometry-euclidean-to-manifold.md#a-running-example-normal-location-and-scale),
+with mean $\mu\in\mathbb R$ and standard deviation $\sigma>0$, we now use
+$\theta$ for natural coordinates in place of the earlier location and scale
+coordinates. With Lebesgue measure and $h(x)=1$, the representation is
 
 ```{math}
 \begin{aligned}

@@ -7,8 +7,20 @@ describe changes in the distributions themselves. A parameter vector gives
 coordinates for a model. The score describes a first-order change in its log
 density, and Fisher information measures the size of that change.
 
-For a regular model $p_\theta$, write
-$s_\theta(x)=\nabla_\theta\log p_\theta(x)$. The basic quadratic form is
+Let $p_\theta$ be a density with respect to a fixed measure, with $\theta$ in
+an open subset of $\mathbb R^d$. Let $X$ have law $P_\theta$, and write
+$s_\theta(x)=\nabla_\theta\log p_\theta(x)$ for the score vector. We work in
+a regular interior region with common positive support, square-integrable
+scores, and smooth positive definite Fisher information. The
+[Fisher note](../information-geometry-fisher-vs-l2.md#a-regular-model-and-its-scores)
+states the differentiation assumptions used below.
+
+Fix a parameter value $\theta$. A smooth perturbation $\theta(\varepsilon)$
+through $\theta(0)=\theta$ has velocity
+$v=\dot\theta(0)$: its first-order parameter displacement is $\varepsilon v$.
+This velocity is a **tangent vector at $\theta$**, not an additional model
+parameter. Let $w$ be another such velocity at the same point. The Fisher
+inner product per observation is
 
 ```{math}
 :label: ig-hub-fisher
@@ -18,9 +30,30 @@ g_\theta(v,w)
 \right].
 ```
 
-The notes below derive this expression, explain why it transforms correctly
-when coordinates change, and introduce the two affine structures that make
-exponential families especially tractable.
+To interpret [](#ig-hub-fisher) statistically, hold an observation $x$ fixed
+and apply the chain rule:
+
+```{math}
+\left.\frac{d}{d\varepsilon}\log p_{\theta(\varepsilon)}(x)
+\right|_{\varepsilon=0}
+=v^\mathsf{T}s_\theta(x).
+```
+
+Thus $v^\mathsf{T}s_\theta(x)$ is the directional score: the rate at which
+the log density changes when we perturb the parameter along $v$. The Fisher
+speed $\sqrt{g_\theta(v,v)}$ is its root mean square under the current model
+$P_\theta$. A larger speed means that the same small increment in
+$\varepsilon$ produces a larger typical first-order change in log density.
+Here $\varepsilon$ indexes a chosen perturbation; it need not represent time.
+Since regular-model scores have mean zero, $g_\theta(v,w)$ is also the
+covariance of the two directional scores.
+
+The [first note](../information-geometry-euclidean-to-manifold.md) works this
+out for $N(\mu,\sigma^2)$, with mean $\mu$ and standard deviation $\sigma>0$.
+In coordinates $\theta=(\mu,\sigma)^\mathsf{T}$, a velocity has two
+components: the rate of change of the mean and the rate of change of the
+standard deviation. The notes then explain coordinate invariance and the two
+affine structures of exponential families.
 
 ## Reading path
 
@@ -45,8 +78,8 @@ information-theory course is not required.
 
 ## Conventions
 
-Prefer the site-wide [shared notation](https://xshi19.github.io/math/notation/) canon for symbols that appear in more than one track. The local conventions below specialize that canon for this reading path.
-
+Symbols follow the site-wide
+[shared notation](https://xshi19.github.io/math/notation/).
 
 Densities are taken with respect to a stated common measure, which may be
 counting measure. Logarithms are natural. In exponential families, $\theta$

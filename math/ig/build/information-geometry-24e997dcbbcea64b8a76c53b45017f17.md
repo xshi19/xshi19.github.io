@@ -100,6 +100,48 @@ A Euclidean metric can also be transformed correctly. The problem arises if
 one declares the identity matrix to be the metric anew in every nonlinear
 chart: that changes the geometry.
 
+## The normal running example
+
+For $X\sim N(\mu,\sigma^2)$ with $\mu\in\mathbb R$ and $\sigma>0$, use
+$\theta=(\mu,\sigma)^\mathsf{T}$. The
+[introductory calculation](./information-geometry-euclidean-to-manifold.md#ig-normal-fisher-metric)
+gives the Fisher matrix $I(\theta)=\operatorname{diag}(\sigma^{-2},2\sigma^{-2})$.
+Its transformation to mean and variance coordinates is worked out
+[there as well](./information-geometry-euclidean-to-manifold.md#ig-normal-fisher-charts).
+
+We can check the local KL expansion directly for this family. Let
+$\widetilde\theta=(\widetilde\mu,\widetilde\sigma)^\mathsf{T}$, with
+$\widetilde\sigma>0$. Taking the expected log density ratio and using
+$\mathbb E_\theta[(X-\widetilde\mu)^2]=\sigma^2+(\mu-\widetilde\mu)^2$
+gives the exact formula
+
+```{math}
+\begin{aligned}
+D_{\mathrm{KL}}(p_\theta\|p_{\widetilde\theta})
+&=\log\frac{\widetilde\sigma}{\sigma}-\frac12\\
+&\quad+\frac{\sigma^2+(\mu-\widetilde\mu)^2}{2\widetilde\sigma^2}.
+\end{aligned}
+```
+
+For a fixed velocity $v=(v^\mu,v^\sigma)^\mathsf{T}$, set
+$\widetilde\theta=\theta+\varepsilon v$. Expanding the logarithm and the
+reciprocal square at $\varepsilon=0$ cancels the linear terms and yields
+
+```{math}
+\begin{gathered}
+D_{\mathrm{KL}}(p_\theta\|p_{\theta+\varepsilon v})\\
+=\frac{\varepsilon^2}{2\sigma^2}
+ \bigl((v^\mu)^2+2(v^\sigma)^2\bigr)+o(\varepsilon^2)\\
+=\frac{\varepsilon^2}{2}g_\theta(v,v)+o(\varepsilon^2).
+\end{gathered}
+```
+
+Thus the squared Fisher speed determines the leading KL change along either
+parameter direction, or any combination of them. The expansion is local at a
+fixed $\sigma>0$, with $\sigma+\varepsilon v^\sigma>0$. If $\sigma$ is
+known and only $\mu$ varies, the restricted metric is $ds^2=d\mu^2/\sigma^2$,
+so a scaled Euclidean metric is appropriate for that subfamily.
+
 ## Bernoulli probability and log odds
 
 For $X\sim\operatorname{Bernoulli}(q)$ with $0<q<1$, differentiation gives
@@ -130,10 +172,6 @@ ds^2=q(1-q)d\theta^2=\frac{dq^2}{q(1-q)}.
 
 This agrees with $I_\theta=\psi''(\theta)$ from the
 [exponential-family calculation](./information-geometry-exponential-families.md).
-There are also models where Fisher information is constant in a useful chart.
-For $N(\mu,\sigma^2)$ with known $\sigma$, the score for $\mu$ is
-$(x-\mu)/\sigma^2$, and $ds^2=d\mu^2/\sigma^2$. A scaled Euclidean metric
-is appropriate in this case.
 
 ## Three different uses of L2
 

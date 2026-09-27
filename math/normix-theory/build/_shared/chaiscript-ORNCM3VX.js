@@ -1,1 +1,0 @@
-import{a}from"/math/normix-theory/build/_shared/chunk-5UUBGF2R.js";import"/math/normix-theory/build/_shared/chunk-YB2OJRYJ.js";import"/math/normix-theory/build/_shared/chunk-CBDDV5MN.js";import"/math/normix-theory/build/_shared/chunk-OZE3FFNP.js";export default a();

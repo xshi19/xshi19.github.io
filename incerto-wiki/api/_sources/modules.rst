@@ -8,3 +8,4 @@ Public Modules
    incerto.estimators
    incerto.figures
    incerto.stats
+   incerto.tail_diagnostics

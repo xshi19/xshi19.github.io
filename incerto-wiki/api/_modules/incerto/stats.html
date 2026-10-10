@@ -144,6 +144,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../incerto.estimators.html">incerto.estimators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../incerto.figures.html">incerto.figures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../incerto.stats.html">incerto.stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incerto.tail_diagnostics.html">incerto.tail_diagnostics</a></li>
 </ul>
 </details></li>
 </ul>
@@ -194,7 +195,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/xshi19/Technical-Incerto-Python" target="_blank"
+<a href="https://github.com/xshi19/incerto-wiki" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -355,6 +356,36 @@
 
     <span class="n">outer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mf">5.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">17.0</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
     <span class="n">inner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mf">5.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">17.0</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">mu</span> <span class="o">-</span> <span class="n">outer</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span>
+            <span class="n">mu</span> <span class="o">-</span> <span class="n">inner</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span>
+            <span class="n">mu</span> <span class="o">+</span> <span class="n">inner</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span>
+            <span class="n">mu</span> <span class="o">+</span> <span class="n">outer</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="normal_variance_peak_shoulder_tail">
+<a class="viewcode-back" href="../../incerto.stats.html#incerto.stats.normal_variance_peak_shoulder_tail">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normal_variance_peak_shoulder_tail</span><span class="p">(</span>
+    <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">variance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return normal variance-curvature boundaries for tail diagnostics.</span>
+
+<span class="sd">    The four returned points split a symmetric normal density into left tail,</span>
+<span class="sd">    left shoulder, peak, right shoulder, and right tail regions under a local,</span>
+<span class="sd">    mean-preserving perturbation of the variance parameter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">variance</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;variance must be positive&quot;</span><span class="p">)</span>
+
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+    <span class="n">outer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">6.0</span><span class="p">))</span>
+    <span class="n">inner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">6.0</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="n">mu</span> <span class="o">-</span> <span class="n">outer</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span>

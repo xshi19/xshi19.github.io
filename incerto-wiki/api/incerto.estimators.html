@@ -145,6 +145,7 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">incerto.estimators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incerto.figures.html">incerto.figures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incerto.stats.html">incerto.stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incerto.tail_diagnostics.html">incerto.tail_diagnostics</a></li>
 </ul>
 </details></li>
 </ul>
@@ -195,7 +196,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/xshi19/Technical-Incerto-Python" target="_blank"
+<a href="https://github.com/xshi19/incerto-wiki" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -312,6 +313,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.hill_stability"><code class="docutils literal notranslate"><span class="pre">hill_stability()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.max_to_sum_ratio"><code class="docutils literal notranslate"><span class="pre">max_to_sum_ratio()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.mean_excess"><code class="docutils literal notranslate"><span class="pre">mean_excess()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.pareto_mean_plugin"><code class="docutils literal notranslate"><span class="pre">pareto_mean_plugin()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.running_mean"><code class="docutils literal notranslate"><span class="pre">running_mean()</span></code></a></li>
 </ul>
             </nav>
@@ -458,6 +460,46 @@ finite mean excess.  Thresholds with fewer exceedances return
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="incerto.estimators.pareto_mean_plugin">
+<span class="sig-prename descclassname"><span class="pre">incerto.estimators.</span></span><span class="sig-name descname"><span class="pre">pareto_mean_plugin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/incerto/estimators.html#pareto_mean_plugin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#incerto.estimators.pareto_mean_plugin" title="Link to this definition">#</a></dt>
+<dd><p>Estimate an exact Pareto mean with a known lower cutoff.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>ArrayLike</em>) – Non-empty array-like of finite observations, all at least <code class="docutils literal notranslate"><span class="pre">x_m</span></code>.
+A scalar is treated as one observation when <code class="docutils literal notranslate"><span class="pre">axis=None</span></code>.</p></li>
+<li><p><strong>x_m</strong> (<em>float</em>) – Known finite positive scalar lower cutoff. For a conditional tail
+mean, pass a fixed threshold and only its exceedances as <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em> | </em><em>None</em>) – Axis containing observations. <code class="docutils literal notranslate"><span class="pre">None</span></code> pools all input values;
+otherwise each slice is fitted separately, removing this axis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">x_m</span> <span class="pre">/</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">xi_hat)</span></code>, where <code class="docutils literal notranslate"><span class="pre">xi_hat</span> <span class="pre">=</span> <span class="pre">mean(log(x</span> <span class="pre">/</span> <span class="pre">x_m))</span></code>
+is the reciprocal of the Pareto maximum-likelihood exponent estimate.
+Returns <code class="docutils literal notranslate"><span class="pre">numpy.inf</span></code> when <code class="docutils literal notranslate"><span class="pre">xi_hat</span> <span class="pre">&gt;=</span> <span class="pre">1</span></code>: the fitted model has no
+finite mean. An all-cutoff slice returns <code class="docutils literal notranslate"><span class="pre">x_m</span></code>, the limiting mean
+as the fitted exponent tends to infinity. Scalar results are floats.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or numpy.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">x_m</span></code> is not a finite positive scalar, or observations are empty,
+    non-finite, or below the cutoff.</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>Statistical calibration assumes iid exact Pareto observations above a
+known cutoff. This function does not select a threshold or validate a tail
+model. It does not clip estimates away from the mean-existence boundary.
+Even conditional on a finite result, the unregularized estimator has
+infinite first and second moments under the exact Pareto sampling model.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="incerto.estimators.running_mean">
 <span class="sig-prename descclassname"><span class="pre">incerto.estimators.</span></span><span class="sig-name descname"><span class="pre">running_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/incerto/estimators.html#running_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#incerto.estimators.running_mean" title="Link to this definition">#</a></dt>
 <dd><p>Return cumulative arithmetic means along an axis.</p>
@@ -532,6 +574,7 @@ over the flattened input.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.hill_stability"><code class="docutils literal notranslate"><span class="pre">hill_stability()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.max_to_sum_ratio"><code class="docutils literal notranslate"><span class="pre">max_to_sum_ratio()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.mean_excess"><code class="docutils literal notranslate"><span class="pre">mean_excess()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.pareto_mean_plugin"><code class="docutils literal notranslate"><span class="pre">pareto_mean_plugin()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incerto.estimators.running_mean"><code class="docutils literal notranslate"><span class="pre">running_mean()</span></code></a></li>
 </ul>
   </nav></div>

@@ -1,121 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="http://localhost:3001/sitemap_style.xsl" ?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:3000/sitemap_style.xsl" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://localhost:3001</loc>
+    <loc>http://localhost:3000</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/index-1</loc>
+    <loc>http://localhost:3000/index-1</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/index-2</loc>
+    <loc>http://localhost:3000/index-2</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/api-reference</loc>
+    <loc>http://localhost:3000/api-reference</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/lean-blueprint</loc>
+    <loc>http://localhost:3000/lean-blueprint</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/releases</loc>
+    <loc>http://localhost:3000/releases</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/v0-1-0</loc>
+    <loc>http://localhost:3000/v0-1-0</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/chinese-entry</loc>
+    <loc>http://localhost:3000/chinese-entry</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/dependency-dag</loc>
+    <loc>http://localhost:3000/dependency-dag</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/distribution-concepts</loc>
+    <loc>http://localhost:3000/distribution-concepts</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/pareto</loc>
+    <loc>http://localhost:3000/pareto</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/double-pareto</loc>
+    <loc>http://localhost:3000/double-pareto</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/variance-gamma</loc>
+    <loc>http://localhost:3000/generalized-pareto</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/normal-mixture</loc>
+    <loc>http://localhost:3000/generalized-extreme-value</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/theorem-concepts</loc>
+    <loc>http://localhost:3000/frechet</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/regular-variation</loc>
+    <loc>http://localhost:3000/normal-mixture</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/karamata</loc>
+    <loc>http://localhost:3000/variance-gamma</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/pareto-moment-existence</loc>
+    <loc>http://localhost:3000/tail-class-catalog</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/lln-failure</loc>
+    <loc>http://localhost:3000/theorem-concepts</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/pickands-balkema-de-haan</loc>
+    <loc>http://localhost:3000/regular-variation</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/mean-excess-function</loc>
+    <loc>http://localhost:3000/karamata</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/method-concepts</loc>
+    <loc>http://localhost:3000/pareto-moment-existence</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/hill-estimator</loc>
+    <loc>http://localhost:3000/lln-failure</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/max-to-sum-ratio</loc>
+    <loc>http://localhost:3000/generalized-central-limit-theorem</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/body-shoulder-tail</loc>
+    <loc>http://localhost:3000/cramer-condition</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/extreme-value-index</loc>
+    <loc>http://localhost:3000/subexponentiality</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/empirical-example-concepts</loc>
+    <loc>http://localhost:3000/pickands-balkema-de-haan</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/sp500-tail</loc>
+    <loc>http://localhost:3000/mean-excess-function</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/amazon-bookrank</loc>
+    <loc>http://localhost:3000/method-concepts</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/lln-preasymptotic</loc>
+    <loc>http://localhost:3000/hill-estimator</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/dispersion-ratio</loc>
+    <loc>http://localhost:3000/plug-in-tail-estimation</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/intro</loc>
+    <loc>http://localhost:3000/extreme-value-index</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/ch3</loc>
+    <loc>http://localhost:3000/tail-threshold-selection</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/ch4</loc>
+    <loc>http://localhost:3000/survival-tail-ratio</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/ch5</loc>
+    <loc>http://localhost:3000/iso-density-tail-geometry</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/ch6</loc>
+    <loc>http://localhost:3000/body-shoulder-tail</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/ch7</loc>
+    <loc>http://localhost:3000/max-to-sum-ratio</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/index-3</loc>
+    <loc>http://localhost:3000/empirical-example-concepts</loc>
   </url>
   <url>
-    <loc>http://localhost:3001/embrechts-modelling-extremal-events</loc>
+    <loc>http://localhost:3000/sp500-tail</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/amazon-bookrank</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/nyc-dog-name-tail</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/lln-preasymptotic</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/dispersion-ratio</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/intro</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/ch3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/ch4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/ch5</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/ch6</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/ch7</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/index-3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/embrechts-modelling-extremal-events</loc>
   </url>
 </urlset>

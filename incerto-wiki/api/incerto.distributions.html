@@ -146,6 +146,7 @@
 <li class="toctree-l2"><a class="reference internal" href="incerto.estimators.html">incerto.estimators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incerto.figures.html">incerto.figures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incerto.stats.html">incerto.stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incerto.tail_diagnostics.html">incerto.tail_diagnostics</a></li>
 </ul>
 </details></li>
 </ul>
@@ -196,7 +197,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/xshi19/Technical-Incerto-Python" target="_blank"
+<a href="https://github.com/xshi19/incerto-wiki" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -346,7 +347,8 @@ with equal probability.  Its density is</p>
 \[f(x; \alpha) = \frac{\alpha}{2}(1 + |x|)^{-(\alpha + 1)}.\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>alpha</strong> – Positive Pareto tail exponent. Smaller values produce heavier tails.</p>
+<dd class="field-odd"><p><strong>alpha</strong> – Positive Pareto tail exponent. Smaller values produce heavier tails.
+The ordinary mean exists only for <code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>

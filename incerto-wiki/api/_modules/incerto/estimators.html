@@ -144,6 +144,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../incerto.estimators.html">incerto.estimators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../incerto.figures.html">incerto.figures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../incerto.stats.html">incerto.stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incerto.tail_diagnostics.html">incerto.tail_diagnostics</a></li>
 </ul>
 </details></li>
 </ul>
@@ -194,7 +195,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/xshi19/Technical-Incerto-Python" target="_blank"
+<a href="https://github.com/xshi19/incerto-wiki" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -358,6 +359,77 @@
 
 
 
+<div class="viewcode-block" id="pareto_mean_plugin">
+<a class="viewcode-back" href="../../incerto.estimators.html#incerto.estimators.pareto_mean_plugin">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pareto_mean_plugin</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">x_m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate an exact Pareto mean with a known lower cutoff.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x:</span>
+<span class="sd">        Non-empty array-like of finite observations, all at least ``x_m``.</span>
+<span class="sd">        A scalar is treated as one observation when ``axis=None``.</span>
+<span class="sd">    x_m:</span>
+<span class="sd">        Known finite positive scalar lower cutoff. For a conditional tail</span>
+<span class="sd">        mean, pass a fixed threshold and only its exceedances as ``x``.</span>
+<span class="sd">    axis:</span>
+<span class="sd">        Axis containing observations. ``None`` pools all input values;</span>
+<span class="sd">        otherwise each slice is fitted separately, removing this axis.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float or numpy.ndarray</span>
+<span class="sd">        ``x_m / (1 - xi_hat)``, where ``xi_hat = mean(log(x / x_m))``</span>
+<span class="sd">        is the reciprocal of the Pareto maximum-likelihood exponent estimate.</span>
+<span class="sd">        Returns ``numpy.inf`` when ``xi_hat &gt;= 1``: the fitted model has no</span>
+<span class="sd">        finite mean. An all-cutoff slice returns ``x_m``, the limiting mean</span>
+<span class="sd">        as the fitted exponent tends to infinity. Scalar results are floats.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If ``x_m`` is not a finite positive scalar, or observations are empty,</span>
+<span class="sd">        non-finite, or below the cutoff.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Statistical calibration assumes iid exact Pareto observations above a</span>
+<span class="sd">    known cutoff. This function does not select a threshold or validate a tail</span>
+<span class="sd">    model. It does not clip estimates away from the mean-existence boundary.</span>
+<span class="sd">    Even conditional on a finite result, the unregularized estimator has</span>
+<span class="sd">    infinite first and second moments under the exact Pareto sampling model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cutoff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x_m</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cutoff</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">cutoff</span><span class="p">)</span> <span class="ow">or</span> <span class="n">cutoff</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x_m must be a finite positive scalar&quot;</span><span class="p">)</span>
+    <span class="n">cutoff</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cutoff</span><span class="p">)</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sample</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x must contain at least one observation&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">sample</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x must contain only finite values&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">sample</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all observations must be at least x_m&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Preserve small log-excesses near the cutoff without overflowing x / x_m.</span>
+    <span class="n">excess</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">-</span> <span class="n">cutoff</span>
+    <span class="n">near</span> <span class="o">=</span> <span class="n">excess</span> <span class="o">&lt;=</span> <span class="n">cutoff</span>
+    <span class="n">log_excess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">log_excess</span><span class="p">[</span><span class="n">near</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">excess</span><span class="p">[</span><span class="n">near</span><span class="p">]</span> <span class="o">/</span> <span class="n">cutoff</span><span class="p">)</span>
+    <span class="n">log_excess</span><span class="p">[</span><span class="o">~</span><span class="n">near</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="o">~</span><span class="n">near</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">cutoff</span><span class="p">)</span>
+    <span class="n">xi_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">log_excess</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">xi_hat</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">xi_hat</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">xi_hat</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">result</span></div>
+
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_default_k_values</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">]:</span>
     <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;num must be positive&quot;</span><span class="p">)</span>
@@ -501,12 +573,11 @@
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">x_array</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max-to-sum ratio requires nonnegative observations&quot;</span><span class="p">)</span>
 
-    <span class="n">numerator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
-    <span class="n">denominator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">denominator</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">):</span>
+    <span class="n">maximum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">maximum</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;sum of observations must be positive&quot;</span><span class="p">)</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x_array</span> <span class="o">/</span> <span class="n">maximum</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">result</span></div>
 
 
@@ -592,6 +663,7 @@
     <span class="s2">&quot;hill_stability&quot;</span><span class="p">,</span>
     <span class="s2">&quot;max_to_sum_ratio&quot;</span><span class="p">,</span>
     <span class="s2">&quot;mean_excess&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pareto_mean_plugin&quot;</span><span class="p">,</span>
     <span class="s2">&quot;running_mean&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 </pre></div>

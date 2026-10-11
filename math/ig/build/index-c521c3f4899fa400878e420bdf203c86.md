@@ -1,5 +1,5 @@
 ---
-title: Information Geometry
+title: Introduction
 ---
 
 Information geometry studies probability models using geometric objects that

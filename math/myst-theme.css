@@ -24,8 +24,11 @@
   --incerto-code-surface: #f0eee6;
   --incerto-link-visited: #1b365d;
   --incerto-measure: 74ch;
-  --incerto-serif: Charter, Georgia, "TsangerJinKai02", "Source Han Serif SC",
-    "Noto Serif CJK SC", "Songti SC", "Palatino Linotype", Palatino, serif;
+  /* Keep Latin punctuation in a Latin serif. CJK U+2019 can occupy a full em,
+     which makes MyST's smart apostrophes look like they have a trailing space. */
+  --incerto-serif: Charter, Georgia, "Palatino Linotype", Palatino,
+    "Noto Serif", "Liberation Serif", "DejaVu Serif", "Times New Roman", Times,
+    "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", serif;
   --incerto-mono: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, Monaco,
     monospace;
 }

@@ -1,0 +1,1266 @@
+{
+  "edges": [
+    {
+      "id": "application:pareto->hill-estimator",
+      "kind": "application",
+      "source": "pareto",
+      "target": "hill-estimator"
+    },
+    {
+      "id": "application:pareto->pareto-moment-existence",
+      "kind": "application",
+      "source": "pareto",
+      "target": "pareto-moment-existence"
+    },
+    {
+      "id": "dependency:body-shoulder-tail->dispersion-ratio",
+      "kind": "dependency",
+      "source": "body-shoulder-tail",
+      "target": "dispersion-ratio"
+    },
+    {
+      "id": "dependency:extreme-value-index->generalized-extreme-value",
+      "kind": "dependency",
+      "source": "extreme-value-index",
+      "target": "generalized-extreme-value"
+    },
+    {
+      "id": "dependency:extreme-value-index->generalized-pareto",
+      "kind": "dependency",
+      "source": "extreme-value-index",
+      "target": "generalized-pareto"
+    },
+    {
+      "id": "dependency:extreme-value-index->hill-estimator",
+      "kind": "dependency",
+      "source": "extreme-value-index",
+      "target": "hill-estimator"
+    },
+    {
+      "id": "dependency:extreme-value-index->pickands-balkema-de-haan",
+      "kind": "dependency",
+      "source": "extreme-value-index",
+      "target": "pickands-balkema-de-haan"
+    },
+    {
+      "id": "dependency:extreme-value-index->tail-threshold-selection",
+      "kind": "dependency",
+      "source": "extreme-value-index",
+      "target": "tail-threshold-selection"
+    },
+    {
+      "id": "dependency:generalized-extreme-value->frechet",
+      "kind": "dependency",
+      "source": "generalized-extreme-value",
+      "target": "frechet"
+    },
+    {
+      "id": "dependency:generalized-extreme-value->pickands-balkema-de-haan",
+      "kind": "dependency",
+      "source": "generalized-extreme-value",
+      "target": "pickands-balkema-de-haan"
+    },
+    {
+      "id": "dependency:generalized-pareto->mean-excess-function",
+      "kind": "dependency",
+      "source": "generalized-pareto",
+      "target": "mean-excess-function"
+    },
+    {
+      "id": "dependency:generalized-pareto->nyc-dog-name-tail",
+      "kind": "dependency",
+      "source": "generalized-pareto",
+      "target": "nyc-dog-name-tail"
+    },
+    {
+      "id": "dependency:generalized-pareto->pickands-balkema-de-haan",
+      "kind": "dependency",
+      "source": "generalized-pareto",
+      "target": "pickands-balkema-de-haan"
+    },
+    {
+      "id": "dependency:generalized-pareto->tail-threshold-selection",
+      "kind": "dependency",
+      "source": "generalized-pareto",
+      "target": "tail-threshold-selection"
+    },
+    {
+      "id": "dependency:hill-estimator->amazon-bookrank",
+      "kind": "dependency",
+      "source": "hill-estimator",
+      "target": "amazon-bookrank"
+    },
+    {
+      "id": "dependency:hill-estimator->nyc-dog-name-tail",
+      "kind": "dependency",
+      "source": "hill-estimator",
+      "target": "nyc-dog-name-tail"
+    },
+    {
+      "id": "dependency:hill-estimator->plug-in-tail-estimation",
+      "kind": "dependency",
+      "source": "hill-estimator",
+      "target": "plug-in-tail-estimation"
+    },
+    {
+      "id": "dependency:hill-estimator->sp500-tail",
+      "kind": "dependency",
+      "source": "hill-estimator",
+      "target": "sp500-tail"
+    },
+    {
+      "id": "dependency:hill-estimator->tail-threshold-selection",
+      "kind": "dependency",
+      "source": "hill-estimator",
+      "target": "tail-threshold-selection"
+    },
+    {
+      "id": "dependency:lln-failure->lln-preasymptotic",
+      "kind": "dependency",
+      "source": "lln-failure",
+      "target": "lln-preasymptotic"
+    },
+    {
+      "id": "dependency:mean-excess-function->plug-in-tail-estimation",
+      "kind": "dependency",
+      "source": "mean-excess-function",
+      "target": "plug-in-tail-estimation"
+    },
+    {
+      "id": "dependency:mean-excess-function->sp500-tail",
+      "kind": "dependency",
+      "source": "mean-excess-function",
+      "target": "sp500-tail"
+    },
+    {
+      "id": "dependency:mean-excess-function->tail-threshold-selection",
+      "kind": "dependency",
+      "source": "mean-excess-function",
+      "target": "tail-threshold-selection"
+    },
+    {
+      "id": "dependency:pareto->amazon-bookrank",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "amazon-bookrank"
+    },
+    {
+      "id": "dependency:pareto->double-pareto",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "double-pareto"
+    },
+    {
+      "id": "dependency:pareto->frechet",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "frechet"
+    },
+    {
+      "id": "dependency:pareto->hill-estimator",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "hill-estimator"
+    },
+    {
+      "id": "dependency:pareto->lln-failure",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "lln-failure"
+    },
+    {
+      "id": "dependency:pareto->lln-preasymptotic",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "lln-preasymptotic"
+    },
+    {
+      "id": "dependency:pareto->max-to-sum-ratio",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "max-to-sum-ratio"
+    },
+    {
+      "id": "dependency:pareto->mean-excess-function",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "mean-excess-function"
+    },
+    {
+      "id": "dependency:pareto->pareto-moment-existence",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "pareto-moment-existence"
+    },
+    {
+      "id": "dependency:pareto->plug-in-tail-estimation",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "plug-in-tail-estimation"
+    },
+    {
+      "id": "dependency:pareto->regular-variation",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "regular-variation"
+    },
+    {
+      "id": "dependency:pareto-moment-existence->generalized-central-limit-theorem",
+      "kind": "dependency",
+      "source": "pareto-moment-existence",
+      "target": "generalized-central-limit-theorem"
+    },
+    {
+      "id": "dependency:pareto-moment-existence->lln-failure",
+      "kind": "dependency",
+      "source": "pareto-moment-existence",
+      "target": "lln-failure"
+    },
+    {
+      "id": "dependency:pareto-moment-existence->plug-in-tail-estimation",
+      "kind": "dependency",
+      "source": "pareto-moment-existence",
+      "target": "plug-in-tail-estimation"
+    },
+    {
+      "id": "dependency:pickands-balkema-de-haan->sp500-tail",
+      "kind": "dependency",
+      "source": "pickands-balkema-de-haan",
+      "target": "sp500-tail"
+    },
+    {
+      "id": "dependency:regular-variation->cramer-condition",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "cramer-condition"
+    },
+    {
+      "id": "dependency:regular-variation->double-pareto",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "double-pareto"
+    },
+    {
+      "id": "dependency:regular-variation->extreme-value-index",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "extreme-value-index"
+    },
+    {
+      "id": "dependency:regular-variation->frechet",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "frechet"
+    },
+    {
+      "id": "dependency:regular-variation->generalized-central-limit-theorem",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "generalized-central-limit-theorem"
+    },
+    {
+      "id": "dependency:regular-variation->hill-estimator",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "hill-estimator"
+    },
+    {
+      "id": "dependency:regular-variation->karamata",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "karamata"
+    },
+    {
+      "id": "dependency:regular-variation->pickands-balkema-de-haan",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "pickands-balkema-de-haan"
+    },
+    {
+      "id": "dependency:regular-variation->plug-in-tail-estimation",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "plug-in-tail-estimation"
+    },
+    {
+      "id": "dependency:regular-variation->subexponentiality",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "subexponentiality"
+    },
+    {
+      "id": "dependency:regular-variation->survival-tail-ratio",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "survival-tail-ratio"
+    },
+    {
+      "id": "dependency:regular-variation->tail-class-catalog",
+      "kind": "dependency",
+      "source": "regular-variation",
+      "target": "tail-class-catalog"
+    },
+    {
+      "id": "dependency:subexponentiality->iso-density-tail-geometry",
+      "kind": "dependency",
+      "source": "subexponentiality",
+      "target": "iso-density-tail-geometry"
+    },
+    {
+      "id": "dependency:subexponentiality->survival-tail-ratio",
+      "kind": "dependency",
+      "source": "subexponentiality",
+      "target": "survival-tail-ratio"
+    },
+    {
+      "id": "dependency:subexponentiality->tail-class-catalog",
+      "kind": "dependency",
+      "source": "subexponentiality",
+      "target": "tail-class-catalog"
+    },
+    {
+      "id": "dependency:survival-tail-ratio->iso-density-tail-geometry",
+      "kind": "dependency",
+      "source": "survival-tail-ratio",
+      "target": "iso-density-tail-geometry"
+    },
+    {
+      "id": "dependency:tail-threshold-selection->nyc-dog-name-tail",
+      "kind": "dependency",
+      "source": "tail-threshold-selection",
+      "target": "nyc-dog-name-tail"
+    },
+    {
+      "id": "dependency:tail-threshold-selection->sp500-tail",
+      "kind": "dependency",
+      "source": "tail-threshold-selection",
+      "target": "sp500-tail"
+    },
+    {
+      "id": "generalization:pareto->regular-variation",
+      "kind": "generalization",
+      "source": "pareto",
+      "target": "regular-variation"
+    },
+    {
+      "id": "proof-dependency:pareto->generalized-central-limit-theorem",
+      "kind": "proof-dependency",
+      "source": "pareto",
+      "target": "generalized-central-limit-theorem"
+    },
+    {
+      "id": "reference:amazon-bookrank->nyc-dog-name-tail",
+      "kind": "reference",
+      "source": "amazon-bookrank",
+      "target": "nyc-dog-name-tail"
+    },
+    {
+      "id": "reference:body-shoulder-tail->iso-density-tail-geometry",
+      "kind": "reference",
+      "source": "body-shoulder-tail",
+      "target": "iso-density-tail-geometry"
+    },
+    {
+      "id": "reference:body-shoulder-tail->nyc-dog-name-tail",
+      "kind": "reference",
+      "source": "body-shoulder-tail",
+      "target": "nyc-dog-name-tail"
+    },
+    {
+      "id": "reference:body-shoulder-tail->pareto",
+      "kind": "reference",
+      "source": "body-shoulder-tail",
+      "target": "pareto"
+    },
+    {
+      "id": "reference:body-shoulder-tail->regular-variation",
+      "kind": "reference",
+      "source": "body-shoulder-tail",
+      "target": "regular-variation"
+    },
+    {
+      "id": "reference:body-shoulder-tail->tail-threshold-selection",
+      "kind": "reference",
+      "source": "body-shoulder-tail",
+      "target": "tail-threshold-selection"
+    },
+    {
+      "id": "reference:cramer-condition->pareto",
+      "kind": "reference",
+      "source": "cramer-condition",
+      "target": "pareto"
+    },
+    {
+      "id": "reference:cramer-condition->subexponentiality",
+      "kind": "reference",
+      "source": "cramer-condition",
+      "target": "subexponentiality"
+    },
+    {
+      "id": "reference:cramer-condition->tail-class-catalog",
+      "kind": "reference",
+      "source": "cramer-condition",
+      "target": "tail-class-catalog"
+    },
+    {
+      "id": "reference:double-pareto->max-to-sum-ratio",
+      "kind": "reference",
+      "source": "double-pareto",
+      "target": "max-to-sum-ratio"
+    },
+    {
+      "id": "reference:double-pareto->pareto-moment-existence",
+      "kind": "reference",
+      "source": "double-pareto",
+      "target": "pareto-moment-existence"
+    },
+    {
+      "id": "reference:extreme-value-index->frechet",
+      "kind": "reference",
+      "source": "extreme-value-index",
+      "target": "frechet"
+    },
+    {
+      "id": "reference:extreme-value-index->karamata",
+      "kind": "reference",
+      "source": "extreme-value-index",
+      "target": "karamata"
+    },
+    {
+      "id": "reference:extreme-value-index->pareto",
+      "kind": "reference",
+      "source": "extreme-value-index",
+      "target": "pareto"
+    },
+    {
+      "id": "reference:extreme-value-index->plug-in-tail-estimation",
+      "kind": "reference",
+      "source": "extreme-value-index",
+      "target": "plug-in-tail-estimation"
+    },
+    {
+      "id": "reference:generalized-central-limit-theorem->karamata",
+      "kind": "reference",
+      "source": "generalized-central-limit-theorem",
+      "target": "karamata"
+    },
+    {
+      "id": "reference:generalized-central-limit-theorem->lln-failure",
+      "kind": "reference",
+      "source": "generalized-central-limit-theorem",
+      "target": "lln-failure"
+    },
+    {
+      "id": "reference:generalized-central-limit-theorem->lln-preasymptotic",
+      "kind": "reference",
+      "source": "generalized-central-limit-theorem",
+      "target": "lln-preasymptotic"
+    },
+    {
+      "id": "reference:generalized-central-limit-theorem->pareto",
+      "kind": "reference",
+      "source": "generalized-central-limit-theorem",
+      "target": "pareto"
+    },
+    {
+      "id": "reference:generalized-central-limit-theorem->plug-in-tail-estimation",
+      "kind": "reference",
+      "source": "generalized-central-limit-theorem",
+      "target": "plug-in-tail-estimation"
+    },
+    {
+      "id": "reference:generalized-extreme-value->generalized-pareto",
+      "kind": "reference",
+      "source": "generalized-extreme-value",
+      "target": "generalized-pareto"
+    },
+    {
+      "id": "reference:generalized-extreme-value->pareto",
+      "kind": "reference",
+      "source": "generalized-extreme-value",
+      "target": "pareto"
+    },
+    {
+      "id": "reference:generalized-pareto->pareto",
+      "kind": "reference",
+      "source": "generalized-pareto",
+      "target": "pareto"
+    },
+    {
+      "id": "reference:hill-estimator->karamata",
+      "kind": "reference",
+      "source": "hill-estimator",
+      "target": "karamata"
+    },
+    {
+      "id": "reference:iso-density-tail-geometry->max-to-sum-ratio",
+      "kind": "reference",
+      "source": "iso-density-tail-geometry",
+      "target": "max-to-sum-ratio"
+    },
+    {
+      "id": "reference:karamata->lln-failure",
+      "kind": "reference",
+      "source": "karamata",
+      "target": "lln-failure"
+    },
+    {
+      "id": "reference:karamata->pareto",
+      "kind": "reference",
+      "source": "karamata",
+      "target": "pareto"
+    },
+    {
+      "id": "reference:karamata->pareto-moment-existence",
+      "kind": "reference",
+      "source": "karamata",
+      "target": "pareto-moment-existence"
+    },
+    {
+      "id": "reference:lln-failure->max-to-sum-ratio",
+      "kind": "reference",
+      "source": "lln-failure",
+      "target": "max-to-sum-ratio"
+    },
+    {
+      "id": "reference:lln-failure->subexponentiality",
+      "kind": "reference",
+      "source": "lln-failure",
+      "target": "subexponentiality"
+    },
+    {
+      "id": "reference:lln-preasymptotic->max-to-sum-ratio",
+      "kind": "reference",
+      "source": "lln-preasymptotic",
+      "target": "max-to-sum-ratio"
+    },
+    {
+      "id": "reference:max-to-sum-ratio->pareto-moment-existence",
+      "kind": "reference",
+      "source": "max-to-sum-ratio",
+      "target": "pareto-moment-existence"
+    },
+    {
+      "id": "reference:max-to-sum-ratio->subexponentiality",
+      "kind": "reference",
+      "source": "max-to-sum-ratio",
+      "target": "subexponentiality"
+    },
+    {
+      "id": "reference:max-to-sum-ratio->survival-tail-ratio",
+      "kind": "reference",
+      "source": "max-to-sum-ratio",
+      "target": "survival-tail-ratio"
+    },
+    {
+      "id": "reference:max-to-sum-ratio->tail-class-catalog",
+      "kind": "reference",
+      "source": "max-to-sum-ratio",
+      "target": "tail-class-catalog"
+    },
+    {
+      "id": "reference:mean-excess-function->pickands-balkema-de-haan",
+      "kind": "reference",
+      "source": "mean-excess-function",
+      "target": "pickands-balkema-de-haan"
+    },
+    {
+      "id": "reference:pareto->pickands-balkema-de-haan",
+      "kind": "reference",
+      "source": "pareto",
+      "target": "pickands-balkema-de-haan"
+    },
+    {
+      "id": "reference:pareto->subexponentiality",
+      "kind": "reference",
+      "source": "pareto",
+      "target": "subexponentiality"
+    },
+    {
+      "id": "reference:pareto->tail-class-catalog",
+      "kind": "reference",
+      "source": "pareto",
+      "target": "tail-class-catalog"
+    },
+    {
+      "id": "reference:pareto-moment-existence->regular-variation",
+      "kind": "reference",
+      "source": "pareto-moment-existence",
+      "target": "regular-variation"
+    },
+    {
+      "id": "reference:pareto-moment-existence->tail-threshold-selection",
+      "kind": "reference",
+      "source": "pareto-moment-existence",
+      "target": "tail-threshold-selection"
+    },
+    {
+      "id": "reference:pickands-balkema-de-haan->tail-threshold-selection",
+      "kind": "reference",
+      "source": "pickands-balkema-de-haan",
+      "target": "tail-threshold-selection"
+    },
+    {
+      "id": "reference:survival-tail-ratio->tail-class-catalog",
+      "kind": "reference",
+      "source": "survival-tail-ratio",
+      "target": "tail-class-catalog"
+    },
+    {
+      "id": "related:body-shoulder-tail->iso-density-tail-geometry",
+      "kind": "related",
+      "source": "body-shoulder-tail",
+      "target": "iso-density-tail-geometry"
+    },
+    {
+      "id": "related:iso-density-tail-geometry->max-to-sum-ratio",
+      "kind": "related",
+      "source": "iso-density-tail-geometry",
+      "target": "max-to-sum-ratio"
+    },
+    {
+      "id": "related:karamata->pareto-moment-existence",
+      "kind": "related",
+      "source": "karamata",
+      "target": "pareto-moment-existence"
+    },
+    {
+      "id": "related:max-to-sum-ratio->survival-tail-ratio",
+      "kind": "related",
+      "source": "max-to-sum-ratio",
+      "target": "survival-tail-ratio"
+    }
+  ],
+  "layouts": {
+    "dag": {
+      "height": 730,
+      "nodes": {
+        "amazon-bookrank": {
+          "x": 690.0,
+          "y": 121.66666666666667
+        },
+        "body-shoulder-tail": {
+          "x": 90.0,
+          "y": 243.33333333333334
+        },
+        "cramer-condition": {
+          "x": 390.0,
+          "y": 91.25
+        },
+        "dispersion-ratio": {
+          "x": 240.0,
+          "y": 146.0
+        },
+        "double-pareto": {
+          "x": 390.0,
+          "y": 638.75
+        },
+        "extreme-value-index": {
+          "x": 390.0,
+          "y": 182.5
+        },
+        "frechet": {
+          "x": 690.0,
+          "y": 243.33333333333334
+        },
+        "generalized-central-limit-theorem": {
+          "x": 390.0,
+          "y": 273.75
+        },
+        "generalized-extreme-value": {
+          "x": 540.0,
+          "y": 104.28571428571429
+        },
+        "generalized-pareto": {
+          "x": 540.0,
+          "y": 208.57142857142858
+        },
+        "hill-estimator": {
+          "x": 540.0,
+          "y": 312.8571428571429
+        },
+        "iso-density-tail-geometry": {
+          "x": 690.0,
+          "y": 365.0
+        },
+        "karamata": {
+          "x": 390.0,
+          "y": 365.0
+        },
+        "lln-failure": {
+          "x": 390.0,
+          "y": 456.25
+        },
+        "lln-preasymptotic": {
+          "x": 540.0,
+          "y": 417.14285714285717
+        },
+        "max-to-sum-ratio": {
+          "x": 240.0,
+          "y": 292.0
+        },
+        "mean-excess-function": {
+          "x": 690.0,
+          "y": 486.6666666666667
+        },
+        "nyc-dog-name-tail": {
+          "x": 990.0,
+          "y": 243.33333333333334
+        },
+        "pareto": {
+          "x": 90.0,
+          "y": 486.6666666666667
+        },
+        "pareto-moment-existence": {
+          "x": 240.0,
+          "y": 438.0
+        },
+        "pickands-balkema-de-haan": {
+          "x": 690.0,
+          "y": 608.3333333333334
+        },
+        "plug-in-tail-estimation": {
+          "x": 840.0,
+          "y": 243.33333333333334
+        },
+        "regular-variation": {
+          "x": 240.0,
+          "y": 584.0
+        },
+        "sp500-tail": {
+          "x": 990.0,
+          "y": 486.6666666666667
+        },
+        "subexponentiality": {
+          "x": 390.0,
+          "y": 547.5
+        },
+        "survival-tail-ratio": {
+          "x": 540.0,
+          "y": 521.4285714285714
+        },
+        "tail-class-catalog": {
+          "x": 540.0,
+          "y": 625.7142857142858
+        },
+        "tail-threshold-selection": {
+          "x": 840.0,
+          "y": 486.6666666666667
+        }
+      },
+      "width": 1080
+    },
+    "knowledge": {
+      "height": 680,
+      "nodes": {
+        "amazon-bookrank": {
+          "x": 538.4679781765194,
+          "y": 268.100694317895
+        },
+        "body-shoulder-tail": {
+          "x": 405.11093735818815,
+          "y": 272.7067751007352
+        },
+        "cramer-condition": {
+          "x": 162.6911741792877,
+          "y": 488.5059785632884
+        },
+        "dispersion-ratio": {
+          "x": 324.35584704130684,
+          "y": 90.0
+        },
+        "double-pareto": {
+          "x": 324.0298850808041,
+          "y": 558.4675439674893
+        },
+        "extreme-value-index": {
+          "x": 648.5086552933705,
+          "y": 461.8379173424708
+        },
+        "frechet": {
+          "x": 631.5986955247039,
+          "y": 551.3127944272092
+        },
+        "generalized-central-limit-theorem": {
+          "x": 429.26081320374567,
+          "y": 565.0871350728031
+        },
+        "generalized-extreme-value": {
+          "x": 767.9133110820255,
+          "y": 503.30864070325356
+        },
+        "generalized-pareto": {
+          "x": 774.0069134587391,
+          "y": 399.13028793203495
+        },
+        "hill-estimator": {
+          "x": 585.1202677186802,
+          "y": 373.31028098615474
+        },
+        "iso-density-tail-geometry": {
+          "x": 146.6720704997383,
+          "y": 309.78306620962917
+        },
+        "karamata": {
+          "x": 509.3250669217928,
+          "y": 517.2572448252331
+        },
+        "lln-failure": {
+          "x": 300.74856763377056,
+          "y": 518.944489559871
+        },
+        "lln-preasymptotic": {
+          "x": 252.71872173765212,
+          "y": 590.0
+        },
+        "max-to-sum-ratio": {
+          "x": 226.32945852501146,
+          "y": 462.5803228837391
+        },
+        "mean-excess-function": {
+          "x": 735.2676941840198,
+          "y": 365.6405952137856
+        },
+        "nyc-dog-name-tail": {
+          "x": 659.4022184497486,
+          "y": 257.88774513183466
+        },
+        "pareto": {
+          "x": 465.30834640089915,
+          "y": 444.32850877114936
+        },
+        "pareto-moment-existence": {
+          "x": 425.5423745694684,
+          "y": 488.6314290472035
+        },
+        "pickands-balkema-de-haan": {
+          "x": 692.0395151338149,
+          "y": 415.23098687875245
+        },
+        "plug-in-tail-estimation": {
+          "x": 568.7109208234181,
+          "y": 466.07841380762073
+        },
+        "regular-variation": {
+          "x": 397.1347703183514,
+          "y": 440.23645248094
+        },
+        "sp500-tail": {
+          "x": 830.0,
+          "y": 314.55129519763216
+        },
+        "subexponentiality": {
+          "x": 223.13366262004902,
+          "y": 402.33562139873635
+        },
+        "survival-tail-ratio": {
+          "x": 90.0,
+          "y": 383.6728304072583
+        },
+        "tail-class-catalog": {
+          "x": 160.4107162917278,
+          "y": 429.31616408441585
+        },
+        "tail-threshold-selection": {
+          "x": 638.751494289629,
+          "y": 341.9140854006064
+        }
+      },
+      "width": 920
+    }
+  },
+  "nodes": [
+    {
+      "id": "amazon-bookrank",
+      "path": "content/incerto-amazon-bookrank.md",
+      "status": "active",
+      "tags": [
+        "rank-size",
+        "empirical"
+      ],
+      "title": "Amazon Book Rank Tail Diagnostics",
+      "type": "empirical-example",
+      "url": "/math/incerto/incerto-amazon-bookrank/"
+    },
+    {
+      "id": "nyc-dog-name-tail",
+      "path": "content/incerto-nyc-dog-name-tail.md",
+      "status": "active",
+      "tags": [
+        "rank-size",
+        "empirical",
+        "tail-risk"
+      ],
+      "title": "Are NYC Dog Names Fat-Tailed?",
+      "type": "empirical-example",
+      "url": "/math/incerto/incerto-nyc-dog-name-tail/"
+    },
+    {
+      "id": "body-shoulder-tail",
+      "path": "content/incerto-body-shoulder-tail.md",
+      "status": "active",
+      "tags": [
+        "diagnostics",
+        "tail-risk"
+      ],
+      "title": "Body, Shoulders, and Tails",
+      "type": "method",
+      "url": "/math/incerto/incerto-body-shoulder-tail/"
+    },
+    {
+      "id": "cramer-condition",
+      "path": "content/incerto-cramer-condition.md",
+      "status": "active",
+      "tags": [
+        "thin-tails",
+        "large-deviations",
+        "exponential-moments"
+      ],
+      "title": "Cram\u00e9r Exponential-Moment Condition",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-cramer-condition/"
+    },
+    {
+      "id": "dispersion-ratio",
+      "path": "content/incerto-dispersion-ratio.md",
+      "status": "active",
+      "tags": [
+        "robust-scale",
+        "tail-risk"
+      ],
+      "title": "Dispersion Ratio Under Fat Tails",
+      "type": "empirical-example",
+      "url": "/math/incerto/incerto-dispersion-ratio/"
+    },
+    {
+      "id": "extreme-value-index",
+      "path": "content/incerto-extreme-value-index.md",
+      "status": "active",
+      "tags": [
+        "extreme-value-theory",
+        "tail-index",
+        "estimation"
+      ],
+      "title": "Extreme Value Index Estimation",
+      "type": "method",
+      "url": "/math/incerto/incerto-extreme-value-index/"
+    },
+    {
+      "id": "frechet",
+      "path": "content/incerto-frechet.md",
+      "status": "active",
+      "tags": [
+        "extreme-value-theory",
+        "block-maxima",
+        "fat-tails"
+      ],
+      "title": "Frechet Distribution and Frechet-Type Limits",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-frechet/"
+    },
+    {
+      "id": "generalized-central-limit-theorem",
+      "path": "content/incerto-generalized-central-limit-theorem.md",
+      "status": "active",
+      "tags": [
+        "stable-laws",
+        "sums",
+        "infinite-variance"
+      ],
+      "title": "Generalized Central Limit Theorem",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-generalized-central-limit-theorem/"
+    },
+    {
+      "id": "generalized-extreme-value",
+      "path": "content/incerto-generalized-extreme-value.md",
+      "status": "active",
+      "tags": [
+        "extreme-value-theory",
+        "block-maxima",
+        "tail-risk"
+      ],
+      "title": "Generalized Extreme-Value Distribution",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-generalized-extreme-value/"
+    },
+    {
+      "id": "generalized-pareto",
+      "path": "content/incerto-generalized-pareto.md",
+      "status": "active",
+      "tags": [
+        "extreme-value-theory",
+        "peaks-over-threshold",
+        "tail-risk"
+      ],
+      "title": "Generalized Pareto Distribution",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-generalized-pareto/"
+    },
+    {
+      "id": "hill-estimator",
+      "path": "content/incerto-hill-estimator.md",
+      "status": "active",
+      "tags": [
+        "tail-index",
+        "estimation"
+      ],
+      "title": "Hill Estimator",
+      "type": "method",
+      "url": "/math/incerto/incerto-hill-estimator/"
+    },
+    {
+      "id": "iso-density-tail-geometry",
+      "path": "content/incerto-iso-density-tail-geometry.md",
+      "status": "active",
+      "tags": [
+        "diagnostics",
+        "fat-tails",
+        "geometry"
+      ],
+      "title": "Iso-Density Tail Geometry",
+      "type": "method",
+      "url": "/math/incerto/incerto-iso-density-tail-geometry/"
+    },
+    {
+      "id": "karamata",
+      "path": "content/incerto-karamata.md",
+      "status": "active",
+      "tags": [
+        "fat-tails",
+        "moments"
+      ],
+      "title": "Karamata's Theorem",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-karamata/"
+    },
+    {
+      "id": "lln-failure",
+      "path": "content/incerto-lln-failure.md",
+      "status": "active",
+      "tags": [
+        "law-of-large-numbers",
+        "infinite-mean"
+      ],
+      "title": "LLN Failure Under Infinite Mean",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-lln-failure/"
+    },
+    {
+      "id": "max-to-sum-ratio",
+      "path": "content/incerto-max-to-sum-ratio.md",
+      "status": "active",
+      "tags": [
+        "finite-sample",
+        "tail-risk"
+      ],
+      "title": "Max-to-Sum Ratio",
+      "type": "method",
+      "url": "/math/incerto/incerto-max-to-sum-ratio/"
+    },
+    {
+      "id": "mean-excess-function",
+      "path": "content/incerto-mean-excess-function.md",
+      "status": "active",
+      "tags": [
+        "peaks-over-threshold",
+        "diagnostics"
+      ],
+      "title": "Mean Excess Function",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-mean-excess-function/"
+    },
+    {
+      "id": "pareto",
+      "path": "content/incerto-pareto.md",
+      "status": "active",
+      "tags": [
+        "fat-tails",
+        "power-law"
+      ],
+      "title": "Pareto Distribution",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-pareto/"
+    },
+    {
+      "id": "pareto-moment-existence",
+      "path": "content/incerto-pareto-moment-existence.md",
+      "status": "active",
+      "tags": [
+        "moments",
+        "pareto"
+      ],
+      "title": "Pareto Moment Existence",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-pareto-moment-existence/"
+    },
+    {
+      "id": "pickands-balkema-de-haan",
+      "path": "content/incerto-pickands-balkema-de-haan.md",
+      "status": "active",
+      "tags": [
+        "extreme-value-theory",
+        "peaks-over-threshold"
+      ],
+      "title": "Pickands-Balkema-de Haan Theorem",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-pickands-balkema-de-haan/"
+    },
+    {
+      "id": "plug-in-tail-estimation",
+      "path": "content/incerto-plug-in-tail-estimation.md",
+      "status": "active",
+      "tags": [
+        "estimation",
+        "tail-risk",
+        "moments"
+      ],
+      "title": "Plug-In Tail Estimation",
+      "type": "method",
+      "url": "/math/incerto/incerto-plug-in-tail-estimation/"
+    },
+    {
+      "id": "lln-preasymptotic",
+      "path": "content/incerto-lln-preasymptotic.md",
+      "status": "active",
+      "tags": [
+        "finite-sample",
+        "simulation"
+      ],
+      "title": "Pre-Asymptotic LLN Behavior",
+      "type": "empirical-example",
+      "url": "/math/incerto/incerto-lln-preasymptotic/"
+    },
+    {
+      "id": "regular-variation",
+      "path": "content/incerto-regular-variation.md",
+      "status": "active",
+      "tags": [
+        "fat-tails",
+        "asymptotics"
+      ],
+      "title": "Regular Variation",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-regular-variation/"
+    },
+    {
+      "id": "sp500-tail",
+      "path": "content/incerto-sp500-tail.md",
+      "status": "active",
+      "tags": [
+        "finance",
+        "tail-risk"
+      ],
+      "title": "S&P 500 tail diagnostics",
+      "type": "empirical-example",
+      "url": "/math/incerto/incerto-sp500-tail/"
+    },
+    {
+      "id": "subexponentiality",
+      "path": "content/incerto-subexponentiality.md",
+      "status": "active",
+      "tags": [
+        "fat-tails",
+        "asymptotics",
+        "one-big-jump"
+      ],
+      "title": "Subexponentiality",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-subexponentiality/"
+    },
+    {
+      "id": "survival-tail-ratio",
+      "path": "content/incerto-survival-tail-ratio.md",
+      "status": "active",
+      "tags": [
+        "diagnostics",
+        "fat-tails",
+        "tail-risk"
+      ],
+      "title": "Survival Tail Ratio",
+      "type": "method",
+      "url": "/math/incerto/incerto-survival-tail-ratio/"
+    },
+    {
+      "id": "double-pareto",
+      "path": "content/incerto-double-pareto.md",
+      "status": "active",
+      "tags": [
+        "fat-tails",
+        "two-sided"
+      ],
+      "title": "Symmetric Shifted Double Pareto Distribution",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-double-pareto/"
+    },
+    {
+      "id": "tail-class-catalog",
+      "path": "content/incerto-tail-class-catalog.md",
+      "status": "active",
+      "tags": [
+        "fat-tails",
+        "asymptotics",
+        "distributions"
+      ],
+      "title": "Tail Class Catalog",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-tail-class-catalog/"
+    },
+    {
+      "id": "tail-threshold-selection",
+      "path": "content/incerto-tail-threshold-selection.md",
+      "status": "active",
+      "tags": [
+        "estimation",
+        "diagnostics",
+        "tail-risk"
+      ],
+      "title": "Tail Threshold Selection",
+      "type": "method",
+      "url": "/math/incerto/incerto-tail-threshold-selection/"
+    }
+  ],
+  "schema_version": 2,
+  "stats": {
+    "dependency_edge_count": 54,
+    "node_count": 28,
+    "reference_edge_count": 43,
+    "related_edge_count": 4,
+    "type_counts": {
+      "distribution": 6,
+      "empirical-example": 5,
+      "method": 8,
+      "theorem": 9
+    }
+  },
+  "topological_order": [
+    "body-shoulder-tail",
+    "pareto",
+    "dispersion-ratio",
+    "max-to-sum-ratio",
+    "pareto-moment-existence",
+    "regular-variation",
+    "lln-failure",
+    "cramer-condition",
+    "double-pareto",
+    "extreme-value-index",
+    "generalized-central-limit-theorem",
+    "karamata",
+    "subexponentiality",
+    "lln-preasymptotic",
+    "generalized-extreme-value",
+    "generalized-pareto",
+    "hill-estimator",
+    "survival-tail-ratio",
+    "tail-class-catalog",
+    "frechet",
+    "mean-excess-function",
+    "pickands-balkema-de-haan",
+    "amazon-bookrank",
+    "iso-density-tail-geometry",
+    "plug-in-tail-estimation",
+    "tail-threshold-selection",
+    "nyc-dog-name-tail",
+    "sp500-tail"
+  ]
+}

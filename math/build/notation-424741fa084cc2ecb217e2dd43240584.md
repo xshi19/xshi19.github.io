@@ -19,6 +19,9 @@ than redefining it.
 | $p_\theta$, $p(x\mid\theta)$ | Density of $P_\theta$ with respect to a stated base measure |
 | $\mathbb E$, $\mathbb E_\theta$ | Expectation; expectation under $P_\theta$ |
 | $\operatorname{Cov}$, $\operatorname{Var}$ | Covariance and variance under the stated law |
+| $X_1,\ldots,X_n$, $x_1,\ldots,x_n$ | Sample variables and observed values; independence is stated where needed |
+| $S_n=\sum_{i=1}^n X_i$, $\bar X_n=S_n/n$ | Sample sum and sample mean |
+| $\sigma$, $\Phi$ | Scale (standard deviation when finite and stated); standard normal CDF |
 | $X$, $x$ | Observable random element and a realized value |
 | $Z$, $z$ | Latent or noise variable when that role is explicit (see Normix note below) |
 

@@ -1,0 +1,305 @@
+:root {
+  color-scheme: light;
+  --paper: #f5f4ed;
+  --panel: #faf9f5;
+  --ink: #24221d;
+  --muted: #6f6a5f;
+  --rule: #d9d4c7;
+  --accent: #1b365d;
+  --green: #2f6f5e;
+  --teal: #2e6f7f;
+  --gold: #9b6a1b;
+  --rose: #8a4f5f;
+  --violet: #635a8a;
+  --shadow: rgba(52, 44, 31, 0.12);
+  font-family: Charter, Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.graph-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.graph-toolbar {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--panel);
+}
+
+.graph-controls,
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-row {
+  margin-top: 8px;
+}
+
+.control {
+  display: grid;
+  gap: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.control input,
+.control select,
+button {
+  min-height: 32px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: #fffef9;
+  color: var(--ink);
+}
+
+.control input {
+  width: min(42vw, 280px);
+  padding: 5px 9px;
+}
+
+.control select {
+  padding: 5px 28px 5px 8px;
+}
+
+.control-compact {
+  width: 122px;
+}
+
+button {
+  align-self: end;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+button:hover,
+.filter-toggle:hover {
+  border-color: var(--accent);
+}
+
+.filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 4px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: #fffef9;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.filter-toggle input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.graph-main {
+  min-height: 0;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+}
+
+.graph-canvas-wrap {
+  position: relative;
+  min-height: 540px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(36, 34, 29, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 34, 29, 0.035) 1px, transparent 1px),
+    var(--paper);
+  background-size: 32px 32px;
+}
+
+#concept-graph {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 540px;
+  cursor: grab;
+  /* Background swipes can scroll the page vertically; horizontal swipes pan.
+     Keep browser pinch zoom available too. */
+  touch-action: pan-y pinch-zoom;
+}
+
+#concept-graph.is-dragging {
+  cursor: grabbing;
+}
+
+.graph-details {
+  padding: 14px;
+  border-left: 1px solid var(--rule);
+  background: var(--panel);
+  overflow: auto;
+}
+
+.graph-details h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.graph-details p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 13px;
+}
+
+.graph-details a {
+  color: var(--accent);
+}
+
+.detail-meta {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 14px;
+  font-size: 12px;
+}
+
+.detail-meta span {
+  color: var(--muted);
+}
+
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  padding: 3px 6px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: #fffef9;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.edge {
+  fill: none;
+  stroke: #948d80;
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.edge-reference {
+  stroke: #b5ab9b;
+  stroke-dasharray: 4 5;
+}
+
+.edge-related {
+  stroke: #a99aba;
+  stroke-dasharray: 2 4;
+}
+
+.edge-muted,
+.node-muted {
+  opacity: 0.16;
+}
+
+.edge-highlight {
+  opacity: 1;
+  stroke-width: 2.3;
+}
+
+.node {
+  cursor: pointer;
+  /* A gesture starting on a node drags it in both axes. Set this before the
+     gesture starts; changing touch-action during a drag would be too late. */
+  touch-action: none;
+}
+
+.node circle {
+  r: 10;
+  fill: #fffef9;
+  stroke-width: 2.2;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 2px 4px var(--shadow));
+}
+
+.node text {
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.node-selected circle,
+.node-highlight circle {
+  r: 13;
+  stroke-width: 3;
+}
+
+.node-type-distribution circle {
+  stroke: var(--green);
+}
+
+.node-type-theorem circle {
+  stroke: var(--gold);
+}
+
+.node-type-method circle {
+  stroke: var(--teal);
+}
+
+.node-type-empirical-example circle {
+  stroke: var(--rose);
+}
+
+.node-type-definition circle {
+  stroke: var(--violet);
+}
+
+.graph-error {
+  padding: 16px;
+  color: #7a2e2e;
+}
+
+@media (max-width: 760px) {
+  .graph-main {
+    grid-template-columns: 1fr;
+  }
+
+  .graph-details {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+    max-height: 240px;
+  }
+
+  .control input {
+    width: min(82vw, 320px);
+  }
+}
+
+.node:focus { outline: none; }
+.node:focus circle { stroke: #1B365D; stroke-width: 4px; }
+.graph-help, .concept-list { padding: 1rem; }
+.edge-proof-dependency { stroke-dasharray: 6 2; }
+.edge-generalization { stroke: #28724F; stroke-dasharray: 2 3; }
+.edge-application { stroke: #8F5A2A; }

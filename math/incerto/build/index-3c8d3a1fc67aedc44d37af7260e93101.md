@@ -90,10 +90,45 @@ and gamma examples. Browse all imported concepts through the
 and [distribution](../incerto-distribution-concepts.md) indexes. Mixture and
 variance-gamma theory links to the existing Normix notes.
 
-These twenty-six concept imports comprise twenty-three body notes and three
-indexes, alongside the original counting-exceedances example and this track hub.
-The notes retain mathematical arguments and use static calculations; they do
-not execute notebooks during the site build. Use the [shared notation](https://xshi19.github.io/math/notation/) canon for overlapping symbols. Data examples, reading guides, and dependency-graph navigation remain planned.
+## Choose an entry path
+
+For an introduction with basic calculus and probability, read
+[Pareto](../incerto-pareto.md), [moment existence](../incerto-pareto-moment-existence.md),
+[running means](../incerto-lln-preasymptotic.md), and
+[max-to-sum ratios](../incerto-max-to-sum-ratio.md), then
+[regular variation](../incerto-regular-variation.md). These pages separate
+finite moments from reliable finite-sample summaries.
+
+To analyze data:
+
+1. Begin with the [NYC dog-name example](../incerto-nyc-dog-name-tail.md).
+   Specify the observed unit and which tail is being studied.
+2. Compare empirical survival with candidate models, then use
+   [threshold selection](../incerto-tail-threshold-selection.md).
+   [Body/shoulder geometry](../incerto-body-shoulder-tail.md) concerns mixture
+   densities; its curvature boundaries do not select empirical thresholds.
+3. Compare [Hill](../incerto-hill-estimator.md) and
+   [mean excess](../incerto-mean-excess-function.md), reporting threshold
+   sensitivity and the example's discrete-count and dependence caveats.
+4. The [S&P method](../incerto-sp500-tail.md) extends the workflow to daily
+   losses when an authorized local data cache is available.
+
+## Reading and reference
+
+- [Empirical examples](../incerto-empirical-example-concepts.md): two committed
+  datasets, two simulations, and the S&P method with explicit data availability.
+- [SCoFT guide](../incerto-scoft-intro.md): Chapter 3 and 4 reading maps;
+  Chapters 5–7 remain planned.
+- [External guides](../incerto-external-reading.md), including
+  [Embrechts, Klüppelberg, and Mikosch](../incerto-reading-embrechts.md).
+- [Concept graph](../incerto-dependency-dag.md), with a plain linked fallback.
+- [Incerto glossary](../incerto-glossary.md),
+  [shared notation](https://xshi19.github.io/math/notation/),
+  [Python API](../incerto-api-reference.md), and
+  [中文入口](../incerto-chinese-entry.md).
+
+Figures and calculations are static. Reproduction scripts run separately from
+the site build; neither notebooks nor data fetches execute during publication.
 
 The [mixture sample](https://xshi19.github.io/math/normix-theory/normix-conditioning-a-mixture/) introduces a
 complementary question: how conditioning specifies a model rather than counts

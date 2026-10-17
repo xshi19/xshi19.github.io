@@ -43,7 +43,7 @@ lowers density there.
 The notation $g_v$ denotes the density at fixed variance $v$; a mixture
 averages these densities over a positive random variance $V$. The
 [Normix normal-mixtures note](https://xshi19.github.io/math/normix-theory/normix-normal-mixtures/) supplies the
-complementary conditional construction. A shared notation page is planned.
+complementary conditional construction. See the [shared notation](https://xshi19.github.io/math/notation/) canon.
 
 ## Examples
 

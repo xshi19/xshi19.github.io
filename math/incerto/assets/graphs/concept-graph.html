@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Incerto Concept Graph</title>
+    <link rel="stylesheet" href="../css/concept-graph.css" />
+  </head>
+  <body>
+    <div class="graph-shell">
+      <header class="graph-toolbar" aria-label="Concept graph controls">
+        <div class="graph-controls">
+          <label class="control">
+            <span>Search</span>
+            <input id="graph-search" type="search" autocomplete="off" />
+          </label>
+          <label class="control control-compact">
+            <span>Layout</span>
+            <select id="graph-layout">
+              <option value="dag">Prerequisites</option>
+              <option value="knowledge">Knowledge</option>
+            </select>
+          </label>
+          <label class="control control-compact">
+            <span>Local</span>
+            <select id="graph-depth">
+              <option value="all">All</option>
+              <option value="1">1 hop</option>
+              <option value="2">2 hops</option>
+            </select>
+          </label>
+          <button id="graph-reset" type="button">Reset</button>
+        </div>
+        <div id="graph-type-filters" class="filter-row" aria-label="Node type filters"></div>
+        <div id="graph-edge-filters" class="filter-row" aria-label="Edge filters"></div>
+      </header>
+
+      <p class="graph-help">Tab to a node and press Enter or Space to inspect it.
+        <a href="concept-list.html">Browse all concepts as a linked list</a>.</p>
+      <main class="graph-main">
+        <section class="graph-canvas-wrap" aria-label="Interactive concept graph">
+          <svg id="concept-graph" role="group" aria-label="Concept graph"></svg>
+        </section>
+        <aside id="graph-details" class="graph-details" aria-live="polite"></aside>
+      </main>
+    </div>
+
+    <noscript>
+      <p class="graph-error">JavaScript is required for the interactive graph.</p>
+    </noscript>
+    <script src="../js/concept-graph.js"></script>
+  </body>
+</html>

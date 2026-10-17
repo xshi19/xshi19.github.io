@@ -4,7 +4,16 @@
     <loc>https://xshi19.github.io/math/incerto/</loc>
   </url>
   <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-amazon-bookrank/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-api-reference/</loc>
+  </url>
+  <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-body-shoulder-tail/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-chinese-entry/</loc>
   </url>
   <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-counting-exceedances/</loc>
@@ -13,10 +22,22 @@
     <loc>https://xshi19.github.io/math/incerto/incerto-cramer-condition/</loc>
   </url>
   <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-dependency-dag/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-dispersion-ratio/</loc>
+  </url>
+  <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-distribution-concepts/</loc>
   </url>
   <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-double-pareto/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-empirical-example-concepts/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-external-reading/</loc>
   </url>
   <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-extreme-value-index/</loc>
@@ -34,6 +55,9 @@
     <loc>https://xshi19.github.io/math/incerto/incerto-generalized-pareto/</loc>
   </url>
   <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-glossary/</loc>
+  </url>
+  <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-hill-estimator/</loc>
   </url>
   <url>
@@ -46,6 +70,9 @@
     <loc>https://xshi19.github.io/math/incerto/incerto-lln-failure/</loc>
   </url>
   <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-lln-preasymptotic/</loc>
+  </url>
+  <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-max-to-sum-ratio/</loc>
   </url>
   <url>
@@ -53,6 +80,9 @@
   </url>
   <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-method-concepts/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-nyc-dog-name-tail/</loc>
   </url>
   <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-pareto-moment-existence/</loc>
@@ -67,7 +97,22 @@
     <loc>https://xshi19.github.io/math/incerto/incerto-plug-in-tail-estimation/</loc>
   </url>
   <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-reading-embrechts/</loc>
+  </url>
+  <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-regular-variation/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-scoft-ch3/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-scoft-ch4/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-scoft-intro/</loc>
+  </url>
+  <url>
+    <loc>https://xshi19.github.io/math/incerto/incerto-sp500-tail/</loc>
   </url>
   <url>
     <loc>https://xshi19.github.io/math/incerto/incerto-subexponentiality/</loc>

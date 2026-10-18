@@ -151,14 +151,19 @@ suggest regular variation, but the definition is about the asymptotic limit.
 - Estimating $\alpha$ from finite samples is threshold-sensitive; the
   [Hill estimator](./incerto-hill-estimator.md) and log-log plots are
   diagnostics, not certificates.
-- A regularly varying right tail with $\alpha>0$ is subexponential under
-  standard conditions; see [Subexponentiality](./incerto-subexponentiality.md) for the
-  one-big-jump principle.
+- A nonnegative law with a regularly varying right tail and $\alpha>0$
+  is subexponential (Foss, Korshunov, and Zachary, 2nd ed., §3.5,
+  Theorem 3.29 and following paragraph, p. 57); see
+  [Subexponentiality](./incerto-subexponentiality.md) for the one-big-jump
+  principle.
 - Moment implications require assumptions on the full tail and should point to
   [Karamata's theorem](./incerto-karamata.md) or to a Pareto-specific proof.
 
 ## References
 
+- Foss, Korshunov, and Zachary, *An Introduction to Heavy-Tailed and
+  Subexponential Distributions*, [2013, 2nd ed.](https://doi.org/10.1007/978-1-4614-7101-1),
+  §3.5, Theorem 3.29, p. 57: cited subexponential classification.
 - Bingham, Goldie, and Teugels, *Regular Variation* [1987](https://doi.org/10.1017/CBO9780511721434).
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).

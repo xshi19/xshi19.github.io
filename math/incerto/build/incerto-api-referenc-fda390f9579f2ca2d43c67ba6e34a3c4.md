@@ -23,6 +23,7 @@ for implementations and use local `help()` for the installed version.
 | `xmath.incerto.estimators` | `hill_estimator` (extreme-value index), `hill_alpha_estimator` (reciprocal exponent), `hill_stability`, `pareto_mean_plugin`, `mean_excess`, `running_mean`, `max_to_sum_ratio` |
 | `xmath.incerto.stats` | Gaussian-calibrated `mean_absolute_deviation`, `median_absolute_deviation`; normal and Student-t shoulder boundaries; `empirical_survival_function` (strict exceedance with ties) and `lognorm_params_from_mean_and_variance` |
 | `xmath.incerto.tail_diagnostics` | `regular_variation_ratio`, `iid_two_sum_tail`, `subexponential_sum_ratio`; numerical calculations with support and integration checks |
+| `xmath.incerto.tail_classes` | `bounded_spike_summary` (population moments), `log_survival_multiplier_ratio` (log-domain tail ratios); used by the [Prologue models](incerto-scoft-ch1.md) |
 | `xmath.incerto.figures` | `set_theme`, `style_axes`, `savefig`; shared figure style and deterministic export helpers |
 
 ```python

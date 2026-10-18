@@ -149,7 +149,11 @@ exponential moment.
   [1971, 2nd ed., Wiley](https://www.wiley-vch.de/de/fachgebiete/mathematik-und-statistik/an-introduction-to-probability-theory-and-its-applications-volume-2-978-0-471-25709-7).
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).
-- Taleb, *Statistical Consequences of Fat Tails* [2020](https://arxiv.org/abs/2001.10488).
+- Taleb, *Statistical Consequences of Fat Tails*, third edition (2025),
+  [arXiv:2001.10488v4](https://arxiv.org/abs/2001.10488v4), ch. 1,
+  pp. 3–5: motivation for distinguishing tail assumptions. The elementary
+  Chernoff and model calculations are proved here; this locator is not a
+  citation for the general large-deviation theorem.
 
 ## Backlinks
 

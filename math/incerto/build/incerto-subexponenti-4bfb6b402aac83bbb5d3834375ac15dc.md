@@ -92,7 +92,9 @@ Chistyakov's convolution-tail criterion for sums of independent positive random
 variables [1964](https://doi.org/10.1137/1109088).  Standard modern references with proofs are
 Embrechts, Klueppelberg, and Mikosch, Appendix A3
 [1997](https://doi.org/10.1007/978-3-642-33483-2), and Foss, Korshunov, and
-Zachary, Chapter 3 [2013](https://doi.org/10.1007/978-1-4614-7101-1).
+Zachary, second edition, §3.5, Theorem 3.29 and its following paragraph,
+p. 57 [2013](https://doi.org/10.1007/978-1-4614-7101-1) for the
+regular-variation implication.
 We do not reprove the full theorem, but the exact [Pareto](./incerto-pareto.md)
 case gives the right calibration.
 
@@ -303,7 +305,10 @@ subexponential even though $M_n/S_n\to0$ almost surely as $n\to\infty$.
   [1997](https://doi.org/10.1007/978-3-642-33483-2).
 - Bingham, Goldie, and Teugels, *Regular Variation* [1987](https://doi.org/10.1017/CBO9780511721434).
 - Resnick, *Heavy-Tail Phenomena* [2007](https://doi.org/10.1007/978-0-387-45024-7).
-- Taleb, *Statistical Consequences of Fat Tails* [2020](https://arxiv.org/abs/2001.10488).
+- Taleb, *Statistical Consequences of Fat Tails*, third edition (2025),
+  [arXiv:2001.10488v4](https://arxiv.org/abs/2001.10488v4), ch. 1,
+  pp. 4–5: terminology context only. The subexponential classification
+  reused by the Prologue guide is supported by Theorem 3.29 above.
 
 ## Backlinks
 

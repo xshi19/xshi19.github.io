@@ -15,15 +15,19 @@ options:
 
 ## Main facts
 
-We catalog common right-tail examples by two asymptotic properties:
-[subexponentiality](./incerto-subexponentiality.md) and
-[regular variation](./incerto-regular-variation.md). The classifications are
-cited results; the appendix proves the elementary convolution decomposition.
-Standard references are Bingham, Goldie, and Teugels for regular variation
-[1987](https://doi.org/10.1017/CBO9780511721434), and Embrechts, Klueppelberg,
-and Mikosch [1997](https://doi.org/10.1007/978-3-642-33483-2) plus Foss,
-Korshunov, and Zachary [2013, 2nd ed.](https://doi.org/10.1007/978-1-4614-7101-1)
-for subexponential tails.
+The [SCoFT Prologue guide](incerto-scoft-ch1.md) separates Gaussian-relative
+kurtosis from asymptotic tail classes. This catalog compares nonnegative
+right-tail models by [subexponentiality](incerto-subexponentiality.md) and
+[regular variation](incerto-regular-variation.md), then checks which moments
+exist. The definitions concern a specified population law.
+
+The positive classifications are cited, not proved here: Foss, Korshunov,
+and Zachary, second edition (2013), §3.5, Theorem 3.29 and its following
+paragraph, p. 57 (regular variation, including Pareto); Theorem 3.30 and
+its following examples, p. 58 (lognormal and Weibull with shape below one).
+See the [book](https://doi.org/10.1007/978-1-4614-7101-1).
+We derive the elementary tail ratios and moment contrasts below; the
+appendix proves the convolution decomposition.
 
 Let $\bar F(x)=\mathbb P(X>x)$ be the survival function.  In the table,
 "regularly varying" means $\bar F\in RV_{-\alpha}$ for some $\alpha>0$, so
@@ -59,9 +63,64 @@ $$
 F\text{ is subexponential},
 $$
 
-for distributions supported on $[0,\infty)$, or under the standard
-corresponding right-tail assumptions.  The converse fails: lognormal and
+for distributions supported on $[0,\infty)$.  The converse fails: lognormal and
 stretched-Weibull tails are subexponential without being regularly varying.
+
+(tail-class-catalog-moment-gates)=
+## Moment gates are different questions
+
+The [Cramér condition](incerto-cramer-condition.md) asks whether
+$\mathbb E e^{\theta X}<\infty$ for at least one $\theta>0$. Ordinary moments
+ask about $\mathbb E X^q$, with $q>0$. For the following nonnegative models:
+
+| Model | Finite positive power moments | Finite positive exponential moments |
+| --- | --- | --- |
+| Exponential, rate $1$ | Every $q>0$ | Exactly $0<\theta<1$ |
+| Lognormal, $\log X\sim N(0,1)$ | Every $q>0$ | None |
+| Pareto Type I, $\alpha>0$, $x_m>0$ | Exactly $0<q<\alpha$ | None |
+
+The [Pareto moment proof](incerto-pareto-moment-existence.md) gives the last
+row's power-moment boundary, including divergence at $q=\alpha$; the
+[Cramér note](incerto-cramer-condition.md) proves its exponential-moment
+failure. For the exponential row, direct integration gives
+$\int_0^\infty x^q e^{-x}\,dx=\Gamma(q+1)<\infty$ and
+$\int_0^\infty e^{-(1-\theta)x}\,dx=1/(1-\theta)$ when $\theta<1$;
+the latter integral diverges when $\theta\ge1$. Here $\Gamma$ denotes
+the gamma integral.
+
+### Proof of the lognormal moment contrast
+
+We prove both entries in the lognormal row. Let $Z\sim N(0,1)$ and
+$X=e^Z$. Completing the square gives, for every real $q$,
+
+$$
+\mathbb E X^q
+=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{qz-z^2/2}\,dz
+=e^{q^2/2}\frac{1}{\sqrt{2\pi}}
+  \int_{-\infty}^{\infty}e^{-(z-q)^2/2}\,dz
+=e^{q^2/2}.
+$$
+
+In contrast, for any fixed $\theta>0$,
+
+$$
+\mathbb E e^{\theta X}
+=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}
+  \exp(\theta e^z-z^2/2)\,dz=\infty.
+$$
+
+Indeed, $e^z/z^2\to\infty$ as $z\to\infty$, so the integrand is at
+least $1$ for all sufficiently large $z$. The integral over that half-line
+diverges. This establishes failure of the Cramér condition despite all
+positive power moments being finite. Subexponentiality is a separate,
+cited result; it does not follow just from this failure.
+
+For a Pareto model with $\alpha=5/2$ and $x_m=1$, the mean is $5/3$
+and the variance is $20/9$, but the fourth moment diverges. The formulas
+follow from the linked integral: $\mathbb E X^2=5$ and
+$5-(5/3)^2=20/9$. Pearson kurtosis is therefore not a finite summary for
+this model. Having a finite variance does not imply a finite fourth or
+positive exponential moment.
 
 ## Reusable diagnostics
 
@@ -98,7 +157,14 @@ A_t(x)\sim
 $$
 
 The asymptotic for $\bar\Phi$ follows from the complementary-error-function
-expansion in [NIST DLMF, Section 7.12](https://dlmf.nist.gov/7.12).
+expansion in [NIST DLMF, Eq. 7.12.1](https://dlmf.nist.gov/7.12#E1).
+It also gives
+$\log\bar F(x)=-\tfrac12(\log x)^2-\log\log x-\tfrac12\log(2\pi)+o(1)$
+for this standard lognormal as $x\to\infty$. Adding $cx$ or $p\log x$
+proves the two exponential-versus-power comparisons stated above. For
+$\log X\sim N(\mu,\sigma^2)$ with $\sigma>0$, replace $\log x$ in
+the normal-tail calculation by $(\log x-\mu)/\sigma$; the same comparisons
+and zero multiplier-ratio limit follow.
 Thus the multiplier diagnostic separates power tails from all four other
 examples, but cannot distinguish subexponential lognormal and stretched-Weibull
 tails from the two light-tailed examples. The classifications of lognormal and
@@ -107,10 +173,44 @@ subexponentiality.
 
 ## Exact light-tail checks
 
-Exponential and integer-shape gamma sums give elementary checks of $R$.
-With shape–rate notation, $\operatorname{Gamma}(k,1)$ has survival
-$e^{-x}\sum_{j=0}^{k-1}x^j/j!$ for $x\ge0$. Independence adds the shapes.
-Consequently,
+We prove the two negative classifications in the table. Write
+$\operatorname{Gamma}(k,\lambda)$ in shape–rate notation, with $k,\lambda>0$.
+At rate one, convolution of the densities with shapes $k$ and $\ell>0$
+gives
+
+$$
+\frac{e^{-x}}{\Gamma(k)\Gamma(\ell)}
+\int_0^x y^{k-1}(x-y)^{\ell-1}\,dy
+=\frac{e^{-x}x^{k+\ell-1}}{\Gamma(k+\ell)},\qquad x>0,
+$$
+
+using the beta integral ([NIST DLMF, Eq. 5.12.1](https://dlmf.nist.gov/5.12#E1)).
+Thus independent shapes add. Scaling by
+$1/\lambda$ gives the same rule at a common rate $\lambda$.
+The survival integral, compared with its leading integrand by l'Hôpital's
+rule, gives
+
+$$
+\bar F(x)\sim\frac{(\lambda x)^{k-1}e^{-\lambda x}}{\Gamma(k)},
+\qquad x\to\infty.
+$$
+
+For completeness, at rate one the derivatives of
+$\int_x^\infty y^{k-1}e^{-y}\,dy$ and $x^{k-1}e^{-x}$ have ratio
+$[1-(k-1)/x]^{-1}\to1$; both functions tend to zero. Consequently,
+for fixed $t>1$,
+
+$$
+A_t(x)\sim t^{k-1}e^{-\lambda(t-1)x}\to0,\qquad
+R(x)\sim\frac{\Gamma(k)}{2\Gamma(2k)}(\lambda x)^k\to\infty.
+$$
+
+This proves that every positive-shape gamma law, including the exponential
+case $k=1$, is neither regularly varying with a finite positive exponent
+nor subexponential.
+
+For integer $k\ge1$ and rate one, repeated integration by parts gives the
+exact survival $e^{-x}\sum_{j=0}^{k-1}x^j/j!$ for $x\ge0$. Hence
 
 $$
 R_{\operatorname{Exp}(1)}(x)=\frac{1+x}{2},
@@ -129,6 +229,33 @@ Both ratios diverge, although the gamma ratio happens to be near one at
 $x=2$. A single moderate-threshold observation is insufficient to infer a
 limiting tail class. The [Cramér condition](./incerto-cramer-condition.md)
 provides the exponential-moment contrast for these two light-tailed laws.
+
+(tail-class-catalog-demo)=
+## A finite model comparison
+
+Run `uv run python demos/incerto/prologue_tail_classes.py` from the
+repository root. It evaluates $\log A_2(u)$ for Pareto
+$(\alpha=5/2,x_m=1)$, standard lognormal, Weibull $(\beta=1/2)$,
+exponential (rate $1$), and gamma (shape $2$, rate $1$).
+The fixed grid has 241 logarithmically spaced thresholds from $1$ to $10^4$;
+all quantities are dimensionless population calculations. There is no
+sampling, data fitting, truncation of a distribution, or uncertainty interval.
+
+```{figure} ../assets/figures/incerto/prologue-tail-ratios.svg
+:alt: Negative log multiplier ratios on logarithmic axes. Pareto is constant while the lognormal, stretched Weibull, exponential and gamma curves increase.
+
+Theoretical survival functions evaluated on a finite grid. The ordinate is
+$-\log[\bar F(2u)/\bar F(u)]$: an increasing curve means a decreasing
+multiplier ratio. The lognormal and stretched-Weibull curves share their
+zero-ratio limit with the two light-tailed models, although their convolution
+tails belong to a different class.
+```
+
+The script also prints exact exponential and gamma two-sum checks at
+$u=2,10,100$. The helper uses log survival values for the multiplier figure;
+non-finite values cause an error. In particular, it does not divide zeros
+when an ordinary survival function underflows. The figure is numerical
+illustration of the formulas above, not evidence of an observed tail class.
 
 ## Caveats
 
@@ -214,7 +341,13 @@ no numerical integration or executable package helper is needed for it.
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).
 - Foss, Korshunov, and Zachary, *An Introduction to Heavy-Tailed and
-  Subexponential Distributions* [2013, 2nd ed.](https://doi.org/10.1007/978-1-4614-7101-1).
+  Subexponential Distributions* [2013, 2nd ed.](https://doi.org/10.1007/978-1-4614-7101-1),
+  §3.5, Theorem 3.29 and following paragraph, p. 57; Theorem 3.30 and
+  following examples, p. 58. These support the cited positive classifications.
+- Taleb, *Statistical Consequences of Fat Tails*, third edition (2025),
+  [arXiv:2001.10488v4](https://arxiv.org/abs/2001.10488v4), ch. 1,
+  terminology discussion, pp. 4–5: context for the companion Prologue guide,
+  not a theorem source for this table.
 
 ## Backlinks
 

@@ -117,7 +117,8 @@ To analyze data:
 
 - [Empirical examples](../incerto-empirical-example-concepts.md): two committed
   datasets, two simulations, and the S&P method with explicit data availability.
-- [SCoFT guide](../incerto-scoft-intro.md): Chapter 3 and 4 reading maps;
+- [SCoFT guide](../incerto-scoft-intro.md): the [Prologue](../incerto-scoft-ch1.md)
+  develops tail terminology through exact models; Chapters 3 and 4 offer reading maps;
   Chapters 5–7 remain planned.
 - [External guides](../incerto-external-reading.md), including
   [Embrechts, Klüppelberg, and Mikosch](../incerto-reading-embrechts.md).

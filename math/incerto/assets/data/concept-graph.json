@@ -235,6 +235,18 @@
       "target": "lln-failure"
     },
     {
+      "id": "dependency:pareto-moment-existence->mixture-uncertainty",
+      "kind": "dependency",
+      "source": "pareto-moment-existence",
+      "target": "mixture-uncertainty"
+    },
+    {
+      "id": "dependency:pareto-moment-existence->moment-estimation",
+      "kind": "dependency",
+      "source": "pareto-moment-existence",
+      "target": "moment-estimation"
+    },
+    {
       "id": "dependency:pareto-moment-existence->plug-in-tail-estimation",
       "kind": "dependency",
       "source": "pareto-moment-existence",
@@ -245,6 +257,12 @@
       "kind": "dependency",
       "source": "pickands-balkema-de-haan",
       "target": "sp500-tail"
+    },
+    {
+      "id": "dependency:plug-in-tail-estimation->moment-estimation",
+      "kind": "dependency",
+      "source": "plug-in-tail-estimation",
+      "target": "moment-estimation"
     },
     {
       "id": "dependency:regular-variation->cramer-condition",
@@ -397,6 +415,12 @@
       "target": "iso-density-tail-geometry"
     },
     {
+      "id": "reference:body-shoulder-tail->mixture-uncertainty",
+      "kind": "reference",
+      "source": "body-shoulder-tail",
+      "target": "mixture-uncertainty"
+    },
+    {
       "id": "reference:body-shoulder-tail->nyc-dog-name-tail",
       "kind": "reference",
       "source": "body-shoulder-tail",
@@ -421,6 +445,12 @@
       "target": "tail-threshold-selection"
     },
     {
+      "id": "reference:cramer-condition->mixture-uncertainty",
+      "kind": "reference",
+      "source": "cramer-condition",
+      "target": "mixture-uncertainty"
+    },
+    {
       "id": "reference:cramer-condition->pareto",
       "kind": "reference",
       "source": "cramer-condition",
@@ -437,6 +467,12 @@
       "kind": "reference",
       "source": "cramer-condition",
       "target": "tail-class-catalog"
+    },
+    {
+      "id": "reference:dispersion-ratio->moment-estimation",
+      "kind": "reference",
+      "source": "dispersion-ratio",
+      "target": "moment-estimation"
     },
     {
       "id": "reference:double-pareto->max-to-sum-ratio",
@@ -577,6 +613,12 @@
       "target": "max-to-sum-ratio"
     },
     {
+      "id": "reference:lln-failure->moment-estimation",
+      "kind": "reference",
+      "source": "lln-failure",
+      "target": "moment-estimation"
+    },
+    {
       "id": "reference:lln-failure->subexponentiality",
       "kind": "reference",
       "source": "lln-failure",
@@ -629,6 +671,18 @@
       "kind": "reference",
       "source": "mean-excess-function",
       "target": "pickands-balkema-de-haan"
+    },
+    {
+      "id": "reference:mixture-uncertainty->moment-estimation",
+      "kind": "reference",
+      "source": "mixture-uncertainty",
+      "target": "moment-estimation"
+    },
+    {
+      "id": "reference:moment-estimation->tail-class-catalog",
+      "kind": "reference",
+      "source": "moment-estimation",
+      "target": "tail-class-catalog"
     },
     {
       "id": "reference:pareto->pickands-balkema-de-haan",
@@ -715,10 +769,28 @@
       "target": "iso-density-tail-geometry"
     },
     {
+      "id": "related:body-shoulder-tail->mixture-uncertainty",
+      "kind": "related",
+      "source": "body-shoulder-tail",
+      "target": "mixture-uncertainty"
+    },
+    {
+      "id": "related:body-shoulder-tail->moment-estimation",
+      "kind": "related",
+      "source": "body-shoulder-tail",
+      "target": "moment-estimation"
+    },
+    {
       "id": "related:decentralization->ruin",
       "kind": "related",
       "source": "decentralization",
       "target": "ruin"
+    },
+    {
+      "id": "related:dispersion-ratio->moment-estimation",
+      "kind": "related",
+      "source": "dispersion-ratio",
+      "target": "moment-estimation"
     },
     {
       "id": "related:inference-asymmetry->ruin",
@@ -739,143 +811,163 @@
       "target": "pareto-moment-existence"
     },
     {
+      "id": "related:lln-preasymptotic->moment-estimation",
+      "kind": "related",
+      "source": "lln-preasymptotic",
+      "target": "moment-estimation"
+    },
+    {
       "id": "related:max-to-sum-ratio->survival-tail-ratio",
       "kind": "related",
       "source": "max-to-sum-ratio",
       "target": "survival-tail-ratio"
+    },
+    {
+      "id": "related:mixture-uncertainty->moment-estimation",
+      "kind": "related",
+      "source": "mixture-uncertainty",
+      "target": "moment-estimation"
     }
   ],
   "layouts": {
     "dag": {
-      "height": 820,
+      "height": 910,
       "nodes": {
         "amazon-bookrank": {
           "x": 690.0,
-          "y": 136.66666666666666
+          "y": 151.66666666666666
         },
         "asymmetric-payoffs": {
           "x": 390.0,
-          "y": 91.11111111111111
+          "y": 91.0
         },
         "body-shoulder-tail": {
           "x": 90.0,
-          "y": 205.0
+          "y": 227.5
         },
         "cramer-condition": {
           "x": 390.0,
-          "y": 182.22222222222223
+          "y": 182.0
         },
         "decentralization": {
           "x": 240.0,
-          "y": 585.7142857142857
+          "y": 650.0
         },
         "dispersion-ratio": {
           "x": 240.0,
-          "y": 117.14285714285714
+          "y": 130.0
         },
         "double-pareto": {
           "x": 390.0,
-          "y": 728.8888888888889
+          "y": 728.0
         },
         "extreme-value-index": {
           "x": 390.0,
-          "y": 273.33333333333337
+          "y": 273.0
         },
         "frechet": {
           "x": 690.0,
-          "y": 273.3333333333333
+          "y": 303.3333333333333
         },
         "generalized-central-limit-theorem": {
           "x": 390.0,
-          "y": 364.44444444444446
+          "y": 364.0
         },
         "generalized-extreme-value": {
           "x": 540.0,
-          "y": 117.14285714285714
+          "y": 130.0
         },
         "generalized-pareto": {
           "x": 540.0,
-          "y": 234.28571428571428
+          "y": 260.0
         },
         "hill-estimator": {
           "x": 540.0,
-          "y": 351.42857142857144
+          "y": 390.0
         },
         "inference-asymmetry": {
           "x": 240.0,
-          "y": 234.28571428571428
+          "y": 260.0
         },
         "iso-density-tail-geometry": {
           "x": 690.0,
-          "y": 410.0
+          "y": 455.0
         },
         "karamata": {
           "x": 390.0,
-          "y": 455.55555555555554
+          "y": 455.0
         },
         "lln-failure": {
           "x": 390.0,
-          "y": 546.6666666666667
+          "y": 546.0
         },
         "lln-preasymptotic": {
           "x": 540.0,
-          "y": 468.57142857142856
+          "y": 520.0
         },
         "max-to-sum-ratio": {
           "x": 240.0,
-          "y": 351.42857142857144
+          "y": 390.0
         },
         "mean-excess-function": {
           "x": 690.0,
-          "y": 546.6666666666666
+          "y": 606.6666666666666
+        },
+        "mixture-uncertainty": {
+          "x": 390.0,
+          "y": 819.0
+        },
+        "moment-estimation": {
+          "x": 990.0,
+          "y": 455.0
         },
         "nyc-dog-name-tail": {
           "x": 990.0,
-          "y": 273.3333333333333
+          "y": 227.5
         },
         "pareto": {
           "x": 90.0,
-          "y": 410.0
+          "y": 455.0
         },
         "pareto-moment-existence": {
           "x": 240.0,
-          "y": 468.57142857142856
+          "y": 520.0
         },
         "pickands-balkema-de-haan": {
           "x": 690.0,
-          "y": 683.3333333333333
+          "y": 758.3333333333333
         },
         "plug-in-tail-estimation": {
           "x": 840.0,
-          "y": 273.3333333333333
+          "y": 303.3333333333333
         },
         "regular-variation": {
           "x": 240.0,
-          "y": 702.8571428571429
+          "y": 780.0
         },
         "ruin": {
           "x": 90.0,
-          "y": 615.0
+          "y": 682.5
         },
         "sp500-tail": {
           "x": 990.0,
-          "y": 546.6666666666666
+          "y": 682.5
         },
         "subexponentiality": {
           "x": 390.0,
-          "y": 637.7777777777778
+          "y": 637.0
         },
         "survival-tail-ratio": {
           "x": 540.0,
-          "y": 585.7142857142857
+          "y": 650.0
         },
         "tail-class-catalog": {
           "x": 540.0,
-          "y": 702.8571428571429
+          "y": 780.0
         },
         "tail-threshold-selection": {
           "x": 840.0,
-          "y": 546.6666666666666
+          "y": 606.6666666666666
         }
       },
       "width": 1080
@@ -884,132 +976,140 @@
       "height": 680,
       "nodes": {
         "amazon-bookrank": {
-          "x": 533.5444162606498,
-          "y": 129.86794133244535
-        },
-        "asymmetric-payoffs": {
-          "x": 184.5535938608276,
+          "x": 386.41968387780423,
           "y": 590.0
         },
+        "asymmetric-payoffs": {
+          "x": 755.5976290721582,
+          "y": 459.67865418172136
+        },
         "body-shoulder-tail": {
-          "x": 633.419596281448,
-          "y": 300.455405152461
+          "x": 534.0567758433242,
+          "y": 302.80710702412557
         },
         "cramer-condition": {
-          "x": 600.3509126797294,
-          "y": 405.5530433126001
+          "x": 436.7189047064098,
+          "y": 173.2134176975471
         },
         "decentralization": {
-          "x": 185.52064719188076,
-          "y": 473.2624751497607
+          "x": 655.3430898253586,
+          "y": 528.3382437355419
         },
         "dispersion-ratio": {
-          "x": 830.0,
-          "y": 224.90758163577703
+          "x": 783.2066192560554,
+          "y": 222.40482062477085
         },
         "double-pareto": {
-          "x": 380.5965499776191,
-          "y": 554.1986694955278
+          "x": 243.73345991901965,
+          "y": 246.3963976418137
         },
         "extreme-value-index": {
-          "x": 403.450495012865,
-          "y": 258.38361611118364
+          "x": 219.1505429063996,
+          "y": 418.70130913136006
         },
         "frechet": {
-          "x": 313.7843312429278,
-          "y": 297.1039261324531
+          "x": 106.20247376132394,
+          "y": 351.57440239639897
         },
         "generalized-central-limit-theorem": {
-          "x": 420.8676954516881,
-          "y": 490.29753808959174
+          "x": 421.8124183828071,
+          "y": 307.6295948510008
         },
         "generalized-extreme-value": {
-          "x": 313.9361672272263,
-          "y": 190.9133673452033
+          "x": 90.0,
+          "y": 449.7763816787329
         },
         "generalized-pareto": {
-          "x": 443.54137412080865,
-          "y": 153.05560858610784
+          "x": 233.89882553923394,
+          "y": 528.8184806639913
         },
         "hill-estimator": {
-          "x": 496.3795626564603,
-          "y": 235.17027248078514
+          "x": 320.22625590159385,
+          "y": 473.35699247311044
         },
         "inference-asymmetry": {
-          "x": 241.30816017851194,
-          "y": 525.2552528687302
+          "x": 650.0406370101381,
+          "y": 448.76527765845253
         },
         "iso-density-tail-geometry": {
-          "x": 687.2220143193161,
-          "y": 500.95050475580393
-        },
-        "karamata": {
-          "x": 456.3030140584504,
-          "y": 426.3409780463007
-        },
-        "lln-failure": {
-          "x": 468.780402820764,
-          "y": 569.5114294449394
-        },
-        "lln-preasymptotic": {
-          "x": 416.15420107489007,
-          "y": 558.1312907156185
-        },
-        "max-to-sum-ratio": {
-          "x": 515.6754465693416,
-          "y": 539.3899887995556
-        },
-        "mean-excess-function": {
-          "x": 368.38829435465897,
-          "y": 174.67517397746997
-        },
-        "nyc-dog-name-tail": {
-          "x": 588.1729637104474,
-          "y": 146.00991100878755
-        },
-        "pareto": {
-          "x": 426.4516922789378,
-          "y": 371.3918705704934
-        },
-        "pareto-moment-existence": {
-          "x": 377.74981136845156,
-          "y": 475.1253123200267
-        },
-        "pickands-balkema-de-haan": {
-          "x": 408.3490554095025,
-          "y": 201.5449940656739
-        },
-        "plug-in-tail-estimation": {
-          "x": 389.2712146450055,
-          "y": 352.268713032295
-        },
-        "regular-variation": {
-          "x": 484.67368892558164,
-          "y": 384.0624780514621
-        },
-        "ruin": {
-          "x": 90.0,
-          "y": 583.5858611120077
-        },
-        "sp500-tail": {
-          "x": 422.61369462452024,
+          "x": 420.98164093704395,
           "y": 90.0
         },
+        "karamata": {
+          "x": 327.1691878802384,
+          "y": 332.4204603563057
+        },
+        "lln-failure": {
+          "x": 451.4688961353915,
+          "y": 233.36667328885696
+        },
+        "lln-preasymptotic": {
+          "x": 508.6004979294513,
+          "y": 262.98496128672195
+        },
+        "max-to-sum-ratio": {
+          "x": 361.43034917606104,
+          "y": 204.8299024296477
+        },
+        "mean-excess-function": {
+          "x": 267.1079475401051,
+          "y": 503.68913910020035
+        },
+        "mixture-uncertainty": {
+          "x": 626.4194970189079,
+          "y": 179.85748417177388
+        },
+        "moment-estimation": {
+          "x": 602.6763015915623,
+          "y": 256.5309571026542
+        },
+        "nyc-dog-name-tail": {
+          "x": 435.84003766158395,
+          "y": 514.0171477845099
+        },
+        "pareto": {
+          "x": 363.6486863277587,
+          "y": 373.144359161862
+        },
+        "pareto-moment-existence": {
+          "x": 489.32977513708875,
+          "y": 328.45226835858375
+        },
+        "pickands-balkema-de-haan": {
+          "x": 177.15417338702446,
+          "y": 454.2077390506511
+        },
+        "plug-in-tail-estimation": {
+          "x": 422.2726254917202,
+          "y": 390.39124743745475
+        },
+        "regular-variation": {
+          "x": 298.5123833782625,
+          "y": 301.15674164092115
+        },
+        "ruin": {
+          "x": 830.0,
+          "y": 553.2480500294265
+        },
+        "sp500-tail": {
+          "x": 159.23620897855665,
+          "y": 545.4027355946275
+        },
         "subexponentiality": {
-          "x": 575.782107922231,
-          "y": 501.75094069650095
+          "x": 317.5728416473895,
+          "y": 170.02646491267888
         },
         "survival-tail-ratio": {
-          "x": 620.0875075351303,
-          "y": 554.4969504000987
+          "x": 270.43138085154396,
+          "y": 114.53995105770639
         },
         "tail-class-catalog": {
-          "x": 532.6826969652877,
-          "y": 444.41275723315687
+          "x": 375.77987919596404,
+          "y": 248.84890814627283
         },
         "tail-threshold-selection": {
-          "x": 474.90537562109955,
-          "y": 263.7199340940043
+          "x": 336.73201339228234,
+          "y": 431.16559251697316
         }
       },
       "width": 920
@@ -1241,6 +1341,19 @@
       "url": "/math/incerto/incerto-mean-excess-function/"
     },
     {
+      "id": "moment-estimation",
+      "path": "content/incerto-moment-estimation.md",
+      "status": "active",
+      "tags": [
+        "estimation",
+        "moments",
+        "finite-samples"
+      ],
+      "title": "Moment estimation and its limits",
+      "type": "method",
+      "url": "/math/incerto/incerto-moment-estimation/"
+    },
+    {
       "id": "pareto",
       "path": "content/incerto-pareto.md",
       "status": "active",
@@ -1412,18 +1525,31 @@
       "title": "Tail Threshold Selection",
       "type": "method",
       "url": "/math/incerto/incerto-tail-threshold-selection/"
+    },
+    {
+      "id": "mixture-uncertainty",
+      "path": "content/incerto-mixture-uncertainty.md",
+      "status": "active",
+      "tags": [
+        "mixtures",
+        "moments",
+        "tail-risk"
+      ],
+      "title": "Variance mixtures and uncertain scale",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-mixture-uncertainty/"
     }
   ],
   "schema_version": 2,
   "stats": {
-    "dependency_edge_count": 57,
-    "node_count": 32,
-    "reference_edge_count": 54,
-    "related_edge_count": 9,
+    "dependency_edge_count": 60,
+    "node_count": 34,
+    "reference_edge_count": 60,
+    "related_edge_count": 14,
     "type_counts": {
-      "distribution": 6,
+      "distribution": 7,
       "empirical-example": 5,
-      "method": 10,
+      "method": 11,
       "theorem": 11
     }
   },
@@ -1439,6 +1565,7 @@
     "regular-variation",
     "asymmetric-payoffs",
     "lln-failure",
+    "mixture-uncertainty",
     "cramer-condition",
     "double-pareto",
     "extreme-value-index",
@@ -1458,6 +1585,7 @@
     "iso-density-tail-geometry",
     "plug-in-tail-estimation",
     "tail-threshold-selection",
+    "moment-estimation",
     "nyc-dog-name-tail",
     "sp500-tail"
   ]

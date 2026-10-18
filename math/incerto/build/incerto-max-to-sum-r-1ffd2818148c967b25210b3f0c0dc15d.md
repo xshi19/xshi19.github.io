@@ -167,7 +167,7 @@ For iid data, a nondegenerate weak limit of the normalized statistic and
 $m/n\to0$ justify convergence of the subsampling distribution at continuity
 points of the limiting CDF. Estimated centering or normalization must have
 negligible effect at the subsample scale. We cite this result from
-[Politis and Romano (1994)](https://doi.org/10.1214/aos/1176325770);
+Politis and Romano (1994) [@politis1994subsampling];
 [Bickel, Götze, and van Zwet (1997), Theorem 1, p. 9](https://www3.stat.sinica.edu.tw/statistica/oldpdf/a7n11.pdf#page=9)
 gives a proof and an explicit plug-in condition. These are asymptotic
 conditions; report the chosen $m$ and sensitivity to it.

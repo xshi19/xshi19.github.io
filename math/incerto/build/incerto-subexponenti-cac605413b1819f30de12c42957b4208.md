@@ -303,7 +303,7 @@ subexponential even though $M_n/S_n\to0$ almost surely as $n\to\infty$.
 
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).
-- Bingham, Goldie, and Teugels, *Regular Variation* [1987](https://doi.org/10.1017/CBO9780511721434).
+- Bingham, Goldie, and Teugels, *Regular Variation* [@bingham1987regular].
 - Resnick, *Heavy-Tail Phenomena* [2007](https://doi.org/10.1007/978-0-387-45024-7).
 - Taleb, *Statistical Consequences of Fat Tails*, third edition (2025),
   [arXiv:2001.10488v4](https://arxiv.org/abs/2001.10488v4), ch. 1,

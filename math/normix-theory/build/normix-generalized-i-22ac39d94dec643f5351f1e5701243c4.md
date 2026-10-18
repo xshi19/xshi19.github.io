@@ -7,7 +7,7 @@ mixing variable for the [GH family](./normix-generalized-hyperbolic.md).
 Its normalizing integral also gives the posterior moments used by
 [EM](./normix-em-algorithm.md). A standard reference is Bent Jørgensen,
 *Statistical Properties of the Generalized Inverse Gaussian Distribution*
-([1982; electronic edition 2012](https://link.springer.com/book/10.1007/978-1-4612-5698-4)).
+(1982; electronic edition 2012) [@jorgensen1982gig].
 
 ## Definition and normalizing integral
 

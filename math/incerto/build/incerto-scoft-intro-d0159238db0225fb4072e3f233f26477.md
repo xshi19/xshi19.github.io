@@ -5,7 +5,7 @@ title: 'Reading Guide: Statistical Consequences of Fat Tails'
 Taleb, N. N. (2025). *Statistical Consequences of Fat Tails*, third edition.
 [arXiv:2001.10488v4](https://arxiv.org/abs/2001.10488v4)
 
-The chapter 1 guide uses this edition's Prologue, printed pp. 3–6. The
+The chapter 1 and 2 guides use this edition, printed pp. 3–6 and 7–21. The
 chapter 3 and 4 guides retain earlier source references; consult the edition
 and locators named on each page when following a claim back to the book.
 
@@ -17,9 +17,10 @@ fills notation gaps, adds proofs, and connects ideas.
 
 | Chapter | Topic | Concepts |
 |---------|-------|----------|
-| [1](incerto-scoft-ch1.md) | Prologue: terminology and the assumptions behind tail summaries | [Tail class catalog](incerto-tail-class-catalog.md), [Cramér condition](incerto-cramer-condition.md), [Regular variation](incerto-regular-variation.md) |
-| [3](incerto-scoft-ch3.md) | Non-technical overview of thick-tail consequences | [Pareto Distribution](incerto-pareto.md), [Regular Variation](incerto-regular-variation.md), [Pre-Asymptotic LLN Behavior](incerto-lln-preasymptotic.md) |
-| [4](incerto-scoft-ch4.md) | Random scale and variance mixtures | [Normal Variance Mixture](https://xshi19.github.io/math/normix-theory/normix-normal-mixtures/), [Variance Gamma Distribution](https://xshi19.github.io/math/normix-theory/normix-gh-family-tour/), [Body, Shoulders, and Tails](incerto-body-shoulder-tail.md) |
+| [Chapter 1 — Prologue](incerto-scoft-ch1.md) | Assumptions behind tail summaries | [Tail class catalog](incerto-tail-class-catalog.md), [Cramér condition](incerto-cramer-condition.md), [Regular variation](incerto-regular-variation.md) |
+| [Chapter 2 — Glossary, definitions, and notations](incerto-scoft-ch2.md) | Probability, conditional size, and tail limits | [Counting exceedances](incerto-counting-exceedances.md), [Pareto](incerto-pareto.md), [EVI](incerto-extreme-value-index.md) |
+| [Chapter 3 — Non-technical overview](incerto-scoft-ch3.md) | Thick-tail consequences | [Pareto Distribution](incerto-pareto.md), [Regular Variation](incerto-regular-variation.md), [Pre-Asymptotic LLN Behavior](incerto-lln-preasymptotic.md) |
+| [Chapter 4 — How fat tails emerge from random scale](incerto-scoft-ch4.md) | Random scale and variance mixtures | [Normal Variance Mixture](https://xshi19.github.io/math/normix-theory/normix-normal-mixtures/), [Variance Gamma Distribution](https://xshi19.github.io/math/normix-theory/normix-gh-family-tour/), [Body, Shoulders, and Tails](incerto-body-shoulder-tail.md) |
 | 5 | Planned guide | Planned; no page published |
 | 6 | Planned guide | Planned; no page published |
 | 7 | Planned guide | Planned; no page published |

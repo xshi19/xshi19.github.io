@@ -1,5 +1,5 @@
 ---
-title: Chapter 1 — Prologue and tail terminology
+title: Chapter 1 — Prologue
 ---
 
 ## Reading the Prologue

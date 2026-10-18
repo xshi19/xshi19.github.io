@@ -66,6 +66,42 @@ $$
 for distributions supported on $[0,\infty)$.  The converse fails: lognormal and
 stretched-Weibull tails are subexponential without being regularly varying.
 
+(tail-class-catalog-slow-variation)=
+## Slow variation need not settle to a constant
+
+SCoFT v4 §§2.2.1 and 2.2.11, pp. 9 and 13, discuss a practical transition
+to a nearly constant tail factor [@taleb2025scoftv4]. Such a transition is an
+extra modeling assumption. The definition of slow variation does not imply
+a finite constant limit, or an exact Pareto tail beyond a finite threshold.
+
+Here is a complete counterexample, in dimensionless units:
+
+$$
+\bar F(x)=
+\begin{cases}
+1,&x<1,\\
+x^{-2}(1+\log x),&x\ge1.
+\end{cases}
+$$
+
+We prove that this is a survival function with a regularly varying tail.
+It is continuous at $1$, tends to zero at infinity, and its derivative on
+$x>1$ is $-x^{-3}(1+2\log x)<0$. Thus it defines a probability law on
+$[1,\infty)$. Its factor $L(x)=1+\log x$ tends to infinity, while for every
+fixed $t>0$ and sufficiently large $x$,
+
+$$
+\frac{L(tx)}{L(x)}=1+\frac{\log t}{1+\log x}\longrightarrow1,
+\qquad
+\frac{\bar F(tx)}{\bar F(x)}\longrightarrow t^{-2}.
+$$
+
+The [chapter 2 worked cases](incerto-scoft-ch2.md#scoft-ch2-demo) evaluate
+this ratio alongside the exact Pareto ratio $1/4$ at multiplier $2$.
+A finite curve cannot establish where a tail approximation becomes adequate;
+[threshold selection](incerto-tail-threshold-selection.md) requires its own
+diagnostics. The example disproves a constant-limit requirement analytically.
+
 (tail-class-catalog-moment-gates)=
 ## Moment gates are different questions
 
@@ -249,6 +285,11 @@ $-\log[\bar F(2u)/\bar F(u)]$: an increasing curve means a decreasing
 multiplier ratio. The lognormal and stretched-Weibull curves share their
 zero-ratio limit with the two light-tailed models, although their convolution
 tails belong to a different class.
+The exponential curve (brick, circles) and gamma curve (teal, squares) nearly
+coincide at high thresholds. Their ordinates are $u$ and
+$u-\log[(1+2u)/(1+u)]$, respectively: the gap tends to $\log2$ while both
+grow like $u$. Logarithmic axes make that relative gap small. Distinct markers
+and line widths preserve both curves without shifting their values.
 ```
 
 The script also prints exact exponential and gamma two-sum checks at
@@ -337,7 +378,7 @@ no numerical integration or executable package helper is needed for it.
 ## References
 
 - Bingham, Goldie, and Teugels, *Regular Variation*
-  [1987](https://doi.org/10.1017/CBO9780511721434).
+  [@bingham1987regular].
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).
 - Foss, Korshunov, and Zachary, *An Introduction to Heavy-Tailed and

@@ -24,6 +24,7 @@ for implementations and use local `help()` for the installed version.
 | `xmath.incerto.stats` | Gaussian-calibrated `mean_absolute_deviation`, `median_absolute_deviation`; normal and Student-t shoulder boundaries; `empirical_survival_function` (strict exceedance with ties) and `lognorm_params_from_mean_and_variance` |
 | `xmath.incerto.tail_diagnostics` | `regular_variation_ratio`, `iid_two_sum_tail`, `subexponential_sum_ratio`; numerical calculations with support and integration checks |
 | `xmath.incerto.tail_classes` | `bounded_spike_summary` (population moments), `log_survival_multiplier_ratio` (log-domain tail ratios); used by the [Prologue models](incerto-scoft-ch1.md) |
+| `xmath.incerto.glossary` | `pareto_tail_quantities` (log survival, conditional means, tail contribution), `pareto_normalized_maximum_cdf` (exact iid maximum law); [chapter 2 worked cases](incerto-scoft-ch2.md#scoft-ch2-demo) |
 | `xmath.incerto.figures` | `set_theme`, `style_axes`, `savefig`; shared figure style and deterministic export helpers |
 
 ```python

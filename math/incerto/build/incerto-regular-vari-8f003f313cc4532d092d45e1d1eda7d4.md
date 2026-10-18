@@ -164,7 +164,7 @@ suggest regular variation, but the definition is about the asymptotic limit.
 - Foss, Korshunov, and Zachary, *An Introduction to Heavy-Tailed and
   Subexponential Distributions*, [2013, 2nd ed.](https://doi.org/10.1007/978-1-4614-7101-1),
   §3.5, Theorem 3.29, p. 57: cited subexponential classification.
-- Bingham, Goldie, and Teugels, *Regular Variation* [1987](https://doi.org/10.1017/CBO9780511721434).
+- Bingham, Goldie, and Teugels, *Regular Variation* [@bingham1987regular].
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).
 - Resnick, *Heavy-Tail Phenomena* [2007](https://doi.org/10.1007/978-0-387-45024-7).

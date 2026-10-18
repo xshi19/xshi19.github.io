@@ -189,6 +189,74 @@ empirical tail thresholds are rarely known and must be diagnosed separately.
 The [symmetric shifted double Pareto model](./incerto-double-pareto.md)
 extends the tail construction to signed observations.
 
+(pareto-threshold-quantities)=
+## Exceedance probability and exceedance size
+
+For $u\ge x_m$ and $y\ge0$, cancellation of Pareto survival probabilities
+proves the conditional excess law:
+
+$$
+P(X-u>y\mid X>u)=\frac{\bar F(u+y)}{\bar F(u)}
+=\left(1+\frac yu\right)^{-\alpha}.
+$$
+
+This is an exact [generalized Pareto](incerto-generalized-pareto.md) survival
+with shape $\xi=1/\alpha$ and scale $u/\alpha$. It holds at every threshold
+$u\ge x_m$ for this model; no limiting approximation is required.
+Integrating the nonnegative excess survival gives
+
+$$
+e(u)=\mathbb E[X-u\mid X>u]=\frac{u}{\alpha-1},\qquad
+\mathbb E[X\mid X>u]=\frac{\alpha u}{\alpha-1},\quad \alpha>1.
+$$
+
+Both expectations are infinite for $0<\alpha\le1$, since the integral of
+$(1+y/u)^{-\alpha}$ diverges. The first expectation is the
+[mean excess](incerto-mean-excess-function.md); the second includes the
+threshold itself. In particular, their ratio to $u$ is different.
+
+We also prove the distinction between tail probability and tail contribution
+to the mean. For any nonnegative $X$ and $u\ge0$, the pointwise identity
+$X\mathbf1_{\{X>u\}}=u\mathbf1_{\{X>u\}}+(X-u)_+$ and Tonelli's theorem
+give
+
+$$
+\mathbb E[X\mathbf1_{\{X>u\}}]
+=u\bar F(u)+\int_u^\infty\bar F(v)\,dv.
+$$
+
+The equality holds in the extended nonnegative reals, including atoms at
+$u$. For Pareto with $\alpha>1$ it becomes
+$\bar F(u)\alpha u/(\alpha-1)$. For $\alpha=3/2$, $x_m=1$, and $u=4$,
+the probability is $1/8$, the mean excess is $8$, the conditional mean is
+$12$, and the tail contribution is $3/2$. Replacing that contribution by
+$u\bar F(u)=1/2$ would discard the entire excess integral.
+
+These definitions clarify SCoFT v4 §2.2.4, pp. 10–11, and §§2.2.23–24,
+pp. 17–18 [@taleb2025scoftv4]. The exact Pareto calculation here does not
+classify arbitrary tails from a finite mean-excess plot. Reproduce it with
+`uv run python demos/incerto/glossary_worked_cases.py`; the script also reports
+the infinite-mean cases without replacing infinity by a finite cutoff.
+
+(pareto-known-cutoff-likelihood)=
+## Why the known-cutoff likelihood formula needs conditions
+
+We prove the estimator stated above for $n\ge1$ iid exact Pareto observations,
+known $x_m>0$, and observed $x_i\ge x_m$. Let
+$D=\sum_i\log(x_i/x_m)$. Terms independent of $\alpha$ can be omitted from
+the log likelihood, leaving
+
+$$
+\ell(\alpha)=n\log\alpha-\alpha D+\text{constant},\qquad
+\ell'(\alpha)=\frac n\alpha-D,\qquad
+\ell''(\alpha)=-\frac n{\alpha^2}<0.
+$$
+
+If $D>0$, the unique maximizer is $n/D$. If $D=0$, every observation equals
+$x_m$ and $\ell$ increases without bound as $\alpha\to\infty$. Observations
+below $x_m$ are outside this model's support. A threshold estimated from the
+same sample changes the problem; this proof supplies no guarantee for that fit.
+
 ## Sums and moment orders
 
 Let $X_1,X_2,\ldots$ be iid Pareto Type I variables with the same
@@ -203,7 +271,7 @@ $M_n=\max_{1\le i\le n}X_i$. For a growing sample, the
   $R_\alpha$ has a nondegenerate distribution on $(0,1)$. In particular,
   the ratio does not tend to zero in probability, nor does it tend to one.
   This is Darling's theorem, cited rather than proved here:
-  [Darling (1952), Theorem 5.1](https://doi.org/10.1090/S0002-9947-1952-0048726-0).
+  Darling (1952), Theorem 5.1 [@darling1952influence].
   [Kevei and Mason (2014), p. 632](https://alea.impa.br/articles/v11/11-30.pdf#page=2)
   restate the iid result and give the corresponding sum/maximum limit law;
   our ratio is its reciprocal.

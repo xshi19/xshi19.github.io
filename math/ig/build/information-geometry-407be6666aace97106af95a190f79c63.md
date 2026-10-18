@@ -637,7 +637,7 @@ wrong: a kernel can discard the observation completely. Equivalently, demanding
 monotonicity for a family of metrics under all such maps forces the isometries
 above, since $K$ and its Markov left inverse give opposite inequalities.
 
-For general sample spaces, [Ay–Jost–Lê–Schwachhöfer (2017)](https://link.springer.com/book/10.1007/978-3-319-56478-4)
+For general sample spaces, Ay–Jost–Lê–Schwachhöfer (2017) [@ay2017information]
 develop invariance and uniqueness results for suitable integrable models and
 continuous local tensor fields. A different extension by
 [Bauer–Bruveris–Michor (2016)](https://arxiv.org/abs/1411.5577)
@@ -1089,8 +1089,8 @@ Indeed, $(\nabla^{(\alpha)}_U g)(V,W)=\alpha C(U,V,W)$, so nonzero $\alpha$
 generally breaks metric compatibility.
 
 These definitions and the sign convention agree with
-[Amari and Nagaoka, *Methods of Information Geometry* (2000)](https://doi.org/10.1090/mmono/191)
-and [Amari, *Information Geometry and Its Applications* (2016)](https://link.springer.com/book/10.1007/978-4-431-55978-8).
+Amari and Nagaoka, *Methods of Information Geometry* (2000) [@amari2000methods]
+and Amari, *Information Geometry and Its Applications* (2016) [@amari2016information].
 The calculations above establish the displayed relations under the stated
 regularity assumptions.
 

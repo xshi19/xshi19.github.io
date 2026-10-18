@@ -1,5 +1,5 @@
 ---
-title: Chapter 3 - Non-Technical Overview
+title: Chapter 3 — Non-technical overview
 ---
 
 ## What This Chapter Is Doing

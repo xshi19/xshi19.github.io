@@ -1,5 +1,5 @@
 ---
-title: Chapter 4 - How Fat Tails Emerge From Random Scale
+title: Chapter 4 — How fat tails emerge from random scale
 ---
 
 ## What This Chapter Is Doing

@@ -117,8 +117,11 @@ To analyze data:
 
 - [Empirical examples](../incerto-empirical-example-concepts.md): two committed
   datasets, two simulations, and the S&P method with explicit data availability.
-- [SCoFT guide](../incerto-scoft-intro.md): the [Prologue](../incerto-scoft-ch1.md)
-  develops tail terminology through exact models; Chapters 3 and 4 offer reading maps;
+- [SCoFT guide](../incerto-scoft-intro.md):
+  [Chapter 1 — Prologue](../incerto-scoft-ch1.md),
+  [Chapter 2 — Glossary, definitions, and notations](../incerto-scoft-ch2.md),
+  [Chapter 3 — Non-technical overview](../incerto-scoft-ch3.md), and
+  [Chapter 4 — How fat tails emerge from random scale](../incerto-scoft-ch4.md).
   Chapters 5–7 remain planned.
 - [External guides](../incerto-external-reading.md), including
   [Embrechts, Klüppelberg, and Mikosch](../incerto-reading-embrechts.md).

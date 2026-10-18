@@ -155,7 +155,7 @@ population question.
 ## References
 
 - Bingham, Goldie, and Teugels, *Regular Variation*
-  [1987](https://doi.org/10.1017/CBO9780511721434).
+  [@bingham1987regular].
 - Resnick, *Heavy-Tail Phenomena* [2007](https://doi.org/10.1007/978-0-387-45024-7).
 
 ## Backlinks

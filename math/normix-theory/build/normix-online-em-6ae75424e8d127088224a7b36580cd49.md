@@ -5,7 +5,7 @@ title: Online EM for exponential families
 Online expectation–maximization replaces a full-data E-step by a running
 average of posterior sufficient statistics. Cappé and Moulines develop the
 general method in
-[2009, *On-line expectation–maximization algorithm for latent data models*](https://doi.org/10.1111/j.1467-9868.2009.00698.x).
+2009, *On-line expectation–maximization algorithm for latent data models* [@cappe2009online].
 This note specializes the update to a full exponential family, derives the
 upstream regret identity, and applies the same statistic order as
 [batch EM for GH](./normix-em-algorithm.md).

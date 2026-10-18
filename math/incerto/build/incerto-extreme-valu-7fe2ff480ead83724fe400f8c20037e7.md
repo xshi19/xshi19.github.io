@@ -86,6 +86,40 @@ standardized GEV CDF $H_\xi$, normalizing constants $a_n$, $b_n$, and
 argument $z$ belong to the block-maxima statement; $k$ and $x_{i:n}$
 are defined with the estimators below.
 
+(evi-pareto-calibration)=
+## Proving the exact Pareto calibration
+
+We prove $\xi=1/\alpha$ for iid exact Pareto variables with $\alpha>0$ and
+$x_m>0$. Set $c_n=x_m n^{1/\alpha}$. For $y\ge n^{-1/\alpha}$,
+independence gives the exact finite-$n$ CDF
+
+$$
+P(M_n/c_n\le y)=\left(1-\frac{y^{-\alpha}}n\right)^n.
+$$
+
+Below that support boundary the CDF is zero. For each fixed $y>0$ the
+displayed expression tends to $\exp(-y^{-\alpha})$ by
+$n\log(1-y^{-\alpha}/n)\to-y^{-\alpha}$. The limit is zero for $y\le0$.
+To match the GEV convention above, choose $b_n=c_n$ and $a_n=c_n/\alpha$.
+Then $y=1+z/\alpha=1+\xi z$, and the limiting CDF is $H_{1/\alpha}(z)$.
+This proves the claimed EVI for exact Pareto. The general regular-variation
+characterization and the threshold-limit theorem are cited results, not
+proved by this special case.
+
+SCoFT v4 §2.2.22, p. 17, motivates the domain-of-attraction terminology
+[@taleb2025scoftv4]. Approaching a support endpoint alone does not define a
+maximum domain of attraction. If $x_F=\sup\{x:F(x)<1\}$, then iid sampling
+gives $P(M_n\le r)=F(r)^n\to0$ for every $r<x_F$, even without a
+nondegenerate normalized limit. The EVI definition needs that additional
+limit and its normalizing constants.
+
+`uv run python demos/incerto/glossary_worked_cases.py` compares the exact
+CDFs for $\alpha=3/2$, $n=1,4,16,64$, with the Fréchet limit on a fixed
+positive grid. These are population CDF evaluations, not fits to simulated
+maxima. The [Pareto excess calculation](incerto-pareto.md#pareto-threshold-quantities)
+also derives the exact GPD shape $1/\alpha$ by a conditional probability
+ratio, without invoking a general limit theorem.
+
 ## Tail-coordinate intuition
 
 Here "coordinate" means a one-dimensional tail coordinate, not a two-dimensional

@@ -145,6 +145,12 @@
       "target": "amazon-bookrank"
     },
     {
+      "id": "dependency:pareto->decentralization",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "decentralization"
+    },
+    {
       "id": "dependency:pareto->double-pareto",
       "kind": "dependency",
       "source": "pareto",
@@ -161,6 +167,12 @@
       "kind": "dependency",
       "source": "pareto",
       "target": "hill-estimator"
+    },
+    {
+      "id": "dependency:pareto->inference-asymmetry",
+      "kind": "dependency",
+      "source": "pareto",
+      "target": "inference-asymmetry"
     },
     {
       "id": "dependency:pareto->lln-failure",
@@ -203,6 +215,12 @@
       "kind": "dependency",
       "source": "pareto",
       "target": "regular-variation"
+    },
+    {
+      "id": "dependency:pareto-moment-existence->asymmetric-payoffs",
+      "kind": "dependency",
+      "source": "pareto-moment-existence",
+      "target": "asymmetric-payoffs"
     },
     {
       "id": "dependency:pareto-moment-existence->generalized-central-limit-theorem",
@@ -355,6 +373,24 @@
       "target": "nyc-dog-name-tail"
     },
     {
+      "id": "reference:asymmetric-payoffs->decentralization",
+      "kind": "reference",
+      "source": "asymmetric-payoffs",
+      "target": "decentralization"
+    },
+    {
+      "id": "reference:asymmetric-payoffs->inference-asymmetry",
+      "kind": "reference",
+      "source": "asymmetric-payoffs",
+      "target": "inference-asymmetry"
+    },
+    {
+      "id": "reference:asymmetric-payoffs->ruin",
+      "kind": "reference",
+      "source": "asymmetric-payoffs",
+      "target": "ruin"
+    },
+    {
       "id": "reference:body-shoulder-tail->iso-density-tail-geometry",
       "kind": "reference",
       "source": "body-shoulder-tail",
@@ -497,6 +533,12 @@
       "kind": "reference",
       "source": "hill-estimator",
       "target": "karamata"
+    },
+    {
+      "id": "reference:inference-asymmetry->pareto-moment-existence",
+      "kind": "reference",
+      "source": "inference-asymmetry",
+      "target": "pareto-moment-existence"
     },
     {
       "id": "reference:iso-density-tail-geometry->max-to-sum-ratio",
@@ -649,10 +691,40 @@
       "target": "tail-threshold-selection"
     },
     {
+      "id": "related:asymmetric-payoffs->decentralization",
+      "kind": "related",
+      "source": "asymmetric-payoffs",
+      "target": "decentralization"
+    },
+    {
+      "id": "related:asymmetric-payoffs->inference-asymmetry",
+      "kind": "related",
+      "source": "asymmetric-payoffs",
+      "target": "inference-asymmetry"
+    },
+    {
+      "id": "related:asymmetric-payoffs->ruin",
+      "kind": "related",
+      "source": "asymmetric-payoffs",
+      "target": "ruin"
+    },
+    {
       "id": "related:body-shoulder-tail->iso-density-tail-geometry",
       "kind": "related",
       "source": "body-shoulder-tail",
       "target": "iso-density-tail-geometry"
+    },
+    {
+      "id": "related:decentralization->ruin",
+      "kind": "related",
+      "source": "decentralization",
+      "target": "ruin"
+    },
+    {
+      "id": "related:inference-asymmetry->ruin",
+      "kind": "related",
+      "source": "inference-asymmetry",
+      "target": "ruin"
     },
     {
       "id": "related:iso-density-tail-geometry->max-to-sum-ratio",
@@ -675,119 +747,135 @@
   ],
   "layouts": {
     "dag": {
-      "height": 730,
+      "height": 820,
       "nodes": {
         "amazon-bookrank": {
           "x": 690.0,
-          "y": 121.66666666666667
+          "y": 136.66666666666666
+        },
+        "asymmetric-payoffs": {
+          "x": 390.0,
+          "y": 91.11111111111111
         },
         "body-shoulder-tail": {
           "x": 90.0,
-          "y": 243.33333333333334
+          "y": 205.0
         },
         "cramer-condition": {
           "x": 390.0,
-          "y": 91.25
+          "y": 182.22222222222223
+        },
+        "decentralization": {
+          "x": 240.0,
+          "y": 585.7142857142857
         },
         "dispersion-ratio": {
           "x": 240.0,
-          "y": 146.0
+          "y": 117.14285714285714
         },
         "double-pareto": {
           "x": 390.0,
-          "y": 638.75
+          "y": 728.8888888888889
         },
         "extreme-value-index": {
           "x": 390.0,
-          "y": 182.5
+          "y": 273.33333333333337
         },
         "frechet": {
           "x": 690.0,
-          "y": 243.33333333333334
+          "y": 273.3333333333333
         },
         "generalized-central-limit-theorem": {
           "x": 390.0,
-          "y": 273.75
+          "y": 364.44444444444446
         },
         "generalized-extreme-value": {
           "x": 540.0,
-          "y": 104.28571428571429
+          "y": 117.14285714285714
         },
         "generalized-pareto": {
           "x": 540.0,
-          "y": 208.57142857142858
+          "y": 234.28571428571428
         },
         "hill-estimator": {
           "x": 540.0,
-          "y": 312.8571428571429
+          "y": 351.42857142857144
+        },
+        "inference-asymmetry": {
+          "x": 240.0,
+          "y": 234.28571428571428
         },
         "iso-density-tail-geometry": {
           "x": 690.0,
-          "y": 365.0
+          "y": 410.0
         },
         "karamata": {
           "x": 390.0,
-          "y": 365.0
+          "y": 455.55555555555554
         },
         "lln-failure": {
           "x": 390.0,
-          "y": 456.25
+          "y": 546.6666666666667
         },
         "lln-preasymptotic": {
           "x": 540.0,
-          "y": 417.14285714285717
+          "y": 468.57142857142856
         },
         "max-to-sum-ratio": {
           "x": 240.0,
-          "y": 292.0
+          "y": 351.42857142857144
         },
         "mean-excess-function": {
           "x": 690.0,
-          "y": 486.6666666666667
+          "y": 546.6666666666666
         },
         "nyc-dog-name-tail": {
           "x": 990.0,
-          "y": 243.33333333333334
+          "y": 273.3333333333333
         },
         "pareto": {
           "x": 90.0,
-          "y": 486.6666666666667
+          "y": 410.0
         },
         "pareto-moment-existence": {
           "x": 240.0,
-          "y": 438.0
+          "y": 468.57142857142856
         },
         "pickands-balkema-de-haan": {
           "x": 690.0,
-          "y": 608.3333333333334
+          "y": 683.3333333333333
         },
         "plug-in-tail-estimation": {
           "x": 840.0,
-          "y": 243.33333333333334
+          "y": 273.3333333333333
         },
         "regular-variation": {
           "x": 240.0,
-          "y": 584.0
+          "y": 702.8571428571429
+        },
+        "ruin": {
+          "x": 90.0,
+          "y": 615.0
         },
         "sp500-tail": {
           "x": 990.0,
-          "y": 486.6666666666667
+          "y": 546.6666666666666
         },
         "subexponentiality": {
           "x": 390.0,
-          "y": 547.5
+          "y": 637.7777777777778
         },
         "survival-tail-ratio": {
           "x": 540.0,
-          "y": 521.4285714285714
+          "y": 585.7142857142857
         },
         "tail-class-catalog": {
           "x": 540.0,
-          "y": 625.7142857142858
+          "y": 702.8571428571429
         },
         "tail-threshold-selection": {
           "x": 840.0,
-          "y": 486.6666666666667
+          "y": 546.6666666666666
         }
       },
       "width": 1080
@@ -796,116 +884,132 @@
       "height": 680,
       "nodes": {
         "amazon-bookrank": {
-          "x": 534.9239880510012,
-          "y": 256.70423404037854
+          "x": 533.5444162606498,
+          "y": 129.86794133244535
         },
-        "body-shoulder-tail": {
-          "x": 380.9604530935795,
-          "y": 275.9029039021225
-        },
-        "cramer-condition": {
-          "x": 146.7581865489131,
-          "y": 458.43304708348984
-        },
-        "dispersion-ratio": {
-          "x": 283.1961903325114,
-          "y": 90.0
-        },
-        "double-pareto": {
-          "x": 207.24109789573882,
-          "y": 540.4697695590412
-        },
-        "extreme-value-index": {
-          "x": 650.6336088411776,
-          "y": 450.9963272942303
-        },
-        "frechet": {
-          "x": 656.2314338571161,
-          "y": 548.2344721744142
-        },
-        "generalized-central-limit-theorem": {
-          "x": 459.7840269389774,
-          "y": 575.1539450036407
-        },
-        "generalized-extreme-value": {
-          "x": 789.5861919940412,
-          "y": 495.3382845749703
-        },
-        "generalized-pareto": {
-          "x": 739.9009833675898,
-          "y": 367.1575982893504
-        },
-        "hill-estimator": {
-          "x": 566.6680999126986,
-          "y": 359.3910609223548
-        },
-        "iso-density-tail-geometry": {
-          "x": 110.22057242586104,
-          "y": 319.1786231706825
-        },
-        "karamata": {
-          "x": 458.2262402836796,
-          "y": 503.72542343058933
-        },
-        "lln-failure": {
-          "x": 292.0217383182693,
-          "y": 551.9839549773674
-        },
-        "lln-preasymptotic": {
-          "x": 372.006748326033,
+        "asymmetric-payoffs": {
+          "x": 184.5535938608276,
           "y": 590.0
         },
+        "body-shoulder-tail": {
+          "x": 633.419596281448,
+          "y": 300.455405152461
+        },
+        "cramer-condition": {
+          "x": 600.3509126797294,
+          "y": 405.5530433126001
+        },
+        "decentralization": {
+          "x": 185.52064719188076,
+          "y": 473.2624751497607
+        },
+        "dispersion-ratio": {
+          "x": 830.0,
+          "y": 224.90758163577703
+        },
+        "double-pareto": {
+          "x": 380.5965499776191,
+          "y": 554.1986694955278
+        },
+        "extreme-value-index": {
+          "x": 403.450495012865,
+          "y": 258.38361611118364
+        },
+        "frechet": {
+          "x": 313.7843312429278,
+          "y": 297.1039261324531
+        },
+        "generalized-central-limit-theorem": {
+          "x": 420.8676954516881,
+          "y": 490.29753808959174
+        },
+        "generalized-extreme-value": {
+          "x": 313.9361672272263,
+          "y": 190.9133673452033
+        },
+        "generalized-pareto": {
+          "x": 443.54137412080865,
+          "y": 153.05560858610784
+        },
+        "hill-estimator": {
+          "x": 496.3795626564603,
+          "y": 235.17027248078514
+        },
+        "inference-asymmetry": {
+          "x": 241.30816017851194,
+          "y": 525.2552528687302
+        },
+        "iso-density-tail-geometry": {
+          "x": 687.2220143193161,
+          "y": 500.95050475580393
+        },
+        "karamata": {
+          "x": 456.3030140584504,
+          "y": 426.3409780463007
+        },
+        "lln-failure": {
+          "x": 468.780402820764,
+          "y": 569.5114294449394
+        },
+        "lln-preasymptotic": {
+          "x": 416.15420107489007,
+          "y": 558.1312907156185
+        },
         "max-to-sum-ratio": {
-          "x": 233.91794396635638,
-          "y": 472.87756818970917
+          "x": 515.6754465693416,
+          "y": 539.3899887995556
         },
         "mean-excess-function": {
-          "x": 786.3663132625077,
-          "y": 433.24078695024116
+          "x": 368.38829435465897,
+          "y": 174.67517397746997
         },
         "nyc-dog-name-tail": {
-          "x": 642.353710435293,
-          "y": 253.50715597789144
+          "x": 588.1729637104474,
+          "y": 146.00991100878755
         },
         "pareto": {
-          "x": 473.06669976915094,
-          "y": 446.01804186454876
+          "x": 426.4516922789378,
+          "y": 371.3918705704934
         },
         "pareto-moment-existence": {
-          "x": 373.5827426977195,
-          "y": 503.61397424980544
+          "x": 377.74981136845156,
+          "y": 475.1253123200267
         },
         "pickands-balkema-de-haan": {
-          "x": 702.5734104933168,
-          "y": 417.7499283904051
+          "x": 408.3490554095025,
+          "y": 201.5449940656739
         },
         "plug-in-tail-estimation": {
-          "x": 563.5099364575209,
-          "y": 494.0370957083523
+          "x": 389.2712146450055,
+          "y": 352.268713032295
         },
         "regular-variation": {
-          "x": 398.7956081536349,
-          "y": 441.38211369052044
+          "x": 484.67368892558164,
+          "y": 384.0624780514621
+        },
+        "ruin": {
+          "x": 90.0,
+          "y": 583.5858611120077
         },
         "sp500-tail": {
-          "x": 830.0,
-          "y": 359.26346160494126
+          "x": 422.61369462452024,
+          "y": 90.0
         },
         "subexponentiality": {
-          "x": 194.61100775260167,
-          "y": 417.2768437589773
+          "x": 575.782107922231,
+          "y": 501.75094069650095
         },
         "survival-tail-ratio": {
-          "x": 90.0,
-          "y": 390.4870354690441
+          "x": 620.0875075351303,
+          "y": 554.4969504000987
         },
         "tail-class-catalog": {
-          "x": 293.96828064676924,
-          "y": 399.4954435753673
+          "x": 532.6826969652877,
+          "y": 444.41275723315687
         },
         "tail-threshold-selection": {
-          "x": 590.660924662982,
-          "y": 381.6919972961578
+          "x": 474.90537562109955,
+          "y": 263.7199340940043
         }
       },
       "width": 920
@@ -936,6 +1040,18 @@
       "title": "Are NYC Dog Names Fat-Tailed?",
       "type": "empirical-example",
       "url": "/math/incerto/incerto-nyc-dog-name-tail/"
+    },
+    {
+      "id": "asymmetric-payoffs",
+      "path": "content/incerto-asymmetric-payoffs.md",
+      "status": "active",
+      "tags": [
+        "payoffs",
+        "convexity"
+      ],
+      "title": "Asymmetric payoffs and exposure",
+      "type": "method",
+      "url": "/math/incerto/incerto-asymmetric-payoffs/"
     },
     {
       "id": "body-shoulder-tail",
@@ -986,6 +1102,18 @@
       "title": "Extreme Value Index Estimation",
       "type": "method",
       "url": "/math/incerto/incerto-extreme-value-index/"
+    },
+    {
+      "id": "inference-asymmetry",
+      "path": "content/incerto-inference-asymmetry.md",
+      "status": "active",
+      "tags": [
+        "fat-tails",
+        "inference"
+      ],
+      "title": "Finite-sample evidence and tail non-identification",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-inference-asymmetry/"
     },
     {
       "id": "frechet",
@@ -1174,6 +1302,18 @@
       "url": "/math/incerto/incerto-lln-preasymptotic/"
     },
     {
+      "id": "decentralization",
+      "path": "content/incerto-decentralization.md",
+      "status": "active",
+      "tags": [
+        "dependence",
+        "aggregation"
+      ],
+      "title": "Redundancy, size, and decentralized exposure",
+      "type": "method",
+      "url": "/math/incerto/incerto-decentralization/"
+    },
+    {
       "id": "regular-variation",
       "path": "content/incerto-regular-variation.md",
       "status": "active",
@@ -1184,6 +1324,18 @@
       "title": "Regular Variation",
       "type": "theorem",
       "url": "/math/incerto/incerto-regular-variation/"
+    },
+    {
+      "id": "ruin",
+      "path": "content/incerto-ruin.md",
+      "status": "active",
+      "tags": [
+        "ruin",
+        "dependence"
+      ],
+      "title": "Ruin and repeated exposure",
+      "type": "theorem",
+      "url": "/math/incerto/incerto-ruin/"
     },
     {
       "id": "sp500-tail",
@@ -1264,24 +1416,28 @@
   ],
   "schema_version": 2,
   "stats": {
-    "dependency_edge_count": 54,
-    "node_count": 28,
-    "reference_edge_count": 50,
-    "related_edge_count": 4,
+    "dependency_edge_count": 57,
+    "node_count": 32,
+    "reference_edge_count": 54,
+    "related_edge_count": 9,
     "type_counts": {
       "distribution": 6,
       "empirical-example": 5,
-      "method": 8,
-      "theorem": 9
+      "method": 10,
+      "theorem": 11
     }
   },
   "topological_order": [
     "body-shoulder-tail",
     "pareto",
+    "ruin",
     "dispersion-ratio",
+    "decentralization",
+    "inference-asymmetry",
     "max-to-sum-ratio",
     "pareto-moment-existence",
     "regular-variation",
+    "asymmetric-payoffs",
     "lln-failure",
     "cramer-condition",
     "double-pareto",

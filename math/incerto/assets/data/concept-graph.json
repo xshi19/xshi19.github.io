@@ -115,6 +115,12 @@
       "target": "tail-threshold-selection"
     },
     {
+      "id": "dependency:iso-density-tail-geometry->multivariate-tails",
+      "kind": "dependency",
+      "source": "iso-density-tail-geometry",
+      "target": "multivariate-tails"
+    },
+    {
       "id": "dependency:lln-failure->lln-preasymptotic",
       "kind": "dependency",
       "source": "lln-failure",
@@ -137,6 +143,12 @@
       "kind": "dependency",
       "source": "mean-excess-function",
       "target": "tail-threshold-selection"
+    },
+    {
+      "id": "dependency:mixture-uncertainty->multivariate-tails",
+      "kind": "dependency",
+      "source": "mixture-uncertainty",
+      "target": "multivariate-tails"
     },
     {
       "id": "dependency:pareto->amazon-bookrank",
@@ -679,6 +691,12 @@
       "target": "tail-class-catalog"
     },
     {
+      "id": "reference:maximum-entropy->multivariate-tails",
+      "kind": "reference",
+      "source": "maximum-entropy",
+      "target": "multivariate-tails"
+    },
+    {
       "id": "reference:maximum-entropy->pareto",
       "kind": "reference",
       "source": "maximum-entropy",
@@ -707,6 +725,18 @@
       "kind": "reference",
       "source": "mixture-uncertainty",
       "target": "moment-estimation"
+    },
+    {
+      "id": "reference:mixture-uncertainty->tail-class-catalog",
+      "kind": "reference",
+      "source": "mixture-uncertainty",
+      "target": "tail-class-catalog"
+    },
+    {
+      "id": "reference:moment-estimation->multivariate-tails",
+      "kind": "reference",
+      "source": "moment-estimation",
+      "target": "multivariate-tails"
     },
     {
       "id": "reference:moment-estimation->tail-class-catalog",
@@ -761,6 +791,12 @@
       "kind": "reference",
       "source": "plug-in-tail-estimation",
       "target": "tail-threshold-selection"
+    },
+    {
+      "id": "reference:ruin->tail-class-catalog",
+      "kind": "reference",
+      "source": "ruin",
+      "target": "tail-class-catalog"
     },
     {
       "id": "reference:survival-tail-ratio->tail-class-catalog",
@@ -835,6 +871,12 @@
       "target": "max-to-sum-ratio"
     },
     {
+      "id": "related:iso-density-tail-geometry->multivariate-tails",
+      "kind": "related",
+      "source": "iso-density-tail-geometry",
+      "target": "multivariate-tails"
+    },
+    {
       "id": "related:karamata->pareto-moment-existence",
       "kind": "related",
       "source": "karamata",
@@ -869,6 +911,18 @@
       "kind": "related",
       "source": "mixture-uncertainty",
       "target": "moment-estimation"
+    },
+    {
+      "id": "related:moment-estimation->multivariate-tails",
+      "kind": "related",
+      "source": "moment-estimation",
+      "target": "multivariate-tails"
+    },
+    {
+      "id": "related:multivariate-tails->pareto",
+      "kind": "related",
+      "source": "multivariate-tails",
+      "target": "pareto"
     }
   ],
   "layouts": {
@@ -967,6 +1021,10 @@
           "x": 990.0,
           "y": 455.0
         },
+        "multivariate-tails": {
+          "x": 840.0,
+          "y": 227.5
+        },
         "nyc-dog-name-tail": {
           "x": 990.0,
           "y": 227.5
@@ -985,7 +1043,7 @@
         },
         "plug-in-tail-estimation": {
           "x": 840.0,
-          "y": 303.3333333333333
+          "y": 455.0
         },
         "regular-variation": {
           "x": 240.0,
@@ -1013,7 +1071,7 @@
         },
         "tail-threshold-selection": {
           "x": 840.0,
-          "y": 606.6666666666666
+          "y": 682.5
         }
       },
       "width": 1080
@@ -1022,144 +1080,148 @@
       "height": 680,
       "nodes": {
         "amazon-bookrank": {
-          "x": 383.7795593900913,
-          "y": 120.71921042204488
+          "x": 450.75927747948,
+          "y": 118.57812544709437
         },
         "asymmetric-payoffs": {
-          "x": 695.2908696037948,
-          "y": 481.7600123528386
+          "x": 550.2831068107973,
+          "y": 526.787915960439
         },
         "body-shoulder-tail": {
-          "x": 375.40263645855566,
-          "y": 243.98629741130534
+          "x": 312.38747161982485,
+          "y": 215.8571816515642
         },
         "cramer-condition": {
-          "x": 266.50361872815586,
-          "y": 263.49025364472607
+          "x": 283.2481456185069,
+          "y": 316.7339319731648
         },
         "decentralization": {
-          "x": 818.4201967909111,
-          "y": 478.1204077166702
+          "x": 652.0489440130563,
+          "y": 541.2142690652818
         },
         "dispersion-ratio": {
-          "x": 642.179652748178,
-          "y": 340.2770356905879
+          "x": 140.28569576738553,
+          "y": 129.92718905339518
         },
         "double-pareto": {
-          "x": 315.39791563257955,
-          "y": 426.46143461883526
+          "x": 290.64356364115076,
+          "y": 435.7126940920164
         },
         "extreme-value-index": {
-          "x": 637.3997665799895,
-          "y": 224.25465674623644
+          "x": 695.6389960978219,
+          "y": 263.8761014600109
         },
         "frechet": {
-          "x": 767.192800280754,
-          "y": 293.7026079377591
+          "x": 779.6197386318565,
+          "y": 340.1673801508536
         },
         "generalized-central-limit-theorem": {
-          "x": 581.6460602562402,
-          "y": 394.2171624974126
+          "x": 631.7220383832758,
+          "y": 409.63096220113397
         },
         "generalized-extreme-value": {
-          "x": 809.8096235623622,
-          "y": 218.28495311426485
+          "x": 830.0,
+          "y": 253.98245558057374
         },
         "generalized-pareto": {
-          "x": 649.5079515518033,
-          "y": 145.72657272699178
+          "x": 673.7627547386629,
+          "y": 160.53780250847524
         },
         "hill-estimator": {
-          "x": 508.92445476096213,
-          "y": 177.97676859251357
+          "x": 590.6760728314528,
+          "y": 201.92138242973655
         },
         "inference-asymmetry": {
-          "x": 642.249448273635,
-          "y": 513.3512649385608
+          "x": 460.0246915882467,
+          "y": 517.8767470164805
         },
         "iso-density-tail-geometry": {
           "x": 90.0,
-          "y": 308.5325860598952
+          "y": 354.87748959587185
         },
         "karamata": {
-          "x": 454.63236692213,
-          "y": 292.6457441210779
+          "x": 598.9024736471678,
+          "y": 355.5992246455537
         },
         "lln-failure": {
-          "x": 405.8656963780753,
-          "y": 416.6742511646928
+          "x": 460.64333708858663,
+          "y": 425.3497507596819
         },
         "lln-preasymptotic": {
-          "x": 506.1713959785871,
-          "y": 432.87732393051186
+          "x": 529.3800481560088,
+          "y": 399.53889292044875
         },
         "max-to-sum-ratio": {
-          "x": 298.37451806326425,
-          "y": 385.4274747796933
+          "x": 353.5210237567863,
+          "y": 430.2237819989017
         },
         "maximum-entropy": {
-          "x": 396.04042575689783,
-          "y": 482.0371002996517
+          "x": 196.794965689089,
+          "y": 357.42432838154707
         },
         "mean-excess-function": {
-          "x": 728.7547635466709,
-          "y": 172.65276571384533
+          "x": 738.5643016432647,
+          "y": 192.35326169117815
         },
         "mixture-uncertainty": {
-          "x": 224.3706509678658,
-          "y": 318.4937643121897
+          "x": 198.34813270887,
+          "y": 310.8339013806572
         },
         "moment-estimation": {
-          "x": 420.26039413516924,
-          "y": 353.0039039116642
+          "x": 335.95633233059147,
+          "y": 281.3491601367276
+        },
+        "multivariate-tails": {
+          "x": 147.44596342263188,
+          "y": 265.4353122725563
         },
         "nyc-dog-name-tail": {
-          "x": 470.9054212751168,
+          "x": 515.7105032974524,
           "y": 90.0
         },
         "pareto": {
-          "x": 536.3565010409268,
-          "y": 316.02248905727737
+          "x": 502.23004328353943,
+          "y": 318.79292983781954
         },
         "pareto-moment-existence": {
-          "x": 479.44442291737823,
-          "y": 387.91161350842367
+          "x": 433.44659133224945,
+          "y": 380.49778519849593
         },
         "pickands-balkema-de-haan": {
-          "x": 687.6045261746023,
-          "y": 202.95964999386194
+          "x": 699.9848409728176,
+          "y": 226.67745139654915
         },
         "plug-in-tail-estimation": {
-          "x": 595.4859643184868,
-          "y": 291.2179807629923
+          "x": 584.1845075273153,
+          "y": 291.3788838406748
         },
         "regular-variation": {
-          "x": 479.3966832826981,
-          "y": 321.83824793676126
+          "x": 484.0419661305128,
+          "y": 347.2319714881655
         },
         "ruin": {
-          "x": 830.0,
+          "x": 460.32878070605904,
           "y": 590.0
         },
         "sp500-tail": {
-          "x": 681.142740337834,
-          "y": 97.3783439704512
+          "x": 771.4991798026236,
+          "y": 134.30398444269312
         },
         "subexponentiality": {
-          "x": 249.5440284798868,
-          "y": 350.5012449343272
+          "x": 261.9007070025332,
+          "y": 396.2272013193051
         },
         "survival-tail-ratio": {
-          "x": 151.08518484946723,
-          "y": 379.11357826821427
+          "x": 180.8465649594666,
+          "y": 450.2705500718295
         },
         "tail-class-catalog": {
-          "x": 343.85819174031076,
-          "y": 335.47434466371794
+          "x": 346.7275998006596,
+          "y": 379.9535068722623
         },
         "tail-threshold-selection": {
-          "x": 543.4725892828328,
-          "y": 207.14781421957827
+          "x": 539.9757220772369,
+          "y": 218.25238859372493
         }
       },
       "width": 920
@@ -1417,6 +1479,18 @@
       "url": "/math/incerto/incerto-moment-estimation/"
     },
     {
+      "id": "multivariate-tails",
+      "path": "content/incerto-multivariate-tails.md",
+      "status": "active",
+      "tags": [
+        "fat-tails",
+        "dependence"
+      ],
+      "title": "Multivariate tails and dependence",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-multivariate-tails/"
+    },
+    {
       "id": "pareto",
       "path": "content/incerto-pareto.md",
       "status": "active",
@@ -1605,12 +1679,12 @@
   ],
   "schema_version": 2,
   "stats": {
-    "dependency_edge_count": 60,
-    "node_count": 35,
-    "reference_edge_count": 65,
-    "related_edge_count": 16,
+    "dependency_edge_count": 62,
+    "node_count": 36,
+    "reference_edge_count": 69,
+    "related_edge_count": 19,
     "type_counts": {
-      "distribution": 7,
+      "distribution": 8,
       "empirical-example": 5,
       "method": 12,
       "theorem": 11
@@ -1649,6 +1723,7 @@
     "iso-density-tail-geometry",
     "plug-in-tail-estimation",
     "tail-threshold-selection",
+    "multivariate-tails",
     "moment-estimation",
     "nyc-dog-name-tail",
     "sp500-tail"

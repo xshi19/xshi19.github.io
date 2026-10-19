@@ -136,6 +136,13 @@ To analyze data:
 3. [Moment estimation](../incerto-moment-estimation.md) distinguishes a
    population moment from the moments and consistency of its estimator.
 
+## Dependence in several dimensions
+
+[Multivariate tails](../incerto-multivariate-tails.md) builds a Student vector
+from a shared scale, derives its mutual information, and separates finite
+sample statistics from population moments. [Density geometry](../incerto-iso-density-tail-geometry.md)
+compares identical marginals under different joint laws.
+
 ## Reading and reference
 
 - [Empirical examples](../incerto-empirical-example-concepts.md): two committed
@@ -144,9 +151,10 @@ To analyze data:
   [Chapter 1 — Prologue](../incerto-scoft-ch1.md),
   [Chapter 2 — Glossary, definitions, and notations](../incerto-scoft-ch2.md),
   [Chapter 3 — Non-technical overview](../incerto-scoft-ch3.md),
-  [Chapter 4 — Finite-moment fat tails](../incerto-scoft-ch4.md), and
-  [Chapter 5 — Subexponentials and power laws](../incerto-scoft-ch5.md).
-  Chapters 6–7 remain planned.
+  [Chapter 4 — Finite-moment fat tails](../incerto-scoft-ch4.md),
+  [Chapter 5 — Subexponentials and power laws](../incerto-scoft-ch5.md), and
+  [Chapter 6 — Thick tails in higher dimensions](../incerto-scoft-ch6.md).
+  Chapter 7 remains planned.
 - [External guides](../incerto-external-reading.md), including
   [Embrechts, Klüppelberg, and Mikosch](../incerto-reading-embrechts.md).
 - [Concept graph](../incerto-dependency-dag.md), with a plain linked fallback.

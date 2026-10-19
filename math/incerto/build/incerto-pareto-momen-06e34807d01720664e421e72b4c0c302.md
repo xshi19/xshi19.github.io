@@ -126,19 +126,21 @@ upper tail contributes a visible power-law rise.
 ## Products and moment integrals
 
 ```{figure} ../assets/figures/incerto/power-law-integrals.svg
-:alt: Vertical panels show independent Pareto product survivals, three truncated moment regimes, and a logarithmic integral divided by its Karamata approximation.
+:alt: Vertical panels show independent Pareto product survivals, three truncated moment regimes on log-log axes, and a logarithmic integral divided by its Karamata approximation.
 
 Top: exact independent Pareto products with exponents $(1,2)$ and $(1,1)$,
 compared with one Pareto of exponent $1$; all minima are one. Middle:
-the three exact truncated moments in the table above, with $\alpha=1.5$.
+the three exact truncated moments in the table above, with $\alpha=1.5$,
+on log-log axes. The zero value at $b=1$ is omitted from this panel;
+the positive curves have no linear-to-log scale transition.
 Bottom: $\int_1^x t^\rho\log t\,dt$ divided by its Karamata leading term,
 for $\rho=0,1$. These deterministic calculations illustrate a slowly varying
 correction and the strict moment boundary; no observations were sampled.
 ```
 
 Run `uv run python demos/incerto/power_laws.py`. Each panel uses 241
-cutoffs from $1$ to $10^4$ (the last begins at $1.01$ to avoid a zero
-leading term). The [Pareto product proof](incerto-pareto.md#pareto-independent-products)
+cutoffs from $1$ to $10^4$ (the middle omits the zero endpoint, leaving
+240 points; the last begins at $1.01$ to avoid a zero leading term). The [Pareto product proof](incerto-pareto.md#pareto-independent-products)
 and [Karamata calculation](incerto-karamata.md#karamata-moment-test-computation)
 own the other two formulas. The cutoff is the indicator truncation in
 $M_p(b)$, not conditioning on $X\le b$ and not the capped moment

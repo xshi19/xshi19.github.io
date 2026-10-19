@@ -343,6 +343,76 @@ The [maximum-entropy note](incerto-maximum-entropy.md) gives another
 construction of power tails, conditional on specified information constraints.
 Neither construction establishes a tail law for observed data.
 
+(tail-catalog-regimes)=
+## Regime separation is not a tail class
+
+Appendix A of SCoFT v4, §A.1, pp. 122–124 [@taleb2025scoftv4],
+considers distributions with separated regimes. We can check the effect on
+kurtosis without assuming a power tail. Let $B$ take $-1$ and $1$ with
+equal probabilities, let $Z\sim N(0,1)$ be independent, and set
+$X=mB+\sigma Z$, with $m\ge0$ and $\sigma>0$. Symmetry gives mean zero.
+Expanding and discarding the odd terms proves
+
+$$
+\mathbb EX^2=m^2+\sigma^2,\qquad
+\mathbb EX^4=m^4+6m^2\sigma^2+3\sigma^4,
+\qquad
+K=3-\frac{2m^4}{(m^2+\sigma^2)^2}.
+$$
+
+Here $K$ is Pearson kurtosis. For $m>0$ it lies below three and tends
+to one as $m/\sigma\to\infty$. Yet
+$\mathbb E e^{tX}=\cosh(mt)e^{\sigma^2t^2/2}<\infty$ for every real
+$t$. This location mixture is light-tailed. Its density has a local
+minimum at zero when $m>\sigma$: differentiating the two normal densities
+gives $f''(0)=f(0)(m^2-\sigma^2)/\sigma^4>0$.
+Thus low kurtosis can accompany a valley around the expectation.
+It is not evidence of a small probability of a large regime change.
+
+For $m=2$, $\sigma=1$, the variance is $5$ and $K=43/25=1.72$.
+The [variance-mixture note](incerto-mixture-uncertainty.md) holds the location
+fixed and mixes variances; these are different experiments. A finite normal
+mixture has positive density everywhere, so a valley is not a forbidden
+interval and every individual point still has probability zero.
+
+(tail-catalog-absorbing)=
+## An absorbing state needs repeated chances to be reached
+
+For the §A.2 context, pp. 124–125, take a homogeneous two-state Markov
+chain with states intact and failed. The failed state is absorbing and
+an intact system fails with probability $p\in[0,1]$ at each step,
+conditional on still being intact. Its row-stochastic transition matrix is
+
+$$
+T=\begin{pmatrix}1-p&p\\0&1\end{pmatrix},\qquad
+T^n=\begin{pmatrix}(1-p)^n&1-(1-p)^n\\0&1\end{pmatrix}
+\quad(n\ge1).
+$$
+
+Induction proves the power: multiplying by $T$ multiplies the remaining
+intact probability by $1-p$. Starting intact, eventual failure has
+probability one if $p>0$ and zero if $p=0$. Irreversibility alone is not
+sufficient; reachability and persistent conditional risk matter. With varying
+conditional hazards $p_j$, intact survival is $\prod_{j=1}^n(1-p_j)$.
+For example, $p_j=2^{-j-1}$ has sum $1/2$, and
+$\prod_{j=1}^n(1-p_j)\ge1-\sum_{j=1}^n p_j\ge1/2$ by induction.
+Every step has positive risk but eventual failure is not certain.
+The [existing survival calculation](incerto-ruin.md) treats this product;
+we do not replace it with an independence assumption on unconditional events.
+
+```{figure} ../assets/figures/incerto/multivariate-regimes.svg
+:alt: Three vertical panels show separated normal-mixture densities, kurtosis falling from three toward one, and intact survival with constant versus decreasing conditional hazards.
+
+Exact appendix-A examples. The location mixture uses $\sigma=1$, with
+$m=0$ and $2$ in the density panel. The last panel compares conditional
+hazard $0.05$ each step with $p_j=2^{-j-1}$, starting intact. The first
+survival tends to zero; the second stays at least $1/2$. Neither construction
+asserts a power-tail law. Run `uv run python demos/incerto/multivariate_tails.py`.
+```
+
+The [Pareto mixture contrast](incerto-pareto.md#pareto-regime-mixture)
+shows what changes when one regime actually has a power tail.
+
 ## Caveats
 
 - Regular variation and subexponentiality concern limits, not the shape of
@@ -421,6 +491,10 @@ taking their ratio. The decomposition is an ordinary conditioning argument;
 no numerical integration or executable package helper is needed for it.
 
 ## References
+
+- @taleb2025scoftv4, appendix A, §A.1, pp. 122–124, and §A.2,
+  pp. 124–125: regime-mixture and transition context. The symmetric-location
+  and absorbing-chain special cases are proved above.
 
 - @taleb2025scoftv4, §5.0.1, pp. 91–93, and §5.5, pp. 102–103:
   classification and log-Pareto context. The new index-zero calculation is

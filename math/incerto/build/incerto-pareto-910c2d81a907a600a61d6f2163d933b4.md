@@ -417,6 +417,34 @@ the earlier three max-to-sum regimes remain unchanged.
 - Do not estimate high moments of heavy-tailed samples without checking whether
   those moments are implied by the fitted tail exponent.
 
+(pareto-regime-mixture)=
+## A rare Pareto regime retains its power tail
+
+The regime question in SCoFT v4 appendix A, §A.1, pp. 122–124
+[@taleb2025scoftv4], does not by itself specify a Pareto law.
+Here is a separate original example that does. With probability
+$w\in(0,1]$, draw a Pareto variable with cutoff $x_m>0$ and exponent
+$\alpha>0$; otherwise draw a uniform variable on $[0,x_m]$.
+For $u\ge x_m$, conditioning on the regime proves
+
+$$
+P(X>u)=w(x_m/u)^\alpha.
+$$
+
+For every positive order $q$, the mixture moment is
+$(1-w)x_m^q/(q+1)+w\mathbb E[X_{\rm Pareto}^q]$.
+The [existing moment proof](incerto-pareto-moment-existence.md) therefore
+implies finiteness exactly when $q<\alpha$. A small positive mixture
+weight changes the survival constant but not the exponent or moment gate.
+At $w=0$ the model becomes bounded and all positive moments exist.
+
+With $w=0.02$, $x_m=1$, $\alpha=3/2$, survival at $u=4$ is
+$0.0025$, the mean is $0.55$, and the second moment is infinite.
+These are population values; they do not predict which tail observations
+will occur in a small sample. The [catalog's normal location mixture](incerto-tail-class-catalog.md#tail-catalog-regimes)
+has a different tail class even when its regimes are widely separated.
+The chapter-6 demo prints this example without sampling or clipping it.
+
 ## References
 
 - @taleb2025scoftv4, §§5.1.1 and 5.2, pp. 95–100: scaling, sums,

@@ -144,11 +144,14 @@ separate subexponential classification for the first range. A vanishing
 $Q_F$ is not a proof of the full convolution condition.
 
 ```{figure} ../assets/figures/incerto/power-law-diagnostics.svg
-:alt: Vertical panels show the log squared-survival ratio and the iid two-sum ratio, distinguishing Pareto, Weibull, exponential, logistic and normal behavior.
+:alt: Three vertical panels show a fully ticked log squared-survival ratio, a linear detail separating exponential zero from negative logistic values, and the iid two-sum ratio.
 
-Top: exact $\log Q_F$ at 241 thresholds between $1$ and $16$ for
+Top and middle: exact $\log Q_F$ at 241 thresholds between $1$ and $16$ for
 Pareto $(3/2,1)$, Weibull shape $1/2$, rate-one exponential, centered
-logistic with $k=1/2$, and standard normal. Bottom: numerical convolution
+logistic with $k=1/2$, and standard normal. The top uses a symmetric-log
+axis with explicit negative and positive ticks. The middle separates the
+two curves near zero on a linear axis: exponential is exactly zero, while
+logistic approaches zero from below. Bottom: numerical convolution
 ratios at 81 thresholds from $3$ to $10^4$ for Pareto $(3/2,1)$,
 Weibull shape $1/2$, and rate-one exponential. The finite plots illustrate
 different questions; only the convolution ratio defines subexponentiality.

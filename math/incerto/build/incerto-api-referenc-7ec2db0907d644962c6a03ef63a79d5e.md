@@ -27,6 +27,7 @@ for implementations and use local `help()` for the installed version.
 | `xmath.incerto.glossary` | `pareto_tail_quantities` (log survival, conditional means, tail contribution), `pareto_normalized_maximum_cdf` (exact iid maximum law); [chapter 2 worked cases](incerto-scoft-ch2.md#scoft-ch2-demo) |
 | `xmath.incerto.lecture_risk` | `repeated_event_probability`, `survival_from_hazards`, `finite_payoff_mean`, `absorbing_resource_path`, `split_power_damage_logsf`, `block_failure_summary`; [chapter 3 worked models](incerto-scoft-ch3.md#scoft-ch3-demo) |
 | `xmath.incerto.finite_moments` | `normal_mixture_log_density`, `normal_mixture_log_abs_survival`, `normal_mixture_absolute_moment`, `pareto_moment_estimator_summary`, `power_mean`; [finite-moment worked cases](incerto-scoft-ch4.md#worked-cases) |
+| `xmath.incerto.multivariate` | `student_entropy`, `student_mutual_information`, `bivariate_student`, `sample_correlation`, `symmetric_spectrum`, `regression_population_r2`, `normal_location_mixture_kurtosis`; [chapter 6 worked cases](incerto-scoft-ch6.md#scoft-ch6-demo). Student helpers deliberately restrict degrees of freedom to [0.5, 1000]. |
 | `xmath.incerto.figures` | `set_theme`, `style_axes`, `savefig`; shared figure style and deterministic export helpers |
 | `xmath.incerto.power_laws` | `pareto_product_logsf`, `pareto_truncated_moment`, `student_double_pareto_scales`, `q_exponential_logsf`, `entropy_log_constraint_example`; [chapter 5 worked cases](incerto-scoft-ch5.md#scoft-ch5-demo) |
 

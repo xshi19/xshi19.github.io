@@ -234,9 +234,10 @@ Student variance about $1.770683$, versus one for double Pareto.
 Matching tails thus leaves a substantial variance difference in this example.
 
 ```{figure} ../assets/figures/incerto/power-law-matching.svg
-:alt: Three vertical panels compare the density, survival ratio and threshold multiplier ratio of a double Pareto law and two scaled Student laws.
+:alt: Three vertical panels compare the density, survival ratio and threshold multiplier ratio of a double Pareto law and two scaled Student laws, with legends below the axes so the central spike is visible.
 
-Exact model curves at exponent $3$. Top: densities near the center.
+Exact model curves at exponent $3$. Top: densities near the center, including the double-Pareto spike at zero;
+the legend is below the axes so it covers no density curve.
 Middle: Student survival divided by the double-Pareto survival, with
 the two asymptotic targets marked. Bottom: multiplier ratios at multiplier
 $2$, approaching $1/8$. Matching variance and matching a tail constant

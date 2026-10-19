@@ -403,6 +403,12 @@
       "target": "inference-asymmetry"
     },
     {
+      "id": "reference:asymmetric-payoffs->regular-variation",
+      "kind": "reference",
+      "source": "asymmetric-payoffs",
+      "target": "regular-variation"
+    },
+    {
       "id": "reference:asymmetric-payoffs->ruin",
       "kind": "reference",
       "source": "asymmetric-payoffs",
@@ -479,6 +485,12 @@
       "kind": "reference",
       "source": "double-pareto",
       "target": "max-to-sum-ratio"
+    },
+    {
+      "id": "reference:double-pareto->mixture-uncertainty",
+      "kind": "reference",
+      "source": "double-pareto",
+      "target": "mixture-uncertainty"
     },
     {
       "id": "reference:double-pareto->pareto-moment-existence",
@@ -667,6 +679,24 @@
       "target": "tail-class-catalog"
     },
     {
+      "id": "reference:maximum-entropy->pareto",
+      "kind": "reference",
+      "source": "maximum-entropy",
+      "target": "pareto"
+    },
+    {
+      "id": "reference:maximum-entropy->pareto-moment-existence",
+      "kind": "reference",
+      "source": "maximum-entropy",
+      "target": "pareto-moment-existence"
+    },
+    {
+      "id": "reference:maximum-entropy->tail-class-catalog",
+      "kind": "reference",
+      "source": "maximum-entropy",
+      "target": "tail-class-catalog"
+    },
+    {
       "id": "reference:mean-excess-function->pickands-balkema-de-haan",
       "kind": "reference",
       "source": "mean-excess-function",
@@ -823,6 +853,18 @@
       "target": "survival-tail-ratio"
     },
     {
+      "id": "related:maximum-entropy->pareto",
+      "kind": "related",
+      "source": "maximum-entropy",
+      "target": "pareto"
+    },
+    {
+      "id": "related:maximum-entropy->tail-class-catalog",
+      "kind": "related",
+      "source": "maximum-entropy",
+      "target": "tail-class-catalog"
+    },
+    {
       "id": "related:mixture-uncertainty->moment-estimation",
       "kind": "related",
       "source": "mixture-uncertainty",
@@ -843,7 +885,7 @@
         },
         "body-shoulder-tail": {
           "x": 90.0,
-          "y": 227.5
+          "y": 182.0
         },
         "cramer-condition": {
           "x": 390.0,
@@ -909,6 +951,10 @@
           "x": 240.0,
           "y": 390.0
         },
+        "maximum-entropy": {
+          "x": 90.0,
+          "y": 364.0
+        },
         "mean-excess-function": {
           "x": 690.0,
           "y": 606.6666666666666
@@ -927,7 +973,7 @@
         },
         "pareto": {
           "x": 90.0,
-          "y": 455.0
+          "y": 546.0
         },
         "pareto-moment-existence": {
           "x": 240.0,
@@ -947,7 +993,7 @@
         },
         "ruin": {
           "x": 90.0,
-          "y": 682.5
+          "y": 728.0
         },
         "sp500-tail": {
           "x": 990.0,
@@ -976,140 +1022,144 @@
       "height": 680,
       "nodes": {
         "amazon-bookrank": {
-          "x": 386.41968387780423,
-          "y": 590.0
+          "x": 383.7795593900913,
+          "y": 120.71921042204488
         },
         "asymmetric-payoffs": {
-          "x": 755.5976290721582,
-          "y": 459.67865418172136
+          "x": 695.2908696037948,
+          "y": 481.7600123528386
         },
         "body-shoulder-tail": {
-          "x": 534.0567758433242,
-          "y": 302.80710702412557
+          "x": 375.40263645855566,
+          "y": 243.98629741130534
         },
         "cramer-condition": {
-          "x": 436.7189047064098,
-          "y": 173.2134176975471
+          "x": 266.50361872815586,
+          "y": 263.49025364472607
         },
         "decentralization": {
-          "x": 655.3430898253586,
-          "y": 528.3382437355419
+          "x": 818.4201967909111,
+          "y": 478.1204077166702
         },
         "dispersion-ratio": {
-          "x": 783.2066192560554,
-          "y": 222.40482062477085
+          "x": 642.179652748178,
+          "y": 340.2770356905879
         },
         "double-pareto": {
-          "x": 243.73345991901965,
-          "y": 246.3963976418137
+          "x": 315.39791563257955,
+          "y": 426.46143461883526
         },
         "extreme-value-index": {
-          "x": 219.1505429063996,
-          "y": 418.70130913136006
+          "x": 637.3997665799895,
+          "y": 224.25465674623644
         },
         "frechet": {
-          "x": 106.20247376132394,
-          "y": 351.57440239639897
+          "x": 767.192800280754,
+          "y": 293.7026079377591
         },
         "generalized-central-limit-theorem": {
-          "x": 421.8124183828071,
-          "y": 307.6295948510008
+          "x": 581.6460602562402,
+          "y": 394.2171624974126
         },
         "generalized-extreme-value": {
-          "x": 90.0,
-          "y": 449.7763816787329
+          "x": 809.8096235623622,
+          "y": 218.28495311426485
         },
         "generalized-pareto": {
-          "x": 233.89882553923394,
-          "y": 528.8184806639913
+          "x": 649.5079515518033,
+          "y": 145.72657272699178
         },
         "hill-estimator": {
-          "x": 320.22625590159385,
-          "y": 473.35699247311044
+          "x": 508.92445476096213,
+          "y": 177.97676859251357
         },
         "inference-asymmetry": {
-          "x": 650.0406370101381,
-          "y": 448.76527765845253
+          "x": 642.249448273635,
+          "y": 513.3512649385608
         },
         "iso-density-tail-geometry": {
-          "x": 420.98164093704395,
-          "y": 90.0
+          "x": 90.0,
+          "y": 308.5325860598952
         },
         "karamata": {
-          "x": 327.1691878802384,
-          "y": 332.4204603563057
+          "x": 454.63236692213,
+          "y": 292.6457441210779
         },
         "lln-failure": {
-          "x": 451.4688961353915,
-          "y": 233.36667328885696
+          "x": 405.8656963780753,
+          "y": 416.6742511646928
         },
         "lln-preasymptotic": {
-          "x": 508.6004979294513,
-          "y": 262.98496128672195
+          "x": 506.1713959785871,
+          "y": 432.87732393051186
         },
         "max-to-sum-ratio": {
-          "x": 361.43034917606104,
-          "y": 204.8299024296477
+          "x": 298.37451806326425,
+          "y": 385.4274747796933
+        },
+        "maximum-entropy": {
+          "x": 396.04042575689783,
+          "y": 482.0371002996517
         },
         "mean-excess-function": {
-          "x": 267.1079475401051,
-          "y": 503.68913910020035
+          "x": 728.7547635466709,
+          "y": 172.65276571384533
         },
         "mixture-uncertainty": {
-          "x": 626.4194970189079,
-          "y": 179.85748417177388
+          "x": 224.3706509678658,
+          "y": 318.4937643121897
         },
         "moment-estimation": {
-          "x": 602.6763015915623,
-          "y": 256.5309571026542
+          "x": 420.26039413516924,
+          "y": 353.0039039116642
         },
         "nyc-dog-name-tail": {
-          "x": 435.84003766158395,
-          "y": 514.0171477845099
+          "x": 470.9054212751168,
+          "y": 90.0
         },
         "pareto": {
-          "x": 363.6486863277587,
-          "y": 373.144359161862
+          "x": 536.3565010409268,
+          "y": 316.02248905727737
         },
         "pareto-moment-existence": {
-          "x": 489.32977513708875,
-          "y": 328.45226835858375
+          "x": 479.44442291737823,
+          "y": 387.91161350842367
         },
         "pickands-balkema-de-haan": {
-          "x": 177.15417338702446,
-          "y": 454.2077390506511
+          "x": 687.6045261746023,
+          "y": 202.95964999386194
         },
         "plug-in-tail-estimation": {
-          "x": 422.2726254917202,
-          "y": 390.39124743745475
+          "x": 595.4859643184868,
+          "y": 291.2179807629923
         },
         "regular-variation": {
-          "x": 298.5123833782625,
-          "y": 301.15674164092115
+          "x": 479.3966832826981,
+          "y": 321.83824793676126
         },
         "ruin": {
           "x": 830.0,
-          "y": 553.2480500294265
+          "y": 590.0
         },
         "sp500-tail": {
-          "x": 159.23620897855665,
-          "y": 545.4027355946275
+          "x": 681.142740337834,
+          "y": 97.3783439704512
         },
         "subexponentiality": {
-          "x": 317.5728416473895,
-          "y": 170.02646491267888
+          "x": 249.5440284798868,
+          "y": 350.5012449343272
         },
         "survival-tail-ratio": {
-          "x": 270.43138085154396,
-          "y": 114.53995105770639
+          "x": 151.08518484946723,
+          "y": 379.11357826821427
         },
         "tail-class-catalog": {
-          "x": 375.77987919596404,
-          "y": 248.84890814627283
+          "x": 343.85819174031076,
+          "y": 335.47434466371794
         },
         "tail-threshold-selection": {
-          "x": 336.73201339228234,
-          "y": 431.16559251697316
+          "x": 543.4725892828328,
+          "y": 207.14781421957827
         }
       },
       "width": 920
@@ -1329,6 +1379,19 @@
       "url": "/math/incerto/incerto-max-to-sum-ratio/"
     },
     {
+      "id": "maximum-entropy",
+      "path": "content/incerto-maximum-entropy.md",
+      "status": "active",
+      "tags": [
+        "entropy",
+        "constraints",
+        "fat-tails"
+      ],
+      "title": "Maximum entropy and power tails",
+      "type": "method",
+      "url": "/math/incerto/incerto-maximum-entropy/"
+    },
+    {
       "id": "mean-excess-function",
       "path": "content/incerto-mean-excess-function.md",
       "status": "active",
@@ -1543,18 +1606,19 @@
   "schema_version": 2,
   "stats": {
     "dependency_edge_count": 60,
-    "node_count": 34,
-    "reference_edge_count": 60,
-    "related_edge_count": 14,
+    "node_count": 35,
+    "reference_edge_count": 65,
+    "related_edge_count": 16,
     "type_counts": {
       "distribution": 7,
       "empirical-example": 5,
-      "method": 11,
+      "method": 12,
       "theorem": 11
     }
   },
   "topological_order": [
     "body-shoulder-tail",
+    "maximum-entropy",
     "pareto",
     "ruin",
     "dispersion-ratio",

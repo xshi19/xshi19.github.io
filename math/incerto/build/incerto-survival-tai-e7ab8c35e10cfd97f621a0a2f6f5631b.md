@@ -104,6 +104,61 @@ Student-t tails with positive degrees of freedom (including the Cauchy case)
 are regularly varying, so the preceding regular-variation argument gives
 $Q_F(x)\to0$. These are population calculations, not empirical fits.
 
+(tail-ratio-borderline)=
+## What a borderline ratio does and does not establish
+
+SCoFT v4 §§5.0.2–5.0.3, pp. 93–95 [@taleb2025scoftv4], motivates
+this event comparison with exponential and sigmoid survivals. We derive
+their values here and keep them separate from a convolution-tail criterion.
+
+For centered logistic survival $\bar F(x)=1/(1+e^{2kx})$, $k>0$,
+
+$$
+Q_F(x)=\frac{1+e^{4kx}}{(1+e^{2kx})^2}\longrightarrow1.
+$$
+
+This law is light-tailed. Its density is bounded by a constant times
+$e^{-2k|x|}$, so its MGF is finite for $|\theta|<2k$ by comparison
+with an exponential integral on each half-line. The density is
+$\tfrac{k}{2}\operatorname{sech}^2(kx)$, the `hypsecant2` helper's law
+with `loc=0, scale=1/k`.
+The name identifies this squared-secant convention, not the ordinary
+hyperbolic-secant distribution.
+
+For a centered Laplace law with scale $b>0$, the right survival is
+$\tfrac12e^{-x/b}$ on $x\ge0$, giving $Q_F(x)=1/2$.
+More generally, $\bar F(x)\sim c e^{-\lambda x}$ implies $Q_F(x)\to c$.
+Translating $X$ by $d$ changes that constant to $ce^{\lambda d}$.
+Thus the value one is not an invariant boundary between light and heavy
+tails. It reflects the tail prefactor as well as its decay.
+
+For Weibull survival $e^{-x^\beta}$ on $x\ge0$,
+
+$$
+\log Q_F(x)=(2^\beta-2)x^\beta.
+$$
+
+It tends to $-\infty$, zero, or $+\infty$ as $\beta<1$, $\beta=1$,
+or $\beta>1$. The [catalog](incerto-tail-class-catalog.md) supplies the
+separate subexponential classification for the first range. A vanishing
+$Q_F$ is not a proof of the full convolution condition.
+
+```{figure} ../assets/figures/incerto/power-law-diagnostics.svg
+:alt: Vertical panels show the log squared-survival ratio and the iid two-sum ratio, distinguishing Pareto, Weibull, exponential, logistic and normal behavior.
+
+Top: exact $\log Q_F$ at 241 thresholds between $1$ and $16$ for
+Pareto $(3/2,1)$, Weibull shape $1/2$, rate-one exponential, centered
+logistic with $k=1/2$, and standard normal. Bottom: numerical convolution
+ratios at 81 thresholds from $3$ to $10^4$ for Pareto $(3/2,1)$,
+Weibull shape $1/2$, and rate-one exponential. The finite plots illustrate
+different questions; only the convolution ratio defines subexponentiality.
+```
+
+Run `uv run python demos/incerto/power_laws.py`. Log survival values prevent
+division of underflowed probabilities. The convolution helper uses
+one-dimensional adaptive quadrature; the demo stops on a failed error check.
+No random sampling or empirical fitting is involved.
+
 ## Caveats
 
 - $Q_F(x)$ is a distribution-level diagnostic.  A finite empirical estimate can
@@ -120,7 +175,8 @@ $Q_F(x)\to0$. These are population calculations, not empirical fits.
 
 ## References
 
-- Taleb, *Statistical Consequences of Fat Tails* [2020](https://arxiv.org/abs/2001.10488).
+- @taleb2025scoftv4, §§5.0.2–5.0.3, pp. 93–95: event-ratio context.
+  The limiting prefactor and translation calculations are proved here.
 - Feller, *An Introduction to Probability Theory and Its Applications, Vol. II*
   (2nd ed., Wiley, 1971).
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*

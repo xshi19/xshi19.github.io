@@ -298,6 +298,51 @@ non-finite values cause an error. In particular, it does not divide zeros
 when an ordinary survival function underflows. The figure is numerical
 illustration of the formulas above, not evidence of an observed tail class.
 
+(tail-catalog-log-pareto)=
+## A survival that varies slowly itself
+
+The positive-exponent convention in the table does not exhaust regularly
+varying functions. To examine the index-zero boundary, let
+$V$ be Pareto with minimum $v_m>0$, exponent $a>0$, and dimensionless
+values, and put $X=e^V$. Here $a,v_m$ are local parameters; the survival
+exponent of $X$ will be zero. This construction is motivated by SCoFT v4
+§5.5, pp. 102–103 [@taleb2025scoftv4]. Inverting the increasing transform
+proves
+
+$$
+P(X>x)=\left(\frac{v_m}{\log x}\right)^a,\quad x\ge e^{v_m},
+\qquad f_X(x)=\frac{a v_m^a}{x(\log x)^{a+1}}.
+$$
+
+For every fixed $t>0$, its survival ratio tends to one because
+$\log(tx)/\log x\to1$. Thus $\bar F_X\in RV_0$, outside this catalog's
+positive-power rows. Every positive power moment diverges:
+$\mathbb EX^p=\mathbb E e^{pV}$, and the exponential factor eventually
+exceeds every polynomial in the Pareto density integral.
+
+We also prove subexponentiality directly for this example. For iid
+nonnegative $X_1,X_2$, with $M_2=\max(X_1,X_2)$,
+
+$$
+P(M_2>x)\le P(X_1+X_2>x)\le P(M_2>x/2).
+$$
+
+Both bounds divided by $2\bar F_X(x)$ tend to one: the maximum-tail
+formula is $2\bar F_X-\bar F_X^2$ and
+$\bar F_X(x/2)/\bar F_X(x)\to1$. The squeeze proves the claim.
+Thus a regularly varying survival can be subexponential even when its
+index is zero. There is no finite positive $1/\alpha$
+calibration at this index-zero boundary.
+
+The chapter demo evaluates this survival using $\log x=2,4,8$ with
+$a=2$, $v_m=1$, obtaining $1/4,1/16,1/64$. It keeps the thresholds in
+logarithmic coordinates to avoid overflowing $e^V$. Finite evaluations
+do not stand in for the moment-divergence or convolution proofs.
+
+The [maximum-entropy note](incerto-maximum-entropy.md) gives another
+construction of power tails, conditional on specified information constraints.
+Neither construction establishes a tail law for observed data.
+
 ## Caveats
 
 - Regular variation and subexponentiality concern limits, not the shape of
@@ -377,6 +422,9 @@ no numerical integration or executable package helper is needed for it.
 
 ## References
 
+- @taleb2025scoftv4, §5.0.1, pp. 91–93, and §5.5, pp. 102–103:
+  classification and log-Pareto context. The new index-zero calculation is
+  proved here; earlier positive classifications retain the references below.
 - @bingham1987regular, *Regular Variation*.
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).

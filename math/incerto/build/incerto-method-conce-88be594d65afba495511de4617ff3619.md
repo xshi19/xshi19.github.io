@@ -10,6 +10,7 @@ across fat-tail arguments.
 - [Plug-In Tail Estimation](./incerto-plug-in-tail-estimation.md)
 - [Tail Threshold Selection](./incerto-tail-threshold-selection.md)
 - [Survival Tail Ratio](./incerto-survival-tail-ratio.md)
+- [Maximum entropy and power tails](./incerto-maximum-entropy.md)
 - [Iso-Density Tail Geometry](./incerto-iso-density-tail-geometry.md)
 - [Max-to-Sum Ratio](./incerto-max-to-sum-ratio.md)
 - [Body, Shoulders, and Tails](./incerto-body-shoulder-tail.md)

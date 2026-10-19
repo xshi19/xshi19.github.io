@@ -24,7 +24,7 @@ $$
 \qquad x\to\infty.
 $$
 
-Equivalently, for each fixed integer $n\ge1$, with
+Equivalently, for every fixed integer $n\ge2$ (and trivially for $n=1$), with
 $S_n=X_1+\cdots+X_n$ and $M_n=\max_{1\le i\le n}X_i$,
 
 $$
@@ -34,7 +34,7 @@ $$
 \sim n\bar F(x).
 $$
 
-Equivalently,
+For those same fixed integers, equivalently,
 
 $$
 \mathbb P(S_n>x,\; M_n\le x)=o(\bar F(x)).
@@ -86,6 +86,12 @@ class.  We prove the elementary maximum-tail asymptotic and an exact Pareto
 two-summand check.  The full equivalence theory and the theorem that regularly
 varying tails are subexponential are cited, because their proofs need more
 convolution-tail machinery than we develop here.
+
+For the general fixed-$n$ extension and its converse, we cite Foss,
+Korshunov, and Zachary (2013), §3.3, Corollary 3.20 and Theorem 3.21,
+p. 52. Their nonnegative case agrees with the definition here. The
+fixed-size Pareto proof for arbitrary $n$ is already on the
+[Pareto page](incerto-pareto.md#fixed-size-rare-event-calculation).
 
 The theorem that regularly varying tails are subexponential goes back to
 Chistyakov's convolution-tail criterion for sums of independent positive random
@@ -287,6 +293,12 @@ The fixed-$n$, large-threshold limit differs from the growing-sample
 [max-to-sum ratio](./incerto-max-to-sum-ratio.md). A finite-mean Pareto law is
 subexponential even though $M_n/S_n\to0$ almost surely as $n\to\infty$.
 
+The [chapter 5 diagnostic figure](incerto-survival-tail-ratio.md#tail-ratio-borderline)
+evaluates $R(x)$ by convolution for Pareto, stretched Weibull, and exponential
+laws. The first two illustrate the cited classification; the exponential
+curve is checked against the exact formula above. The quadrature has an
+explicit error tolerance and cannot prove a limiting statement.
+
 ## Caveats
 
 - The definition above is for nonnegative iid summands.  Two-sided or
@@ -301,6 +313,12 @@ subexponential even though $M_n/S_n\to0$ almost surely as $n\to\infty$.
 
 ## References
 
+- @taleb2025scoftv4, §5.0.1, pp. 91–93: fixed-size iid tail context.
+- Foss, Korshunov, and Zachary, *An Introduction to Heavy-Tailed and
+  Subexponential Distributions*, second edition (2013), §3.3,
+  Corollary 3.20 and Theorem 3.21, p. 52; §3.5, Theorems 3.29–3.30,
+  pp. 57–58. General fixed-size extension and positive classifications
+  are cited, not proved by the numerical illustration.
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).
 - @bingham1987regular, *Regular Variation*.

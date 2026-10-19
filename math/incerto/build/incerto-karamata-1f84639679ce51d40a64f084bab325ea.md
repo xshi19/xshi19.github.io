@@ -32,7 +32,11 @@ $$
 \qquad x\to\infty.
 $$
 
-Here $a>0$ is fixed, and $A(x)\sim B(x)$ means $A(x)/B(x)\to1$.
+Here $a>0$ is fixed in a region where $L$ is locally bounded, and
+$A(x)\sim B(x)$ means $A(x)/B(x)\to1$.
+Both integral statements are cited from @bingham1987regular,
+Theorem 1.5.11, p. 28 (direct half); the special case for $L$ and powers
+also appears as Propositions 1.5.8 and 1.5.10, pp. 26–27.
 
 For a nonnegative random variable $X$ with
 [regularly varying](./incerto-regular-variation.md) survival function
@@ -56,7 +60,7 @@ $$
 $$
 
 Thus a [Pareto-type tail](./incerto-pareto.md) has finite $p$th moment
-for $p<\alpha$ and infinite $p$th moment for $p>\alpha$.  The boundary case
+for $0<p<\alpha$ and infinite $p$th moment for $p>\alpha$. The boundary case
 $p=\alpha$ is not decided by this theorem alone; it depends on the slowly
 varying factor $L$.
 
@@ -191,6 +195,47 @@ moment to its leading term is $1-x^{-(p-\alpha)}\to1$.
 At $p=\alpha$, the truncated moment is $\alpha\log x$ instead.
 These are exact calculations illustrating the cited theorem.
 
+(karamata-conditional-mean)=
+## Conditional size and the boundary moment
+
+For $\alpha>1$, write $e(u)=\mathbb E[X-u\mid X>u]$ for the mean excess.
+Set $p=1$ in the proved tail-moment consequence and divide by
+$\bar F(u)>0$. It gives
+
+$$
+\frac{\mathbb E[X\mid X>u]}u\longrightarrow\frac{\alpha}{\alpha-1},
+\qquad
+\frac{e(u)}u\longrightarrow\frac1{\alpha-1}.
+$$
+
+This is a consequence under a regular-variation assumption, not a finite
+threshold criterion for fitting that class. It gives the precise forward
+implication relevant to SCoFT v4 §5.0.2, pp. 93–94 [@taleb2025scoftv4].
+The [Pareto note](incerto-pareto.md#pareto-threshold-quantities) owns the
+exact version. The chapter guide gives a subexponential Weibull example
+whose conditional-mean ratio tends to one.
+
+For a complete example with a finite boundary moment, take the survival
+equal to one below $e$ and, for $x\ge e$, set
+$\bar F(x)=e^\alpha x^{-\alpha}/(\log x)^2$.
+It is continuous at $e$ and strictly decreasing afterwards. Tonelli gives
+
+$$
+\mathbb EX^\alpha
+=\alpha\int_0^\infty t^{\alpha-1}\bar F(t)\,dt
+=e^\alpha+\alpha e^\alpha\int_e^\infty\frac{dt}{t(\log t)^2}
+=(1+\alpha)e^\alpha<\infty.
+$$
+
+This proves why the exact-Pareto boundary cannot be transferred to every
+regularly varying tail. For $\alpha=2$ the answer is $3e^2$, whereas an
+exact Pareto of exponent $2$ has infinite second moment.
+
+The [chapter 5 integral figure](incerto-pareto-moment-existence.md#pareto-moments-demo)
+compares the logarithmic integral in the earlier moment-test calculation
+with its Karamata leading term. The demo also evaluates the
+boundary example in logarithmic coordinates, integrating to infinity.
+
 ## Caveats
 
 - The assumptions on $L$ matter.  Slow variation is an asymptotic regularity
@@ -206,7 +251,11 @@ These are exact calculations illustrating the cited theorem.
 
 ## References
 
-- @bingham1987regular, *Regular Variation*.
+- @bingham1987regular, *Regular Variation*, Theorem 1.5.11, p. 28;
+  Propositions 1.5.8 and 1.5.10, pp. 26–27. These support the cited integral
+  asymptotics; the moment and conditional-mean consequences are derived here.
+- @taleb2025scoftv4, §§5.0.2 and 5.1.1, pp. 93–94 and 95–97:
+  conditional-size and scaling context, not the proof source for Karamata.
 - Feller, *An Introduction to Probability Theory and Its Applications, Vol. II*
   (1971, 2nd ed., Wiley).
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*

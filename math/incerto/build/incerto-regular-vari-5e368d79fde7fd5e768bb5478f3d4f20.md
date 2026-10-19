@@ -119,6 +119,51 @@ $$
 
 so $L(x)=x_m^\alpha$ is constant and therefore slowly varying.
 
+(regular-variation-representation)=
+## What the representation theorem adds
+
+The elementary equivalence above defines $L$; it does not prove Karamata's
+representation theorem. For positive measurable slowly varying $L$, that
+theorem gives, eventually,
+
+$$
+L(x)=c(x)\exp\left\{\int_a^x\frac{\varepsilon(v)}v\,dv\right\},
+\qquad c(x)\to c\in(0,\infty),\quad \varepsilon(x)\to0,
+$$
+
+with measurable $c$ and locally integrable $\varepsilon(v)/v$.
+We cite the existence of this representation: @bingham1987regular,
+Theorem 1.3.1, p. 12. This is a different result from the
+[integral theorem](incerto-karamata.md).
+
+Its sufficiency follows directly. For fixed $t>0$, the logarithm of
+$L(tx)/L(x)$ is $\log[c(tx)/c(x)]+\int_x^{tx}\varepsilon(v)\,dv/v$.
+The integral's absolute value is at most $|\log t|$ times the supremum
+of $|\varepsilon|$ between $x$ and $tx$, which tends to zero.
+Also $\log L(x)/\log x\to0$: split the integral at a fixed point beyond
+which $|\varepsilon|<\delta$, divide by $\log x$, and then let
+$\delta\downarrow0$. Hence a regularly varying survival satisfies
+$\log\bar F(x)/\log x\to-\alpha$. This is a ratio of logarithms;
+convergence of a derivative of a log-log plot needs extra smoothness.
+
+(regular-variation-powers)=
+## Positive powers of a tail variable
+
+We prove the transformation rule used in SCoFT v4 §5.2.3, p. 100
+[@taleb2025scoftv4], without differentiating a density. Let $X\ge0$ have
+$\bar F(x)=x^{-\alpha}L(x)$ eventually and let $r>0$. Then
+
+$$
+P(X^r>y)=\bar F(y^{1/r})=y^{-\alpha/r}L(y^{1/r}).
+$$
+
+For fixed $t>0$, the ratio of the last slowly varying factors has arguments
+$t^{1/r}y^{1/r}$ and $y^{1/r}$, so it tends to one. Thus $X^r$ has
+survival exponent $\alpha/r$. Units may be fixed first by applying this
+argument to $X/x_m$. Negative powers concern the behavior near zero and
+are outside this right-tail rule. The exact Pareto payoff case is already
+derived in [asymmetric payoffs](incerto-asymmetric-payoffs.md#payoffs-tail-transform).
+
 ## Ratio diagnostics
 
 The fixed-multiplier ratio can be compared algebraically for an exact Pareto
@@ -144,6 +189,11 @@ The exact Pareto ratio is constant at $2^{-\alpha}$; the log-corrected
 ratio approaches the same target slowly. A finite diagnostic curve can
 suggest regular variation, but the definition is about the asymptotic limit.
 
+The [chapter 5 demo](incerto-scoft-ch5.md#scoft-ch5-demo) compares
+multiplier ratios for Student and shifted double-Pareto tails. Their finite
+threshold differences are explained by the
+[matching calculation](incerto-double-pareto.md#double-pareto-student-matching).
+
 ## Caveats
 
 - Regular variation is an asymptotic property.  It does not say that every
@@ -164,7 +214,11 @@ suggest regular variation, but the definition is about the asymptotic limit.
 - Foss, Korshunov, and Zachary, *An Introduction to Heavy-Tailed and
   Subexponential Distributions*, [2013, 2nd ed.](https://doi.org/10.1007/978-1-4614-7101-1),
   §3.5, Theorem 3.29, p. 57: cited subexponential classification.
-- @bingham1987regular, *Regular Variation*.
+- @bingham1987regular, *Regular Variation*, Theorem 1.3.1, p. 12:
+  the cited representation theorem; the elementary power-times-$L$
+  characterization is proved on this page.
+- @taleb2025scoftv4, §5.1.1, pp. 95–97, and §5.2.3, p. 100:
+  scaling and transformation context.
 - Embrechts, Klueppelberg, and Mikosch, *Modelling Extremal Events*
   [1997](https://doi.org/10.1007/978-3-642-33483-2).
 - Resnick, *Heavy-Tail Phenomena* [2007](https://doi.org/10.1007/978-0-387-45024-7).

@@ -345,6 +345,65 @@ Finally, $\mathbb P(M_n>x)=1-(1-\bar F(x))^n\sim n\bar F(x)$.
 Nonnegativity makes $\{M_n>x\}$ a subset of $\{S_n>x\}$, and the
 negligible residual probability proves the sum-tail equivalence.
 
+(pareto-sums-products)=
+## Positive sums and independent products
+
+The sum and product discussions in SCoFT v4 §§5.2.1–5.2.2, pp. 98–100
+[@taleb2025scoftv4], require different assumptions. Here we prove a bounded
+claim about sums and exact formulas for independent Pareto products.
+
+Fix $n<\infty$, positive weights $w_i$, and nonnegative $X_i$ with
+$P(X_i>x)=x^{-\alpha_i}L_i(x)$ eventually, where $\alpha_i>0$
+and each $L_i$ is slowly varying.
+Dependence is unrestricted. For $S=\sum_{i=1}^n w_iX_i$,
+
+$$
+\max_i P(X_i>x/w_i)\le P(S>x)
+\le\sum_{i=1}^nP(X_i>x/(nw_i)).
+$$
+
+The lower bound uses nonnegativity; the upper bound holds because a sum
+above $x$ has some term above $x/n$. Put $a=\min_i\alpha_i$.
+The [logarithmic regular-variation consequence](incerto-regular-variation.md#regular-variation-representation)
+makes both bounds $x^{-a+o(1)}$, so
+$\log P(S>x)/\log x\to-a$. These bounds establish a logarithmic
+exponent, not a limiting survival constant or full regular variation of
+every dependent sum. If one allows signed variables, take a symmetric
+power-tailed $V$ and $(X_1,X_2)=(V,-V)$: both have right power tails but
+their sum is identically zero.
+
+(pareto-independent-products)=
+For products, let $X_1,X_2$ be **independent** unit-cutoff Pareto variables
+with exponents $a,b>0$. The symbols $a,b$ are local exponents in this
+two-law calculation. For $z\ge1$, condition on $X_1$ to obtain
+
+$$
+P(X_1X_2>z)=z^{-a}+a z^{-b}\int_1^z t^{b-a-1}\,dt
+=\begin{cases}
+\dfrac{b z^{-a}-a z^{-b}}{b-a},&a\ne b,\\[6pt]
+z^{-a}(1+a\log z),&a=b.
+\end{cases}
+$$
+
+For unequal exponents the smaller one determines the leading power.
+Equal exponents introduce a logarithmic factor, which is slowly varying
+but never constant. With $a=1$, $b=2$, the survival is $2/z-1/z^2$;
+with $a=b=1$, it is $(1+\log z)/z$.
+For other Pareto minima, apply the formula to
+$X_1X_2/(x_{m,1}x_{m,2})$.
+
+Independence cannot be suppressed: $X_2=X_1$ gives the square, with
+exponent $a/2$. Multiplication by a dependent bounded variable can even
+remove the tail: $X_2=1/X_1$ gives product one. Claims that multiplication
+always preserves the heavier tail therefore need additional hypotheses.
+The [power-transformation proof](incerto-regular-variation.md#regular-variation-powers)
+handles deterministic powers separately.
+
+Run `uv run python demos/incerto/power_laws.py` for these product survivals,
+the [moment-integral figure](incerto-pareto-moment-existence.md#pareto-moments-demo),
+and exact population checks. This adds no new growing-sample dominance claim;
+the earlier three max-to-sum regimes remain unchanged.
+
 ## Caveats
 
 - Empirical data rarely follows an exact Pareto law from its minimum value.  A
@@ -360,6 +419,9 @@ negligible residual probability proves the sum-tail equivalence.
 
 ## References
 
+- @taleb2025scoftv4, §§5.1.1 and 5.2, pp. 95–100: scaling, sums,
+  products and powers. The new finite-sum bounds and product formulas above
+  are proved with explicit support and dependence assumptions.
 - Darling, "The Influence of the Maximum Term in the Addition of Independent
   Random Variables," *Transactions of the American Mathematical Society*
   **73** (1952), 95–107, Theorem 5.1

@@ -90,6 +90,9 @@ and gamma examples. Browse the concepts through the
 and [distribution](../incerto-distribution-concepts.md) indexes. Mixture and
 variance-gamma theory links to the existing Normix notes.
 
+[Maximum entropy](../incerto-maximum-entropy.md) derives a Pareto model from
+a fixed logarithmic moment, with explicit support and reference measure.
+
 ## Choose an entry path
 
 For an introduction with basic calculus and probability, read
@@ -140,9 +143,10 @@ To analyze data:
 - [SCoFT guide](../incerto-scoft-intro.md):
   [Chapter 1 — Prologue](../incerto-scoft-ch1.md),
   [Chapter 2 — Glossary, definitions, and notations](../incerto-scoft-ch2.md),
-  [Chapter 3 — Non-technical overview](../incerto-scoft-ch3.md), and
-  [Chapter 4 — Finite-moment fat tails](../incerto-scoft-ch4.md).
-  Chapters 5–7 remain planned.
+  [Chapter 3 — Non-technical overview](../incerto-scoft-ch3.md),
+  [Chapter 4 — Finite-moment fat tails](../incerto-scoft-ch4.md), and
+  [Chapter 5 — Subexponentials and power laws](../incerto-scoft-ch5.md).
+  Chapters 6–7 remain planned.
 - [External guides](../incerto-external-reading.md), including
   [Embrechts, Klüppelberg, and Mikosch](../incerto-reading-embrechts.md).
 - [Concept graph](../incerto-dependency-dag.md), with a plain linked fallback.

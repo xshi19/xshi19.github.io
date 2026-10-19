@@ -28,6 +28,7 @@ for implementations and use local `help()` for the installed version.
 | `xmath.incerto.lecture_risk` | `repeated_event_probability`, `survival_from_hazards`, `finite_payoff_mean`, `absorbing_resource_path`, `split_power_damage_logsf`, `block_failure_summary`; [chapter 3 worked models](incerto-scoft-ch3.md#scoft-ch3-demo) |
 | `xmath.incerto.finite_moments` | `normal_mixture_log_density`, `normal_mixture_log_abs_survival`, `normal_mixture_absolute_moment`, `pareto_moment_estimator_summary`, `power_mean`; [finite-moment worked cases](incerto-scoft-ch4.md#worked-cases) |
 | `xmath.incerto.figures` | `set_theme`, `style_axes`, `savefig`; shared figure style and deterministic export helpers |
+| `xmath.incerto.power_laws` | `pareto_product_logsf`, `pareto_truncated_moment`, `student_double_pareto_scales`, `q_exponential_logsf`, `entropy_log_constraint_example`; [chapter 5 worked cases](incerto-scoft-ch5.md#scoft-ch5-demo) |
 
 ```python
 import numpy as np

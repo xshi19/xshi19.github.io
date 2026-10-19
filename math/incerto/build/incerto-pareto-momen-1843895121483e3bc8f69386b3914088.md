@@ -118,9 +118,37 @@ For $\alpha=1.5$ and $x_m=1$, the three regimes reduce to:
 | $1.5$ | $1.5\log b$ | Infinite, logarithmic growth |
 | $2$ | $3(\sqrt b-1)$ | Infinite, power growth |
 
-**What to notice.** For $p<\alpha$, the truncated moment levels off.  At
+For $p<\alpha$, the truncated moment levels off. At
 $p=\alpha$, it keeps growing, but only logarithmically.  For $p>\alpha$, the
 upper tail contributes a visible power-law rise.
+
+(pareto-moments-demo)=
+## Products and moment integrals
+
+```{figure} ../assets/figures/incerto/power-law-integrals.svg
+:alt: Vertical panels show independent Pareto product survivals, three truncated moment regimes, and a logarithmic integral divided by its Karamata approximation.
+
+Top: exact independent Pareto products with exponents $(1,2)$ and $(1,1)$,
+compared with one Pareto of exponent $1$; all minima are one. Middle:
+the three exact truncated moments in the table above, with $\alpha=1.5$.
+Bottom: $\int_1^x t^\rho\log t\,dt$ divided by its Karamata leading term,
+for $\rho=0,1$. These deterministic calculations illustrate a slowly varying
+correction and the strict moment boundary; no observations were sampled.
+```
+
+Run `uv run python demos/incerto/power_laws.py`. Each panel uses 241
+cutoffs from $1$ to $10^4$ (the last begins at $1.01$ to avoid a zero
+leading term). The [Pareto product proof](incerto-pareto.md#pareto-independent-products)
+and [Karamata calculation](incerto-karamata.md#karamata-moment-test-computation)
+own the other two formulas. The cutoff is the indicator truncation in
+$M_p(b)$, not conditioning on $X\le b$ and not the capped moment
+$\mathbb E\min(X,b)^p$.
+
+The chapter's transformation discussion (§5.2.3, p. 100) and squared
+Student example (§5.6, pp. 103–105) use different moment orders
+[@taleb2025scoftv4]. The [moment-estimation note](incerto-moment-estimation.md#moment-estimation-gates)
+already explains why an existing second moment need not give a finite
+variance to the empirical average of squares.
 
 ## Examples
 
@@ -154,6 +182,9 @@ population question.
 
 ## References
 
+- @taleb2025scoftv4, §§5.2.3 and 5.6, pp. 100 and 103–105:
+  power transformations and squared observations; the exact Pareto integral
+  and its equality boundary are proved here.
 - @bingham1987regular, *Regular Variation*.
 - Resnick, *Heavy-Tail Phenomena* [2007](https://doi.org/10.1007/978-0-387-45024-7).
 

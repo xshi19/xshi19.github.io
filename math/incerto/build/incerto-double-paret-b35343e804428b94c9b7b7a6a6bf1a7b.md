@@ -182,6 +182,73 @@ formula evaluations, without simulation or an imported distribution package.
 For [max-to-sum diagnostics](./incerto-max-to-sum-ratio.md), use $|X_i|$
 or another explicitly defined nonnegative quantity; signed sums can cancel.
 
+(double-pareto-student-matching)=
+## Matching a Student tail or a variance
+
+SCoFT v4 §5.3, p. 101 [@taleb2025scoftv4], compares a symmetric shifted
+power law with a Student law. We keep the normalized density $\alpha/2$
+above on each side and derive both matching scales. Equal exponents do
+not imply equal moments or equal leading tail constants.
+
+Let $T_\nu$ have the unit-scale Student density, with $\nu=\alpha>0$,
+and let $Z=sT_\alpha$, $s>0$. Its right tail satisfies
+
+$$
+P(Z>x)\sim C_\alpha s^\alpha x^{-\alpha},\qquad
+C_\alpha=\frac{\Gamma((\alpha+1)/2)\alpha^{\alpha/2-1}}
+                  {\sqrt\pi\,\Gamma(\alpha/2)}.
+$$
+
+We prove the constant from the density. Factoring $x^2/(\alpha s^2)$
+out of $1+x^2/(\alpha s^2)$ in the Student density gives
+$f_Z(x)\sim\alpha C_\alpha s^\alpha x^{-\alpha-1}$.
+For each $\varepsilon>0$, this density lies between $1\pm\varepsilon$
+times its leading power beyond a fixed threshold. Integrating those bounds
+from $x$ to infinity and letting $\varepsilon\downarrow0$ gives the
+displayed survival asymptotic. For positive orders $p$, the same comparison
+proves $\mathbb E|Z|^p<\infty$ exactly when $p<\alpha$; the density is
+bounded near zero.
+
+The double-Pareto right-tail constant is $1/2$ at scale one. Matching it
+requires
+
+$$
+s_{\rm tail}=(2C_\alpha)^{-1/\alpha}.
+$$
+
+For $\alpha>2$, the Student variance is
+$s^2\alpha/(\alpha-2)$ (the beta-integral moment calculation is also
+given in the [mixture note](incerto-mixture-uncertainty.md#mixture-variance-precision)).
+Equating that to $2/[(\alpha-1)(\alpha-2)]$ instead gives
+
+$$
+s_{\rm var}=\sqrt{\frac{2}{\alpha(\alpha-1)}}.
+$$
+
+At $\alpha=3$, $C_3=2\sqrt3/\pi$. Variance matching uses
+$s_{\rm var}=1/\sqrt3$ and gives Student right-tail constant
+$2/(3\pi)$, versus $1/2$ for double Pareto. Their asymptotic survival
+ratio is $4/(3\pi)\approx0.424413$ even though both variances are one.
+Tail matching uses $s_{\rm tail}=(\pi/(4\sqrt3))^{1/3}$ and gives
+Student variance about $1.770683$, versus one for double Pareto.
+Matching tails thus leaves a substantial variance difference in this example.
+
+```{figure} ../assets/figures/incerto/power-law-matching.svg
+:alt: Three vertical panels compare the density, survival ratio and threshold multiplier ratio of a double Pareto law and two scaled Student laws.
+
+Exact model curves at exponent $3$. Top: densities near the center.
+Middle: Student survival divided by the double-Pareto survival, with
+the two asymptotic targets marked. Bottom: multiplier ratios at multiplier
+$2$, approaching $1/8$. Matching variance and matching a tail constant
+choose different Student scales; neither makes the distributions identical.
+```
+
+Run `uv run python demos/incerto/power_laws.py`. The figure uses 501 density
+points on $[-4,4]$ and 241 thresholds from $1$ to $10^4$ for each tail
+panel. All values are dimensionless, exact-model evaluations. This comparison
+does not change the helper's retained `NaN`/`+inf` reporting convention
+when $\alpha\le1$, or define variance about an undefined mean.
+
 ## Caveats
 
 - We describe a symmetric signed construction whose magnitude $|X|$ has
@@ -196,13 +263,15 @@ or another explicitly defined nonnegative quantity; signed sums can cancel.
 
 ## References
 
+- @taleb2025scoftv4, §5.3, p. 101: comparison context. The normalization,
+  tail constants and matching formulas above are derived for our explicit convention.
 - Resnick, *Heavy-Tail Phenomena* [2007](https://doi.org/10.1007/978-0-387-45024-7).
 
 ## Backlinks
 
 - Depends on: [Pareto Distribution](./incerto-pareto.md) and
   [Regular Variation](./incerto-regular-variation.md).
-- Used by: two-sided tail examples (planned).
+- Used by: [Chapter 5](incerto-scoft-ch5.md) and its Student comparison.
 
 ## Source and adaptation
 

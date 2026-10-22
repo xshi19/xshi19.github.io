@@ -709,6 +709,12 @@
       "target": "pareto-moment-existence"
     },
     {
+      "id": "reference:maximum-entropy->rayleigh-speed",
+      "kind": "reference",
+      "source": "maximum-entropy",
+      "target": "rayleigh-speed"
+    },
+    {
       "id": "reference:maximum-entropy->tail-class-catalog",
       "kind": "reference",
       "source": "maximum-entropy",
@@ -725,6 +731,12 @@
       "kind": "reference",
       "source": "mixture-uncertainty",
       "target": "moment-estimation"
+    },
+    {
+      "id": "reference:mixture-uncertainty->rayleigh-speed",
+      "kind": "reference",
+      "source": "mixture-uncertainty",
+      "target": "rayleigh-speed"
     },
     {
       "id": "reference:mixture-uncertainty->tail-class-catalog",
@@ -791,6 +803,12 @@
       "kind": "reference",
       "source": "plug-in-tail-estimation",
       "target": "tail-threshold-selection"
+    },
+    {
+      "id": "reference:rayleigh-speed->tail-class-catalog",
+      "kind": "reference",
+      "source": "rayleigh-speed",
+      "target": "tail-class-catalog"
     },
     {
       "id": "reference:ruin->tail-class-catalog",
@@ -901,6 +919,12 @@
       "target": "pareto"
     },
     {
+      "id": "related:maximum-entropy->rayleigh-speed",
+      "kind": "related",
+      "source": "maximum-entropy",
+      "target": "rayleigh-speed"
+    },
+    {
       "id": "related:maximum-entropy->tail-class-catalog",
       "kind": "related",
       "source": "maximum-entropy",
@@ -913,6 +937,12 @@
       "target": "moment-estimation"
     },
     {
+      "id": "related:mixture-uncertainty->rayleigh-speed",
+      "kind": "related",
+      "source": "mixture-uncertainty",
+      "target": "rayleigh-speed"
+    },
+    {
       "id": "related:moment-estimation->multivariate-tails",
       "kind": "related",
       "source": "moment-estimation",
@@ -923,6 +953,12 @@
       "kind": "related",
       "source": "multivariate-tails",
       "target": "pareto"
+    },
+    {
+      "id": "related:rayleigh-speed->tail-class-catalog",
+      "kind": "related",
+      "source": "rayleigh-speed",
+      "target": "tail-class-catalog"
     }
   ],
   "layouts": {
@@ -939,7 +975,7 @@
         },
         "body-shoulder-tail": {
           "x": 90.0,
-          "y": 182.0
+          "y": 151.66666666666666
         },
         "cramer-condition": {
           "x": 390.0,
@@ -1007,7 +1043,7 @@
         },
         "maximum-entropy": {
           "x": 90.0,
-          "y": 364.0
+          "y": 303.3333333333333
         },
         "mean-excess-function": {
           "x": 690.0,
@@ -1031,7 +1067,7 @@
         },
         "pareto": {
           "x": 90.0,
-          "y": 546.0
+          "y": 455.0
         },
         "pareto-moment-existence": {
           "x": 240.0,
@@ -1045,13 +1081,17 @@
           "x": 840.0,
           "y": 455.0
         },
+        "rayleigh-speed": {
+          "x": 90.0,
+          "y": 606.6666666666666
+        },
         "regular-variation": {
           "x": 240.0,
           "y": 780.0
         },
         "ruin": {
           "x": 90.0,
-          "y": 728.0
+          "y": 758.3333333333333
         },
         "sp500-tail": {
           "x": 990.0,
@@ -1080,148 +1120,152 @@
       "height": 680,
       "nodes": {
         "amazon-bookrank": {
-          "x": 450.75927747948,
-          "y": 118.57812544709437
+          "x": 333.7685502510842,
+          "y": 138.6954088957756
         },
         "asymmetric-payoffs": {
-          "x": 550.2831068107973,
-          "y": 526.787915960439
+          "x": 579.650345223627,
+          "y": 520.9620622111188
         },
         "body-shoulder-tail": {
-          "x": 312.38747161982485,
-          "y": 215.8571816515642
+          "x": 374.45762303000316,
+          "y": 266.55266641322703
         },
         "cramer-condition": {
-          "x": 283.2481456185069,
-          "y": 316.7339319731648
+          "x": 244.65336775398197,
+          "y": 309.9495508395821
         },
         "decentralization": {
-          "x": 652.0489440130563,
-          "y": 541.2142690652818
+          "x": 733.7362670940352,
+          "y": 535.6069745183277
         },
         "dispersion-ratio": {
-          "x": 140.28569576738553,
-          "y": 129.92718905339518
+          "x": 730.9359984953804,
+          "y": 318.4881307932468
         },
         "double-pareto": {
-          "x": 290.64356364115076,
-          "y": 435.7126940920164
+          "x": 414.3721319937645,
+          "y": 454.6524426260391
         },
         "extreme-value-index": {
-          "x": 695.6389960978219,
-          "y": 263.8761014600109
+          "x": 683.153191831015,
+          "y": 217.81298597517923
         },
         "frechet": {
-          "x": 779.6197386318565,
-          "y": 340.1673801508536
+          "x": 826.0422522312506,
+          "y": 266.32939922555073
         },
         "generalized-central-limit-theorem": {
-          "x": 631.7220383832758,
-          "y": 409.63096220113397
+          "x": 722.9244290071506,
+          "y": 379.47767949115325
         },
         "generalized-extreme-value": {
           "x": 830.0,
-          "y": 253.98245558057374
+          "y": 186.18537566955757
         },
         "generalized-pareto": {
-          "x": 673.7627547386629,
-          "y": 160.53780250847524
+          "x": 621.6338173510944,
+          "y": 135.31673006134383
         },
         "hill-estimator": {
-          "x": 590.6760728314528,
-          "y": 201.92138242973655
+          "x": 522.3523719400857,
+          "y": 185.79727131040764
         },
         "inference-asymmetry": {
-          "x": 460.0246915882467,
-          "y": 517.8767470164805
+          "x": 667.0915204284698,
+          "y": 499.8777287571914
         },
         "iso-density-tail-geometry": {
           "x": 90.0,
-          "y": 354.87748959587185
+          "y": 304.2841379985981
         },
         "karamata": {
-          "x": 598.9024736471678,
-          "y": 355.5992246455537
+          "x": 618.9635019270139,
+          "y": 322.7220884743151
         },
         "lln-failure": {
-          "x": 460.64333708858663,
-          "y": 425.3497507596819
+          "x": 554.7526701090744,
+          "y": 418.6653779546245
         },
         "lln-preasymptotic": {
-          "x": 529.3800481560088,
-          "y": 399.53889292044875
+          "x": 639.2661843802983,
+          "y": 400.38424692252175
         },
         "max-to-sum-ratio": {
-          "x": 353.5210237567863,
-          "y": 430.2237819989017
+          "x": 368.02902238694264,
+          "y": 369.99737494870146
         },
         "maximum-entropy": {
-          "x": 196.794965689089,
-          "y": 357.42432838154707
+          "x": 284.2783117384254,
+          "y": 481.0619909640802
         },
         "mean-excess-function": {
-          "x": 738.5643016432647,
-          "y": 192.35326169117815
+          "x": 726.4890349065048,
+          "y": 161.65567835375828
         },
         "mixture-uncertainty": {
-          "x": 198.34813270887,
-          "y": 310.8339013806572
+          "x": 242.60909297252792,
+          "y": 422.92150987320036
         },
         "moment-estimation": {
-          "x": 335.95633233059147,
-          "y": 281.3491601367276
+          "x": 450.7309611235778,
+          "y": 369.0637928412857
         },
         "multivariate-tails": {
-          "x": 147.44596342263188,
-          "y": 265.4353122725563
+          "x": 175.26452182226222,
+          "y": 397.039960434271
         },
         "nyc-dog-name-tail": {
-          "x": 515.7105032974524,
-          "y": 90.0
+          "x": 422.18588193374603,
+          "y": 104.87790103370749
         },
         "pareto": {
-          "x": 502.23004328353943,
-          "y": 318.79292983781954
+          "x": 538.3829259435386,
+          "y": 319.24957370440416
         },
         "pareto-moment-existence": {
-          "x": 433.44659133224945,
-          "y": 380.49778519849593
+          "x": 508.03453020818324,
+          "y": 400.7123052918044
         },
         "pickands-balkema-de-haan": {
-          "x": 699.9848409728176,
-          "y": 226.67745139654915
+          "x": 649.4228417070168,
+          "y": 180.85391645115942
         },
         "plug-in-tail-estimation": {
-          "x": 584.1845075273153,
-          "y": 291.3788838406748
+          "x": 634.8048252981553,
+          "y": 282.28303581178227
+        },
+        "rayleigh-speed": {
+          "x": 108.65212347333167,
+          "y": 530.228930970672
         },
         "regular-variation": {
-          "x": 484.0419661305128,
-          "y": 347.2319714881655
+          "x": 491.2423161152522,
+          "y": 323.1183918416965
         },
         "ruin": {
-          "x": 460.32878070605904,
+          "x": 548.888574144198,
           "y": 590.0
         },
         "sp500-tail": {
-          "x": 771.4991798026236,
-          "y": 134.30398444269312
+          "x": 676.7591675275631,
+          "y": 90.0
         },
         "subexponentiality": {
-          "x": 261.9007070025332,
-          "y": 396.2272013193051
+          "x": 284.51604549047204,
+          "y": 346.27820125965553
         },
         "survival-tail-ratio": {
-          "x": 180.8465649594666,
-          "y": 450.2705500718295
+          "x": 144.85430741463534,
+          "y": 350.1891796410313
         },
         "tail-class-catalog": {
-          "x": 346.7275998006596,
-          "y": 379.9535068722623
+          "x": 347.97766308109846,
+          "y": 413.5271154585783
         },
         "tail-threshold-selection": {
-          "x": 539.9757220772369,
-          "y": 218.25238859372493
+          "x": 526.8211710102819,
+          "y": 222.7164864304852
         }
       },
       "width": 920
@@ -1552,6 +1596,19 @@
       "url": "/math/incerto/incerto-lln-preasymptotic/"
     },
     {
+      "id": "rayleigh-speed",
+      "path": "content/incerto-rayleigh-speed.md",
+      "status": "active",
+      "tags": [
+        "statistical-mechanics",
+        "distributions",
+        "sampling"
+      ],
+      "title": "Rayleigh speeds",
+      "type": "distribution",
+      "url": "/math/incerto/incerto-rayleigh-speed/"
+    },
+    {
       "id": "decentralization",
       "path": "content/incerto-decentralization.md",
       "status": "active",
@@ -1680,11 +1737,11 @@
   "schema_version": 2,
   "stats": {
     "dependency_edge_count": 62,
-    "node_count": 36,
-    "reference_edge_count": 69,
-    "related_edge_count": 19,
+    "node_count": 37,
+    "reference_edge_count": 72,
+    "related_edge_count": 22,
     "type_counts": {
-      "distribution": 8,
+      "distribution": 9,
       "empirical-example": 5,
       "method": 12,
       "theorem": 11
@@ -1694,6 +1751,7 @@
     "body-shoulder-tail",
     "maximum-entropy",
     "pareto",
+    "rayleigh-speed",
     "ruin",
     "dispersion-ratio",
     "decentralization",

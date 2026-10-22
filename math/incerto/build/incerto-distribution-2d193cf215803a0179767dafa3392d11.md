@@ -6,6 +6,7 @@ Distribution pages state each law and its tail behavior. Mixture and variance-ga
 theory is covered by the Normix track; these entries link to its existing notes.
 
 - [Multivariate tails and dependence](incerto-multivariate-tails.md)
+- [Rayleigh speeds](incerto-rayleigh-speed.md)
 - [Variance mixtures and uncertain scale](./incerto-mixture-uncertainty.md)
 - [Pareto Distribution](./incerto-pareto.md)
 - [Double Pareto Distribution](./incerto-double-pareto.md)

@@ -31,6 +31,7 @@ for implementations and use local `help()` for the installed version.
 
 | Module | Entry points and purpose |
 | --- | --- |
+| `xmath.incerto.gas_speeds` | [`chi_speed`](incerto-api-reference.md#api-chi-speed), [`sample_chi_speed`](incerto-api-reference.md#api-sample-chi-speed), [`fit_speed_models`](incerto-api-reference.md#api-fit-speed-models), [`speed_fit_table`](incerto-api-reference.md#api-speed-fit-table), [`speed_qq`](incerto-api-reference.md#api-speed-qq), [`squared_speed_ks`](incerto-api-reference.md#api-squared-speed-ks), [`speed_fit_figure`](incerto-api-reference.md#api-speed-fit-figure); [Rayleigh chamber speeds](incerto-rayleigh-speed.md) and fitted comparisons |
 | `xmath.incerto.datasets` | [`load_amazon_bookrank`](incerto-api-reference.md#api-load-amazon-bookrank), [`load_nyc_dog_name_frequencies`](incerto-api-reference.md#api-load-nyc-dog-name-frequencies), [`load_sp500_prices`](incerto-api-reference.md#api-load-sp500-prices); explicit local-cache and refresh helpers |
 | `xmath.incerto.distributions` | [`pareto_type1`](incerto-api-reference.md#api-pareto-type1), [`double_pareto`](incerto-api-reference.md#api-double-pareto), [`hypsecant2`](incerto-api-reference.md#api-hypsecant2), [`simple_normal_mixture`](incerto-api-reference.md#api-simple-normal-mixture), [`univariate_variance_gamma`](incerto-api-reference.md#api-univariate-variance-gamma), [`generalized_pareto`](incerto-api-reference.md#api-generalized-pareto), [`generalized_extreme_value`](incerto-api-reference.md#api-generalized-extreme-value), [`frechet`](incerto-api-reference.md#api-frechet); SciPy-style distribution objects |
 | `xmath.incerto.estimators` | [`hill_estimator`](incerto-api-reference.md#api-hill-estimator) (extreme-value index), [`hill_alpha_estimator`](incerto-api-reference.md#api-hill-alpha-estimator) (reciprocal exponent), [`hill_stability`](incerto-api-reference.md#api-hill-stability), [`pareto_mean_plugin`](incerto-api-reference.md#api-pareto-mean-plugin), [`mean_excess`](incerto-api-reference.md#api-mean-excess), [`running_mean`](incerto-api-reference.md#api-running-mean), [`max_to_sum_ratio`](incerto-api-reference.md#api-max-to-sum-ratio), [`max_to_sum_path`](incerto-api-reference.md#api-max-to-sum-path), [`gpd_threshold_fit`](incerto-api-reference.md#api-gpd-threshold-fit) |
@@ -1543,6 +1544,140 @@ kl: 0.1159
 
 Independent quadrature uses $x_m=1$ and $\mathbb E\log X=1/2$.
 
+
+### Gas speeds
+
+Module: `xmath.incerto.gas_speeds`. These helpers simulate equilibrium
+observations, not collision trajectories. The
+[Rayleigh note](incerto-rayleigh-speed.md) derives the chamber, effusion, and
+finite-system laws and gives the seeded seven-family comparison.
+
+(api-chi-speed)=
+#### [`chi_speed`](incerto-api-reference.md#api-chi-speed)
+
+`chi_speed(dimension=2, thermal_variance=1.0)`
+
+Return the frozen chi law with scale $\sqrt{kT/m}$. `dimension` is a positive
+integer; `thermal_variance` is the finite positive component variance $kT/m$.
+The object exposes SciPy `pdf`, `cdf`, `sf`, `ppf`, `moment`, and `rvs`.
+Support is $[0,\infty)$; dimensions 1, 2, and 3 are half-normal, Rayleigh,
+and Maxwell. Density and CDF are zero below zero.
+
+```python
+from xmath.incerto.gas_speeds import chi_speed
+
+for d in (2, 3):
+    law = chi_speed(d)
+    print(f"d={d}: mean={law.mean():.4f}, variance={law.var():.4f}")
+```
+
+**Output**
+
+```text
+d=2: mean=1.2533, variance=0.4292
+d=3: mean=1.5958, variance=0.4535
+```
+
+(api-sample-chi-speed)=
+#### [`sample_chi_speed`](incerto-api-reference.md#api-sample-chi-speed)
+
+`sample_chi_speed(size, *, dimension=2, thermal_variance=1.0, random_state=None)`
+
+Draw independent normal components in an array of shape `(dimension, size)`
+and reduce their lengths with `hypot`. Return a one-dimensional speed array.
+Counts must be positive integers. `random_state` accepts an integer seed,
+a NumPy Generator, or `None`. All first components precede all second
+components in the random stream; changing `size` changes that pairing.
+Zero or nonfinite numerical draws raise rather than being replaced.
+
+(api-speedfit)=
+#### [`SpeedFit`](incerto-api-reference.md#api-speedfit)
+
+An immutable record returned by `fit_speed_models`. Fields are `name`,
+`law` (frozen SciPy distribution), `parameters` (number estimated),
+`log_likelihood`, `aic`, `ks_statistic`, `ks_pvalue`, and `boundary`.
+The last field is empty for an interior fit, or names the GIG boundary law.
+Reported p-values are uncorrected for fitting. Parameters of `law` follow
+SciPy's conventions; in particular inverse Gaussian shape is $\mu/\kappa$
+and scale is $\kappa$ for physical mean $\mu$ and shape $\kappa$.
+
+(api-fit-speed-models)=
+#### [`fit_speed_models`](incerto-api-reference.md#api-fit-speed-models)
+
+`fit_speed_models(sample)`
+
+Return an AIC-sorted tuple of `SpeedFit` records for Gaussian, Rayleigh,
+Weibull, Gamma, inverse Gamma, inverse Gaussian, and GIG. Input must be a
+one-dimensional vector of at least three finite positive observations and
+must not be constant. Locations of positive families are fixed at zero.
+Gaussian has two estimated parameters, Rayleigh one, GIG three, and the
+others two. Inverse Gamma is fitted through the Gamma MLE of reciprocals;
+the transformation's Jacobian is independent of its parameters.
+
+The GIG fit includes normalizable Gamma and inverse Gamma boundaries.
+An inward score test certifies a boundary maximum using concavity in natural
+parameters, as proved in the [note](incerto-rayleigh-speed.md#rayleigh-speed-gig-boundary).
+Otherwise SciPy's interior optimizer must converge within 4,000 iterations
+and 8,000 evaluations, and its likelihood must match or beat both boundaries
+to within $10^{-7}$. This numerical branch does not certify a global optimum.
+The frozen interior law uses SciPy's `geninvgauss(p, b, scale=scale)`:
+the note's canonical parameters are $a=b/\mathrm{scale}$ and
+$b_{\rm canonical}=b\,\mathrm{scale}$.
+
+Nonfinite diagnostics and optimizer failures raise. Large interior GIG
+samples may be slow because their CDF uses quadrature. GIG's AIC retains
+the nominal three-parameter penalty on a boundary; its usual regular-model
+interpretation is not asserted there. KS uses the ordinary exact finite-$n$
+distribution for a specified continuous CDF, without adjusting for the
+estimated parameters. Very small p-values may underflow to zero.
+
+(api-speed-fit-table)=
+#### [`speed_fit_table`](incerto-api-reference.md#api-speed-fit-table)
+
+`speed_fit_table(fits)`
+
+Return a text table sorted by AIC: model, parameter count, AIC (one decimal),
+KS distance (four decimals), and raw p-value (three significant digits).
+This function formats the supplied records; it performs no fitting or test.
+
+(api-speed-qq)=
+#### [`speed_qq`](incerto-api-reference.md#api-speed-qq)
+
+`speed_qq(sample, law, probabilities=None)`
+
+Return `(theoretical, empirical)` quantile arrays. Input observations are
+finite, positive, and one-dimensional. The law must expose `ppf`.
+The default uses 199 equally spaced probabilities from $0.005$ to $0.995$;
+an explicit nonempty vector must increase strictly inside $(0,1)$.
+Empirical quantiles use NumPy's linear interpolation. Nonfinite theoretical
+quantiles raise. No observations are removed and no confidence band is added.
+
+(api-squared-speed-ks)=
+#### [`squared_speed_ks`](incerto-api-reference.md#api-squared-speed-ks)
+
+`squared_speed_ks(sample, thermal_variance=1.0)`
+
+Return a dictionary with float `statistic` and `pvalue` for a two-sided KS
+comparison of squared speeds against $\operatorname{Exp}(2kT/m)$, where
+the argument is the mean. The helper estimates no parameters.
+Usual calibration requires iid observations and `thermal_variance` specified
+independently of them. The input must be a finite positive vector and the
+variance finite and positive. Arithmetic overflow raises.
+
+(api-speed-fit-figure)=
+#### [`speed_fit_figure`](incerto-api-reference.md#api-speed-fit-figure)
+
+`speed_fit_figure(sample, fits, *, kind="density", thermal_variance=1.0)`
+
+Return a Matplotlib figure, applying the shared DejaVu Serif theme at scale
+1.1 and five-inch single-column layout. Supply the sample used to produce
+the seven fits. `kind="density"` draws two panels with 80-bin histograms
+and 401-point fitted curves on linear and log axes. `kind="qq"` draws five
+panels, grouping families by quantile range and ending with squared speeds
+against the fixed exponential law. It uses `speed_qq`'s default grid and
+does not clip the displayed quantiles. `thermal_variance` supplies the
+exponential null and the density viewport scale, not a new fit.
+The caller closes or saves the figure; the helper writes no files.
 
 ### Figures
 

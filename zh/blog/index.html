@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#191a18" media="(prefers-color-scheme: dark)"><title>文章 · Xiang Shi</title><meta name="description" content="Xiang Shi 关于人工智能、数据、市场与社会的中文文章。"><meta name="author" content="Xiang Shi"><link rel="canonical" href="https://xshi19.github.io/zh/blog/"><link rel="alternate" hreflang="en" href="https://xshi19.github.io/blog/"><link rel="alternate" hreflang="zh-CN" href="https://xshi19.github.io/zh/blog/"><link rel="alternate" hreflang="x-default" href="https://xshi19.github.io/blog/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="Xiang Shi · RSS" href="/rss.xml"><link rel="alternate" type="application/atom+xml" title="Xiang Shi · Atom" href="/feeds/all.atom.xml"><meta property="og:type" content="website"><meta property="og:title" content="文章"><meta property="og:description" content="Xiang Shi 关于人工智能、数据、市场与社会的中文文章。"><meta property="og:url" content="https://xshi19.github.io/zh/blog/"><meta property="og:site_name" content="Xiang Shi"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xshi19.github.io/og/zh-blog.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="文章 — Xiang Shi"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://xshi19.github.io/#person","name":"Xiang Shi","url":"https://xshi19.github.io/","description":"I'm Xiang. I build risk models at a hedge fund and write code for fun. This is where I keep my open-source code, math notes, and the occasional essay.","image":"https://xshi19.github.io/images/xiang-shi-avatar.jpg","sameAs":["https://github.com/xshi19","https://x.com/xxiangshi","https://www.linkedin.com/in/xiangshi/","https://cursor.com/@xshi"]}</script><link rel="stylesheet" href="/_astro/Base.D6EjccxM.css"></head><body><a class="skip-link" href="#main">跳到正文</a><header class="site-header shell"><a class="wordmark" href="/zh/" aria-label="Xiang Shi — 首页">xs<span aria-hidden="true">.</span></a><nav aria-label="主导航"><a href="/zh/about/">关于</a><a href="/projects/">项目（英文）</a><a href="/zh/blog/" aria-current="page">文章</a><a href="/contact/">联系（英文）</a></nav><a class="language" href="/blog/" lang="en" title="Switch language">EN</a></header><main id="main" class="shell" tabindex="-1"><p class="eyebrow">博客</p><h1>笔记与观察。</h1><p class="page-intro">关于数据、不确定性，以及模型的局限。</p><div class="search" role="search" aria-label="搜索文章"><label for="search-input">搜索中文文章</label><input id="search-input" type="search" placeholder="试试“强化学习”或“合作”" autocomplete="off" aria-controls="search-results"><p id="search-status" class="search-status" role="status" aria-live="polite"></p><ul id="search-results" class="search-results"></ul><noscript><p>搜索需要 JavaScript。你可以浏览下方的全部文章。</p></noscript></div><script type="module">
+  const input = document.querySelector('#search-input');
+  const results = document.querySelector('#search-results');
+  const status = document.querySelector('#search-status');
+  const zh = document.documentElement.lang.startsWith('zh');
+  let pagefind;
+  let timer;
+  let revision = 0;
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    const current = ++revision;
+    results.replaceChildren();
+    const query = input.value.trim();
+    if (!query) { status.textContent = ''; return; }
+    status.textContent = zh ? '搜索中…' : 'Searching…';
+    timer = setTimeout(async () => {
+      try {
+        pagefind ??= await import('/pagefind/pagefind.js');
+        const found = await pagefind.search(query);
+        const pages = await Promise.all(found.results.slice(0, 8).map(result => result.data()));
+        if (current !== revision) return;
+        status.textContent = zh ? `${found.results.length} 条结果` : `${found.results.length} result${found.results.length === 1 ? '' : 's'}`;
+        for (const page of pages) {
+          const li = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = page.url;
+          link.textContent = page.meta.title;
+          li.append(link);
+          results.append(li);
+        }
+      } catch {
+        if (current === revision) status.textContent = zh ? '搜索暂时不可用，请浏览下方文章。' : 'Search is unavailable here. Browse the articles below.';
+      }
+    }, 180);
+  });
+</script><section class="section" aria-labelledby="all-posts"><div class="section-heading"><h2 id="all-posts">全部文章</h2><span class="meta">5 篇文章</span></div><ol class="post-list"><li><time datetime="2026-09-03T21:37:32-04:00">2026年9月3日</time><h3><a href="/zh/blog/harari-imagined-communities/">尤瓦尔赫拉利：想象的想象共同体</a></h3><p>对赫拉利关于共同故事与大规模合作之间因果关系的质疑。</p></li><li><time datetime="2026-02-17T23:05:30-05:00">2026年2月17日</time><h3><a href="/zh/blog/ai-bubble-arguments/">几种常见的AI泡沫论</a></h3><p>关于估值、技术路线和生产力的五种常见 AI 泡沫论。</p></li><li><time datetime="2025-02-11T20:38:06-05:00">2025年2月11日</time><h3><a href="/zh/blog/supervised-learning-rlhf-deepseek-r1/">监督学习，基于人类反馈的强化学习和DeepSeek R1的强化学习之间的区别</a></h3><p>用数学课的评分方式类比三种大语言模型训练方法。</p></li><li><time datetime="2024-11-19T22:04:53-05:00">2024年11月19日</time><h3><a href="/zh/blog/use-logarithmic-charts/">一个基本的股市小技巧</a></h3><p>为什么对数坐标能让股价的涨跌幅更容易比较。</p></li><li><time datetime="2024-11-12T23:15:21-05:00">2024年11月12日</time><h3><a href="/zh/blog/farewell-yann-lecun/">别了， Yann LeCun</a></h3><p>关于 Yann LeCun、科学指标与风险共担。</p></li></ol></section></main><footer class="site-footer shell"><span>© 2026 Xiang Shi</span><nav aria-label="Footer"><a href="/rss.xml">RSS（英文）</a><a href="/llms.txt">llms.txt</a><a href="https://github.com/xshi19" rel="me noopener">GitHub <span aria-hidden="true">↗</span></a><a href="https://x.com/xxiangshi" rel="me noopener">X <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/xiangshi/" rel="me noopener">LinkedIn <span aria-hidden="true">↗</span></a></nav></footer></body></html>

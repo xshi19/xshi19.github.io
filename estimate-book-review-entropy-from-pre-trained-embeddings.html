@@ -1,718 +1,470 @@
-<!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
-<head>
-    <title>Estimate Book Review Entropy from Pre-trained Embeddings - Xiang Shi</title>
-    <!-- Using the latest rendering mode for IE -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
-<link rel="canonical" href="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html">
-
-        <meta name="author" content="Xiang Shi" />
-        <meta name="keywords" content="NLP,machine learning,information theory" />
-        <meta name="description" content="The inspiration for this exploration came from a Twitter (or X) post by Nassim Taleb: In this article, I propose a simple method to quantify this &#34;summary diversity&#34; or &#34;book dimensionality&#34; using natural language processing (NLP) and a bit match approach. The process involves: Collecting book review data. Since it&#39;s …" />
-
-        <meta property="og:site_name" content="Xiang Shi" />
-        <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Estimate Book Review Entropy from Pre-trained Embeddings"/>
-        <meta property="og:url" content="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html"/>
-        <meta property="og:description" content="The inspiration for this exploration came from a Twitter (or X) post by Nassim Taleb: In this article, I propose a simple method to quantify this &#34;summary diversity&#34; or &#34;book dimensionality&#34; using natural language processing (NLP) and a bit match approach. The process involves: Collecting book review data. Since it&#39;s …"/>
-        <meta property="article:published_time" content="2023-12-25" />
-            <meta property="article:section" content="Blog" />
-            <meta property="article:tag" content="NLP" />
-            <meta property="article:tag" content="machine learning" />
-            <meta property="article:tag" content="information theory" />
-            <meta property="article:author" content="Xiang Shi" />
-
-
-
-    <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://xshi19.github.io/theme/css/bootstrap.min.css" type="text/css"/>
-    <link href="https://xshi19.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
-
-    <link href="https://xshi19.github.io/theme/css/pygments/native.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://xshi19.github.io/theme/css/style.css" type="text/css"/>
-
-        <link href="https://xshi19.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Xiang Shi ATOM Feed"/>
-
-        <link href="https://xshi19.github.io/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Xiang Shi Blog ATOM Feed"/>
-
-</head>
-<body>
-
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="https://xshi19.github.io/" class="navbar-brand">
-Xiang Shi            </a>
-        </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                    <li><a href="https://xshi19.github.io/normix/">normix</a></li>
-                         <li><a href="https://xshi19.github.io/pages/about-me.html">
-                             About Me
-                          </a></li>
-                        <li class="active">
-                            <a href="https://xshi19.github.io/category/blog.html">Blog</a>
-                        </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-</div> <!-- /.navbar -->
-
-<!-- Banner -->
-<!-- End Banner -->
-
-<!-- Content Container -->
-<div class="container">
-    <div class="row">
-        <div class="col-sm-9">
-    <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html"
-                       rel="bookmark"
-                       title="Permalink to Estimate Book Review Entropy from Pre-trained Embeddings">
-                        Estimate Book Review Entropy from Pre-trained Embeddings
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
-<footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2023-12-25T00:00:00-05:00"> Mon 25 December 2023</time>
-    </span>
-
-
-
-
-
-<span class="label label-default">Tags</span>
-	<a href="https://xshi19.github.io/tag/nlp.html">NLP</a>
-        /
-	<a href="https://xshi19.github.io/tag/machine-learning.html">machine learning</a>
-        /
-	<a href="https://xshi19.github.io/tag/information-theory.html">information theory</a>
-    
-</footer><!-- /.post-info -->                    </div>
-                </div>
-                <p>The inspiration for this exploration came from a <a href="https://x.com/nntaleb/status/1735647215421411675?s=20">Twitter (or X) post</a> by Nassim Taleb:</p>
-<p><img src="/blog/2023/img/nnt_x.png" alt="drawing" width="500"/></p>
-<p>In this article, I propose a simple method to quantify this "summary diversity" or "book dimensionality" using natural language processing (NLP) and a bit match approach. The process involves:</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#191a18" media="(prefers-color-scheme: dark)"><title>Estimate Book Review Entropy from Pre-trained Embeddings · Xiang Shi</title><meta name="description" content="An experiment in measuring the diversity of book reviews with embeddings and entropy."><meta name="author" content="Xiang Shi"><link rel="canonical" href="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="Xiang Shi · RSS" href="/rss.xml"><link rel="alternate" type="application/atom+xml" title="Xiang Shi · Atom" href="/feeds/all.atom.xml"><meta property="og:type" content="article"><meta property="og:title" content="Estimate Book Review Entropy from Pre-trained Embeddings"><meta property="og:description" content="An experiment in measuring the diversity of book reviews with embeddings and entropy."><meta property="og:url" content="https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html"><meta property="og:site_name" content="Xiang Shi"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://xshi19.github.io/og/estimate-book-review-entropy-from-pre-trained-embeddings.html.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Estimate Book Review Entropy from Pre-trained Embeddings — Xiang Shi"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Estimate Book Review Entropy from Pre-trained Embeddings","description":"An experiment in measuring the diversity of book reviews with embeddings and entropy.","datePublished":"2023-12-25T00:00:00-05:00","author":{"@type":"Person","@id":"https://xshi19.github.io/#person","name":"Xiang Shi","url":"https://xshi19.github.io/","description":"I'm Xiang. I build risk models at a hedge fund and write code for fun. This is where I keep my open-source code, math notes, and the occasional essay.","image":"https://xshi19.github.io/images/xiang-shi-avatar.jpg","sameAs":["https://github.com/xshi19","https://x.com/xxiangshi","https://www.linkedin.com/in/xiangshi/","https://cursor.com/@xshi"]},"inLanguage":"en","keywords":["NLP","machine learning","information theory"],"url":"https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html","mainEntityOfPage":"https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html","image":"https://xshi19.github.io/og/estimate-book-review-entropy-from-pre-trained-embeddings.html.png"}</script><link rel="stylesheet" href="/_astro/Base.D6EjccxM.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header shell"><a class="wordmark" href="/" aria-label="Xiang Shi — Home">xs<span aria-hidden="true">.</span></a><nav aria-label="Main navigation"><a href="/about/">About</a><a href="/projects/">Projects</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a></nav><a class="language" href="/zh/" lang="zh-CN" title="Chinese introduction; this page is available in English">中文</a></header><main id="main" class="shell" tabindex="-1"><article data-pagefind-body lang="en"><header class="post-header"><p class="eyebrow"><a href="/blog/">Writing</a> / 2023</p><h1 data-pagefind-meta="title">Estimate Book Review Entropy from Pre-trained Embeddings</h1><p class="description">An experiment in measuring the diversity of book reviews with embeddings and entropy.</p><div class="meta"><time datetime="2023-12-25T00:00:00-05:00">Dec 25, 2023</time><span>Xiang Shi</span><a href="/estimate-book-review-entropy-from-pre-trained-embeddings.md" data-pagefind-ignore>Read as Markdown ↗</a></div><ul class="tags" data-pagefind-ignore><li><a href="/tag/nlp.html">NLP</a></li><li><a href="/tag/machine-learning.html">machine learning</a></li><li><a href="/tag/information-theory.html">information theory</a></li></ul></header><div class="prose"><p>The inspiration for this exploration came from a <a href="https://x.com/nntaleb/status/1735647215421411675?s=20">Twitter (or X) post</a> by Nassim Taleb:</p>
+<img src="/blog/2023/img/nnt_x.png" alt="Nassim Taleb asks about the diversity of summaries of a book" width="500">
+<p>In this article, I propose a simple method to quantify this “summary diversity” or “book dimensionality” using natural language processing (NLP) and a bit match approach. The process involves:</p>
 <ol>
-<li>Collecting book review data. Since it's impractical to have thousands of books summarized by individuals, I utilize Goodreads reviews as a proxy, trading some accuracy for scalability.</li>
-<li>Converting each review into numerical embeddings using pre-trained <a href="https://www.sbert.net/">sentence transformers</a>. For each book, this results in a matrix  <span class="math">\(X\)</span> of dimensions <span class="math">\(n \times d\)</span> <span class="math">\(n\)</span> is the number of reviews and <span class="math">\(d\)</span> is the embedding dimension.</li>
-<li>Applying Principal Component Analysis (PCA) or equivalently, <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular Value Decomposition (SVD)</a> to the review embeddings:
-<div class="math">$$
-X = USV
-$$</div>
-where <span class="math">\(U\)</span> and <span class="math">\(V\)</span> are unitary matrices and <span class="math">\(S\)</span> is a diagnoal matrix with singular values <span class="math">\(s_1 \geq s_2 \geq \cdots \geq s_m\)</span> with <span class="math">\(m=\min(n, d)\)</span>.</li>
-<li>Computing the <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">entropy</a> of the singular values:
-<div class="math">$$
-\text{entropy} = -\sum_{i=1}^m p_i \log p_i \text{, where } p_i = \frac{s_i}{\sum_{i=1}^m s_i}
-$$</div>
-</li>
+<li>Collecting book review data. Since it’s impractical to have thousands of books summarized by individuals, I utilize Goodreads reviews as a proxy, trading some accuracy for scalability.</li>
+<li>Converting each review into numerical embeddings using pre-trained <a href="https://www.sbert.net/">sentence transformers</a>. For each book, this results in a matrix  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span></span></span></span> of dimensions <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">n \times d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> is the number of reviews and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span> is the embedding dimension.</li>
+<li>Applying Principal Component Analysis (PCA) or equivalently, <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular Value Decomposition (SVD)</a> to the review embeddings:</li>
 </ol>
+<span class="katex-display" tabindex="0" aria-label="Equation; scroll horizontally if needed" role="group"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mo>=</mo><mi>U</mi><mi>S</mi><mi>V</mi></mrow><annotation encoding="application/x-tex">X = USV</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">U</span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span></span></span></span></span>
+<p>where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi></mrow><annotation encoding="application/x-tex">U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">U</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span></span></span></span> are unitary matrices and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span></span></span></span> is a diagnoal matrix with singular values <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>1</mn></msub><mo>≥</mo><msub><mi>s</mi><mn>2</mn></msub><mo>≥</mo><mo>⋯</mo><mo>≥</mo><msub><mi>s</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">s_1 \geq s_2 \geq \cdots \geq s_m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.786em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.786em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>min</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>n</mi><mo separator="true">,</mo><mi>d</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">m=\min(n, d)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mclose">)</span></span></span></span>.
+4. Computing the <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">entropy</a> of the singular values:</p>
+<span class="katex-display" tabindex="0" aria-label="Equation; scroll horizontally if needed" role="group"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>entropy</mtext><mo>=</mo><mo>−</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><msub><mi>p</mi><mi>i</mi></msub><mi>log</mi><mo>⁡</mo><msub><mi>p</mi><mi>i</mi></msub><mtext>, where </mtext><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mfrac><msub><mi>s</mi><mi>i</mi></msub><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><msub><mi>s</mi><mi>i</mi></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\text{entropy} = -\sum_{i=1}^m p_i \log p_i \text{, where } p_i = \frac{s_i}{\sum_{i=1}^m s_i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8095em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">entropy</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.9291em;vertical-align:-1.2777em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.0139em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord text"><span class="mord">, where </span></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.1016em;vertical-align:-0.994em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1076em;"><span style="top:-2.3057em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8043em;"><span style="top:-2.4003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.994em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span>
 <p>The rationale behind this approach is as follows:</p>
 <ul>
-<li>Similar book reviews imply correlated review embeddings <span class="math">\(X\)</span>, leading to a significant disparity in the singular values of <span class="math">\(X\)</span> (i.e. <span class="math">\(s_1\)</span> much larger than <span class="math">\(s_m\)</span>), resulting in low entropy.</li>
-<li>Diversified and independent reviews suggest uncorrelated and orthogonal embeddings <span class="math">\(X\)</span> causing the singular values of <span class="math">\(X\)</span> to be relatively uniform, leading to high entropy.</li>
+<li>Similar book reviews imply correlated review embeddings <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span></span></span></span>, leading to a significant disparity in the singular values of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span></span></span></span> (i.e. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">s_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> much larger than <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">s_m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>), resulting in low entropy.</li>
+<li>Diversified and independent reviews suggest uncorrelated and orthogonal embeddings <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span></span></span></span> causing the singular values of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span></span></span></span> to be relatively uniform, leading to high entropy.</li>
 </ul>
 <p>This concept mirrors methods used to <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1358533">measure portfolio diversity</a> in finance.</p>
-<p>The following figure showcases a comparison of "review entropy" for three thousand popular non-fiction books on Goodreads (y-axis) against their average ratings (x-axis). Intriguingly, there is no correlation between review entropy and ratings. Notably, Nassim Taleb's books exhibit high review entropy yet possess average ratings. I wonder if he have employed a similar analysis and saw these results before sending his tweet lol.</p>
-<p><img alt="Book review entropy" src="/blog/2023/img/book_review_entropy.png"></p>
-<h3>Code</h3>
-<p>I utilized the <a href="[https://www.kaggle.com/datasets/pypiahmad/goodreads-book-reviews1">Goodreads book review dataset</a> from Kaggle, focusing solely on non-fiction books due to the large data size.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filter_genre</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;non-fiction&#39;</span><span class="p">,</span><span class="s1">&#39;history, historical fiction, biography&#39;</span><span class="p">]</span>
-
-<span class="n">book_genre</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s2">&quot;goodreads_book_genres_initial.json&quot;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">books_filtered</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">book_genre</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">book_genre</span><span class="p">[</span><span class="s1">&#39;genres&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">filter_genre</span><span class="p">),</span> <span class="s1">&#39;book_id&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+<p>The following figure showcases a comparison of “review entropy” for three thousand popular non-fiction books on Goodreads (y-axis) against their average ratings (x-axis). Intriguingly, there is no correlation between review entropy and ratings. Notably, Nassim Taleb’s books exhibit high review entropy yet possess average ratings. I wonder if he have employed a similar analysis and saw these results before sending his tweet lol.</p>
+<p><img src="/blog/2023/img/book_review_entropy.png" alt="Book review entropy"></p>
+<h3 id="code">Code</h3>
+<p>I utilized the <a href="https://www.kaggle.com/datasets/pypiahmad/goodreads-book-reviews1">Goodreads book review dataset</a> from Kaggle, focusing solely on non-fiction books due to the large data size.</p>
+<pre class="astro-code astro-code-themes github-light-high-contrast github-dark-high-contrast" style="background-color:#ffffff;--shiki-dark-bg:#0a0c10;color:#0e1116;--shiki-dark:#f0f3f6; overflow-x: auto;" tabindex="0" data-language="python" aria-label="Code sample"><code><span class="line"><span style="color:#A0111F;--shiki-dark:#FF9492">def</span><span style="color:#622CBC;--shiki-dark:#DBB7FF"> filter_genre</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">(x):</span></span>
+<span class="line"><span style="color:#A0111F;--shiki-dark:#FF9492">    return</span><span style="color:#023B95;--shiki-dark:#91CBFF"> len</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">(x) </span><span style="color:#A0111F;--shiki-dark:#FF9492">></span><span style="color:#023B95;--shiki-dark:#91CBFF"> 0</span><span style="color:#A0111F;--shiki-dark:#FF9492"> and</span><span style="color:#023B95;--shiki-dark:#91CBFF"> max</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">(x, </span><span style="color:#702C00;--shiki-dark:#FFB757">key</span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">x.get) </span><span style="color:#A0111F;--shiki-dark:#FF9492">in</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> [</span><span style="color:#032563;--shiki-dark:#ADDCFF">'non-fiction'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">,</span><span style="color:#032563;--shiki-dark:#ADDCFF">'history, historical fiction, biography'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">book_genre </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> pd.read_json(</span><span style="color:#032563;--shiki-dark:#ADDCFF">"goodreads_book_genres_initial.json"</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">, </span><span style="color:#702C00;--shiki-dark:#FFB757">orient</span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#032563;--shiki-dark:#ADDCFF">"records"</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">, </span><span style="color:#702C00;--shiki-dark:#FFB757">lines</span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#023B95;--shiki-dark:#91CBFF">True</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">)</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">books_filtered </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#023B95;--shiki-dark:#91CBFF"> set</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">(book_genre.loc[book_genre[</span><span style="color:#032563;--shiki-dark:#ADDCFF">'genres'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">].apply(filter_genre), </span><span style="color:#032563;--shiki-dark:#ADDCFF">'book_id'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">])</span></span></code></pre>
 <p>Then, I processed the reviews through pre-trained sentence transformers to generate numerical embeddings. The <a href="https://huggingface.co/sentence-transformers/all-MiniLM-L12-v1">all-MiniLM-L12-v1 model</a> has an embedding dimension of 384.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s1">&#39;all-MiniLM-L12-v1&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s2">&quot;goodreads_reviews_dedup.json&quot;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">500000</span><span class="p">)):</span>
-    <span class="n">chunk</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;book_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">books_filtered</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;book_id&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;review_text&#39;</span><span class="p">]]</span>
-    <span class="n">chunk</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;review_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span><span class="o">&gt;=</span><span class="mi">100</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">chunk</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-      <span class="n">embed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;review_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">show_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;book_id&#39;</span><span class="p">])</span>
-      <span class="n">embed</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">embed</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-      <span class="n">embed</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;book_review_embeddings/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.parquet&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+<pre class="astro-code astro-code-themes github-light-high-contrast github-dark-high-contrast" style="background-color:#ffffff;--shiki-dark-bg:#0a0c10;color:#0e1116;--shiki-dark:#f0f3f6; overflow-x: auto;" tabindex="0" data-language="python" aria-label="Code sample"><code><span class="line"><span style="color:#A0111F;--shiki-dark:#FF9492">from</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> sentence_transformers </span><span style="color:#A0111F;--shiki-dark:#FF9492">import</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> SentenceTransformer</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">model </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> SentenceTransformer(</span><span style="color:#032563;--shiki-dark:#ADDCFF">'all-MiniLM-L12-v1'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">)</span></span>
+<span class="line"><span style="color:#A0111F;--shiki-dark:#FF9492">for</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> i, chunk </span><span style="color:#A0111F;--shiki-dark:#FF9492">in</span><span style="color:#023B95;--shiki-dark:#91CBFF"> enumerate</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">(pd.read_json(</span><span style="color:#032563;--shiki-dark:#ADDCFF">"goodreads_reviews_dedup.json"</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">, </span><span style="color:#702C00;--shiki-dark:#FFB757">orient</span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#032563;--shiki-dark:#ADDCFF">"records"</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">, </span><span style="color:#702C00;--shiki-dark:#FFB757">lines</span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#023B95;--shiki-dark:#91CBFF">True</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">, </span><span style="color:#702C00;--shiki-dark:#FFB757">chunksize</span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#023B95;--shiki-dark:#91CBFF">500000</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">)):</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">    chunk </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> chunk.loc[chunk[</span><span style="color:#032563;--shiki-dark:#ADDCFF">'book_id'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">].isin(books_filtered), [</span><span style="color:#032563;--shiki-dark:#ADDCFF">'book_id'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">, </span><span style="color:#032563;--shiki-dark:#ADDCFF">'rating'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">, </span><span style="color:#032563;--shiki-dark:#ADDCFF">'review_text'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">]]</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">    chunk </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> chunk.loc[chunk[</span><span style="color:#032563;--shiki-dark:#ADDCFF">'review_text'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">].str.len()</span><span style="color:#A0111F;--shiki-dark:#FF9492">>=</span><span style="color:#023B95;--shiki-dark:#91CBFF">100</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">]</span></span>
+<span class="line"><span style="color:#A0111F;--shiki-dark:#FF9492">    if</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> chunk.shape[</span><span style="color:#023B95;--shiki-dark:#91CBFF">0</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">] </span><span style="color:#A0111F;--shiki-dark:#FF9492">></span><span style="color:#023B95;--shiki-dark:#91CBFF"> 0</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">:</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">      embed </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> pd.DataFrame(model.encode(chunk[</span><span style="color:#032563;--shiki-dark:#ADDCFF">'review_text'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">].tolist(), </span><span style="color:#702C00;--shiki-dark:#FFB757">show_progress_bar</span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#023B95;--shiki-dark:#91CBFF">True</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">), </span><span style="color:#702C00;--shiki-dark:#FFB757">index</span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">chunk[</span><span style="color:#032563;--shiki-dark:#ADDCFF">'book_id'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">])</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">      embed.columns </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> embed.columns.astype(</span><span style="color:#023B95;--shiki-dark:#91CBFF">str</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">)</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">      embed.to_parquet(</span><span style="color:#A0111F;--shiki-dark:#FF9492">f</span><span style="color:#032563;--shiki-dark:#ADDCFF">"book_review_embeddings/</span><span style="color:#A0111F;--shiki-dark:#FF9492">{</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">i</span><span style="color:#A0111F;--shiki-dark:#FF9492">}</span><span style="color:#032563;--shiki-dark:#ADDCFF">.parquet"</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">)</span></span></code></pre>
 <p>Finally, I computed the SVD for each book, considering those with at least 50 reviews. To ensure fairness, I sampled 50 reviews per book for entropy calculation, as books with larger numbers of reviews (for example 1000) could inherently have higher entropy then the ones with 50-100 reviews.</p>
-<div class="highlight"><pre><span></span><code><span class="n">embed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;C:/Users/soars/Downloads/goodreads/book_review_embeddings&#39;</span><span class="p">)</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;review_count&#39;</span><span class="p">:</span> <span class="n">embed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()})</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">output</span><span class="s1">&#39;review_count&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">50</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">embed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="mi">50</span><span class="p">,</span> <span class="p">:])</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">s</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">p</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">output</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
-</code></pre></div>
-
-<h3>Limitations</h3>
+<pre class="astro-code astro-code-themes github-light-high-contrast github-dark-high-contrast" style="background-color:#ffffff;--shiki-dark-bg:#0a0c10;color:#0e1116;--shiki-dark:#f0f3f6; overflow-x: auto;" tabindex="0" data-language="python" aria-label="Code sample"><code><span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">embed </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> pd.read_parquet(</span><span style="color:#032563;--shiki-dark:#ADDCFF">'C:/Users/soars/Downloads/goodreads/book_review_embeddings'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">)</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">output </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> pd.DataFrame({</span><span style="color:#032563;--shiki-dark:#ADDCFF">'review_count'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">: embed.index.value_counts()})</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">output </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> output.loc[output</span><span style="color:#032563;--shiki-dark:#ADDCFF">'review_count'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">]</span><span style="color:#A0111F;--shiki-dark:#FF9492">>=</span><span style="color:#023B95;--shiki-dark:#91CBFF">50</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#A0111F;--shiki-dark:#FF9492">for</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> i </span><span style="color:#A0111F;--shiki-dark:#FF9492">in</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> tqdm(output.index):</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">    _, s, _ </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> np.linalg.svd(embed.loc[i].values[:</span><span style="color:#023B95;--shiki-dark:#91CBFF">50</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">, :])</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">    p </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> s</span><span style="color:#A0111F;--shiki-dark:#FF9492">/</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">np.sum(s)</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">    p </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#0E1116;--shiki-dark:#F0F3F6"> p[p</span><span style="color:#A0111F;--shiki-dark:#FF9492">></span><span style="color:#023B95;--shiki-dark:#91CBFF">0</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">]</span></span>
+<span class="line"><span style="color:#0E1116;--shiki-dark:#F0F3F6">    output.loc[i, </span><span style="color:#032563;--shiki-dark:#ADDCFF">'entropy'</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">] </span><span style="color:#A0111F;--shiki-dark:#FF9492">=</span><span style="color:#A0111F;--shiki-dark:#FF9492"> -</span><span style="color:#0E1116;--shiki-dark:#F0F3F6">np.dot(p, np.log(p))</span></span></code></pre>
+<h3 id="limitations">Limitations</h3>
 <ul>
-<li>Not all reviews are summaries; some discuss editions or translations, especially for classical books which have many different editions. Some reviews, of a biography for example, focus on characters rather than content. For instance, Walter Isaacson's "Steve Jobs" has a moderate review entropy score (~3.63).</li>
-<li>The general-purpose nature of pre-trained embeddings means they also capture reviewers' styles and emotions, which aren't ideal for information entropy measurement. An example is "The Rape of Nanking: The Forgotten Holocaust of World War II" by Iris Chang. This book deals with the Nanjing Massacre, a tragic and brutal episode during the Second Sino-Japanese War where hundreds of thousands of Chinese civilians and disarmed soldiers were murdered, and numerous women were assaulted by soldiers of the Imperial Japanese Army. The intense emotional impact of the subject matter invariably influence the tone of its reviews, leading to a review entropy of only 3.53.</li>
-<li>The methodology's robustness is impacted by the choice of embedding model, dimension, and number of reviews considered. Randomly selecting a subset of reviews also leads to potential information loss. Advanced approaches like random matrix theory could offer better comparisons between books with varying numbers of reviews, but this is outside this article's scope.</li>
-<li>Ultimately, "review diversity" or "book dimensionality" are subjective concepts. This project is a fun exploration rather than a definitive measure of a book's value, as you many already notice in books highlighted in the previous figure --- there is no "skin in the game".</li>
+<li>Not all reviews are summaries; some discuss editions or translations, especially for classical books which have many different editions. Some reviews, of a biography for example, focus on characters rather than content. For instance, Walter Isaacson’s “Steve Jobs” has a moderate review entropy score (~3.63).</li>
+<li>The general-purpose nature of pre-trained embeddings means they also capture reviewers’ styles and emotions, which aren’t ideal for information entropy measurement. An example is “The Rape of Nanking: The Forgotten Holocaust of World War II” by Iris Chang. This book deals with the Nanjing Massacre, a tragic and brutal episode during the Second Sino-Japanese War where hundreds of thousands of Chinese civilians and disarmed soldiers were murdered, and numerous women were assaulted by soldiers of the Imperial Japanese Army. The intense emotional impact of the subject matter invariably influence the tone of its reviews, leading to a review entropy of only 3.53.</li>
+<li>The methodology’s robustness is impacted by the choice of embedding model, dimension, and number of reviews considered. Randomly selecting a subset of reviews also leads to potential information loss. Advanced approaches like random matrix theory could offer better comparisons between books with varying numbers of reviews, but this is outside this article’s scope.</li>
+<li>Ultimately, “review diversity” or “book dimensionality” are subjective concepts. This project is a fun exploration rather than a definitive measure of a book’s value, as you many already notice in books highlighted in the previous figure --- there is no “skin in the game”.</li>
 </ul>
-<h3>Appendix - books with highest review entropy</h3>
-<table>
-<thead>
-<tr>
-<th>title</th>
-<th>url</th>
-<th>book_id</th>
-<th>rating</th>
-<th>review_count</th>
-<th>entropy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Influence: The Psychology of Persuasion</td>
-<td>https://www.goodreads.com/book/show/28815.Influence</td>
-<td>28815</td>
-<td>4.114754</td>
-<td>183</td>
-<td>3.738005</td>
-</tr>
-<tr>
-<td>Min kamp 1 (Min kamp #1)</td>
-<td>https://www.goodreads.com/book/show/7147831-min-kamp-1</td>
-<td>7147831</td>
-<td>3.662162</td>
-<td>74</td>
-<td>3.736675</td>
-</tr>
-<tr>
-<td>The Universe Doesn't Give a Flying Fuck About You</td>
-<td>https://www.goodreads.com/book/show/13628888-the-universe-doesn-t-give-a-flying-fuck-about-you</td>
-<td>13628888</td>
-<td>3.680556</td>
-<td>72</td>
-<td>3.735819</td>
-</tr>
-<tr>
-<td>Holy Bible: New International Version</td>
-<td>https://www.goodreads.com/book/show/280111.Holy_Bible</td>
-<td>280111</td>
-<td>3.500000</td>
-<td>80</td>
-<td>3.735288</td>
-</tr>
-<tr>
-<td>Tao Te Ching</td>
-<td>https://www.goodreads.com/book/show/67896.Tao_Te_Ching</td>
-<td>67896</td>
-<td>3.807229</td>
-<td>83</td>
-<td>3.734882</td>
-</tr>
-<tr>
-<td>Holy Bible: King James Version</td>
-<td>https://www.goodreads.com/book/show/1923820.Holy_Bible</td>
-<td>1923820</td>
-<td>3.354938</td>
-<td>324</td>
-<td>3.732286</td>
-</tr>
-<tr>
-<td>Weird Things Customers Say in Bookshops</td>
-<td>https://www.goodreads.com/book/show/12640991-weird-things-customers-say-in-bookshops</td>
-<td>12640991</td>
-<td>3.997585</td>
-<td>414</td>
-<td>3.731400</td>
-</tr>
-<tr>
-<td>Beyond Good and Evil</td>
-<td>https://www.goodreads.com/book/show/12321.Beyond_Good_and_Evil</td>
-<td>12321</td>
-<td>3.366337</td>
-<td>101</td>
-<td>3.725606</td>
-</tr>
-<tr>
-<td>The Nicomachean Ethics</td>
-<td>https://www.goodreads.com/book/show/19068.The_Nicomachean_Ethics</td>
-<td>19068</td>
-<td>3.037736</td>
-<td>53</td>
-<td>3.725171</td>
-</tr>
-<tr>
-<td>Chicken Soup for the Soul</td>
-<td>https://www.goodreads.com/book/show/801178.Chicken_Soup_for_the_Soul</td>
-<td>801178</td>
-<td>3.500000</td>
-<td>64</td>
-<td>3.725138</td>
-</tr>
-<tr>
-<td>The Teachings of Don Juan: A Yaqui Way of Knowledge</td>
-<td>https://www.goodreads.com/book/show/78250.The_Teachings_of_Don_Juan</td>
-<td>78250</td>
-<td>3.642857</td>
-<td>84</td>
-<td>3.724613</td>
-</tr>
-<tr>
-<td>Wreck This Journal</td>
-<td>https://www.goodreads.com/book/show/428862.Wreck_This_Journal</td>
-<td>428862</td>
-<td>4.047059</td>
-<td>85</td>
-<td>3.722732</td>
-</tr>
-<tr>
-<td>The Life-Changing Magic of Not Giving a F*ck: How to Stop Spending Time You Don't Have with Peop...</td>
-<td>https://www.goodreads.com/book/show/26200068-the-life-changing-magic-of-not-giving-a-f-ck</td>
-<td>26200068</td>
-<td>3.465347</td>
-<td>202</td>
-<td>3.722119</td>
-</tr>
-<tr>
-<td>The Book of General Ignorance</td>
-<td>https://www.goodreads.com/book/show/410632.The_Book_of_General_Ignorance</td>
-<td>410632</td>
-<td>3.745098</td>
-<td>51</td>
-<td>3.721834</td>
-</tr>
-<tr>
-<td>More Weird Things Customers Say in Bookshops</td>
-<td>https://www.goodreads.com/book/show/16174631-more-weird-things-customers-say-in-bookshops</td>
-<td>16174631</td>
-<td>3.807143</td>
-<td>140</td>
-<td>3.720029</td>
-</tr>
-<tr>
-<td>Steal Like an Artist: 10 Things Nobody Told You About Being Creative</td>
-<td>https://www.goodreads.com/book/show/13099738-steal-like-an-artist</td>
-<td>13099738</td>
-<td>4.087500</td>
-<td>480</td>
-<td>3.719942</td>
-</tr>
-<tr>
-<td>The Secret (The Secret, #1)</td>
-<td>https://www.goodreads.com/book/show/52529.The_Secret</td>
-<td>52529</td>
-<td>2.873807</td>
-<td>943</td>
-<td>3.719174</td>
-</tr>
-<tr>
-<td>Papillon</td>
-<td>https://www.goodreads.com/book/show/6882.Papillon</td>
-<td>6882</td>
-<td>3.993103</td>
-<td>145</td>
-<td>3.718292</td>
-</tr>
-<tr>
-<td>Getting Things Done: The Art of Stress-Free Productivity</td>
-<td>https://www.goodreads.com/book/show/1633.Getting_Things_Done</td>
-<td>1633</td>
-<td>3.697222</td>
-<td>360</td>
-<td>3.717931</td>
-</tr>
-<tr>
-<td>Thus Spoke Zarathustra</td>
-<td>https://www.goodreads.com/book/show/51893.Thus_Spoke_Zarathustra</td>
-<td>51893</td>
-<td>3.514286</td>
-<td>140</td>
-<td>3.716682</td>
-</tr>
-<tr>
-<td>The Monk Who Sold His Ferrari: A Fable About Fulfilling Your Dreams Reaching Your Destiny</td>
-<td>https://www.goodreads.com/book/show/43877.The_Monk_Who_Sold_His_Ferrari</td>
-<td>43877</td>
-<td>3.389610</td>
-<td>308</td>
-<td>3.716322</td>
-</tr>
-<tr>
-<td>The Black Swan: The Impact of the Highly Improbable</td>
-<td>https://www.goodreads.com/book/show/242472.The_Black_Swan</td>
-<td>242472</td>
-<td>3.555184</td>
-<td>299</td>
-<td>3.715842</td>
-</tr>
-<tr>
-<td>How to Live on 24 Hours a Day</td>
-<td>https://www.goodreads.com/book/show/4855.How_to_Live_on_24_Hours_a_Day</td>
-<td>4855</td>
-<td>3.520000</td>
-<td>50</td>
-<td>3.715379</td>
-</tr>
-<tr>
-<td>Whatever You Think, Think the Opposite</td>
-<td>https://www.goodreads.com/book/show/265525.Whatever_You_Think_Think_the_Opposite</td>
-<td>265525</td>
-<td>3.831169</td>
-<td>77</td>
-<td>3.714774</td>
-</tr>
-<tr>
-<td>59 Seconds: Think a Little, Change a Lot</td>
-<td>https://www.goodreads.com/book/show/6340948-59-seconds</td>
-<td>6340948</td>
-<td>3.792453</td>
-<td>53</td>
-<td>3.713075</td>
-</tr>
-<tr>
-<td>It's Not How Good You Are, It's How Good You Want To Be</td>
-<td>https://www.goodreads.com/book/show/114737.It_s_Not_How_Good_You_Are_It_s_How_Good_You_Want_To_Be</td>
-<td>114737</td>
-<td>3.540541</td>
-<td>111</td>
-<td>3.712133</td>
-</tr>
-<tr>
-<td>Gödel, Escher, Bach: An Eternal Golden Braid</td>
-<td>https://www.goodreads.com/book/show/24113.G_del_Escher_Bach</td>
-<td>24113</td>
-<td>3.838095</td>
-<td>105</td>
-<td>3.711328</td>
-</tr>
-<tr>
-<td>Encyclopedia of an Ordinary Life</td>
-<td>https://www.goodreads.com/book/show/39872.Encyclopedia_of_an_Ordinary_Life</td>
-<td>39872</td>
-<td>3.823009</td>
-<td>113</td>
-<td>3.710922</td>
-</tr>
-<tr>
-<td>Ignore Everybody: and 39 Other Keys to Creativity</td>
-<td>https://www.goodreads.com/book/show/6162567-ignore-everybody</td>
-<td>6162567</td>
-<td>3.462687</td>
-<td>67</td>
-<td>3.710877</td>
-</tr>
-<tr>
-<td>The Art of War</td>
-<td>https://www.goodreads.com/book/show/10534.The_Art_of_War</td>
-<td>10534</td>
-<td>3.669291</td>
-<td>508</td>
-<td>3.710865</td>
-</tr>
-<tr>
-<td>Snoop: What Your Stuff Says About You</td>
-<td>https://www.goodreads.com/book/show/1581330.Snoop</td>
-<td>1581330</td>
-<td>3.148148</td>
-<td>81</td>
-<td>3.710645</td>
-</tr>
-<tr>
-<td>The Bhagavad Gita</td>
-<td>https://www.goodreads.com/book/show/99944.The_Bhagavad_Gita</td>
-<td>99944</td>
-<td>3.693333</td>
-<td>75</td>
-<td>3.710421</td>
-</tr>
-<tr>
-<td>The Drama of the Gifted Child: The Search for the True Self</td>
-<td>https://www.goodreads.com/book/show/4887.The_Drama_of_the_Gifted_Child</td>
-<td>4887</td>
-<td>3.711864</td>
-<td>59</td>
-<td>3.710158</td>
-</tr>
-<tr>
-<td>How to Win Friends and Influence People</td>
-<td>https://www.goodreads.com/book/show/4865.How_to_Win_Friends_and_Influence_People</td>
-<td>4865</td>
-<td>3.862745</td>
-<td>663</td>
-<td>3.709622</td>
-</tr>
-<tr>
-<td>The Subtle Art of Not Giving a F*ck: A Counterintuitive Approach to Living a Good Life</td>
-<td>https://www.goodreads.com/book/show/28257707-the-subtle-art-of-not-giving-a-f-ck</td>
-<td>28257707</td>
-<td>3.742802</td>
-<td>521</td>
-<td>3.709340</td>
-</tr>
-<tr>
-<td>Abundance: The Future Is Better Than You Think</td>
-<td>https://www.goodreads.com/book/show/13187824-abundance</td>
-<td>13187824</td>
-<td>3.987805</td>
-<td>82</td>
-<td>3.709272</td>
-</tr>
-<tr>
-<td>All I Really Need to Know I Learned in Kindergarten</td>
-<td>https://www.goodreads.com/book/show/34760.All_I_Really_Need_to_Know_I_Learned_in_Kindergarten</td>
-<td>34760</td>
-<td>3.625000</td>
-<td>56</td>
-<td>3.709270</td>
-</tr>
-<tr>
-<td>Why Do Men Have Nipples?: Hundreds of Questions You'd Only Ask a Doctor After Your Third Martini</td>
-<td>https://www.goodreads.com/book/show/131529.Why_Do_Men_Have_Nipples_</td>
-<td>131529</td>
-<td>2.793814</td>
-<td>97</td>
-<td>3.708684</td>
-</tr>
-<tr>
-<td>The Art of Thinking Clearly</td>
-<td>https://www.goodreads.com/book/show/16248196-the-art-of-thinking-clearly</td>
-<td>16248196</td>
-<td>3.392157</td>
-<td>102</td>
-<td>3.708681</td>
-</tr>
-<tr>
-<td>Shop Class as Soulcraft: An Inquiry Into the Value of Work</td>
-<td>https://www.goodreads.com/book/show/6261332-shop-class-as-soulcraft</td>
-<td>6261332</td>
-<td>3.383838</td>
-<td>99</td>
-<td>3.707851</td>
-</tr>
-<tr>
-<td>The Communist Manifesto</td>
-<td>https://www.goodreads.com/book/show/30474.The_Communist_Manifesto</td>
-<td>30474</td>
-<td>3.078603</td>
-<td>229</td>
-<td>3.707773</td>
-</tr>
-<tr>
-<td>The Power of Your Subconscious Mind</td>
-<td>https://www.goodreads.com/book/show/68984.The_Power_of_Your_Subconscious_Mind</td>
-<td>68984</td>
-<td>3.520000</td>
-<td>75</td>
-<td>3.707511</td>
-</tr>
-<tr>
-<td>The Art of Social Media: Power Tips for Power Users</td>
-<td>https://www.goodreads.com/book/show/23281903-the-art-of-social-media</td>
-<td>23281903</td>
-<td>3.666667</td>
-<td>54</td>
-<td>3.707500</td>
-</tr>
-<tr>
-<td>Sway: The Irresistible Pull of Irrational Behavior</td>
-<td>https://www.goodreads.com/book/show/2118114.Sway</td>
-<td>2118114</td>
-<td>3.649351</td>
-<td>77</td>
-<td>3.707418</td>
-</tr>
-<tr>
-<td>Tractatus Logico-Philosophicus</td>
-<td>https://www.goodreads.com/book/show/12075.Tractatus_Logico_Philosophicus</td>
-<td>12075</td>
-<td>3.500000</td>
-<td>54</td>
-<td>3.707324</td>
-</tr>
-<tr>
-<td>Lost in Translation: An Illustrated Compendium of Untranslatable Words from Around the World</td>
-<td>https://www.goodreads.com/book/show/20176282-lost-in-translation</td>
-<td>20176282</td>
-<td>4.210526</td>
-<td>76</td>
-<td>3.706830</td>
-</tr>
-<tr>
-<td>What If?: Serious Scientific Answers to Absurd Hypothetical Questions</td>
-<td>https://www.goodreads.com/book/show/21413662-what-if</td>
-<td>21413662</td>
-<td>4.122535</td>
-<td>710</td>
-<td>3.706252</td>
-</tr>
-<tr>
-<td>Originals: How Non-Conformists Move the World</td>
-<td>https://www.goodreads.com/book/show/25614523-originals</td>
-<td>25614523</td>
-<td>3.618056</td>
-<td>144</td>
-<td>3.706107</td>
-</tr>
-<tr>
-<td>Linchpin: Are You Indispensable?</td>
-<td>https://www.goodreads.com/book/show/7155145-linchpin</td>
-<td>7155145</td>
-<td>3.742138</td>
-<td>159</td>
-<td>3.706064</td>
-</tr>
-<tr>
-<td>Think and Grow Rich</td>
-<td>https://www.goodreads.com/book/show/30186948-think-and-grow-rich</td>
-<td>30186948</td>
-<td>3.557377</td>
-<td>61</td>
-<td>3.705275</td>
-</tr>
-</tbody>
-</table>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-</script>
-            </div>
-            <!-- /.entry-content -->
-        </article>
-    </section>
-
-        </div>
-        <div class="col-sm-3" id="sidebar">
-            <aside>
-<!-- Sidebar -->
-<section class="well well-sm">
-  <ul class="list-group list-group-flush">
-
-<!-- Sidebar/Social -->
-<li class="list-group-item">
-  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
-  <ul class="list-group" id="social">
-    <li class="list-group-item"><a href="https://twitter.com/xxiangshi"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
-    <li class="list-group-item"><a href="https://www.linkedin.com/in/xiangshi"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
-    <li class="list-group-item"><a href="https://github.com/xshi19"><i class="fa fa-github-square fa-lg"></i> github</a></li>
-  </ul>
-</li>
-<!-- End Sidebar/Social -->
-  </ul>
-</section>
-<!-- End Sidebar -->            </aside>
-        </div>
-    </div>
-</div>
-<!-- End Content Container -->
-
-<footer>
-   <div class="container">
-      <hr>
-      <div class="row">
-         <div class="col-xs-10">&copy; 2024 Xiang Shi
-            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
-            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
-            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
-    Content
-  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>, except where indicated otherwise.
-</small></p>
-         </div>
-         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
-      </div>
-   </div>
-</footer>
-<script src="https://xshi19.github.io/theme/js/jquery.min.js"></script>
-
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="https://xshi19.github.io/theme/js/bootstrap.min.js"></script>
-
-<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="https://xshi19.github.io/theme/js/respond.min.js"></script>
+<h3 id="appendix---books-with-highest-review-entropy">Appendix - books with highest review entropy</h3>
 
 
 
 
-</body>
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table tabindex="0" aria-label="Data table"><thead><tr><th>title</th><th>url</th><th>book_id</th><th>rating</th><th>review_count</th><th>entropy</th></tr></thead><tbody><tr><td>Influence: The Psychology of Persuasion</td><td><a href="https://www.goodreads.com/book/show/28815.Influence">https://www.goodreads.com/book/show/28815.Influence</a></td><td>28815</td><td>4.114754</td><td>183</td><td>3.738005</td></tr><tr><td>Min kamp 1 (Min kamp #1)</td><td><a href="https://www.goodreads.com/book/show/7147831-min-kamp-1">https://www.goodreads.com/book/show/7147831-min-kamp-1</a></td><td>7147831</td><td>3.662162</td><td>74</td><td>3.736675</td></tr><tr><td>The Universe Doesn’t Give a Flying Fuck About You</td><td><a href="https://www.goodreads.com/book/show/13628888-the-universe-doesn-t-give-a-flying-fuck-about-you">https://www.goodreads.com/book/show/13628888-the-universe-doesn-t-give-a-flying-fuck-about-you</a></td><td>13628888</td><td>3.680556</td><td>72</td><td>3.735819</td></tr><tr><td>Holy Bible: New International Version</td><td><a href="https://www.goodreads.com/book/show/280111.Holy_Bible">https://www.goodreads.com/book/show/280111.Holy_Bible</a></td><td>280111</td><td>3.500000</td><td>80</td><td>3.735288</td></tr><tr><td>Tao Te Ching</td><td><a href="https://www.goodreads.com/book/show/67896.Tao_Te_Ching">https://www.goodreads.com/book/show/67896.Tao_Te_Ching</a></td><td>67896</td><td>3.807229</td><td>83</td><td>3.734882</td></tr><tr><td>Holy Bible: King James Version</td><td><a href="https://www.goodreads.com/book/show/1923820.Holy_Bible">https://www.goodreads.com/book/show/1923820.Holy_Bible</a></td><td>1923820</td><td>3.354938</td><td>324</td><td>3.732286</td></tr><tr><td>Weird Things Customers Say in Bookshops</td><td><a href="https://www.goodreads.com/book/show/12640991-weird-things-customers-say-in-bookshops">https://www.goodreads.com/book/show/12640991-weird-things-customers-say-in-bookshops</a></td><td>12640991</td><td>3.997585</td><td>414</td><td>3.731400</td></tr><tr><td>Beyond Good and Evil</td><td><a href="https://www.goodreads.com/book/show/12321.Beyond_Good_and_Evil">https://www.goodreads.com/book/show/12321.Beyond_Good_and_Evil</a></td><td>12321</td><td>3.366337</td><td>101</td><td>3.725606</td></tr><tr><td>The Nicomachean Ethics</td><td><a href="https://www.goodreads.com/book/show/19068.The_Nicomachean_Ethics">https://www.goodreads.com/book/show/19068.The_Nicomachean_Ethics</a></td><td>19068</td><td>3.037736</td><td>53</td><td>3.725171</td></tr><tr><td>Chicken Soup for the Soul</td><td><a href="https://www.goodreads.com/book/show/801178.Chicken_Soup_for_the_Soul">https://www.goodreads.com/book/show/801178.Chicken_Soup_for_the_Soul</a></td><td>801178</td><td>3.500000</td><td>64</td><td>3.725138</td></tr><tr><td>The Teachings of Don Juan: A Yaqui Way of Knowledge</td><td><a href="https://www.goodreads.com/book/show/78250.The_Teachings_of_Don_Juan">https://www.goodreads.com/book/show/78250.The_Teachings_of_Don_Juan</a></td><td>78250</td><td>3.642857</td><td>84</td><td>3.724613</td></tr><tr><td>Wreck This Journal</td><td><a href="https://www.goodreads.com/book/show/428862.Wreck_This_Journal">https://www.goodreads.com/book/show/428862.Wreck_This_Journal</a></td><td>428862</td><td>4.047059</td><td>85</td><td>3.722732</td></tr><tr><td>The Life-Changing Magic of Not Giving a F*ck: How to Stop Spending Time You Don’t Have with Peop…</td><td><a href="https://www.goodreads.com/book/show/26200068-the-life-changing-magic-of-not-giving-a-f-ck">https://www.goodreads.com/book/show/26200068-the-life-changing-magic-of-not-giving-a-f-ck</a></td><td>26200068</td><td>3.465347</td><td>202</td><td>3.722119</td></tr><tr><td>The Book of General Ignorance</td><td><a href="https://www.goodreads.com/book/show/410632.The_Book_of_General_Ignorance">https://www.goodreads.com/book/show/410632.The_Book_of_General_Ignorance</a></td><td>410632</td><td>3.745098</td><td>51</td><td>3.721834</td></tr><tr><td>More Weird Things Customers Say in Bookshops</td><td><a href="https://www.goodreads.com/book/show/16174631-more-weird-things-customers-say-in-bookshops">https://www.goodreads.com/book/show/16174631-more-weird-things-customers-say-in-bookshops</a></td><td>16174631</td><td>3.807143</td><td>140</td><td>3.720029</td></tr><tr><td>Steal Like an Artist: 10 Things Nobody Told You About Being Creative</td><td><a href="https://www.goodreads.com/book/show/13099738-steal-like-an-artist">https://www.goodreads.com/book/show/13099738-steal-like-an-artist</a></td><td>13099738</td><td>4.087500</td><td>480</td><td>3.719942</td></tr><tr><td>The Secret (The Secret, #1)</td><td><a href="https://www.goodreads.com/book/show/52529.The_Secret">https://www.goodreads.com/book/show/52529.The_Secret</a></td><td>52529</td><td>2.873807</td><td>943</td><td>3.719174</td></tr><tr><td>Papillon</td><td><a href="https://www.goodreads.com/book/show/6882.Papillon">https://www.goodreads.com/book/show/6882.Papillon</a></td><td>6882</td><td>3.993103</td><td>145</td><td>3.718292</td></tr><tr><td>Getting Things Done: The Art of Stress-Free Productivity</td><td><a href="https://www.goodreads.com/book/show/1633.Getting_Things_Done">https://www.goodreads.com/book/show/1633.Getting_Things_Done</a></td><td>1633</td><td>3.697222</td><td>360</td><td>3.717931</td></tr><tr><td>Thus Spoke Zarathustra</td><td><a href="https://www.goodreads.com/book/show/51893.Thus_Spoke_Zarathustra">https://www.goodreads.com/book/show/51893.Thus_Spoke_Zarathustra</a></td><td>51893</td><td>3.514286</td><td>140</td><td>3.716682</td></tr><tr><td>The Monk Who Sold His Ferrari: A Fable About Fulfilling Your Dreams Reaching Your Destiny</td><td><a href="https://www.goodreads.com/book/show/43877.The_Monk_Who_Sold_His_Ferrari">https://www.goodreads.com/book/show/43877.The_Monk_Who_Sold_His_Ferrari</a></td><td>43877</td><td>3.389610</td><td>308</td><td>3.716322</td></tr><tr><td>The Black Swan: The Impact of the Highly Improbable</td><td><a href="https://www.goodreads.com/book/show/242472.The_Black_Swan">https://www.goodreads.com/book/show/242472.The_Black_Swan</a></td><td>242472</td><td>3.555184</td><td>299</td><td>3.715842</td></tr><tr><td>How to Live on 24 Hours a Day</td><td><a href="https://www.goodreads.com/book/show/4855.How_to_Live_on_24_Hours_a_Day">https://www.goodreads.com/book/show/4855.How_to_Live_on_24_Hours_a_Day</a></td><td>4855</td><td>3.520000</td><td>50</td><td>3.715379</td></tr><tr><td>Whatever You Think, Think the Opposite</td><td><a href="https://www.goodreads.com/book/show/265525.Whatever_You_Think_Think_the_Opposite">https://www.goodreads.com/book/show/265525.Whatever_You_Think_Think_the_Opposite</a></td><td>265525</td><td>3.831169</td><td>77</td><td>3.714774</td></tr><tr><td>59 Seconds: Think a Little, Change a Lot</td><td><a href="https://www.goodreads.com/book/show/6340948-59-seconds">https://www.goodreads.com/book/show/6340948-59-seconds</a></td><td>6340948</td><td>3.792453</td><td>53</td><td>3.713075</td></tr><tr><td>It’s Not How Good You Are, It’s How Good You Want To Be</td><td><a href="https://www.goodreads.com/book/show/114737.It_s_Not_How_Good_You_Are_It_s_How_Good_You_Want_To_Be">https://www.goodreads.com/book/show/114737.It_s_Not_How_Good_You_Are_It_s_How_Good_You_Want_To_Be</a></td><td>114737</td><td>3.540541</td><td>111</td><td>3.712133</td></tr><tr><td>Gödel, Escher, Bach: An Eternal Golden Braid</td><td><a href="https://www.goodreads.com/book/show/24113.G_del_Escher_Bach">https://www.goodreads.com/book/show/24113.G_del_Escher_Bach</a></td><td>24113</td><td>3.838095</td><td>105</td><td>3.711328</td></tr><tr><td>Encyclopedia of an Ordinary Life</td><td><a href="https://www.goodreads.com/book/show/39872.Encyclopedia_of_an_Ordinary_Life">https://www.goodreads.com/book/show/39872.Encyclopedia_of_an_Ordinary_Life</a></td><td>39872</td><td>3.823009</td><td>113</td><td>3.710922</td></tr><tr><td>Ignore Everybody: and 39 Other Keys to Creativity</td><td><a href="https://www.goodreads.com/book/show/6162567-ignore-everybody">https://www.goodreads.com/book/show/6162567-ignore-everybody</a></td><td>6162567</td><td>3.462687</td><td>67</td><td>3.710877</td></tr><tr><td>The Art of War</td><td><a href="https://www.goodreads.com/book/show/10534.The_Art_of_War">https://www.goodreads.com/book/show/10534.The_Art_of_War</a></td><td>10534</td><td>3.669291</td><td>508</td><td>3.710865</td></tr><tr><td>Snoop: What Your Stuff Says About You</td><td><a href="https://www.goodreads.com/book/show/1581330.Snoop">https://www.goodreads.com/book/show/1581330.Snoop</a></td><td>1581330</td><td>3.148148</td><td>81</td><td>3.710645</td></tr><tr><td>The Bhagavad Gita</td><td><a href="https://www.goodreads.com/book/show/99944.The_Bhagavad_Gita">https://www.goodreads.com/book/show/99944.The_Bhagavad_Gita</a></td><td>99944</td><td>3.693333</td><td>75</td><td>3.710421</td></tr><tr><td>The Drama of the Gifted Child: The Search for the True Self</td><td><a href="https://www.goodreads.com/book/show/4887.The_Drama_of_the_Gifted_Child">https://www.goodreads.com/book/show/4887.The_Drama_of_the_Gifted_Child</a></td><td>4887</td><td>3.711864</td><td>59</td><td>3.710158</td></tr><tr><td>How to Win Friends and Influence People</td><td><a href="https://www.goodreads.com/book/show/4865.How_to_Win_Friends_and_Influence_People">https://www.goodreads.com/book/show/4865.How_to_Win_Friends_and_Influence_People</a></td><td>4865</td><td>3.862745</td><td>663</td><td>3.709622</td></tr><tr><td>The Subtle Art of Not Giving a F*ck: A Counterintuitive Approach to Living a Good Life</td><td><a href="https://www.goodreads.com/book/show/28257707-the-subtle-art-of-not-giving-a-f-ck">https://www.goodreads.com/book/show/28257707-the-subtle-art-of-not-giving-a-f-ck</a></td><td>28257707</td><td>3.742802</td><td>521</td><td>3.709340</td></tr><tr><td>Abundance: The Future Is Better Than You Think</td><td><a href="https://www.goodreads.com/book/show/13187824-abundance">https://www.goodreads.com/book/show/13187824-abundance</a></td><td>13187824</td><td>3.987805</td><td>82</td><td>3.709272</td></tr><tr><td>All I Really Need to Know I Learned in Kindergarten</td><td><a href="https://www.goodreads.com/book/show/34760.All_I_Really_Need_to_Know_I_Learned_in_Kindergarten">https://www.goodreads.com/book/show/34760.All_I_Really_Need_to_Know_I_Learned_in_Kindergarten</a></td><td>34760</td><td>3.625000</td><td>56</td><td>3.709270</td></tr><tr><td>Why Do Men Have Nipples?: Hundreds of Questions You’d Only Ask a Doctor After Your Third Martini</td><td><a href="https://www.goodreads.com/book/show/131529.Why_Do_Men_Have_Nipples">https://www.goodreads.com/book/show/131529.Why_Do_Men_Have_Nipples</a>_</td><td>131529</td><td>2.793814</td><td>97</td><td>3.708684</td></tr><tr><td>The Art of Thinking Clearly</td><td><a href="https://www.goodreads.com/book/show/16248196-the-art-of-thinking-clearly">https://www.goodreads.com/book/show/16248196-the-art-of-thinking-clearly</a></td><td>16248196</td><td>3.392157</td><td>102</td><td>3.708681</td></tr><tr><td>Shop Class as Soulcraft: An Inquiry Into the Value of Work</td><td><a href="https://www.goodreads.com/book/show/6261332-shop-class-as-soulcraft">https://www.goodreads.com/book/show/6261332-shop-class-as-soulcraft</a></td><td>6261332</td><td>3.383838</td><td>99</td><td>3.707851</td></tr><tr><td>The Communist Manifesto</td><td><a href="https://www.goodreads.com/book/show/30474.The_Communist_Manifesto">https://www.goodreads.com/book/show/30474.The_Communist_Manifesto</a></td><td>30474</td><td>3.078603</td><td>229</td><td>3.707773</td></tr><tr><td>The Power of Your Subconscious Mind</td><td><a href="https://www.goodreads.com/book/show/68984.The_Power_of_Your_Subconscious_Mind">https://www.goodreads.com/book/show/68984.The_Power_of_Your_Subconscious_Mind</a></td><td>68984</td><td>3.520000</td><td>75</td><td>3.707511</td></tr><tr><td>The Art of Social Media: Power Tips for Power Users</td><td><a href="https://www.goodreads.com/book/show/23281903-the-art-of-social-media">https://www.goodreads.com/book/show/23281903-the-art-of-social-media</a></td><td>23281903</td><td>3.666667</td><td>54</td><td>3.707500</td></tr><tr><td>Sway: The Irresistible Pull of Irrational Behavior</td><td><a href="https://www.goodreads.com/book/show/2118114.Sway">https://www.goodreads.com/book/show/2118114.Sway</a></td><td>2118114</td><td>3.649351</td><td>77</td><td>3.707418</td></tr><tr><td>Tractatus Logico-Philosophicus</td><td><a href="https://www.goodreads.com/book/show/12075.Tractatus_Logico_Philosophicus">https://www.goodreads.com/book/show/12075.Tractatus_Logico_Philosophicus</a></td><td>12075</td><td>3.500000</td><td>54</td><td>3.707324</td></tr><tr><td>Lost in Translation: An Illustrated Compendium of Untranslatable Words from Around the World</td><td><a href="https://www.goodreads.com/book/show/20176282-lost-in-translation">https://www.goodreads.com/book/show/20176282-lost-in-translation</a></td><td>20176282</td><td>4.210526</td><td>76</td><td>3.706830</td></tr><tr><td>What If?: Serious Scientific Answers to Absurd Hypothetical Questions</td><td><a href="https://www.goodreads.com/book/show/21413662-what-if">https://www.goodreads.com/book/show/21413662-what-if</a></td><td>21413662</td><td>4.122535</td><td>710</td><td>3.706252</td></tr><tr><td>Originals: How Non-Conformists Move the World</td><td><a href="https://www.goodreads.com/book/show/25614523-originals">https://www.goodreads.com/book/show/25614523-originals</a></td><td>25614523</td><td>3.618056</td><td>144</td><td>3.706107</td></tr><tr><td>Linchpin: Are You Indispensable?</td><td><a href="https://www.goodreads.com/book/show/7155145-linchpin">https://www.goodreads.com/book/show/7155145-linchpin</a></td><td>7155145</td><td>3.742138</td><td>159</td><td>3.706064</td></tr><tr><td>Think and Grow Rich</td><td><a href="https://www.goodreads.com/book/show/30186948-think-and-grow-rich">https://www.goodreads.com/book/show/30186948-think-and-grow-rich</a></td><td>30186948</td><td>3.557377</td><td>61</td><td>3.705275</td></tr></tbody></table></div></article><div class="article-end"><a class="text-link" href="/blog/">← All writing</a><a class="text-link" href="/rss.xml">Subscribe via RSS</a></div></main><footer class="site-footer shell"><span>© 2026 Xiang Shi</span><nav aria-label="Footer"><a href="/rss.xml">RSS</a><a href="/llms.txt">llms.txt</a><a href="https://github.com/xshi19" rel="me noopener">GitHub <span aria-hidden="true">↗</span></a><a href="https://x.com/xxiangshi" rel="me noopener">X <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/xiangshi/" rel="me noopener">LinkedIn <span aria-hidden="true">↗</span></a></nav></footer></body></html>

@@ -1,0 +1,47 @@
+# Xiang Shi
+
+> I'm Xiang. I build risk models at a hedge fund and write code for fun. This is where I keep my open-source code, math notes, and the occasional essay.
+
+## Pages
+- [About](https://xshi19.github.io/about/): PhD work on heavy-tailed distributions at Stony Brook, risk models, normix, and pair-programming with AI agents.
+- [Projects](https://xshi19.github.io/projects/): normix and Mathematical notes; the notes link to the independently maintained /math/ site.
+- [Blog](https://xshi19.github.io/blog/)
+- [Contact](https://xshi19.github.io/contact/): GitHub, X, and LinkedIn.
+- [中文入口](https://xshi19.github.io/zh/): Chinese introduction, biography, and original articles.
+- [GitHub](https://github.com/xshi19)
+- [X](https://x.com/xxiangshi)
+- [LinkedIn](https://www.linkedin.com/in/xiangshi/)
+- [Cursor profile](https://cursor.com/@xshi)
+
+## Articles
+- [Harari’s Imagined Imagined Communities](https://xshi19.github.io/harari-imagined-communities.md): 2026-09-03. HTML: https://xshi19.github.io/harari-imagined-communities.html
+- [Common Arguments About the AI Bubble](https://xshi19.github.io/ai-bubble-arguments.md): 2026-02-17. HTML: https://xshi19.github.io/ai-bubble-arguments.html
+- [Supervised Learning, RLHF, and DeepSeek R1](https://xshi19.github.io/supervised-learning-rlhf-deepseek-r1.md): 2025-02-11. HTML: https://xshi19.github.io/supervised-learning-rlhf-deepseek-r1.html
+- [A Simple Stock Market Trick: Use Logarithmic Charts](https://xshi19.github.io/use-logarithmic-charts.md): 2024-11-19. HTML: https://xshi19.github.io/use-logarithmic-charts.html
+- [Farewell, Yann LeCun](https://xshi19.github.io/farewell-yann-lecun.md): 2024-11-12. HTML: https://xshi19.github.io/farewell-yann-lecun.html
+- [Yuval Harari's Dataism: Why is it a Bad Idea?](https://xshi19.github.io/yuval-hararis-dataism-why-is-it-a-bad-idea.md): 2024-02-17. HTML: https://xshi19.github.io/yuval-hararis-dataism-why-is-it-a-bad-idea.html
+- [Estimate Book Review Entropy from Pre-trained Embeddings](https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.md): 2023-12-25. HTML: https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html
+- [A Simple Way to Estimate DDP, A Better Alternative to GDP](https://xshi19.github.io/a-simple-way-to-estimate-ddp-a-better-alternative-to-gdp.md): 2023-12-21. HTML: https://xshi19.github.io/a-simple-way-to-estimate-ddp-a-better-alternative-to-gdp.html
+- [Fat Tails, Survivorship Bias, and the Illusion of Exponential Growth](https://xshi19.github.io/fat-tails-survivorship-bias-and-the-illusion-of-exponential-growth.md): 2023-12-07. HTML: https://xshi19.github.io/fat-tails-survivorship-bias-and-the-illusion-of-exponential-growth.html
+
+## 中文文章
+- [中文博客](https://xshi19.github.io/zh/blog/)
+- [尤瓦尔赫拉利：想象的想象共同体](https://xshi19.github.io/zh/blog/harari-imagined-communities.md): 2026-09-03. HTML: https://xshi19.github.io/zh/blog/harari-imagined-communities/
+- [几种常见的AI泡沫论](https://xshi19.github.io/zh/blog/ai-bubble-arguments.md): 2026-02-17. HTML: https://xshi19.github.io/zh/blog/ai-bubble-arguments/
+- [监督学习，基于人类反馈的强化学习和DeepSeek R1的强化学习之间的区别](https://xshi19.github.io/zh/blog/supervised-learning-rlhf-deepseek-r1.md): 2025-02-11. HTML: https://xshi19.github.io/zh/blog/supervised-learning-rlhf-deepseek-r1/
+- [一个基本的股市小技巧](https://xshi19.github.io/zh/blog/use-logarithmic-charts.md): 2024-11-19. HTML: https://xshi19.github.io/zh/blog/use-logarithmic-charts/
+- [别了， Yann LeCun](https://xshi19.github.io/zh/blog/farewell-yann-lecun.md): 2024-11-12. HTML: https://xshi19.github.io/zh/blog/farewell-yann-lecun/
+
+## Related sites (independently maintained)
+- [Mathematical notes](https://xshi19.github.io/math/)
+- [Legacy Incerto wiki](https://xshi19.github.io/incerto-wiki/)
+- [normix documentation](https://xshi19.github.io/normix/)
+
+## Machine-readable resources
+- [Full English article text](https://xshi19.github.io/llms-full.txt)
+- [中文文章全文](https://xshi19.github.io/zh/llms-full.txt)
+- [RSS](https://xshi19.github.io/rss.xml)
+- [Atom](https://xshi19.github.io/feeds/all.atom.xml)
+- [Sitemap](https://xshi19.github.io/sitemap-index.xml)
+
+Articles are dated historical writing. The dates are publication dates, not claims of current facts. No comment or write API is available.

@@ -1,0 +1,776 @@
+# Xiang Shi
+
+I'm Xiang. I build risk models at a hedge fund and write code for fun. This is where I keep my open-source code, math notes, and the occasional essay.
+
+## About
+
+I did my PhD in applied mathematics and statistics at Stony Brook, on how to use heavy-tailed distributions in portfolio allocation. Since then I have bounced between finance and data: risk and portfolio research, models for mobile location data, a recommendation algorithm for books, and now risk models again.
+
+The thread through all of it is the same annoying fact: real data has fat tails, and the textbook shortcuts break exactly when it matters.
+
+[normix](https://xshi19.github.io/normix/) is my attempt to make that less painful. It's a JAX package for normal variance mixture distributions, with generalized hyperbolic as the main case, and it covers fitting them to data and computing risk measures under them. Longer write-ups are in the [math notes](https://xshi19.github.io/math/), shorter ones on the [blog](https://xshi19.github.io/blog/).
+
+I also spend a lot of time pair-programming with AI agents, which is probably worth a post once I have figured out what I actually think about it. [My Cursor profile](https://cursor.com/@xshi) has the receipts.
+
+## Contact
+
+https://github.com/xshi19
+https://x.com/xxiangshi
+https://www.linkedin.com/in/xiangshi/
+https://cursor.com/@xshi
+
+## Projects
+
+- normix: JAX package for normal variance mixture distributions (generalized hyperbolic and relatives), with fitting and risk measures. https://github.com/xshi19/normix
+- Mathematical notes: Notes on fat tails, information geometry, and distribution theory. https://xshi19.github.io/math/
+
+## Articles
+
+These are historical articles; publication dates are preserved.
+
+# Harari’s Imagined Imagined Communities
+
+Author: Xiang Shi
+Published: 2026-09-03T21:37:32-04:00
+Language: en
+Tags: information, survivorship bias
+Canonical: https://xshi19.github.io/harari-imagined-communities.html
+Source: https://x.com/xxiangshi/status/2095687674602336452
+
+> Image note: the original text’s positional references are retained; article images are collected at the end because their positions are unknown.
+
+![Original cover — Harari’s Imagined Imagined Communities](/images/x-articles/harari-imagined-communities/cover.jpg)
+
+## Imagined “imagined communities”
+
+In *Sapiens*, Yuval Noah Harari (尤瓦尔·赫拉利) makes a widely repeated argument: humans “stand out” among animals because of large-scale, flexible cooperation. Greater physical strength or smarter individual brains cannot explain it. Such cooperation is possible because we can jointly believe in things that do not exist as physical entities: religious myths, nation-states, laws, companies, money, human rights. He calls them shared myths that exist in the “collective imagination,” and a company a “legal fiction.”
+
+People on the Chinese internet often bring up this argument, most recently in a video by Zhengquejun (正确君). It sounds persuasive, too. I was among the earliest people to watch Harari's course on Coursera. His patient storytelling made me feel, back then, as if the clouds had parted. Looking at it again all these years later, collective imagination certainly exists, and money does need shared recognition to function. The central problem is that Harari stuffs several completely different kinds of things into one word, *fiction*, and adds a simple causal chain: once stories and collective imagination exist, large-scale, flexible cooperation appears as if someone had flipped a switch. When concepts are mixed together, the actual causality becomes hard to test.
+
+## Big history, big concepts
+
+A common problem with “big history” and grand narratives is that they create a broad, abstract concept and then use it to explain all sorts of problems. It reads like a grand unified theory in physics. Because the scope is so broad, the author can easily cherry-pick evidence and construct plausible-sounding causal claims that are difficult to falsify.
+
+For Harari, this big term is “imagined communities,” “shared imagination,” and the “stories” (*fiction*) he so often invokes. States, companies, religions, mythical creatures, Harry Potter: all fit into the same framework.
+
+If we take this *fiction* apart, we may find that these things do not belong to the same category at all.
+
+**A. Predictions later falsified.** A prehistoric cave painting shows a winged horse. To modern people who have traveled the globe and know modern biology, this is obviously a nonexistent creature, an imagining. It need not have been so for the people of that time. Given their limited information, it could have been a reasonable conjecture: a simple hypothesis about the world before people had mastered the scientific method. This is what Taleb's *The Black Swan* is about: you cannot conclude that black swans do not exist just because you have only seen white ones. Intelligent beings, whether humans or some alien civilization, make predictions with limited information. Nobody can be omniscient and infallible from the start. Conjectures that were later proved wrong become “fictional imaginings” in Harari's account.
+
+**B. Deliberately invented fiction.** Novels, films, bedtime stories for children: both the author and the audience know they are made up. Reading *Journey to the West* (《西游记》), you do not really believe in the magical seventy-two transformations, and storytellers entertaining children do not expect them to take it all literally. Such fiction is sometimes entertainment, sometimes education, and occasionally fraud. These stories may greatly influence our history and society, but it is hard to establish that they directly cause large-scale human cooperation.
+
+**C. Abstract concepts rooted in reality.** One apple and two apples are abstracted into numbers. Numbers themselves do not exist in the physical world, but with them we can use the same method to count fruit and sheep. States, companies, and laws are close to this category: as society becomes more complex, people inevitably need these concepts to understand society and explain how it works. They are not necessarily sufficient conditions for large-scale cooperation, but they are necessary ones. They need not be precise descriptions; some models may be wrong but useful. Even Newton's equation of universal gravitation is only an approximation of the macroscopic world, and no physicist considers Einstein's relativity to be absolute truth. Harari puts these abstractions into the category of *fiction* as well.
+
+**D. Living religions.** Religion is often placed entirely in B, treated as “stories made up for ordinary people” or “a tool of rulers,” or in A, as mistakes made by ancient people who did not know enough. But by Popper's standard, the truly durable layer of religion is the unfalsifiable one: whether the universe has meaning, whether souls exist, where we go after death. “God exists” is neither a natural prediction that has already been falsified nor entertainment that everyone knows is made up.
+
+The falsifiable parts have kept changing with the times. After geology and biology overturned a young Earth and a literal seven-day creation, many churches read “days” as ages and creation as allegory. In 1996, John Paul II acknowledged that evolution was “more than a hypothesis.” Catholicism did not abandon its faith; it pulled back the layer that could be overturned by empirical evidence. There was another, more interesting revision: in 1844, William Miller's followers predicted that Jesus would return to Earth that year. He did not come. Some of them then said that what happened that day was an event in the heavenly sanctuary, invisible to human eyes. Jehovah's Witnesses later made a similar move with 1914: a visible end of the world became Christ's invisible enthronement in heaven. A failed prediction that could be checked against a date was explained away as an event that could no longer be checked. Religion rewrites A as an unfalsifiable proposition and then continues to spread.
+
+These four categories differ in their definitions, origins, and effects on human society and history. Mix them together, and a curious bit of magic happens.
+
+You see, complex societies do need C to function. So how do you prove that C causes large-scale cooperation? Just show that C came earlier. Oh, right, A seems to have appeared before that. Since A and C are the same thing, the causal argument is “complete.”
+
+But is that really how it works?
+
+## Stories and cooperation do not run in just one direction
+
+For a fictional thing to spread and become “shared imagination,” there must first be a communication system that is good enough. For prehistoric humans, that could be the simplest language, or paintings on cave walls, the beginnings of pictographic writing. That communication system also happens to be a necessary condition for large-scale, flexible cooperation.
+
+Appearing at the same time, or one after the other, does not establish causality. So the real question is: why should “shared imagination” and “large-scale, flexible cooperation” have a causal relationship, rather than both being results of “intelligence + complex communication abilities”?
+
+Harari gives no answer.
+
+We can imagine that humans first cooperated when several groups came together to hunt large animals they could not handle alone, such as mammoths. Basic communication was necessary: there is a herd of mammoths to the northeast; there are crocodiles in this river. Other things could of course come along for the ride, such as a winged horse carved into stone. For Harari's causal chain to hold, he would have to show that the opposite scenario did not occur. He would have to show that several groups first believed together in a winged horse and only then began hunting together. The overlap of two things in history is not enough evidence to establish that sequence.
+
+Cooperation can also break down without a story first being rewritten. In *Science* in 2026, Sandel and colleagues reported a permanent split among the Ngogo chimpanzees in Kibale, Uganda. The western and central clusters, which had previously mixed, began avoiding each other in 2015, split into two groups in 2018, and then the western group began sustained lethal attacks on the central group. They had shared territory, groomed together, and bred together. After the split, individuals who had been together just yesterday became targets of attack. Thirty years of observation show that group identity can shift without language, group markers, or ideology, and can escalate into killing. Clearly, the western and central groups did not start killing each other because they had converted to a different myth.
+
+Another way to look at this is survivorship bias. Societies kept stories that helped coordination and discarded those that did nothing for social development or group competitiveness. The “stories” we see now may be just a small fraction selected by history. We do not know how many different “stories” circulated among human groups during the long ages before writing was invented. Nor can we expect to fix a complex institution today simply by swapping one story for another, just as natural selection does not mean animals “chose” good genes; the environment eliminated poorly adapted ones.
+
+Let me also mention two other pieces of evidence Harari himself has used. He writes that Neanderthals had larger brains, so the success of Homo sapiens was “not because they were smarter, but because they could invent fiction,” trying to strip “intelligence” out of the argument as a common cause. Yet we now know that larger brains do not mean higher general intelligence: Pearce, Stringer, and Dunbar (2013) pointed out that Neanderthals had larger eye sockets, and more of their neurons may have been devoted to vision.
+
+On the other hand, Trut's (1999) silver fox breeding experiment showed that selecting only individuals that were less fearful and less aggressive toward humans changed behavior and even appearance within a few dozen generations. “Trust” can act as a selection pressure on its own, without a shared story coming first. Dogs did not become our friends because of imagined communities.
+
+## Institutions are not switches
+
+In Harari's narrative, large-scale cooperation works like a switch: a group believes the same story, and cooperation happens. But complex institutions emerge through a long historical process, not all at once.
+
+A tribe's alpha can know every member and maintain order through personal relationships. Other social primates live this way too. Robin Dunbar inferred a number from primate neocortex size: the circle humans can stably maintain through personal relationships is roughly 150 people. The exact number is disputed, but that is the general scale. Beyond that circle of acquaintances, you cannot know and be familiar with everyone, let alone a thousand people. Categories must then be introduced: who handles food, who handles fighting, who owes how much to whom. Once the categories are shared and governance follows them, population and social complexity can grow further. This is a positive feedback process from simple to complex. Nobody first writes a complicated constitution and thereby turns a tribe into a state from the top down.
+
+And “categorization,” this ability to simplify problems, does not even require a very complex brain. Prehistoric people only need to remember that rattlesnakes are venomous, without separately remembering every rattlesnake they have ever seen. When Benedict Anderson says a nation is “imagined,” he means that the vast majority of its members will never meet. But there is nothing strange about this. A person does not need to know every rattlesnake alive in the world either. People can naturally categorize living things by appearance, even if the categories are not accurate by modern biological standards. They can also categorize by geography, clothing, skin color, and language, forming the earliest nations.
+
+We can do a thought experiment. Suppose there is a very intelligent prehistoric person who cannot learn our language and cannot listen, read, or write. He relies only on observation. He sees people walk into McDonald's, hand over a patterned piece of paper, and receive food from a uniformed employee. He does not need to understand company law or a market economy to derive a rule from repeated events: enter a place with that sign, pay, and you get food. As he keeps watching, he notices that paper money can also be obtained by selling things or doing certain things (work). Even if he knows absolutely nothing of our “stories,” he can survive by learning these observed regularities. One day this McDonald's closes, and the rule of walking in and exchanging money for food stops working. At the same time, a KFC with a different sign opens nearby. He still understands nothing about laws or companies, but after observing repeatedly, he revises his earlier theory and enters the new shop. He may have his own explanation for these phenomena. Nobody needs to know his explanation, and he does not need to know ours. As long as both sides can learn the patterns in each other's behavior, basic cooperation can happen.
+
+## Beyond true and false, there is risk
+
+Harari makes “true or false” his main axis of classification: fiction is false, and the physical world is real. He later makes this yardstick more specific, and does so repeatedly. In *Homo Deus*, he asks how we can tell whether an entity is real or fictional. “Very simple – just ask yourself, 'Can it suffer?'” If Zeus's temple burns down, Zeus does not suffer. If the euro depreciates, the euro does not suffer. If a bank goes bankrupt, the bank does not suffer. If a state loses a war, the state does not suffer either. “It's just a metaphor.” The ones who suffer are wounded soldiers, starving farmers, and cows whose calves have been taken away. In a 2017 TED conversation, he repeats: If it can suffer, it's real. If it can't suffer, it's not real. Physically, Jerusalem is just stones, trees, buildings, people, dogs, and cats. When people fight wars, they are fighting over imagined stories, not these things.
+
+As a reminder “not to sacrifice living people for the word nation,” this seems morally powerful. But as a way to distinguish reality from fiction, it is rather odd. Stones do not suffer, the Earth's crust does not suffer, numbers do not suffer, and neither gravity nor mathematical models feel pain. Should they all be classified as fiction?
+
+Another interesting question is a debate in the style of “a white horse is not a horse.” An individual horse can suffer, but what about “horse” as a biological category? If we add a color modifier, can “white horse” suffer?
+
+When he discusses Jerusalem, he again describes stones, trees, and cats as physical reality. In practice, he switches between two yardsticks: when he wants to show that states, money, and companies are fictional, he asks “can it suffer?” When he wants to preserve the objective world, he asks “does it exist in physical space?” Suffering identifies the capacity to feel, not whether something is real. The fact that a state cannot suffer does not imply that it is fictional in the same way as Harry Potter; it only shows that a state is not an organism with a nervous system.
+
+In *Sapiens*, *Homo Deus*, *21 Lessons for the 21st Century*, and many interviews, he repeatedly emphasizes truth, but rarely pauses over something more practical: if this statement is wrong, what is the cost? The rattlesnake mentioned above is one example. You can refuse to believe that this rattlesnake you have never seen before is venomous, or invent a story saying it is harmless, but you will still die if it bites you. Venom does not need shared imagination to keep working. The shape of the Earth is a different matter. The Earth is round, but this fact is of no use to a prehistoric tribe living in the jungle. Believing the Earth is flat will not stop them from catching their prey.
+
+## The Soviet Union did not dissolve by a wizard's spell
+
+In the passages about imagined orders in *Sapiens*, Harari describes the Soviet Union's collapse as if a wizard's spell had stopped working: people stopped believing the Soviet story, and so the Soviet Union disappeared.
+
+The analogy is vivid, but irresponsible coming from a historian. Many complex causes lay behind the Soviet Union's dissolution: prolonged economic stagnation, the fiscal burden of the arms race, nationalist movements in the constituent republics, Gorbachev's reforms spinning out of control, and the failed coup of 1991. Each can be studied on its own, and each can be challenged. Harari simply compresses them into “the story stopped working,” reducing a historical process that lasted years to a simple switch.
+
+The bigger problem is that history becomes not only a simple switch in his telling, but a switch of belief: believe, and it exists; stop believing, and it suddenly vanishes. Following this logic, any institutional collapse can be reduced to people “no longer believing,” to the story failing, while the underlying material conditions, power structures, and path dependence are all bypassed. A country whose economy is still growing and whose military faces no external threat is unlikely to dissolve because everyone suddenly stops believing one day. The loss of trust is often a consequence, not a cause.
+
+In the chimpanzee example, there was neither a Soviet Union nor a wizard casting spells. Relations between groups broke down first; the split followed. Chimpanzees can cooperate, split, and kill each other without fiction. That shows that both group coordination and group breakdown can occur before shared stories appear.
+
+This article was translated from the Chinese original posted on [X](https://x.com/xxiangshi/status/2095687674602336452).
+
+---
+
+# Common Arguments About the AI Bubble
+
+Author: Xiang Shi
+Published: 2026-02-17T23:05:30-05:00
+Language: en
+Tags: machine learning, economics
+Canonical: https://xshi19.github.io/ai-bubble-arguments.html
+Source: https://x.com/xxiangshi/status/2023972117004644397
+
+## 1. AI is in a bubble
+
+Yes, but there is a trap here. It leads many people to think that if there is a bubble in the market, the technology must be a scam.
+
+Bubbles are a feature of human nature, not a property of technology. Every revolutionary technology goes through the same script: early progress exceeds expectations, expectations are raised to even more absurd heights, and eventually valuations become completely detached from fundamentals. You can mock the internet bubble of 1999, but it is hard to deny that its overinvestment built an entire set of infrastructure ahead of time: fiber optics, internet data centers (IDCs), content delivery networks (CDNs), payments, logistics, ad delivery, and more. After the bubble burst, Amazon survived and Pets.com died. The technology did not die; the companies that “raised money on stories and stayed alive on funding” did. Economist William Janeway calls this phenomenon “productive bubbles”: through waste, bubbles pay in advance for society's infrastructure and room for trial and error.
+
+And trial and error is unavoidable in the development of any technology. You cannot wait until the technology matures and then look in the rearview mirror to judge how absurd and wasteful the earlier bubble was.
+
+## 2. There are lots of AI scam companies
+
+As above, new technologies give rise to many “scam” companies, as well as companies that were once wildly popular but were quickly eliminated by later technological advances. These things are inevitable, but none of them shows that the technology itself is a scam.
+
+The timing of technological breakthroughs is unpredictable. Of course you can look at the current situation and conclude that “valuations are too high, expectations too full, and supply is expanding too fast.” But you do not know which team, approach, architecture, or product form will suddenly push the boundary a little further at some point.
+
+For example, you think tulip valuations are outrageously high, until a scientist extracts a cancer cure from tulips. Then a short squeeze sends prices to even more outrageous heights. As the saying goes, take fandom far enough and you become a hater; take shorting far enough and you become a buyer.
+
+## 3. Today's AI is not AGI; the entire technical approach is wrong
+
+Well...
+
+Yes, the human brain does not need this much electricity or such vast amounts of training data to do these tasks. Just as a horse does not need this much coal or any tracks laid down: it eats grass and handles all sorts of terrain with ease. So the technical approach behind trains must be wrong.
+
+## 4. AI scaling laws are unsustainable
+
+Parameter growth is often entangled with other innovations: architecture, training objectives, data recipes, inference strategies, tool use, product form, distribution channels, the hardware stack, and even the restructuring of organizational workflows. Give an LSTM as many parameters as a Transformer and it still will not become a new GPT.
+
+“Predicting AI's economic value from a parameter curve” is about as reliable as economists using theoretical models to predict a country's future GDP.
+
+## 5. A report from some university or research institute says AI has limited productivity benefits at large companies; someone claims they deployed Copilot to 4,000 employees and found it useless
+
+If you look closely, the central obstacle these reports repeatedly identify tends to be how AI is put into use, rather than model capability. Organizations have not redesigned their workflows for AI; they just treat it as an “add-on chat box.” Or management puts on a show for KPIs, calling the launch of a ChatGPT-style bot “digital transformation.” The engineers below them pile on a layer of “agents,” but these so-called agents just swap out a system prompt, connect a different vector store, and add a tool-call wrapper. Of course there is no productivity gain: you never brought AI into the complete production workflow in the first place. What the reports measure is how bad outdated management can be, not the upper limit of AI.
+
+I strongly agree with the point Andrew Ng made at Davos in 2025. Earlier technological revolutions spread “top down,” from governments to businesses to individuals. Generative AI, with its low barrier to use, reverses that pattern and spreads “bottom up”: individuals adopt it at scale first, while businesses and governments work to catch up and set rules.
+
+So I trust my own experience more than reports from institutions or assessments by “experts” with all sorts of titles. Next come the experiences shared on social media by top engineers such as Andrej Karpathy, followed by the experiences of ordinary users and independent creators. Within days of OpenClaw taking off, social media was flooded with posts: reviews, installation guides, usage tips, criticism, and attacks. Many may have been clickbait or attempts to attract traffic, but the pace of information updates and feedback far exceeds that of sluggish large companies and governments.
+
+This article was translated from the Chinese original posted on [X](https://x.com/xxiangshi/status/2023972117004644397).
+
+---
+
+# Supervised Learning, RLHF, and DeepSeek R1
+
+Author: Xiang Shi
+Published: 2025-02-11T20:38:06-05:00
+Language: en
+Tags: machine learning
+Canonical: https://xshi19.github.io/supervised-learning-rlhf-deepseek-r1.html
+Source: https://x.com/xxiangshi/status/1889489122063999257
+
+> Image note: the original text’s positional references are retained; article images are collected at the end because their positions are unknown.
+
+![Original cover — Supervised Learning, RLHF, and DeepSeek R1](/images/x-articles/supervised-learning-rlhf-deepseek-r1/cover.jpg)
+
+Imagine you are solving a math problem, say $2^x + x = 5$. Most people would first work on scratch paper, trying different approaches (analogous to AI's “chain of thought,” or CoT), before writing out the complete solution and answer.
+
+## Supervised learning (traditional large language models)
+
+No scratch work is allowed. The model must give the complete solution steps and answer directly.
+
+As shown at the top of the image, the LLM can generate only one word (token) at a time. That word is then compared with the “standard answer” in the training data.
+
+A rigid language teacher grades your math problem as if it were a poetry dictation exercise, deducting points for every wrong character. (This is a simplified version that leaves out probabilities.)
+
+These penalties add up to a total score (or negative loss), and the training objective is to maximize that score.
+
+The model's score is calculated using all the generated tokens.
+
+## Reinforcement learning from human feedback (RLHF)
+
+No scratch work is allowed. The model must give the complete solution steps and answer directly.
+
+Humans evaluate how good the answer is and give a reward.
+
+But a human teacher's grading may be influenced by many factors, such as the answer's format, the clarity of its expression, or even personal preferences (whether the mathematical notation is neat, whether the language is polite, and so on). So even two answers with the same content may receive different scores.
+
+The middle of the image shows two approaches: one says to use the Newton–Raphson method; the other says to make a guess first. Even if the final answer is the same, the teacher will surely prefer the first student.
+
+This method also calculates the score using all the generated tokens. The difference is that each token may carry a different weight in the score, entirely determined by human subjective judgment.
+
+## DeepSeek R1 reinforcement learning
+
+The model is allowed to do scratch work, as much as it likes. In other words, it can freely reason through a “chain of thought” (CoT).
+
+The final score depends only on whether the final answer is correct. It has nothing to do with what was written in the intermediate scratch work.
+
+## Additional notes
+
+The supervised learning example is simplified. A better analogy would be to imagine ten thousand parallel universes, with a version of you solving a problem in each one. In the end, one thousand of you, or 10%, get the right answer. The final score is based on that 10% (taking its logarithm).
+
+DeepSeek R1's reward mechanism also checks the answer's format, such as whether the LLM's CoT is enclosed in `<think>...</think>`. In other words, what you write in your scratch work does not matter, but you have to put it on scratch paper, separate from the exam paper. I left this detail out above for simplicity.
+
+The GRPO algorithm in the DeepSeek R1 paper is important, but [this article](https://hkust-nlp.notion.site/simplerl-reason) shows that ordinary PPO also works.
+
+Chain of thought (CoT) is not a direct product of reinforcement learning. [This paper](https://arxiv.org/pdf/2501.19393) demonstrates that a model can generate very long CoT even without reinforcement learning.
+
+The key is how you score the LLM's answers. A student may already know how to reason and solve problems, but the way they show it will be shaped by how the teacher grades.
+
+## Images from the original
+
+The images below follow the order supplied with the source; their positions in the original text are unknown.
+
+![Original image 1](/images/x-articles/supervised-learning-rlhf-deepseek-r1/image-1.png)
+
+
+
+This article was translated from the Chinese original posted on [X](https://x.com/xxiangshi/status/1889489122063999257).
+
+I also wrote a separate [English article on X](https://x.com/xxiangshi/status/1889177092476015036).
+
+---
+
+# A Simple Stock Market Trick: Use Logarithmic Charts
+
+Author: Xiang Shi
+Published: 2024-11-19T22:04:53-05:00
+Language: en
+Tags: economics
+Canonical: https://xshi19.github.io/use-logarithmic-charts.html
+Source: https://x.com/xxiangshi/status/1859070382730362967
+
+> Image note: the original text’s positional references are retained; article images are collected at the end because their positions are unknown.
+
+![Original cover — A Simple Stock Market Trick: Use Logarithmic Charts](/images/x-articles/use-logarithmic-charts/cover.jpg)
+
+If you are active in the stock market, especially if you invest in Tesla, you inevitably come across posts like the one below.
+
+Here is a very basic trick that surprisingly few people use. Whether you use technical analysis or value investing, whether you trade short term or invest long term, this trick will help.
+
+Important things deserve to be said three times:
+
+**When looking at stock price charts, use a logarithmic scale!**
+
+**When looking at stock price charts, use a logarithmic scale!**
+
+**When looking at stock price charts, use a logarithmic scale!**
+
+What follows contains no mathematical formulas or theory.
+
+## How to use it
+
+Take Yahoo Finance as an example. Click a stock chart to enter the page shown below. Click Settings in the upper right.
+
+Then select Logarithmic, as indicated by the red line.
+
+## Why use a logarithmic scale?
+
+This article does not discuss any mathematical theory. Just visually, the biggest reason to use a logarithmic scale is that the same vertical distance represents the same percentage gain or loss at any point in time.
+
+For example, in the chart above, a stock goes from 1 to 10, then from 10 to 100. Both are tenfold increases. Buying at point A and selling at point B gives you the same return as buying at point B and selling at point C. You cannot see this at all on a regular scale (left), but the distances are consistent on a logarithmic scale (right). Conversely, the losses from C to B and from B to A are also the same.
+
+Because of this, when stock prices are displayed on a regular scale, the historical price movements you see, such as a 10% rise or a 10% fall, are distorted. A 10% fall a year ago does not look the same as a 10% fall today.
+
+## Technical investors
+
+If you use technical analysis, you probably cannot resist the urge to draw all sorts of straight lines.
+
+The following two charts show Microsoft's stock price on regular and logarithmic scales. It is self-evident which one is better suited to drawing trends with “straight lines.”
+
+## Value investors
+
+Why does this matter even to value investors who do not spend much time looking at historical data? Because it helps you judge what counts as “noise,” making it easier to hold stocks for the long term.
+
+Back to that terrifying big circle Gary drew at the beginning. On a logarithmic scale, it becomes the red circle on the left below. The pitifully small red circle on the right is the “sharp” drop after the launch event that caused such a stir recently.
+
+The logarithmic scale shows that Tesla's real gains came in two periods, 2013–2014 and 2019–2021, both on the order of 10x. Most of the rest can be considered “noise.”
+
+## Images from the original
+
+The images below follow the order supplied with the source; their positions in the original text are unknown.
+
+![Original image 1](/images/x-articles/use-logarithmic-charts/image-1.jpg)
+
+![Original image 2](/images/x-articles/use-logarithmic-charts/image-2.jpg)
+
+![Original image 3](/images/x-articles/use-logarithmic-charts/image-3.jpg)
+
+![Original image 4](/images/x-articles/use-logarithmic-charts/image-4.jpg)
+
+![Original image 5](/images/x-articles/use-logarithmic-charts/image-5.jpg)
+
+![Original image 6](/images/x-articles/use-logarithmic-charts/image-6.jpg)
+
+![Original image 7](/images/x-articles/use-logarithmic-charts/image-7.jpg)
+
+![Original image 8](/images/x-articles/use-logarithmic-charts/image-8.jpg)
+
+![Original image 9](/images/x-articles/use-logarithmic-charts/image-9.jpg)
+
+
+
+This article was translated from the Chinese original posted on [X](https://x.com/xxiangshi/status/1859070382730362967).
+
+---
+
+# Farewell, Yann LeCun
+
+Author: Xiang Shi
+Published: 2024-11-12T23:15:21-05:00
+Language: en
+Tags: machine learning, economics
+Canonical: https://xshi19.github.io/farewell-yann-lecun.html
+Source: https://x.com/xxiangshi/status/1856551399854637207
+
+> Image note: the original text’s positional references are retained; article images are collected at the end because their positions are unknown.
+
+![Original cover — Farewell, Yann LeCun](/images/x-articles/farewell-yann-lecun/cover.jpg)
+
+This is my first article since subscribing to X, and it happens to coincide with the departure of the great AI scientist and Turing Award winner Yann LeCun. After months of trading barbs with Elon Musk (mostly one-sided, from Yann himself), he seems to have finally lost his composure.
+
+At first I was on Yann's side. After all, Elon had made a complete fool of himself over convolutional neural networks (CNNs). There is no question that Tesla's vision-based self-driving system depends on convolutional neural networks. Model architectures can take all sorts of forms, but they still rely on convolution to process images.
+
+But as time went on, Yann LeCun began attacking Musk in other areas, perhaps because of his politics. Unfortunately, in areas he knew nothing about, he displayed astonishing ignorance. Nassim Taleb, the author of *The Black Swan*, has a good term for people like this: Intellectual Yet Idiot (IYI).
+
+The IYI is a bit like what we call a small-town exam whiz: someone who treats all sorts of metrics as ends in themselves rather than means, such as exam scores, or Yann LeCun's favorites, publications and citations.
+
+IYIs love very long chains of logic, which make their arguments look more rigorous. But the very first link in Master Yann LeCun's chain is already absurd: to ensure correctness and reproducibility, scientific research must go through publication and peer review. This is the familiar mistake of equating IQ scores with intelligence, or scores on the College English Test, Bands 4 and 6, with English proficiency. Papers, peer review, and replication are ways of ensuring scientific rigor, but they have never been the same thing as scientific truth. Science has always been a way to apply knowledge and solve problems. If Tesla successfully builds an intelligent robot, you do not need to publish a paper laying out the technical details so that others can judge whether your achievement is “scientific.”
+
+Yann LeCun is lucky. In his field, reproducing someone else's results is very easy. We have to acknowledge that the open-source approach he advocates has been crucial to AI's rapid development. Most machine learning papers come with open-source code, and that code is very likely built on an open-source framework such as PyTorch. With the hardware available, a good researcher needs only a few days to reproduce someone else's model and adapt it to their own use case. Under these conditions, a good model, such as the transformer architecture, can spread quickly among researchers.
+
+Other fields are a different matter, especially “soft sciences” such as social science, behavioral science, and economics. A typical example is the behavioral scientist Francesca Gino. Her famous 2012 paper about how the position of a signature can reveal whether someone is honest was not found to be irreproducible until 9 years later. She was not fired by Harvard until 2023. I recommend [this episode of the Freak Economics Podcast](https://freakonomics.com/podcast/why-is-there-so-much-fraud-in-academia/).
+
+So far, that disputed paper still has more than 500 citations on Google Scholar. She herself has faced no substantive punishment, and her bestselling books are still selling well on Amazon. Her h-index on Google Scholar is as high as 92. By Master Yann LeCun's logic, her contribution to “science” must vastly exceed that of Elon Musk, who has no papers.
+
+When IYIs mistake means for ends and metrics for facts, they become easy to fool. Students can raise their scores through all sorts of “techniques” designed specifically for exams. In academia, trading citations is hardly unusual. Another common phenomenon is the misuse of statistics. If everyone uses the p-value as the universal criterion for whether a paper can be published, p-hacking becomes inevitable. When everyone uses the wrong statistical methods, whether the results can be “reproduced” becomes meaningless.
+
+Yann LeCun clearly cannot understand any of this, so he displays the same confidence when discussing economics and politics as he does in machine learning.
+
+Yann LeCun's understanding of banking may still be at the level of our secondary-school general education. He seems to think official explanations and Wikipedia are enough to understand how the Federal Reserve really works. A fondness for textbook “standard answers” and official, authoritative explanations is another IYI trait.
+
+When discussing economic indicators, he once again makes the mistake of treating metrics as facts.
+
+In the chart he cites, both the CPI and average hourly earnings are averages. They can be broken down along other dimensions. For example, when you break down hourly wages by income group, you see a completely different story: the middle class has seen a decline, not a rise, and they were the main voting force in this election. Low-income groups have seen some growth, but they are extremely sensitive to inflation. For people living paycheck to paycheck, even a slight fluctuation in wages can put them in trouble.
+
+On data, Jeff Bezos once said in an interview:
+
+> When the data and the anecdotes disagree, the anecdotes are usually right. And it doesn't  mean you just slavishly go follow the anecdotes then. It means you go  examine the data. 'Cause the data, and it's usually not that the data is being mis-collected, it's usually that you're not measuring the right thing.
+
+When data and anecdotes disagree, the anecdotes are usually right. That does not mean you should blindly follow the anecdotes; it means you should reexamine the data. The problem is usually not that the data was collected incorrectly, but that you are measuring the wrong thing.
+
+The biggest difference between entrepreneurs like Jeff Bezos and IYIs is whether they have skin in the game. If Bezos blindly trusts certain data and metrics, his company will lose customers and be driven out of the market. All of the above is part of every data scientist's onboarding at Amazon.
+
+IYIs like Yann LeCun, including many economists, love treating their models and data as laws of physics. When people complain about the economy and inflation, these lofty elites pull out the “facts” they have worked out in their ivory towers to educate the “populists” who lack “scientific” literacy and can only be brainwashed by conspiracy theories. They love mocking other people's failures, such as Trump's past bankruptcies. They like saying, “See, I told you so.” Because they have no skin in the game, they have never failed.
+
+People with skin in the game also make mistakes. Bezos, for example, bought *The Washington Post* and spent the past few years attacking Trump. But in the end, he was still able to [face the problem](https://www.washingtonpost.com/opinions/2024/10/28/jeff-bezos-washington-post-trust/). Someone who spends too long in an environment without skin in the game is like an animal raised by humans: they permanently lose the ability to survive in the wild. So Yann LeCun finally chose to be an ostrich and returned to his comfort zone.
+
+## Images from the original
+
+The images below follow the order supplied with the source; their positions in the original text are unknown.
+
+![Original image 1](/images/x-articles/farewell-yann-lecun/image-1.jpg)
+
+![Original image 2](/images/x-articles/farewell-yann-lecun/image-2.jpg)
+
+![Original image 3](/images/x-articles/farewell-yann-lecun/image-3.jpg)
+
+![Original image 4](/images/x-articles/farewell-yann-lecun/image-4.jpg)
+
+[Original image 5 (external link)](https://pbs.twimg.com/media/GcJxsZsXwAAjd-r.jpg)
+
+![Original image 6](/images/x-articles/farewell-yann-lecun/image-6.jpg)
+
+
+
+This article was translated from the Chinese original posted on [X](https://x.com/xxiangshi/status/1856551399854637207).
+
+---
+
+# Yuval Harari's Dataism: Why is it a Bad Idea?
+
+Author: Xiang Shi
+Published: 2024-02-17T00:00:00-05:00
+Language: en
+Tags: dataism, information, data science
+Canonical: https://xshi19.github.io/yuval-hararis-dataism-why-is-it-a-bad-idea.html
+
+It's been almost six years since I last read Yuval Noah Harari's "Homo Deus: A Brief History of Tomorrow". I remember when a colleague, who had just finished reading Sapiens, asked me if I recommended this sequel. My response was that this book did not leave as lasting an impression as its predecessor. Indeed, over the past six years, I've nearly forgotten most contents of this book, until a friend sent me [this article](https://www.wired.co.uk/article/yuval-noah-harari-dataism), driving me to re-examine Yuval Harari's Dataism.
+
+This reevaluation comes at a very good time—the AI trend led by ChatGPT is sweeping the world, with the core of large language models being vast amounts of text data. Everything seems to be developing towards the Dataism Harari described. In this article, I will share my perspective as a data scientist on why Harari's Dataism is problematic and how we can address these issues.
+
+
+## What is Dataism?
+
+I recommend reading the last chapter of "Homo Deus: A Brief History of Tomorrow". According to Harari, Dataism spans multiple disciplines, including:
+
+1. **[Sociology]** Human society is similar to a huge data center or computer, with each individual acting as a neuron or data processing unit.
+2. **[History]** The historical development of mankind is the improvement of this massive data processing system, capable of generating and managing increasing volumes of information. The books, music, paintings, and math equations created by humans are all equivalent to the input and output of data flow. Societies with better data processing capabilities (capitalism) have eliminated societies with weaker data processing capabilities (communism).
+3. **[Biology and Neuroscience]** The cognitive thinking ability and emotions of human individuals are essentially a kind of algorithm.
+4. **[Computer Science]** The rapid development of the Internet has brought us a large amount of information far beyond our brain's processing capacity. On the other hand, artificial intelligence is surpassing humans in more and more fields: recommendation algorithms may know us better than ourselves.
+
+The primary criticisms of Dataism focus on Harari's challenge to humanism and traditional religions—after all, many people are uncomfortable with the notion that our humanity, rationality, and emotions are merely algorithms and data flows. But for me, such disputes are hard to resolve. Because according to Harari,
+Dataism, like various religions and ideologies, is a kind of "imaginary reality" or a fiction, rather than a falsifiable scientific proposition. In such a situation, the discussion can easily turn into debates about more fundamental philosophical thinking, such as what the nature of human consciousness is, and no conclusion can be drawn. It can only result in everyone holding onto their own opinions, each with its own rationale.
+
+What concerns me more are the specific suggestions Harari makes in his book, that is, how a Dataist (believer in Dataism) will put his faith into specific actions. He writes:
+
+> Like every religion, it has its practical commandments. First and foremost a Dataist ought to maximise data flow by connecting to more and more media, and producing and consuming more and more information. Like other successful religions, Dataism is also missionary. Its second commandment is to link everything to the system, including heretics who don’t want to be plugged in. And ‘everything’ means more than just humans. It means every thing.
+
+## More Connections, Better?
+Harari claims Dataism is based on biology and computer science, but the above paragraph shows that Dataism is neither consistent with biology nor computer science.
+
+Beginning with biology, humans go through a stage called [synaptic pruning](https://en.wikipedia.org/wiki/Synaptic_pruning) from birth to adulthood. During this stage,the connections between neurons in the brain are reduced, not increased. Synaptic pruning is widely thought to be related to learning,where the brain acquires new knowledge and skills by eliminating unnecessary connections rather than adding more. This concept is intuitive; for example, you wouldn't want to activate the neurons used to play basketball while reading books.
+On the other hand, some studies suggests that problems with the process of synaptic pruning may be associated with conditions such as schizophrenia.
+
+We should be grateful that Mother Nature is not a fanatical Dataist, otherwise your brain might look like this:
+
+![A dense tangle of overhead cables](/blog/2024/img/a_lot_of_wires.jpg)
+
+Deep neural networks based on computers also follow the same rules. Ilya Sutskever, one of OpenAI's founders who was recently gained significant media attention, is one of the most cited experts in the field of artificial intelligence and machine learning.
+His third most cited paper (cited 48,429 times as of February 2024) is called ["Dropout: a simple way to prevent neural networks from overfitting"](https://dl.acm.org/doi/abs/10.5555/2627435.2670313). You don't need to be an expert in artificial intelligence to grasp the essence of this paper. Just looking at the diagram in the paper can make it clear—yes, the neural network model on the right outperforms the one on the left.
+
+![A neural network before and after dropout removes connections](/blog/2024/img/dropout_net.png)
+
+## More Connections, More Information?
+Not only biology and computer science, but Dataists who are keen to increase "links" may also lack a fundamental understanding of statistics. Some might argue, doesn't the Law of Large Numbers, the foundation of statistics, suggest that more data is better? As we accumulate more data, the answers we get become more accurate, eventually infinitely converging to the truth.
+
+But the Law of Large Numbers has a key prerequisite: the data must be independently and identically distributed. When all humans are interconnected via electronic devices and networks, their independence vanishes.
+There are already many polarized views on the Internet today, people either passionately support or oppose certain views. Statistically speaking, ten thousand random variables with a correlation of 1 or -1 carry no more information than a single random variable.
+Of course, some people will say that in some conditions, such as ergodic and bounded correlation, the Law of Large Numbers will still converge, but the convergence speed is obviously much slower than that of independently and identically distributed variables.
+
+Harari is not unaware of this. When discussing the historical view of Dataism, he writes:
+
+>The greater the number and variety of processors, the harder it is to freely connect them.
+
+Perhaps he optimistically believes in the possibility of maximizing connections without sacrificing diversity.
+
+However, increasing connections not only reduces information and increases data noise, but also significantly increases tail risks brought by contagion. Modern transportation allowed COVID to spread globally in a very short time. Similarly, a piece of misinformation can spread quickly on social networks like a virus. Time was originally the best antidote to misinformation,
+ss Lincoln famously said:
+
+> You can fool all the people some of the time, and some of the people all the time, but you cannot fool all the people all the time.
+
+But by the time people realize they've been fooled, the falsehoods that have rapidly spreaded worldwide through the internet may have already caused great damage.
+
+
+## One bit data is not one bit data
+
+I recently finished reading Dr. Robert Lustig's book "Metabolical", where his assertion of "a calorie is not a calorie" was impressive. As a data scientist, I immediately think of the same analogy for data: one bit data is not one bit data.
+
+For simplicity, I divide data into two types: data processed by the human brain and data processed by computers (of course, with the development of artificial intelligence, the former is gradually becoming a subset of the latter). I use food—that is, "data" processed by the human digestive system—as an analogy:
+
+|Food (processed by human digestive system)	|Data (processed by human brain)	|Data (processed by computer)|
+| ---------------------------------------- |:-----------------------------:| -------------------------:|
+|Toxic food/junk food: transfat, over-processed food |Harmful information/false information: extreme thoughts, cults and conspiracy theories |Wrong data/biased data: inputting these data will only lead to absurd results, so-called [GIGO (garbage in, garbage out)](https://en.wikipedia.org/wiki/Garbage_in,_garbage_out) in machine learning field|
+|Useless food: food additives, fructose, alcohol. Human can survive without these substances, and long-term consumption may have potential risks.	|Useless information: various news media, especially financial news	|Noise in data: daily stock market fluctuations, which contain a lot of randomness and irrational factors. |
+|Nutrition: essential substances like vitamins, proteins, fats, etc.	|Knowledge: science, philosophy, and various experiences learned in life	|Models: Whether it's statistics or machine learning, model is a kind of compression of (cleaned) data, extracting signals from noise|
+|Excessive intake of nutrients: Even water can harm or kill if taken in excess.	|Excessive knowledge: over-specialization in academics, what Taleb calls [IYI (intellectual yet idiot)](https://medium.com/incerto/the-intellectual-yet-idiot-13211e2d0577) 	|Overfitting of models: the model performs exceptionally well on the training data, but is outrageously wrong in real-world applications.|
+
+Thus, the reality may be far more complex than Dataists assume: not all data is equal, and one bit of data is not just one bit of data. The worship of data itself is more like the past obsession with vitamin C—believing that consuming large amounts of vitamin C can cure various diseases, and drinks labeled "rich in vitamin C" are considered healthy.
+
+
+## Information and Freedom
+Harari believes "Information wants to be free",  suggesting that dataists should liberate "information" and let them flow freely. While this view appears valid, it raises two questions: 1. Is information truly imprisoned? 2. Can humans really decide whether information is free or not?
+
+Nassim Taleb has a different perspective:
+
+> Information is antifragile; it feeds more on attempts to harm it than it does on efforts to promote it.
+
+He believes that attempts to suppress information only make it spread wider: for example, a banned book may arose people's curiosity, and an attack on a viewpoint may inadvertently promote it, a phenomenon frequently observed on today's internet.
+
+In fact, many people, including governments and the media, have recognized that simply banning or refuting information often backfires, and that a better strategy is to use information to defeat information: deliberately creating topics to distract people, using a large amount of other information to flood people's brains, impairing their critical thinking abilities. Harari himself also writes in the book:
+
+> In the past, censorship worked by blocking the flow of information.
+In the twenty-first century censorship works by flooding people with irrelevant information.
+We just don't know what to pay attention to, and often spend our time investigating and debating side issues.
+In ancient times having power meant having access to data. Today having power means knowing what to ignore.
+
+So the challenge in modern society is not the lack of freedom of information, but too much free information.
+
+In response, Dataism's solution seems to be simple and crude—leaving everything to models and algorithms, as they can handle large amounts of data more effectively than humans. This also addresses our second question: it is not humans who should decide the freedom of information, but sophisticated models and algorithms.
+
+Yet, data scientists, statisticians, computer scientists and mathematicians all acknowledge a fundamental truth: "All models are wrong, but some are useful". Given that "all models are wrong",
+it is absurd and ridiculous to idolize them like Dataism. Historical data cannot reflect the future, and all models, essentially summaries of past data, are constrained by the turkey problem. That's why Wall Street's quantitative hedge funds never bet everything on single mathematical model——the last fund to attempt this was called [LTCM](https://en.wikipedia.org/wiki/Long-Term_Capital_Management).
+
+
+## Lindy Effect
+
+So, how should we view the ever-growing information on the internet and the rapidly developing artificial intelligence models recently? Harari suggests in his book that, like the free market economy, data also has an "invisible hand." Regrettably, he does not elaborate further on this. I believe that, just as the "invisible hand" in economics is bottom-up, the "invisible hand" of data should also be so, rather than following a top-down grand model or algorithm controlled by government bureaucrats or a few large tech corporations.
+
+[The Lindy Effect](https://en.wikipedia.org/wiki/Lindy_effect) embodies this "invisible hand." All information and data flows follow the Lindy Effect: information that has withstood the test of time has a longer "expected lifespan." Books, music, and paintings that have been popular for centuries are likely to remain so in the next hundred years. When we expand this time frame, DNA——a code designed for life——also follows this invisible hand of Lindy. Contrary to common misconceptions, the Lindy Effect does not imply immortality but serves as a harsh selection mechanism. Mathematically, the Lindy Effect indicates that the lifespan of information follows a Pareto distribution——most information will be discarded, just like countless bankrupt companies in the capital market and numerous extinct species in biological evolution, with only a few being favored by time. Therefore, what we should preserve is this "invisible hand," not the data and algorithms themselves. Just as we should protect the ecosystem rather than a specific species. Misidentifying the object of protection can lead to catastrophe, allowing companies that should have failed to survive under the guise of being "too big to fail" only amplifies future systemic risks.
+
+
+## In conclusion
+
+Yuval Harari's upcoming book, NEXUS: A Brief History of Information Networks from the Stone Age to AI, seems to be an extension of the last chapter on Dataism in Homo Deus: A Brief History of Tomorrow. I do not know if he will revise his previous arguments or continue to advance in the direction he has set. I have pre-ordered this book and will share my thoughts after reading it.
+
+---
+
+# Estimate Book Review Entropy from Pre-trained Embeddings
+
+Author: Xiang Shi
+Published: 2023-12-25T00:00:00-05:00
+Language: en
+Tags: NLP, machine learning, information theory
+Canonical: https://xshi19.github.io/estimate-book-review-entropy-from-pre-trained-embeddings.html
+
+The inspiration for this exploration came from a [Twitter (or X) post](https://x.com/nntaleb/status/1735647215421411675?s=20) by Nassim Taleb:
+
+<img src="/blog/2023/img/nnt_x.png" alt="Nassim Taleb asks about the diversity of summaries of a book" width="500"/>
+
+In this article, I propose a simple method to quantify this "summary diversity" or "book dimensionality" using natural language processing (NLP) and a bit match approach. The process involves:
+
+1. Collecting book review data. Since it's impractical to have thousands of books summarized by individuals, I utilize Goodreads reviews as a proxy, trading some accuracy for scalability.
+2. Converting each review into numerical embeddings using pre-trained [sentence transformers](https://www.sbert.net/). For each book, this results in a matrix  $X$ of dimensions $n \times d$ $n$ is the number of reviews and $d$ is the embedding dimension.
+3. Applying Principal Component Analysis (PCA) or equivalently, [Singular Value Decomposition (SVD)](https://en.wikipedia.org/wiki/Singular_value_decomposition) to the review embeddings:
+$$
+X = USV
+$$
+where $U$ and $V$ are unitary matrices and $S$ is a diagnoal matrix with singular values $s_1 \geq s_2 \geq \cdots \geq s_m$ with $m=\min(n, d)$.
+4. Computing the [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)) of the singular values:
+$$
+\text{entropy} = -\sum_{i=1}^m p_i \log p_i \text{, where } p_i = \frac{s_i}{\sum_{i=1}^m s_i}
+$$
+
+The rationale behind this approach is as follows:
+
+* Similar book reviews imply correlated review embeddings $X$, leading to a significant disparity in the singular values of $X$ (i.e. $s_1$ much larger than $s_m$), resulting in low entropy.
+* Diversified and independent reviews suggest uncorrelated and orthogonal embeddings $X$ causing the singular values of $X$ to be relatively uniform, leading to high entropy.
+
+This concept mirrors methods used to [measure portfolio diversity](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1358533) in finance.
+
+The following figure showcases a comparison of "review entropy" for three thousand popular non-fiction books on Goodreads (y-axis) against their average ratings (x-axis). Intriguingly, there is no correlation between review entropy and ratings. Notably, Nassim Taleb's books exhibit high review entropy yet possess average ratings. I wonder if he have employed a similar analysis and saw these results before sending his tweet lol.
+
+![Book review entropy](/blog/2023/img/book_review_entropy.png)
+
+### Code
+
+I utilized the [Goodreads book review dataset](https://www.kaggle.com/datasets/pypiahmad/goodreads-book-reviews1) from Kaggle, focusing solely on non-fiction books due to the large data size.
+
+```python
+def filter_genre(x):
+    return len(x) > 0 and max(x, key=x.get) in ['non-fiction','history, historical fiction, biography']
+
+book_genre = pd.read_json("goodreads_book_genres_initial.json", orient="records", lines=True)
+books_filtered = set(book_genre.loc[book_genre['genres'].apply(filter_genre), 'book_id'])
+```
+
+Then, I processed the reviews through pre-trained sentence transformers to generate numerical embeddings. The [all-MiniLM-L12-v1 model](https://huggingface.co/sentence-transformers/all-MiniLM-L12-v1) has an embedding dimension of 384.
+```python
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer('all-MiniLM-L12-v1')
+for i, chunk in enumerate(pd.read_json("goodreads_reviews_dedup.json", orient="records", lines=True, chunksize=500000)):
+    chunk = chunk.loc[chunk['book_id'].isin(books_filtered), ['book_id', 'rating', 'review_text']]
+    chunk = chunk.loc[chunk['review_text'].str.len()>=100]
+    if chunk.shape[0] > 0:
+      embed = pd.DataFrame(model.encode(chunk['review_text'].tolist(), show_progress_bar=True), index=chunk['book_id'])
+      embed.columns = embed.columns.astype(str)
+      embed.to_parquet(f"book_review_embeddings/{i}.parquet")
+```
+
+Finally, I computed the SVD for each book, considering those with at least 50 reviews. To ensure fairness, I sampled 50 reviews per book for entropy calculation, as books with larger numbers of reviews (for example 1000) could inherently have higher entropy then the ones with 50-100 reviews.
+```python
+embed = pd.read_parquet('C:/Users/soars/Downloads/goodreads/book_review_embeddings')
+output = pd.DataFrame({'review_count': embed.index.value_counts()})
+output = output.loc[output'review_count']>=50]
+
+for i in tqdm(output.index):
+    _, s, _ = np.linalg.svd(embed.loc[i].values[:50, :])
+    p = s/np.sum(s)
+    p = p[p>0]
+    output.loc[i, 'entropy'] = -np.dot(p, np.log(p))
+```
+
+### Limitations
+
+* Not all reviews are summaries; some discuss editions or translations, especially for classical books which have many different editions. Some reviews, of a biography for example, focus on characters rather than content. For instance, Walter Isaacson's "Steve Jobs" has a moderate review entropy score (~3.63).
+* The general-purpose nature of pre-trained embeddings means they also capture reviewers' styles and emotions, which aren't ideal for information entropy measurement. An example is "The Rape of Nanking: The Forgotten Holocaust of World War II" by Iris Chang. This book deals with the Nanjing Massacre, a tragic and brutal episode during the Second Sino-Japanese War where hundreds of thousands of Chinese civilians and disarmed soldiers were murdered, and numerous women were assaulted by soldiers of the Imperial Japanese Army. The intense emotional impact of the subject matter invariably influence the tone of its reviews, leading to a review entropy of only 3.53.
+* The methodology's robustness is impacted by the choice of embedding model, dimension, and number of reviews considered. Randomly selecting a subset of reviews also leads to potential information loss. Advanced approaches like random matrix theory could offer better comparisons between books with varying numbers of reviews, but this is outside this article's scope.
+* Ultimately, "review diversity" or "book dimensionality" are subjective concepts. This project is a fun exploration rather than a definitive measure of a book's value, as you many already notice in books highlighted in the previous figure --- there is no "skin in the game".
+
+### Appendix - books with highest review entropy
+
+| title                                                                                                | url                                                                                               | book_id  | rating | review_count | entropy |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------- | -------- | ------ | ------------ |
+| Influence: The Psychology of Persuasion                                                              | https://www.goodreads.com/book/show/28815.Influence                                               | 28815    | 4.114754 | 183    | 3.738005     |
+| Min kamp 1 (Min kamp #1)                                                                             | https://www.goodreads.com/book/show/7147831-min-kamp-1                                            | 7147831  | 3.662162 | 74     | 3.736675     |
+| The Universe Doesn't Give a Flying Fuck About You                                                    | https://www.goodreads.com/book/show/13628888-the-universe-doesn-t-give-a-flying-fuck-about-you    | 13628888 | 3.680556 | 72     | 3.735819     |
+| Holy Bible: New International Version                                                                | https://www.goodreads.com/book/show/280111.Holy_Bible                                             | 280111   | 3.500000 | 80     | 3.735288     |
+| Tao Te Ching                                                                                         | https://www.goodreads.com/book/show/67896.Tao_Te_Ching                                            | 67896    | 3.807229 | 83     | 3.734882     |
+| Holy Bible: King James Version                                                                       | https://www.goodreads.com/book/show/1923820.Holy_Bible                                            | 1923820  | 3.354938 | 324    | 3.732286     |
+| Weird Things Customers Say in Bookshops                                                              | https://www.goodreads.com/book/show/12640991-weird-things-customers-say-in-bookshops              | 12640991 | 3.997585 | 414    | 3.731400     |
+| Beyond Good and Evil                                                                                 | https://www.goodreads.com/book/show/12321.Beyond_Good_and_Evil                                    | 12321    | 3.366337 | 101    | 3.725606     |
+| The Nicomachean Ethics                                                                               | https://www.goodreads.com/book/show/19068.The_Nicomachean_Ethics                                  | 19068    | 3.037736 | 53     | 3.725171     |
+| Chicken Soup for the Soul                                                                            | https://www.goodreads.com/book/show/801178.Chicken_Soup_for_the_Soul                              | 801178   | 3.500000 | 64     | 3.725138     |
+| The Teachings of Don Juan: A Yaqui Way of Knowledge                                                  | https://www.goodreads.com/book/show/78250.The_Teachings_of_Don_Juan                               | 78250    | 3.642857 | 84     | 3.724613     |
+| Wreck This Journal                                                                                   | https://www.goodreads.com/book/show/428862.Wreck_This_Journal                                     | 428862   | 4.047059 | 85     | 3.722732     |
+| The Life-Changing Magic of Not Giving a F\*ck: How to Stop Spending Time You Don't Have with Peop... | https://www.goodreads.com/book/show/26200068-the-life-changing-magic-of-not-giving-a-f-ck         | 26200068 | 3.465347 | 202    | 3.722119     |
+| The Book of General Ignorance                                                                        | https://www.goodreads.com/book/show/410632.The_Book_of_General_Ignorance                          | 410632   | 3.745098 | 51     | 3.721834     |
+| More Weird Things Customers Say in Bookshops                                                         | https://www.goodreads.com/book/show/16174631-more-weird-things-customers-say-in-bookshops         | 16174631 | 3.807143 | 140    | 3.720029     |
+| Steal Like an Artist: 10 Things Nobody Told You About Being Creative                                 | https://www.goodreads.com/book/show/13099738-steal-like-an-artist                                 | 13099738 | 4.087500 | 480    | 3.719942     |
+| The Secret (The Secret, #1)                                                                          | https://www.goodreads.com/book/show/52529.The_Secret                                              | 52529    | 2.873807 | 943    | 3.719174     |
+| Papillon                                                                                             | https://www.goodreads.com/book/show/6882.Papillon                                                 | 6882     | 3.993103 | 145    | 3.718292     |
+| Getting Things Done: The Art of Stress-Free Productivity                                             | https://www.goodreads.com/book/show/1633.Getting_Things_Done                                      | 1633     | 3.697222 | 360    | 3.717931     |
+| Thus Spoke Zarathustra                                                                               | https://www.goodreads.com/book/show/51893.Thus_Spoke_Zarathustra                                  | 51893    | 3.514286 | 140    | 3.716682     |
+| The Monk Who Sold His Ferrari: A Fable About Fulfilling Your Dreams Reaching Your Destiny            | https://www.goodreads.com/book/show/43877.The_Monk_Who_Sold_His_Ferrari                           | 43877    | 3.389610 | 308    | 3.716322     |
+| The Black Swan: The Impact of the Highly Improbable                                                  | https://www.goodreads.com/book/show/242472.The_Black_Swan                                         | 242472   | 3.555184 | 299    | 3.715842     |
+| How to Live on 24 Hours a Day                                                                        | https://www.goodreads.com/book/show/4855.How_to_Live_on_24_Hours_a_Day                            | 4855     | 3.520000 | 50     | 3.715379     |
+| Whatever You Think, Think the Opposite                                                               | https://www.goodreads.com/book/show/265525.Whatever_You_Think_Think_the_Opposite                  | 265525   | 3.831169 | 77     | 3.714774     |
+| 59 Seconds: Think a Little, Change a Lot                                                             | https://www.goodreads.com/book/show/6340948-59-seconds                                            | 6340948  | 3.792453 | 53     | 3.713075     |
+| It's Not How Good You Are, It's How Good You Want To Be                                              | https://www.goodreads.com/book/show/114737.It_s_Not_How_Good_You_Are_It_s_How_Good_You_Want_To_Be | 114737   | 3.540541 | 111    | 3.712133     |
+| Gödel, Escher, Bach: An Eternal Golden Braid                                                         | https://www.goodreads.com/book/show/24113.G_del_Escher_Bach                                       | 24113    | 3.838095 | 105    | 3.711328     |
+| Encyclopedia of an Ordinary Life                                                                     | https://www.goodreads.com/book/show/39872.Encyclopedia_of_an_Ordinary_Life                        | 39872    | 3.823009 | 113    | 3.710922     |
+| Ignore Everybody: and 39 Other Keys to Creativity                                                    | https://www.goodreads.com/book/show/6162567-ignore-everybody                                      | 6162567  | 3.462687 | 67     | 3.710877     |
+| The Art of War                                                                                       | https://www.goodreads.com/book/show/10534.The_Art_of_War                                          | 10534    | 3.669291 | 508    | 3.710865     |
+| Snoop: What Your Stuff Says About You                                                                | https://www.goodreads.com/book/show/1581330.Snoop                                                 | 1581330  | 3.148148 | 81     | 3.710645     |
+| The Bhagavad Gita                                                                                    | https://www.goodreads.com/book/show/99944.The_Bhagavad_Gita                                       | 99944    | 3.693333 | 75     | 3.710421     |
+| The Drama of the Gifted Child: The Search for the True Self                                          | https://www.goodreads.com/book/show/4887.The_Drama_of_the_Gifted_Child                            | 4887     | 3.711864 | 59     | 3.710158     |
+| How to Win Friends and Influence People                                                              | https://www.goodreads.com/book/show/4865.How_to_Win_Friends_and_Influence_People                  | 4865     | 3.862745 | 663    | 3.709622     |
+| The Subtle Art of Not Giving a F\*ck: A Counterintuitive Approach to Living a Good Life              | https://www.goodreads.com/book/show/28257707-the-subtle-art-of-not-giving-a-f-ck                  | 28257707 | 3.742802 | 521    | 3.709340     |
+| Abundance: The Future Is Better Than You Think                                                       | https://www.goodreads.com/book/show/13187824-abundance                                            | 13187824 | 3.987805 | 82     | 3.709272     |
+| All I Really Need to Know I Learned in Kindergarten                                                  | https://www.goodreads.com/book/show/34760.All_I_Really_Need_to_Know_I_Learned_in_Kindergarten     | 34760    | 3.625000 | 56     | 3.709270     |
+| Why Do Men Have Nipples?: Hundreds of Questions You'd Only Ask a Doctor After Your Third Martini     | https://www.goodreads.com/book/show/131529.Why_Do_Men_Have_Nipples_                               | 131529   | 2.793814 | 97     | 3.708684     |
+| The Art of Thinking Clearly                                                                          | https://www.goodreads.com/book/show/16248196-the-art-of-thinking-clearly                          | 16248196 | 3.392157 | 102    | 3.708681     |
+| Shop Class as Soulcraft: An Inquiry Into the Value of Work                                           | https://www.goodreads.com/book/show/6261332-shop-class-as-soulcraft                               | 6261332  | 3.383838 | 99     | 3.707851     |
+| The Communist Manifesto                                                                              | https://www.goodreads.com/book/show/30474.The_Communist_Manifesto                                 | 30474    | 3.078603 | 229    | 3.707773     |
+| The Power of Your Subconscious Mind                                                                  | https://www.goodreads.com/book/show/68984.The_Power_of_Your_Subconscious_Mind                     | 68984    | 3.520000 | 75     | 3.707511     |
+| The Art of Social Media: Power Tips for Power Users                                                  | https://www.goodreads.com/book/show/23281903-the-art-of-social-media                              | 23281903 | 3.666667 | 54     | 3.707500     |
+| Sway: The Irresistible Pull of Irrational Behavior                                                   | https://www.goodreads.com/book/show/2118114.Sway                                                  | 2118114  | 3.649351 | 77     | 3.707418     |
+| Tractatus Logico-Philosophicus                                                                       | https://www.goodreads.com/book/show/12075.Tractatus_Logico_Philosophicus                          | 12075    | 3.500000 | 54     | 3.707324     |
+| Lost in Translation: An Illustrated Compendium of Untranslatable Words from Around the World         | https://www.goodreads.com/book/show/20176282-lost-in-translation                                  | 20176282 | 4.210526 | 76     | 3.706830     |
+| What If?: Serious Scientific Answers to Absurd Hypothetical Questions                                | https://www.goodreads.com/book/show/21413662-what-if                                              | 21413662 | 4.122535 | 710    | 3.706252     |
+| Originals: How Non-Conformists Move the World                                                        | https://www.goodreads.com/book/show/25614523-originals                                            | 25614523 | 3.618056 | 144    | 3.706107     |
+| Linchpin: Are You Indispensable?                                                                     | https://www.goodreads.com/book/show/7155145-linchpin                                              | 7155145  | 3.742138 | 159    | 3.706064     |
+| Think and Grow Rich                                                                                  | https://www.goodreads.com/book/show/30186948-think-and-grow-rich                                  | 30186948 | 3.557377 | 61     | 3.705275     |
+
+---
+
+# A Simple Way to Estimate DDP, A Better Alternative to GDP
+
+Author: Xiang Shi
+Published: 2023-12-21T00:00:00-05:00
+Language: en
+Tags: fat tails, economics
+Canonical: https://xshi19.github.io/a-simple-way-to-estimate-ddp-a-better-alternative-to-gdp.html
+
+### DDP vs GDP
+I have read an interesting [article](https://ergodicityeconomics.com/2020/02/26/democratic-domestic-product/) about the Democratic Domestic Product (DDP)[^1]. There are many disputes and critiques regarding GDP, so I refer you to the details in this article. The main point is that GDP is not a good measure of individual well-being since its growth is dominated by a few of the richest people, companies, and the government. While Elon Musk may not care about a few billion dollars in profit or loss when [he acquired Twitter](https://www.reuters.com/technology/elon-musk-puts-20-bln-value-twitter-information-2023-03-26/), my personal well-being dramatically declined when my \$500 AirPods Pro were stolen before Thanksgiving.
+
+The solution, as the article proposes, is quite simple -- taking the logarithm, which is almost an instinct for me as a data scientist. Since GDP per capita is simply the average of everyone's spending, why not use the [geometric mean](https://en.wikipedia.org/wiki/Geometric_mean) instead? Let $x_i$ be the spending of an individual. GDP per capita is
+$$
+\text{GDP} = \frac{1}{n} \sum_{i=1}^n x_i,
+$$
+while DDP is
+$$
+\text{DDP} = \exp \left( \frac{1}{n} \sum_{i=1}^n \log(x_i) \right).
+$$
+The intuition is straightforward: the logarithm emphasizes the smaller numbers and suppresses the extremely large ones. So my AirPods Pro is about $\log(500) = 6.215$, not that far from Elon Musk's 1 billion becomes $\log(10^6) = 20.723$. Most importantly, the logarithm is a natural measure of [utility](https://en.wikipedia.org/wiki/Utility), which was pointed out by [Daniel Bernoulli more than 300 years ago](https://en.wikipedia.org/wiki/St._Petersburg_paradox#Expected_utility_theory).
+
+Moreover, the logarithm converts multiplication into addition. So, the log improvement of DDP is also the average of an individual's utility improvement:
+$$
+\log \left( \frac{DDP_t}{DDP_{t-1}} \right) = \frac{1}{n} \sum_{i=1}^n \log \left( \frac{x_{i,t}}{x_{i,t-1}} \right).
+$$
+
+### A Simplified Method for DDP Calculation: GPD per capita and Gini Index
+However, there are two major problems with DDP:
+
+1. It is not easy to compute. In [one paper](https://arxiv.org/abs/2009.10451), the authors used income quantiles to estimate the distribution of $x_i$ and approximate DDP.
+2. Its relationship to GDP is not obvious. The authors of [the original paper](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00918.x) used a geometric Brownian motion[^2] to model DDP growth, which, some may argue, is neither continuous nor stationary, and most of all, should be fat-tailed. To understand this, think about someone who just spent ten years' savings to purchase a house.
+
+Here is a much easier way to compute DDP:
+
+1. Assume individual GDP contribution follows the [Pareto distribution](https://en.wikipedia.org/wiki/Pareto_distribution): $X \sim \text{Pareto} (\alpha, x_m)$.
+2. The Gini index of the Pareto distribution is simply:
+$$
+\text{Gini} = \frac{1}{2\alpha - 1}
+$$
+3. The average of the Pareto distribution corresponds to the GDP per capita:
+$$
+\text{GDP per capita} = \frac{\alpha}{\alpha - 1} x_m
+$$
+4. The DDP, or the geometric mean of the Pareto distribution:
+$$
+\text{DDP} = x_m e^{\frac{1}{\alpha}}
+$$
+5. Finally, putting everything together:
+$$
+\text{DDP} = \text{GDP per capita} \times \left( \frac{1 - \text{Gini}}{1 + \text{Gini}} \right) \cdot e^{\frac{2\text{Gini}}{1 + \text{Gini}}}
+$$
+
+This formula is simple and clear: it can be viewed as GDP per capita adjusted by a function of the Gini index, which measures inequality. The Gini index adjustment is 1 in the case of full equality and 0 in the case of maximum inequality, as seen in the figure below.
+
+![DDP vs Gini](/blog/2023/img/ddp_gini.png)
+
+Both the Gini Index and GDP per capita data are available from [The World Bank](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD). Here are the historical values of DDP vs GDP for the USA:
+
+![USA DDP vs GDP](/blog/2023/img/usa_ddp.png)
+
+
+[^1]: Thanks, Nathan, for sharing this on [Fat Tony](https://x.com/FatTonysPodcast?s=20)'s Discord.
+[^2]: Based on the geometric Brownian motion model, the gap between (log) GDP and (log) DDP is a linear function of time $\frac{\sigma^2}{2} t$. In fact, any Lévy process with a finite and well-defined moment generating function has a linear growth rate over time, based on the [Lévy–Khintchine representation](https://en.wikipedia.org/wiki/L%C3%A9vy_process#L%C3%A9vy%E2%80%93Khintchine_representation):
+$$
+\log E[e^{X_t}] = t \left( \mu  - \frac{\sigma^2}{2} + \int (e^{x} - 1 - x 1_{|x|<1}) \nu(dx) \right)
+$$
+where $\nu$ is the Lévy measure.
+
+### Final Thoughts
+
+Similar to GDP, there are numerous debates about the Gini index's effectiveness as a measure of inequality. The assumption of a Pareto distribution might be overly simplistic. A more nuanced approach could involve applying the generalized Pareto rule and extreme value theory to better fit the tails of wealth and spending distributions, thereby addressing inequality more accurately.
+
+Ultimately, no single metric can completely encapsulate the complexity of economic activities. Overemphasis on optimizing a single metric can lead to disastrous outcomes. Take DDP as an example: it could be manipulated through a simplistic redistribution of wealth, which might create an illusion of economic growth without any real improvement in economic conditions.
+
+---
+
+# Fat Tails, Survivorship Bias, and the Illusion of Exponential Growth
+
+Author: Xiang Shi
+Published: 2023-12-07T10:20:00-05:00
+Language: en
+Tags: fat tails, survivorship bias, personal development
+Canonical: https://xshi19.github.io/fat-tails-survivorship-bias-and-the-illusion-of-exponential-growth.html
+
+Nassim Taleb warns us of the dangers in misapplying linear statistical methods (e.g. regression, correlation) to compare a fat-tailed variable (e.g. wealth, income) to a thin-tailed one (e.g. IQ test scores) in his book "[Statistical Consequences of Fat Tails](https://arxiv.org/abs/2001.10488)". The fat tails - where the extremes lie and the outliers that shape our world reside - defy conventional analysis and prediction. While professionals in finance likes linear method and sometimes tends to pretend like financial crises are outliers that can be edited out in their risk models, a process known as "winsorization". In other realms, however, there is a tendency to focus too heavily on these extremes due to survivorship bias, creating a false narrative of non-linear, exponential success.
+
+Consider the following scatter plot comparing people's wealth to their IQ scores. The wealth distribution, which follows a fat-tailed Pareto distribution, is contrasted with the IQ scores, which is normally distributed by design, as in the bell-shaped histograms under the scatter plot.
+
+![Unreal exponential growth curve based on survivorship bias. IQ-wealth data source: https://researchers.wls.wisc.edu/data/survey-data/](/blog/2023/img/fat_tails_survivorship_bias_01.png)
+
+Survivorship bias shines a light on the top achievers—the red dots indicating the wealthiest 1% within each IQ category — skewing the perceived growth curve sharply upward. This contrasts with the more gradual blue curve, representing all the data points.[^1]
+
+While overemphasizing the negative tail (e.g. financial risk) can be beneficial, emphasizing the success stories, the "positive tail", can skew our perceptions. For instance, if we substitute IQ with the number of personal development strategies adopted from bestselling books, the principle holds. These strategies, such as early rising, voracious reading habits or rigorous self-discipline, gleaned from studying the ultra-successful, may not translate to wealth for the average person. Yet, we're often told that persistence and patience will lead to a compound growth payoff: slow in the beginning, then skyrockets to capture the top outliers and neglects the "ordinary" data points.
+
+The concept of compound growth is widely endorsed, even from OpenAI's CEO Sam Altman:
+
+> Compounding is magic. Look for it everywhere. Exponential curves are the key to wealth generation.
+> A medium-sized business that grows 50% in value every year becomes huge in a very short amount of time. Few businesses in the world have true network effects and extreme scalability. But with technology, more and more will. It's worth a lot of effort to find them and create them.
+
+You may find similar figures in many places, including [one of my favorite book](https://jamesclear.com/):
+
+<img src="/blog/2023/img/fat_tails_survivorship_bias_02.jpg" alt="A chart illustrating the compounding of small daily improvements" width="500"/>
+
+This pattern is observable across different life choices, from investing to career paths. A foundational knowledge of finance and initial investments can yield more than inaction. However, a deep dive into the complexities of financial news, technical stock analysis, and day trading with options doesn't universally increase success chances, regardless of the few who succeed.
+
+In career terms, "leveraged" positions, like those of authors, YouTubers, or tech startup entrepreneurs, are sold on the premise of high potential. Yet, these fields are often winner-take-all arenas, leading to a highly fat-tailed income distribution (80–20 Pareto distribution or even more extreme) with more obscured failures than visible successes. Starting these careers as a side hustle can be a window to their potential, but fully committing (getting further on the x-axis) doesn't guarantee the high rewards often promised.
+
+Rob Copeland's recent book "The Fund: Ray Dalio, Bridgewater Associates, and the Unraveling of a Wall Street Legend" mentioned Ray Dalio's attempt to use personality tests to predict success at Bridgewater Associates. The tests reveal a curious pattern: many employees share similar traits with Dalio himself, a typical outcome of using thin-tailed variables to forecast fat-tailed ones. The "solution" was to craft an ever-growing list of principles, a set of rules to live and work by. Yet even with over 200 principles in play did not translate into exponential performance gains, i.e. as successful as Dailo himself.
+
+[^1]: Both curves are exponential curves fitted by OLS: $\log(y) = \alpha + \beta x$.
+
+
+## 中文文章
+
+[中文文章全文](https://xshi19.github.io/zh/llms-full.txt)

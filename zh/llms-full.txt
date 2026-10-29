@@ -1,6 +1,8 @@
 # Xiang Shi — 中文文章
 
-量化 · 风险 · 厚尾 · 应用数学 · 工程 · 赛博精神病
+量化 · 风险 · 应用数学 · 工程 &
+
+[Looooooooooong tail](https://safarithedoxie.com/)
 
 保留原始发表日期与中文正文。
 

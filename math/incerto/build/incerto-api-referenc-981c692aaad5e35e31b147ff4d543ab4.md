@@ -31,6 +31,7 @@ for implementations and use local `help()` for the installed version.
 
 | Module | Entry points and purpose |
 | --- | --- |
+| `xmath.incerto.concentration` | [`kappa_from_mads`](incerto-api-reference.md#api-kappa-from-mads), [`stable_kappa`](incerto-api-reference.md#api-stable-kappa), [`gaussian_sum_mad`](incerto-api-reference.md#api-gaussian-sum-mad), [`gamma_sum_mad`](incerto-api-reference.md#api-gamma-sum-mad), [`student_sum_mad`](incerto-api-reference.md#api-student-sum-mad), [`estimate_sum_mad`](incerto-api-reference.md#api-estimate-sum-mad), [`lognormal_sum_mad`](incerto-api-reference.md#api-lognormal-sum-mad), [`normal_location_mixture_sum_mad`](incerto-api-reference.md#api-normal-location-mixture-sum-mad), [`gaussian_equivalent_n`](incerto-api-reference.md#api-gaussian-equivalent-n); [finite-sample concentration](incerto-kappa.md) and [sample sufficiency](incerto-moment-estimation.md#moment-estimation-sufficiency) |
 | `xmath.incerto.gas_speeds` | [`chi_speed`](incerto-api-reference.md#api-chi-speed), [`sample_chi_speed`](incerto-api-reference.md#api-sample-chi-speed), [`fit_speed_models`](incerto-api-reference.md#api-fit-speed-models), [`speed_fit_table`](incerto-api-reference.md#api-speed-fit-table), [`speed_qq`](incerto-api-reference.md#api-speed-qq), [`squared_speed_ks`](incerto-api-reference.md#api-squared-speed-ks), [`speed_fit_figure`](incerto-api-reference.md#api-speed-fit-figure); [Rayleigh chamber speeds](incerto-rayleigh-speed.md) and fitted comparisons |
 | `xmath.incerto.datasets` | [`load_amazon_bookrank`](incerto-api-reference.md#api-load-amazon-bookrank), [`load_nyc_dog_name_frequencies`](incerto-api-reference.md#api-load-nyc-dog-name-frequencies), [`load_sp500_prices`](incerto-api-reference.md#api-load-sp500-prices); explicit local-cache and refresh helpers |
 | `xmath.incerto.distributions` | [`pareto_type1`](incerto-api-reference.md#api-pareto-type1), [`double_pareto`](incerto-api-reference.md#api-double-pareto), [`hypsecant2`](incerto-api-reference.md#api-hypsecant2), [`simple_normal_mixture`](incerto-api-reference.md#api-simple-normal-mixture), [`univariate_variance_gamma`](incerto-api-reference.md#api-univariate-variance-gamma), [`generalized_pareto`](incerto-api-reference.md#api-generalized-pareto), [`generalized_extreme_value`](incerto-api-reference.md#api-generalized-extreme-value), [`frechet`](incerto-api-reference.md#api-frechet); SciPy-style distribution objects |
@@ -44,6 +45,7 @@ for implementations and use local `help()` for the installed version.
 | `xmath.incerto.multivariate` | [`student_entropy`](incerto-api-reference.md#api-student-entropy), [`student_mutual_information`](incerto-api-reference.md#api-student-mutual-information), [`bivariate_student`](incerto-api-reference.md#api-bivariate-student), [`sample_correlation`](incerto-api-reference.md#api-sample-correlation), [`symmetric_spectrum`](incerto-api-reference.md#api-symmetric-spectrum), [`regression_population_r2`](incerto-api-reference.md#api-regression-population-r2), [`normal_location_mixture_kurtosis`](incerto-api-reference.md#api-normal-location-mixture-kurtosis); [chapter 6 worked cases](incerto-scoft-ch6.md#scoft-ch6-demo). Student helpers deliberately restrict degrees of freedom to [0.5, 1000]. |
 | `xmath.incerto.limits` | [`pareto_capped_mean`](incerto-api-reference.md#api-pareto-capped-mean), [`symmetric_stable_mean_abs`](incerto-api-reference.md#api-symmetric-stable-mean-abs), [`repeated_centered_sums`](incerto-api-reference.md#api-repeated-centered-sums), [`pareto_plugin_nonfinite_probability`](incerto-api-reference.md#api-pareto-plugin-nonfinite-probability), [`bernoulli_chernoff_log_bound`](incerto-api-reference.md#api-bernoulli-chernoff-log-bound); [chapter 7 averaging and limit laws](incerto-scoft-ch7.md) |
 | `xmath.incerto.figures` | [`set_theme`](incerto-api-reference.md#api-set-theme), [`style_axes`](incerto-api-reference.md#api-style-axes), [`savefig`](incerto-api-reference.md#api-savefig), [`vertical_figure`](incerto-api-reference.md#api-vertical-figure), [`distribution_card`](incerto-api-reference.md#api-distribution-card); shared figure style and deterministic export helpers |
+| `xmath.incerto.powerlaw` | [`powerlaw_mle_continuous`](incerto-api-reference.md#api-powerlaw-mle-continuous), [`powerlaw_mle_discrete`](incerto-api-reference.md#api-powerlaw-mle-discrete), [`ks_distance_powerlaw`](incerto-api-reference.md#api-ks-distance-powerlaw), [`select_xmin`](incerto-api-reference.md#api-select-xmin), [`powerlaw_standard_error`](incerto-api-reference.md#api-powerlaw-standard-error), [`sample_powerlaw`](incerto-api-reference.md#api-sample-powerlaw), [`powerlaw_bootstrap_se`](incerto-api-reference.md#api-powerlaw-bootstrap-se), [`powerlaw_gof_bootstrap`](incerto-api-reference.md#api-powerlaw-gof-bootstrap), [`fit_tail_model`](incerto-api-reference.md#api-fit-tail-model), [`likelihood_ratio_test`](incerto-api-reference.md#api-likelihood-ratio-test); power-tail fitting, bootstrap checks, and conditional model comparison |
 | `xmath.incerto.power_laws` | [`pareto_product_logsf`](incerto-api-reference.md#api-pareto-product-logsf), [`pareto_truncated_moment`](incerto-api-reference.md#api-pareto-truncated-moment), [`student_double_pareto_scales`](incerto-api-reference.md#api-student-double-pareto-scales), [`q_exponential_logsf`](incerto-api-reference.md#api-q-exponential-logsf), [`entropy_log_constraint_example`](incerto-api-reference.md#api-entropy-log-constraint-example); [chapter 5 worked cases](incerto-scoft-ch5.md#scoft-ch5-demo) |
 
 Use [`pareto_type1`](incerto-api-reference.md#api-pareto-type1) and
@@ -1924,6 +1926,254 @@ Card panels: 3
 ```
 :::
 
+### Finite-sample concentration
+
+(api-kappa-from-mads)=
+#### [`kappa_from_mads`](incerto-api-reference.md#api-kappa-from-mads)
+
+`concentration.kappa_from_mads(mad_n0, mad_n, n, *, n0=1)` evaluates the
+two-size population metric. Counts are integers with
+`1 <= n0 < n <= 10000000`; MADs must be nonnegative real scalars and
+positive finite sum MADs must not decrease. No clipping to [0,1] occurs.
+
+```python
+from xmath.incerto.concentration import kappa_from_mads
+
+for pair in ((1, 1.5), (2/3, 14/15), (1, 1), (0, 0), (float("inf"), float("inf"))):
+    print(f"kappa: {kappa_from_mads(*pair, 2):.4g}")
+try:
+    kappa_from_mads(1, 0.9, 2)
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+kappa: 0.2905
+kappa: -0.06004
+kappa: -inf
+kappa: nan
+kappa: nan
+ValueError: population sum MAD must not decrease
+```
+
+(api-stable-kappa)=
+#### [`stable_kappa`](incerto-api-reference.md#api-stable-kappa)
+
+`concentration.stable_kappa(alpha)` requires `0 < alpha <= 2`.
+For an integrable stable law it evaluates `2-alpha`; the sum growth
+exponent is `1/alpha`.
+
+```python
+from xmath.incerto.concentration import stable_kappa
+
+for alpha in (0.8, 1, 1.5, 2):
+    print(f"alpha={alpha:g}: {stable_kappa(alpha):.3f}")
+```
+
+**Output**
+
+```text
+alpha=0.8: nan
+alpha=1: nan
+alpha=1.5: 0.500
+alpha=2: 0.000
+```
+
+(api-gaussian-sum-mad)=
+#### [`gaussian_sum_mad`](incerto-api-reference.md#api-gaussian-sum-mad)
+
+`concentration.gaussian_sum_mad(n, *, sigma=1)` uses the parent standard
+deviation, not the stable CF scale. Requires positive finite sigma and
+integer `1 <= n <= 10000000`.
+
+```python
+from xmath.incerto.concentration import gaussian_sum_mad
+
+for n in (1, 2, 100):
+    print(f"n={n}: sum MAD={gaussian_sum_mad(n):.4f}")
+```
+
+**Output**
+
+```text
+n=1: sum MAD=0.7979
+n=2: sum MAD=1.1284
+n=100: sum MAD=7.9788
+```
+
+(api-gamma-sum-mad)=
+#### [`gamma_sum_mad`](incerto-api-reference.md#api-gamma-sum-mad)
+
+`concentration.gamma_sum_mad(n, *, shape=1, scale=1)` is the closed form
+for sums of independent Gamma(shape, scale) variables. Shape one gives
+exponential summands. Shape is in `[0.000001, 1000000]`; scale is positive
+and finite, and counts have the same domain as the Gaussian helper.
+Log-domain evaluation and a Stirling remainder avoid large-shape cancellation.
+
+```python
+from xmath.incerto.concentration import gamma_sum_mad
+
+for n in (1, 2, 100):
+    print(f"n={n}: sum MAD={gamma_sum_mad(n):.4f}")
+try:
+    gamma_sum_mad(10, scale=1e308)
+except FloatingPointError:
+    print("FloatingPointError: finite MAD exceeds floating-point range")
+```
+
+**Output**
+
+```text
+n=1: sum MAD=0.7358
+n=2: sum MAD=1.0827
+n=100: sum MAD=7.9722
+FloatingPointError: finite MAD exceeds floating-point range
+```
+
+(api-student-sum-mad)=
+#### [`student_sum_mad`](incerto-api-reference.md#api-student-sum-mad)
+
+`concentration.student_sum_mad(n, *, nu=3, scale=1)` uses ordinary
+Student degrees of freedom `nu` in `[0.5, 1000]` and positive finite scale.
+It evaluates closed forms at sizes one and two for all admitted degrees of
+freedom, and at every integer size up to ten million for the cubic law.
+
+```python
+from xmath.incerto.concentration import student_sum_mad
+
+for nu in (1, 1.5, 3, 5):
+    print(f"nu={nu:g}: two-sum MAD={student_sum_mad(2, nu=nu):.4f}")
+print(f"Cubic at n=30: {student_sum_mad(30):.4f}")
+try:
+    student_sum_mad(3, nu=5)
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+nu=1: two-sum MAD=inf
+nu=1.5: two-sum MAD=3.4126
+nu=3: two-sum MAD=1.6540
+nu=5: two-sum MAD=1.3840
+Cubic at n=30: 7.2218
+ValueError: closed form requires n <= 2 or nu=3
+```
+
+(api-estimate-sum-mad)=
+#### [`estimate_sum_mad`](incerto-api-reference.md#api-estimate-sum-mad)
+
+`concentration.estimate_sum_mad(rv, n, *, mean, repetitions=20000, random_state=0)`
+uses a frozen SciPy-style law and the **known population mean**. The returned
+dictionary contains `mad` and `mc_se`. Replications are independent and
+all draws are retained; nonfinite observations raise. It requires at least
+two replications, at most a million summands, and at most 50 million draws.
+The estimated SE has its usual interpretation only if the absolute centered
+sum has finite variance; it is not a model-validity or coverage guarantee.
+
+```python
+from scipy.stats import t
+from xmath.incerto.concentration import estimate_sum_mad, student_sum_mad
+
+result = estimate_sum_mad(t(3), 8, mean=0, random_state=20261089)
+print(f"Estimate: {result['mad']:.3f}, MC SE: {result['mc_se']:.3f}")
+print(f"Exact: {student_sum_mad(8):.3f}")
+```
+
+**Output**
+
+```text
+Estimate: 3.564, MC SE: 0.025
+Exact: 3.578
+```
+
+(api-lognormal-sum-mad)=
+#### [`lognormal_sum_mad`](incerto-api-reference.md#api-lognormal-sum-mad)
+
+`concentration.lognormal_sum_mad(n, sigma, *, mu=0, repetitions=20000, random_state=0)`
+uses log-location `mu` and log-scale `sigma`, with sigma in `[0.0001, 10]`.
+The single-summand result is exact. Larger sizes use a bounded conditional
+Monte Carlo payoff and return `mad` and `mc_se`. With at least two
+replications, `(n-1)*repetitions` must not exceed 50 million and n must not
+exceed a million.
+The underlying normal generator is PCG64; no samples are discarded.
+
+```python
+from xmath.incerto.concentration import lognormal_sum_mad
+
+for n in (1, 2, 16):
+    result = lognormal_sum_mad(n, 1, random_state=20261088)
+    print(f"n={n}: MAD={result['mad']:.3f}, MC SE={result['mc_se']:.3f}")
+try:
+    lognormal_sum_mad(1, 1, mu=1000)
+except FloatingPointError:
+    print("FloatingPointError: finite MAD exceeds floating-point range")
+```
+
+**Output**
+
+```text
+n=1: MAD=1.263, MC SE=0.000
+n=2: MAD=1.973, MC SE=0.009
+n=16: MAD=6.422, MC SE=0.052
+FloatingPointError: finite MAD exceeds floating-point range
+```
+
+(api-normal-location-mixture-sum-mad)=
+#### [`normal_location_mixture_sum_mad`](incerto-api-reference.md#api-normal-location-mixture-sum-mad)
+
+`concentration.normal_location_mixture_sum_mad(n, separation, *, sigma=1)`
+evaluates the binomial mixture for independent copies of
+`separation*R + sigma*Z`, with equiprobable signs R and independent standard
+normal Z. Separation is nonnegative, sigma positive, both finite;
+integer n is at most 10,000. The exact formula has n+1 terms.
+
+```python
+from xmath.incerto.concentration import normal_location_mixture_sum_mad
+
+for n in (1, 2, 8):
+    print(f"n={n}: sum MAD={normal_location_mixture_sum_mad(n, 3):.4f}")
+```
+
+**Output**
+
+```text
+n=1: sum MAD=3.0008
+n=2: sum MAD=3.5642
+n=8: sum MAD=7.1947
+```
+
+(api-gaussian-equivalent-n)=
+#### [`gaussian_equivalent_n`](incerto-api-reference.md#api-gaussian-equivalent-n)
+
+`concentration.gaussian_equivalent_n(sum_mad, n_g, *, max_n=1000000)`
+returns the smallest matching integer, using doubling then binary search.
+Both counts are integers in `[1, 10000000]`. The callable must be a
+deterministic population sum-MAD curve for an iid integrable law with
+positive MAD; noisy estimates cannot support the search. The criterion is
+relative mean absolute error with equal one-observation MADs.
+An eight-machine-epsilon tolerance, scaled by the absolute log target
+or one, handles rounded equalities; closer crossings cannot be distinguished.
+
+```python
+from xmath.incerto.concentration import gaussian_equivalent_n, student_sum_mad
+
+print("Gaussian reference 30:", gaussian_equivalent_n(student_sum_mad, 30))
+print("Insufficient search cap:", gaussian_equivalent_n(student_sum_mad, 30, max_n=10))
+print("Reference size one:", gaussian_equivalent_n(student_sum_mad, 1))
+```
+
+**Output**
+
+```text
+Gaussian reference 30: 44
+Insufficient search cap: None
+Reference size one: 1
+```
+
 ### Base package
 
 (api-exceedance-fraction)=
@@ -1947,3 +2197,310 @@ for threshold in (0, 2, 4):
 ```
 
 Exceedances are strict; the sample must be nonempty and finite.
+
+## Power-law fitting and model checks
+
+The functions in `xmath.incerto.powerlaw` are also re-exported from
+`xmath.incerto`. Their `alpha` is the survival exponent; the CSN density/mass
+exponent is `alpha + 1`. Inputs are positive finite real one-dimensional
+samples of at least two observations, with integer values in discrete mode.
+Every observation is validated before the inclusive `x >= xmin` tail is
+selected. No nonfinite observations are silently dropped. See
+[fitting](incerto-power-law-fitting.md) and
+[goodness of fit](incerto-power-law-goodness-of-fit.md) for statistical assumptions.
+
+(api-powerlaw-mle-continuous)=
+### [`powerlaw_mle_continuous`](incerto-api-reference.md#api-powerlaw-mle-continuous)
+
+`powerlaw_mle_continuous(x, xmin) -> float` fits a fixed positive threshold,
+using `n_tail / sum(log(x/xmin))`. It needs at least two retained observations
+and a positive log-excess sum. An all-cutoff tail raises `ValueError` because
+there is no finite MLE. Logarithmic arithmetic avoids forming extreme ratios.
+
+```python
+from xmath.incerto.powerlaw import powerlaw_mle_continuous
+
+print(f"alpha: {powerlaw_mle_continuous([2, 3, 5, 9], 2):.3f}")
+```
+
+**Output**
+
+```text
+alpha: 1.416
+```
+
+(api-powerlaw-mle-discrete)=
+### [`powerlaw_mle_discrete`](incerto-api-reference.md#api-powerlaw-mle-discrete)
+
+`powerlaw_mle_discrete(x, xmin, *, approximate=False) -> float` fits the
+normalized integer mass `k**(-(alpha+1))/zeta(alpha+1,xmin)`. Thresholds and
+observations must be positive integers represented exactly, at most
+`2**53-1`. The default maximizes the zeta likelihood numerically.
+`approximate=True` instead uses the half-integer correction, which can be
+poor at small cutoffs or large exponents. The exact fit expands its upper
+exponent bracket at most 12 times, with 300 iterations per scalar search;
+exponents below about `exp(-16)` and zeta underflow fail explicitly.
+
+```python
+from xmath.incerto.powerlaw import powerlaw_mle_discrete
+
+x = [1, 1, 1, 2, 2, 3, 5, 9, 12]
+print(f"Exact alpha: {powerlaw_mle_discrete(x, 1):.3f}")
+print(f"Approximate alpha: {powerlaw_mle_discrete(x, 1, approximate=True):.3f}")
+```
+
+**Output**
+
+```text
+Exact alpha: 0.693
+Approximate alpha: 0.599
+```
+
+(api-ks-distance-powerlaw)=
+### [`ks_distance_powerlaw`](incerto-api-reference.md#api-ks-distance-powerlaw)
+
+`ks_distance_powerlaw(x, alpha, xmin, *, discrete=False) -> float` returns
+the supremum CDF distance on the retained tail. It checks both sides of
+empirical jumps; integer mode also accounts for gaps in the support. It
+returns a statistic only, with no fitted-model KS p-value.
+
+```python
+from xmath.incerto.powerlaw import ks_distance_powerlaw
+
+for discrete in (False, True):
+    d = ks_distance_powerlaw([1, 1, 2, 5], 2, 1, discrete=discrete)
+    print(f"discrete={discrete}: KS={d:.3f}")
+```
+
+**Output**
+
+```text
+discrete=False: KS=0.500
+discrete=True: KS=0.332
+```
+
+(api-select-xmin)=
+### [`select_xmin`](incerto-api-reference.md#api-select-xmin)
+
+`select_xmin(x, *, discrete=False, min_tail=50, candidates=None) -> dict`
+refits the exponent and minimizes KS over distinct observed values by default.
+An explicit nonempty candidate vector replaces that rule with a fixed grid.
+`min_tail` must be an integer at least two. Equal minima choose the lowest
+threshold. Results contain `xmin`, `alpha`, `n_tail`, `ks`, `discrete`, and
+candidate arrays `xmins`, `alphas`, `counts`, `distances`. Ineligible or
+all-cutoff tails have `nan` estimates/distances; an entirely ineligible grid
+raises `ValueError`. Numerical failures abort. The default search has
+quadratic sample-size cost; declare a smaller grid for large samples.
+
+```python
+from xmath.incerto.powerlaw import select_xmin
+
+fit = select_xmin([1, 1, 2, 3, 6], min_tail=2)
+print(f"xmin={fit['xmin']:.1f}; alpha={fit['alpha']:.3f}; n={fit['n_tail']}")
+print("Counts:", [int(v) for v in fit["counts"]])
+```
+
+**Output**
+
+```text
+xmin=2.0; alpha=1.995; n=3
+Counts: [5, 3, 2, 1]
+```
+
+(api-powerlaw-standard-error)=
+### [`powerlaw_standard_error`](incerto-api-reference.md#api-powerlaw-standard-error)
+
+`powerlaw_standard_error(alpha, n_tail, *, xmin=1, discrete=False) -> float`
+returns the fixed-threshold asymptotic error: `alpha/sqrt(n_tail)` for
+continuous data, inverse square-root total Fisher information for integer
+data. Discrete information is the variance of log observations, computed
+from scaled log-moment sums with an Euler–Maclaurin tail correction.
+Refining the sum checks convergence, and a roundoff check rejects unresolved
+information with `FloatingPointError`. This error excludes threshold selection,
+dependence, and model misspecification. Adding one to the exponent leaves its SE unchanged.
+
+```python
+from xmath.incerto.powerlaw import powerlaw_standard_error
+
+for discrete in (False, True):
+    se = powerlaw_standard_error(2, 400, xmin=1, discrete=discrete)
+    print(f"discrete={discrete}: SE={se:.3f}")
+```
+
+**Output**
+
+```text
+discrete=False: SE=0.100
+discrete=True: SE=0.120
+```
+
+(api-sample-powerlaw)=
+### [`sample_powerlaw`](incerto-api-reference.md#api-sample-powerlaw)
+
+`sample_powerlaw(alpha, xmin, size, *, discrete=False, random_state=None)`
+returns a vector of continuous Pareto or exact integer zeta draws. `size` is
+a positive integer; `random_state` accepts a seed or NumPy generator. Continuous
+sampling reuses [`pareto_type1`](incerto-api-reference.md#api-pareto-type1).
+Discrete sampling inverts the zeta CDF by bracket expansion and integer
+bisection; it does not round continuous draws. Nonfinite draws or integer
+draws beyond `2**53-1` fail instead of being clipped.
+
+```python
+from xmath.incerto.powerlaw import sample_powerlaw
+
+x = sample_powerlaw(2, 3, 5, random_state=381)
+k = sample_powerlaw(2, 3, 5, discrete=True, random_state=381)
+print("Continuous:", [round(float(v), 3) for v in x])
+print("Discrete:", [int(v) for v in k])
+```
+
+**Output**
+
+```text
+Continuous: [6.84, 12.742, 9.057, 4.72, 7.573]
+Discrete: [6, 11, 8, 4, 6]
+```
+
+(api-powerlaw-bootstrap-se)=
+### [`powerlaw_bootstrap_se`](incerto-api-reference.md#api-powerlaw-bootstrap-se)
+
+`powerlaw_bootstrap_se(x, *, replicates=199, random_state=None,
+discrete=False, min_tail=50, candidates=None) -> dict` resamples the whole
+empirical sample and refits the threshold and exponent in every replicate.
+At least two replicates are required. It returns `fit`, `alpha_se`, `xmin_se`,
+`covariance` in `(alpha,xmin)` order, and paired `alphas`, `xmins` arrays.
+Standard deviations and covariance use divisor `replicates-1`. Failed
+replicates abort with their index. Discontinuous threshold selection can
+invalidate naive confidence-interval interpretations of these summaries.
+
+```python
+from xmath.incerto.powerlaw import sample_powerlaw, powerlaw_bootstrap_se
+
+x = sample_powerlaw(2, 1, 100, random_state=382)
+b = powerlaw_bootstrap_se(x, replicates=8, min_tail=25, random_state=383)
+print(f"SE(alpha)={b['alpha_se']:.3f}; SE(xmin)={b['xmin_se']:.3f}")
+```
+
+**Output**
+
+```text
+SE(alpha)=0.168; SE(xmin)=0.042
+```
+
+(api-powerlaw-gof-bootstrap)=
+### [`powerlaw_gof_bootstrap`](incerto-api-reference.md#api-powerlaw-gof-bootstrap)
+
+`powerlaw_gof_bootstrap(x, *, replicates=499, random_state=None,
+discrete=False, min_tail=50, candidates=None) -> dict` mixes the empirical
+below-cutoff body with the fitted tail, with tail probability `n_tail/len(x)`.
+Each replicate has the original total size, a random generated tail count,
+and its own fitted threshold/exponent. The observed-value candidate rule is
+recomputed from the replicate; an explicit grid is reused. Returns `fit`,
+`p_value`, `mc_se`, `worst_case_mc_se`, `ks_samples`, `alphas`, `xmins`,
+`tail_counts` after refitting, and `generated_tail_counts` before refitting.
+The p-value is the fraction with KS at least the observed KS. At least two
+replicates are required; failures abort, with none discarded. The worst-case
+Monte Carlo SE is `0.5/sqrt(replicates)`; a plug-in `mc_se=0` at an endpoint
+does not imply exact knowledge. The tiny example below illustrates the API.
+
+```python
+from xmath.incerto.powerlaw import sample_powerlaw, powerlaw_gof_bootstrap
+
+x = sample_powerlaw(2, 1, 100, random_state=384)
+b = powerlaw_gof_bootstrap(x, replicates=8, min_tail=25, random_state=385)
+print(f"p={b['p_value']:.3f}; worst-case MC SE={b['worst_case_mc_se']:.3f}")
+```
+
+**Output**
+
+```text
+p=0.375; worst-case MC SE=0.177
+```
+
+(api-fit-tail-model)=
+### [`fit_tail_model`](incerto-api-reference.md#api-fit-tail-model)
+
+`fit_tail_model(x, xmin, model="powerlaw", *, discrete=False) -> dict`
+fits one common conditional tail. Models are `powerlaw`, `lognormal`,
+`exponential`, `stretched_exponential` (the full Weibull family), and
+`truncated_powerlaw` (an exponential cutoff, no finite upper endpoint).
+Discrete mode supports `powerlaw` only and rejects continuous alternatives.
+The result contains `model`, `xmin`, `discrete`, `n_tail`, `parameters`,
+per-observation `loglik` in retained input order, `loglikelihood`, `success`,
+`boundary`, and `status`. Below-cutoff values do not enter the scores.
+
+Parameters are `alpha` for a pure power law; `mu`, `sigma` for the parent
+lognormal; `rate` for exponential; `shape`, `scale` for Weibull; and density
+exponent `a`, `rate` for the cutoff family. The interior cutoff exponent `a`
+can be any real number mathematically. Lognormal/Weibull/cutoff fits use
+multi-start numerical optimization; convergence is not a global-MLE proof.
+
+Numerical search boxes use dimensionless coordinates: lognormal
+`mu-log(xmin)` in `[-100,100]` and `log(sigma)` in `[-6,5]`; Weibull
+`log(shape)` in `[-5,5]`, profiling out scale. The cutoff search starts with
+`a-1` in `[-20,100]` and `log(rate*xmin)` covering both `[-18,8]` and the
+sample's inverse mean excess scale. It expands the bounds over at most eight
+search rounds; log rates stay within `[-700,700]`. Each start permits 2000
+iterations. An unresolved search or artificial bound sets `success=False`.
+These bounds are numerical limits, not definitions of the families.
+The pure-law boundary `rate=0` is accepted only after verifying its inward
+score, returning `boundary=True` with status `pure-power-law boundary`.
+An inferior numerical fit can return the pure law with `success=False` and
+an explicit uncertified-boundary status. Cutoff quadrature is centered and
+scaled around its mode; unresolved integration raises or fails the fit.
+Exponential fitting accepts constant observations above the threshold when
+their mean excess is positive. Lognormal, Weibull, and cutoff fitting reject
+constant tails.
+
+```python
+from xmath.incerto.powerlaw import fit_tail_model
+
+fit = fit_tail_model([0.5, 1, 2, 3, 6], 1, "exponential")
+print(f"Retained: {fit['n_tail']}; rate: {fit['parameters']['rate']:.3f}")
+print(f"Conditional log likelihood: {fit['loglikelihood']:.3f}")
+```
+
+**Output**
+
+```text
+Retained: 4; rate: 0.500
+Conditional log likelihood: -6.773
+```
+
+(api-likelihood-ratio-test)=
+### [`likelihood_ratio_test`](incerto-api-reference.md#api-likelihood-ratio-test)
+
+`likelihood_ratio_test(loglik1, loglik2, *, nested=False,
+calibration=None, df=1) -> dict` accepts paired finite real score vectors of
+length at least two, from the same ordered observations and reference measure.
+Positive `R=sum(loglik1-loglik2)` favors model 1. Non-nested mode returns
+`normalized_R=R/(sqrt(n)*std(d,ddof=0))` and a two-sided normal `p_value`.
+Zero contrast variance gives `nan` statistic/p with an explanatory status.
+Results also contain `n`, `statistic`, and `status`; `statistic` is the nested
+LR statistic and is `nan` for non-nested comparisons.
+
+For `nested=True`, model 1 must be the smaller model. Model 2 fitting worse
+beyond numerical tolerance raises `ValueError`. The statistic is `-2R`, while
+the default p-value is `nan` pending calibration. Explicit `calibration="chi2"`
+uses a chi-square reference with positive integer `df`;
+`calibration="boundary"` requires `df=1` and uses the regular half-point-mass,
+half-chi-square reference, with inclusive p-value one at statistic zero.
+These options assert conditions; they do not diagnose them. See the
+[boundary and infinite-information caveats](incerto-power-law-goodness-of-fit.md#csn-nested-cutoff).
+No automatic AIC/BIC correction, multiple-testing adjustment, dependence
+correction, or selected-threshold calibration is performed.
+
+```python
+from xmath.incerto.powerlaw import likelihood_ratio_test
+
+lr = likelihood_ratio_test([1, 2, 5, 1], [2, 1, 1, 0])
+print(f"R={lr['R']:.3f}; normalized R={lr['normalized_R']:.3f}")
+print(f"Two-sided p: {lr['p_value']:.3f}")
+```
+
+**Output**
+
+```text
+R=5.000; normalized R=1.400
+Two-sided p: 0.161
+```

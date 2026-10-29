@@ -242,6 +242,13 @@ sample sizes and fit-iteration caps bound the work.
 - Thresholds for right-tail positive data do not automatically apply to
   two-sided returns or losses without an explicit transformation.
 
+## See also
+
+- [Fitting a power-law tail](incerto-power-law-fitting.md): continuous and
+  discrete likelihoods, KS threshold search, and jointly refitted uncertainty.
+- [Power-law goodness of fit and alternatives](incerto-power-law-goodness-of-fit.md):
+  fitted-null bootstrap checks and conditional likelihood comparisons.
+
 ## References
 
 - Hill, "A Simple General Approach to Inference About the Tail of a

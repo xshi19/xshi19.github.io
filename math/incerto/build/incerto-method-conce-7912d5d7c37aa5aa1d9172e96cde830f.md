@@ -6,9 +6,12 @@ Method pages describe diagnostics, estimators, and modeling moves that recur
 across fat-tail arguments.
 
 - [Moment estimation and its limits](./incerto-moment-estimation.md)
+- [Kappa and finite-sample concentration](./incerto-kappa.md)
 - [Hill Estimator](./incerto-hill-estimator.md)
 - [Plug-In Tail Estimation](./incerto-plug-in-tail-estimation.md)
 - [Tail Threshold Selection](./incerto-tail-threshold-selection.md)
+- [Fitting a power-law tail](./incerto-power-law-fitting.md)
+- [Power-law goodness of fit and alternatives](./incerto-power-law-goodness-of-fit.md)
 - [Survival Tail Ratio](./incerto-survival-tail-ratio.md)
 - [Maximum entropy and power tails](./incerto-maximum-entropy.md)
 - [Iso-Density Tail Geometry](./incerto-iso-density-tail-geometry.md)

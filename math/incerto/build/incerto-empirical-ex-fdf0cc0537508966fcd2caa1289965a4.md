@@ -13,3 +13,7 @@ back to the concept pages that carry the mathematical claims.
 
 The [Cauchy running-statistics experiment](incerto-cauchy-running.md) uses
 synthetic iid samples to compare mean and median behavior.
+
+The [chapter 8 experiments](incerto-scoft-ch8.md) compare exact sum deviations,
+seeded lognormal/Pareto estimates, and Gaussian-equivalent sample sizes.
+These are model calculations, not observed-data studies.

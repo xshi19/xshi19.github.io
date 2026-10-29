@@ -209,6 +209,13 @@ The same mixture sample supplies the coordinated threshold diagnostics.
 - The reciprocal $\widehat\alpha=1/\widehat\xi$ is unstable when
   $\widehat\xi$ is close to zero.  Thin-tail regimes need different tools.
 
+## See also
+
+- [Fitting a power-law tail](incerto-power-law-fitting.md): continuous and
+  discrete likelihoods, KS threshold search, and jointly refitted uncertainty.
+- [Power-law goodness of fit and alternatives](incerto-power-law-goodness-of-fit.md):
+  fitted-null bootstrap checks and conditional likelihood comparisons.
+
 ## References
 
 - Hill, "A Simple General Approach to Inference About the Tail of a

@@ -8,6 +8,7 @@ options:
       - pareto-moment-existence
       - plug-in-tail-estimation
     related:
+      - kappa
       - mixture-uncertainty
       - dispersion-ratio
       - lln-preasymptotic
@@ -27,8 +28,10 @@ The sample notation follows the [shared canon](https://xshi19.github.io/math/not
 For iid $X_i\ge0$ and order $q>0$, write
 
 $$
-m_q=\mathbb E X^q,\qquad
-\widehat m_{q,n}=\frac1n\sum_{i=1}^nX_i^q.
+\begin{aligned}
+m_q&=\mathbb E X^q,\\
+\widehat m_{q,n}&=\frac1n\sum_{i=1}^nX_i^q.
+\end{aligned}
 $$
 
 These are raw moments. For a signed variable, replace $X^q$ by $|X|^q$;
@@ -40,18 +43,23 @@ a signed odd moment requires separate integrability conditions.
 For [Pareto](incerto-pareto-moment-existence.md) with $\alpha,x_m>0$,
 
 $$
-m_q=\frac{\alpha x_m^q}{\alpha-q}\quad(q<\alpha),\qquad
-m_q=\infty\quad(q\ge\alpha).
+\begin{aligned}
+m_q&=\frac{\alpha x_m^q}{\alpha-q},\\
+&\hspace{2em}q<\alpha,\\
+m_q&=\infty,\\
+&\hspace{2em}q\ge\alpha.
+\end{aligned}
 $$
 
 Assume $q<\alpha$. Then the sample moment is unbiased for every $n\ge1$,
 but it has finite variance **only if $2q<\alpha$**. In that regime,
 
 $$
-\operatorname{Var}(\widehat m_{q,n})
-=\frac1n\left[
-\frac{\alpha x_m^{2q}}{\alpha-2q}
--\left(\frac{\alpha x_m^q}{\alpha-q}\right)^2\right].
+\begin{aligned}
+n\operatorname{Var}(\widehat m_{q,n})
+&=\frac{\alpha x_m^{2q}}{\alpha-2q}\\
+&\quad-\left(\frac{\alpha x_m^q}{\alpha-q}\right)^2.
+\end{aligned}
 $$
 
 We prove both assertions. Linearity gives the expectation whenever $m_q$
@@ -93,9 +101,11 @@ which population regime applies.
 Let $R_n=\sqrt{\widehat m_{2,n}}$. If $m_2<\infty$, then
 
 $$
-\mathbb E R_n^2=m_2,\qquad
-\mathbb E R_n\le\sqrt{m_2},\qquad
+\begin{gathered}
+\mathbb E R_n^2=m_2,\\
+\mathbb E R_n\le\sqrt{m_2},\\
 \operatorname{Var}(R_n)<\infty.
+\end{gathered}
 $$
 
 The identity is immediate from the definition. Cauchy–Schwarz gives the
@@ -130,10 +140,12 @@ give shape $n/2$, scale 2 for $T$. Integrating $\sqrt T$ against that
 density yields
 
 $$
-b_n=\frac{\mathbb ER_n}{\sigma}
-=\sqrt{\frac2n}\frac{\Gamma((n+1)/2)}{\Gamma(n/2)},
-\qquad
-\frac{\mathbb E(R_n-\sigma)^2}{\sigma^2}=2(1-b_n).
+\begin{aligned}
+b_n&=\frac{\mathbb ER_n}{\sigma}\\
+&=\sqrt{\frac2n}\frac{\Gamma((n+1)/2)}{\Gamma(n/2)},\\
+\frac{\mathbb E(R_n-\sigma)^2}{\sigma^2}
+&=2(1-b_n).
+\end{aligned}
 $$
 
 The last identity uses $\mathbb ER_n^2=\sigma^2$. The corresponding MSE
@@ -207,8 +219,11 @@ a gamma density that is positive and continuous at 1. Consequently even
 conditional on a finite fit,
 
 $$
+\begin{gathered}
 \mathbb E\left[\frac{x_m}{1-\widehat\xi_n}
-\;\middle|\;\widehat\xi_n<1\right]=\infty.
+\;\middle|\;\widehat\xi_n<1\right]\\
+=\infty.
+\end{gathered}
 $$
 
 The linked note derives that density. Its positive lower bound on a small
@@ -277,7 +292,162 @@ not a universal lower bound. Mean and median absolute deviations also
 answer different questions. Neither universally replaces a second-moment
 estimand or dominates every estimator under every loss.
 
-## Reproduce and interpret
+(moment-estimation-sufficiency)=
+## Matching a Gaussian sample by absolute error
+
+For iid integrable observations, let $M(n)=\mathbb E|S_n-n\mu|$ and
+assume $M(1)>0$. The [kappa note](incerto-kappa.md#kappa-definition)
+compares this sum deviation at two sizes. Here the target is the
+relative mean absolute error of the sample mean:
+
+$$
+R(n)=\frac{M(n)}{nM(1)}.
+$$
+
+Scaling two parent laws to the same single-observation MAD makes $R(n)$
+a comparison in common units. A Gaussian sample of size $n_g$ has
+$R_g(n_g)=n_g^{-1/2}$. Define the minimum matching integer by
+
+$$
+\begin{aligned}
+\mathcal N_g&=\{n\ge1:R(n)\le n_g^{-1/2}\},\\
+n_*&=\min\mathcal N_g.
+\end{aligned}
+$$
+
+This criterion matches one expectation of an estimation error. It does
+not equate variances, quantiles, or confidence coverage. For example,
+Markov's inequality gives only
+
+$$
+\begin{gathered}
+P(|\bar X_n-\mu|>\varepsilon)
+\le\frac{M(n)}{n\varepsilon},\\
+\varepsilon>0.
+\end{gathered}
+$$
+
+The bound may be loose. There is no universal kappa cutoff that certifies
+a normal confidence interval. Under variance matching, every iid law
+with the same finite variance has the same variance of its sample mean
+at the same size; that is a different comparison.
+
+### Why the search is valid
+
+We prove that $R(n)$ is nonincreasing. Center $n+1$ observations and
+form the $n+1$ averages that each omit one observation. Their average is
+the full $(n+1)$-observation average. Convexity of absolute value and
+identical distributions therefore give
+
+$$
+\mathbb E|\bar X_{n+1}-\mu|
+\le\mathbb E|\bar X_n-\mu|.
+$$
+
+It also tends to zero under integrability. To see this, clip each centered
+variable to $[-B,B]$ and center the clipped variable again. Its average
+has expected absolute value at most its standard deviation divided by
+$\sqrt n$. The remaining centered part has expected absolute value at
+most twice the expected clipping error, uniformly in $n$, and this tends
+to zero as $B\to\infty$. First take $n\to\infty$, then $B\to\infty$.
+Thus $n_*$ exists for every finite integer $n_g$ under these assumptions.
+A finite computational search can still stop before reaching it.
+
+Use [`gaussian_equivalent_n`](incerto-api-reference.md#api-gaussian-equivalent-n)
+with deterministic population MADs, such as
+[`student_sum_mad`](incerto-api-reference.md#api-student-sum-mad) and
+[`gamma_sum_mad`](incerto-api-reference.md#api-gamma-sum-mad).
+
+```python
+from xmath.incerto.concentration import gaussian_equivalent_n, student_sum_mad, gamma_sum_mad
+
+target = 1/30**0.5
+print(f"Gaussian target: {target:.4f}")
+for name, mad in (("Student 3", student_sum_mad), ("Exponential", gamma_sum_mad)):
+    n = gaussian_equivalent_n(mad, 30)
+    print(f"{name}: n={n}")
+    for j in (n-1, n):
+        print(f"  n={j}: relative error={mad(j)/(j*mad(1)):.4f}")
+print("Cap at 10:", gaussian_equivalent_n(student_sum_mad, 30, max_n=10))
+```
+
+**Output**
+
+```text
+Gaussian target: 0.1826
+Student 3: n=44
+  n=43: relative error=0.1837
+  n=44: relative error=0.1817
+Exponential: n=36
+  n=35: relative error=0.1829
+  n=36: relative error=0.1803
+Cap at 10: None
+```
+
+The cap result means only that the requested finite search did not find a
+match. A noisy Monte Carlo curve must not be passed to this binary search:
+sampling noise can destroy monotonicity and shift the first crossing.
+
+### When a constant kappa is enough
+
+If a model has the **exact** power relation
+$M(n)/M(1)=n^{1/(2-\kappa)}$ at every size, with constant $\kappa<1$,
+solving the matching inequality gives
+
+$$
+\begin{aligned}
+n_*&=\left\lceil n_g^{\,p}\right\rceil,\\
+p&=\frac{2-\kappa}{2(1-\kappa)}.
+\end{aligned}
+$$
+
+For an integrable stable law, $\kappa=2-\alpha$ and
+$p=\alpha/[2(\alpha-1)]$. At $\alpha=1.5$ this is $p=1.5$.
+For a general law, substituting a small-size kappa into this formula is a
+heuristic. Its kappa changes with size, so the exact equation is implicit.
+The cubic Student and exponential examples use their full MAD curves.
+
+```{figure} ../assets/figures/incerto/kappa-sample-size.svg
+:name: kappa-sample-size-figure
+:alt: Minimum observation counts versus Gaussian reference size for Gaussian, exponential, cubic Student and stable index 1.5 laws, all matched by single-observation MAD.
+
+Exact integer searches using population MAD curves, and the exact stable
+power law, over Gaussian reference sizes 2–1000. The dashed diagonal is
+equal sample sizes. This compares expected absolute error under specified
+iid laws, not observed data or confidence levels.
+```
+
+(moment-estimation-portfolio)=
+## Equal-weight exposures and apparent stabilization
+
+For independent, identically distributed centered exposures $X_i-\mu$,
+the equally weighted portfolio fluctuation is
+$n^{-1}\sum_i(X_i-\mu)$. Its MAD is exactly $M(n)/n$.
+The [aggregation figure](incerto-kappa.md#kappa-aggregation-figure) therefore
+also quantifies this narrowly specified diversification calculation.
+A smooth sample path or a visually concentrated center can still conceal
+substantial expected absolute error.
+
+Dependence changes the result. If every exposure equals the same integrable
+random variable $Y$, then the portfolio average is $Y$ at every size and
+its MAD never decreases. More generally, writing $X_i=C+\epsilon_i$ with
+an integrable common component $C$ independent of iid centered integrable
+$\epsilon_i$ gives an average converging to $C$ in $L^1$. Its MAD about
+$\mathbb EC$ consequently tends to $\mathbb E|C-\mathbb EC|$: apply
+the reverse triangle inequality and the $L^1$ averaging argument above.
+Increasing the number of components cannot remove the common fluctuation.
+
+These model identities are the scope used for @taleb2025scoftv4,
+§§8.3.2/8.5, pp. 159–164. They do not establish an optimal allocation,
+a universal risk multiple, or empirical kappa values for stocks.
+For different weights and dependence, return to the
+[multivariate note](incerto-multivariate-tails.md) and
+[shared-shock example](incerto-decentralization.md).
+
+The chapter-8 figures are regenerated by
+`uv run python demos/incerto/concentration.py`.
+
+## Reproduce the moment-estimation experiment
 
 Use [`pareto_type1`](incerto-api-reference.md#api-pareto-type1), [`pareto_moment_estimator_summary`](incerto-api-reference.md#api-pareto-moment-estimator-summary).
 

@@ -1,6 +1,6 @@
 # Xiang Shi
 
-> I'm Xiang. I build risk models at a hedge fund and write code for fun. This is where I keep my open-source code, math notes, and the occasional essay.
+> Quant · Risk · Fat tails · Applied math · Engineering · Cyberpsychosis
 
 ## Pages
 - [About](https://xshi19.github.io/about/): PhD work on heavy-tailed distributions at Stony Brook, risk models, normix, and pair-programming with AI agents.
@@ -32,10 +32,12 @@
 - [一个基本的股市小技巧](https://xshi19.github.io/zh/blog/use-logarithmic-charts.md): 2024-11-19. HTML: https://xshi19.github.io/zh/blog/use-logarithmic-charts/
 - [别了， Yann LeCun](https://xshi19.github.io/zh/blog/farewell-yann-lecun.md): 2024-11-12. HTML: https://xshi19.github.io/zh/blog/farewell-yann-lecun/
 
+## Public code
+- [normix](https://github.com/xshi19/normix): JAX package for normal variance mixture distributions (generalized hyperbolic and relatives), with fitting and risk measures.
+
 ## Related sites (independently maintained)
 - [Mathematical notes](https://xshi19.github.io/math/)
 - [Legacy Incerto wiki](https://xshi19.github.io/incerto-wiki/)
-- [normix documentation](https://xshi19.github.io/normix/)
 
 ## Machine-readable resources
 - [Full English article text](https://xshi19.github.io/llms-full.txt)

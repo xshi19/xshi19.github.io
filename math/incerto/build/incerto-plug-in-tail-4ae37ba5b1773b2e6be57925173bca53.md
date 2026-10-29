@@ -316,6 +316,75 @@ far into the tail, not an exact conditional model at a chosen finite threshold.
 The known-cutoff $\sqrt n$ calculation does not supply a rate or confidence
 interval for a Hill fit with a selected threshold.
 
+(plugin-hidden-tail)=
+## A missing contribution requires a tail model
+
+The [hidden-tail result](incerto-hidden-tail.md#hidden-tail-pareto) gives,
+for an exact Pareto parent and $\alpha>1$,
+
+$$
+\begin{gathered}
+T_1(t)=\frac{\alpha x_m}{\alpha-1}
+       \left(\frac{x_m}{t}\right)^{\alpha-1},\\
+t\ge x_m.
+\end{gathered}
+$$
+
+Replacing $\alpha$ by an estimate turns this into a model-based tail
+contribution. It does not make the true population's unobserved tail
+empirical. With a tail-only model, its fitted mass and body contribution
+must also be included, as in the preceding decomposition. In particular,
+adding the true-model $T_1(M_n)$ to a sample mean produces upward bias:
+a finite-mean iid sample mean is already unbiased, and the added term has
+a strictly positive expectation.
+
+(plugin-exponent-truncation)=
+## Debiasing, conditional selection, and clipping
+
+The [inverse-gamma law](incerto-hill-estimator.md#hill-sampling-law)
+provides exact calibration for a known Pareto cutoff. Let
+$A=(m-1)\widehat\alpha/m$, $m>1$, and fix $h>1$. Its density $f_A$
+has inverse-gamma shape $m$ and scale $(m-1)\alpha$. Conditioning on a
+retained estimate has density
+
+$$
+f_{A\mid A>h}(a)=\frac{f_A(a)}{P(A>h)},\qquad a>h.
+$$
+
+This is a conditional law, not the original estimator's unconditional
+sampling law. Clipping $A$ to $\max(A,h)$ instead gives an atom of size
+$P(A\le h)$ at $h$ and retains the original density above it. Either
+choice changes the estimator or the samples being reported. Under
+conditioning, the plug-in mean is bounded above by $x_mh/(h-1)$;
+clipping attains this bound at its atom. Neither operation preserves
+unbiasedness or establishes mean-squared-error superiority.
+
+Use [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling)
+to expose the selection mass instead of silently omitting estimates:
+
+```python
+from xmath.incerto.extremes import pareto_exponent_sampling
+
+law = pareto_exponent_sampling(1.2, 20, debiased=True)
+for h in (1, 1.1, 1.3):
+    print(f"h={h:g}: retained={law.sf(h):.4g}, excluded or clipped={law.cdf(h):.4g}")
+```
+
+**Output**
+
+```text
+h=1: retained=0.7495, excluded or clipped=0.2505
+h=1.1: retained=0.5929, excluded or clipped=0.4071
+h=1.3: retained=0.3088, excluded or clipped=0.6912
+```
+
+Appendix E, pp. 189–191, especially E.1, is the SCoFT v4 source context
+[@taleb2025scoftv4]. Its finite-sample calibration must be restricted to
+an exact Pareto model, with known cutoff or the fixed-$k$ Hill experiment.
+A general slowly varying factor need not be constant. The earlier
+singularity proof still rules out finite unconditional MSE for the
+unregularized plug-in mean, even when central error quantiles look small.
+
 (plugin-caveats)=
 ## Caveats
 
@@ -367,7 +436,8 @@ mean to recover by this method.
 - Resnick, *Heavy-Tail Phenomena*: regularly varying tails and stable limits
   @resnick2007heavy.
 - Taleb, *Statistical Consequences of Fat Tails*: motivation for estimating
-  functionals through fitted tail parameters [2020](https://arxiv.org/abs/2001.10488). See the [SCoFT reading guide](./incerto-scoft-intro.md).
+  functionals through fitted tail parameters, v4 Appendix E, pp. 189–191
+  [@taleb2025scoftv4]. See the [SCoFT reading guide](./incerto-scoft-intro.md).
 
 ## Backlinks
 

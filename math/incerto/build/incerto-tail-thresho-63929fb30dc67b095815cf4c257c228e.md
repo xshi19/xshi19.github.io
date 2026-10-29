@@ -224,6 +224,40 @@ Regenerate both figures with `uv run python demos/incerto/tail_estimation.py`.
 The runner also exports the Hill and mean-excess comparisons; its fixed
 sample sizes and fit-iteration caps bound the work.
 
+(threshold-chapter-nine)=
+## What is fixed in a sampling calculation
+
+The [exact Hill sampling law](incerto-hill-estimator.md#hill-sampling-law)
+uses a deterministic retained count $k<n$ in an iid continuous Pareto sample.
+The threshold is random, but the count is fixed. Alternatively, at a fixed
+nonrandom cutoff in an exact Pareto tail, conditional on a positive exceedance
+count $m$, the $m$ log-excesses have the Gamma-sum calculation. These are
+different experiments from choosing a cutoff after inspecting a stability plot.
+
+If $u$ is chosen to make an estimate look stable, the selection event can
+change its distribution. An exact-model inverse-gamma interval with that
+selected count is not automatically a calibrated confidence interval.
+The existing [power-law fitting workflow](incerto-power-law-fitting.md)
+explains jointly refitting the selection step in simulations.
+
+Ties introduce a separate issue. For $(1,2,2,4)$ and $k=2$, the
+order-statistic threshold is $2$, but only one observation strictly exceeds
+it. Hill includes a zero log-excess from the tie. A GPD fit to strict
+excesses has one observation, not two. Keep those counts distinct:
+
+$$
+\begin{gathered}
+k=2,\quad u=x_{n-k:n}=2,\\
+\sum_i\mathbf1_{\{x_i>u\}}=1.
+\end{gathered}
+$$
+
+SCoFT v4 §9.3, pp. 180–181, concerns what empirical tail frequencies can
+support [@taleb2025scoftv4]. Rank positions and strict survival are different
+objects, as the [hidden-tail note](incerto-hidden-tail.md#hidden-tail-empirical)
+explains. Numerical fit success, a population limit theorem, and a
+sample-based threshold decision provide different kinds of evidence.
+
 ## Caveats
 
 - Threshold selection is a modeling judgment, not a theorem.  Different

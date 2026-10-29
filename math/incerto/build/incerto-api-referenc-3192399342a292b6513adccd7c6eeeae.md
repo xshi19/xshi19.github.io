@@ -31,11 +31,12 @@ for implementations and use local `help()` for the installed version.
 
 | Module | Entry points and purpose |
 | --- | --- |
+| `xmath.incerto.extremes` | [`pareto_hidden_moment`](incerto-api-reference.md#api-pareto-hidden-moment), [`expected_pareto_hidden_fraction`](incerto-api-reference.md#api-expected-pareto-hidden-fraction), [`maximum_missing_mass`](incerto-api-reference.md#api-maximum-missing-mass), [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling), [`gaussian_maximum_norming`](incerto-api-reference.md#api-gaussian-maximum-norming), [`gaussian_maximum_cdf`](incerto-api-reference.md#api-gaussian-maximum-cdf), [`expected_gaussian_hidden_mean`](incerto-api-reference.md#api-expected-gaussian-hidden-mean); [chapter 9 maxima and hidden tails](incerto-scoft-ch9.md) |
 | `xmath.incerto.concentration` | [`kappa_from_mads`](incerto-api-reference.md#api-kappa-from-mads), [`stable_kappa`](incerto-api-reference.md#api-stable-kappa), [`gaussian_sum_mad`](incerto-api-reference.md#api-gaussian-sum-mad), [`gamma_sum_mad`](incerto-api-reference.md#api-gamma-sum-mad), [`student_sum_mad`](incerto-api-reference.md#api-student-sum-mad), [`estimate_sum_mad`](incerto-api-reference.md#api-estimate-sum-mad), [`lognormal_sum_mad`](incerto-api-reference.md#api-lognormal-sum-mad), [`normal_location_mixture_sum_mad`](incerto-api-reference.md#api-normal-location-mixture-sum-mad), [`gaussian_equivalent_n`](incerto-api-reference.md#api-gaussian-equivalent-n); [finite-sample concentration](incerto-kappa.md) and [sample sufficiency](incerto-moment-estimation.md#moment-estimation-sufficiency) |
 | `xmath.incerto.gas_speeds` | [`chi_speed`](incerto-api-reference.md#api-chi-speed), [`sample_chi_speed`](incerto-api-reference.md#api-sample-chi-speed), [`fit_speed_models`](incerto-api-reference.md#api-fit-speed-models), [`speed_fit_table`](incerto-api-reference.md#api-speed-fit-table), [`speed_qq`](incerto-api-reference.md#api-speed-qq), [`squared_speed_ks`](incerto-api-reference.md#api-squared-speed-ks), [`speed_fit_figure`](incerto-api-reference.md#api-speed-fit-figure); [Rayleigh chamber speeds](incerto-rayleigh-speed.md) and fitted comparisons |
-| `xmath.incerto.datasets` | [`load_amazon_bookrank`](incerto-api-reference.md#api-load-amazon-bookrank), [`load_nyc_dog_name_frequencies`](incerto-api-reference.md#api-load-nyc-dog-name-frequencies), [`load_sp500_prices`](incerto-api-reference.md#api-load-sp500-prices); explicit local-cache and refresh helpers |
+| `xmath.incerto.datasets` | [`load_layoffs`](incerto-api-reference.md#api-load-layoffs), [`clean_layoffs`](incerto-api-reference.md#api-clean-layoffs), [`workforce_log_loss`](incerto-api-reference.md#api-workforce-log-loss); [`load_amazon_bookrank`](incerto-api-reference.md#api-load-amazon-bookrank), [`load_nyc_dog_name_frequencies`](incerto-api-reference.md#api-load-nyc-dog-name-frequencies), [`load_sp500_prices`](incerto-api-reference.md#api-load-sp500-prices); explicit local-cache and refresh helpers |
 | `xmath.incerto.distributions` | [`pareto_type1`](incerto-api-reference.md#api-pareto-type1), [`double_pareto`](incerto-api-reference.md#api-double-pareto), [`hypsecant2`](incerto-api-reference.md#api-hypsecant2), [`simple_normal_mixture`](incerto-api-reference.md#api-simple-normal-mixture), [`univariate_variance_gamma`](incerto-api-reference.md#api-univariate-variance-gamma), [`generalized_pareto`](incerto-api-reference.md#api-generalized-pareto), [`generalized_extreme_value`](incerto-api-reference.md#api-generalized-extreme-value), [`frechet`](incerto-api-reference.md#api-frechet); SciPy-style distribution objects |
-| `xmath.incerto.estimators` | [`hill_estimator`](incerto-api-reference.md#api-hill-estimator) (extreme-value index), [`hill_alpha_estimator`](incerto-api-reference.md#api-hill-alpha-estimator) (reciprocal exponent), [`hill_stability`](incerto-api-reference.md#api-hill-stability), [`pareto_mean_plugin`](incerto-api-reference.md#api-pareto-mean-plugin), [`mean_excess`](incerto-api-reference.md#api-mean-excess), [`running_mean`](incerto-api-reference.md#api-running-mean), [`max_to_sum_ratio`](incerto-api-reference.md#api-max-to-sum-ratio), [`max_to_sum_path`](incerto-api-reference.md#api-max-to-sum-path), [`gpd_threshold_fit`](incerto-api-reference.md#api-gpd-threshold-fit) |
+| `xmath.incerto.estimators` | [`hill_stability_bootstrap`](incerto-api-reference.md#api-hill-stability-bootstrap); [`hill_estimator`](incerto-api-reference.md#api-hill-estimator) (extreme-value index), [`hill_alpha_estimator`](incerto-api-reference.md#api-hill-alpha-estimator) (reciprocal exponent), [`hill_stability`](incerto-api-reference.md#api-hill-stability), [`pareto_mean_plugin`](incerto-api-reference.md#api-pareto-mean-plugin), [`mean_excess`](incerto-api-reference.md#api-mean-excess), [`running_mean`](incerto-api-reference.md#api-running-mean), [`max_to_sum_ratio`](incerto-api-reference.md#api-max-to-sum-ratio), [`max_to_sum_path`](incerto-api-reference.md#api-max-to-sum-path), [`gpd_threshold_fit`](incerto-api-reference.md#api-gpd-threshold-fit) |
 | `xmath.incerto.stats` | Gaussian-calibrated [`dispersion_ratios`](incerto-api-reference.md#api-dispersion-ratios), [`mean_absolute_deviation`](incerto-api-reference.md#api-mean-absolute-deviation), [`median_absolute_deviation`](incerto-api-reference.md#api-median-absolute-deviation); normal and Student-t shoulder boundaries; [`empirical_survival_function`](incerto-api-reference.md#api-empirical-survival-function) (strict exceedance with ties) and [`lognorm_params_from_mean_and_variance`](incerto-api-reference.md#api-lognorm-params-from-mean-and-variance) |
 | `xmath.incerto.tail_diagnostics` | [`regular_variation_ratio`](incerto-api-reference.md#api-regular-variation-ratio), [`iid_two_sum_tail`](incerto-api-reference.md#api-iid-two-sum-tail), [`subexponential_sum_ratio`](incerto-api-reference.md#api-subexponential-sum-ratio); numerical calculations with support and integration checks |
 | `xmath.incerto.tail_classes` | [`bounded_spike_summary`](incerto-api-reference.md#api-bounded-spike-summary) (population moments), [`log_survival_multiplier_ratio`](incerto-api-reference.md#api-log-survival-multiplier-ratio) (log-domain tail ratios); used by the [Prologue models](incerto-scoft-ch1.md) |
@@ -93,6 +94,83 @@ Module: `xmath.incerto.datasets`.
 #### [`DatasetNotAvailable`](incerto-api-reference.md#api-datasetnotavailable)
 
 Raised when a dataset is missing or a fetch cannot provide usable data.
+
+(api-layoffdata)=
+#### [`LayoffData`](incerto-api-reference.md#api-layoffdata)
+
+Company-date event arrays: `company`, `date`, `count`, and `fraction`, plus
+`input_rows` and `source`. Missing measurements are NaN; dates have day
+resolution. Counts and fractions are aligned by event, but may be missing
+independently.
+
+(api-clean-layoffs)=
+#### [`clean_layoffs`](incerto-api-reference.md#api-clean-layoffs)
+
+`clean_layoffs(rows, *, source="")`
+
+Accept an iterable of mappings with `company`, `date`, and either raw
+`total_laid_off`/`percentage_laid_off` or cleaned `n`/`frac` fields. Fractions
+are already in [0,1]. Trim company names, parse ISO or month/day/year dates,
+and sort by company/date. Within a group, sum available counts and maximize
+available fractions; all-missing groups stay missing. No imputation, case
+folding, or duplicate removal. Invalid measurements/dates and empty inputs
+raise `ValueError`. Counts must be nonnegative exactly represented integers;
+fractions must lie in [0,1]. Blank, None, and NaN measurements remain missing.
+Returns [`LayoffData`](incerto-api-reference.md#api-layoffdata).
+
+```python
+from xmath.incerto.datasets import clean_layoffs
+
+rows = [dict(company=" A ", date="2020-03-11", n=10, frac=0.1),
+        dict(company="A", date="03/11/2020", n=20, frac=0.2)]
+data = clean_layoffs(rows)
+print(f"Rows / events: {data.input_rows} {data.count.size}")
+print(f"Count / fraction: {data.count[0]:.0f} {data.fraction[0]:.2f}")
+```
+
+**Output**
+
+```text
+Rows / events: 2 1
+Count / fraction: 30 0.20
+```
+
+(api-load-layoffs)=
+#### [`load_layoffs`](incerto-api-reference.md#api-load-layoffs)
+
+`load_layoffs(path=None, *, data_dir=None)`
+
+Read a local CSV and apply
+[`clean_layoffs`](incerto-api-reference.md#api-clean-layoffs).
+An explicit `path` wins; otherwise read `cache/layoffs/layoffs.csv` beneath
+[`data_root`](incerto-api-reference.md#api-data-root). No downloads or writes.
+Missing files raise
+[`DatasetNotAvailable`](incerto-api-reference.md#api-datasetnotavailable).
+See the [layoffs example](incerto-layoffs-tails.md) for visible code and
+recorded output; its data-dependent snippet is skipped when data are absent.
+
+(api-workforce-log-loss)=
+#### [`workforce_log_loss`](incerto-api-reference.md#api-workforce-log-loss)
+
+`workforce_log_loss(fractions)`
+
+Return the float vector `-log1p(-p)` for real finite fractions in [0,1).
+Zero maps to zero; missing, nonfinite, out-of-range, complex or non-vector
+inputs raise `ValueError`. Full-workforce cuts (`p=1`) must be separated by
+the caller. No clipping, imputation, or automatic removal.
+
+```python
+from xmath.incerto.datasets import workforce_log_loss
+
+values = workforce_log_loss([0, 0.5, 0.9])
+print("Log loss: [" + ", ".join(f"{v:.3f}" for v in values) + "]")
+```
+
+**Output**
+
+```text
+Log loss: [0.000, 0.693, 2.303]
+```
 
 (api-priceseries)=
 #### [`PriceSeries`](incerto-api-reference.md#api-priceseries)
@@ -449,6 +527,24 @@ Module: `xmath.incerto.estimators`.
 
 `hill_estimator(x, k)`
 
+Requires a one-dimensional sample of at least two finite positive float64
+values and an integer $1\le k<n$. Exact ties contribute zero adjacent
+log spacing; identical largest $k+1$ observations give exactly zero.
+Nearby distinct floats use `log1p`, and widely separated values use log
+differences to avoid overflowing their ratio. No positive spacing is
+deliberately clamped to zero.
+
+In `tests/test_incerto_extremes.py`, `test_hill_ties_and_rescaling` checks
+four scales from `1e-200` through `1e200` at relative tolerance `1e-13`.
+`test_hill_near_ties_and_full_float_range` compares adjacent floats near
+1 and `1e200` with 70-digit Decimal calculations, but its `pytest.approx`
+absolute tolerance of `1e-12` dominates the requested relative tolerance
+`1e-14` for those tiny results. It does not establish relative accuracy
+there. Its separate subnormal-to-maximum-float case checks finiteness and
+positivity only. The tested rescaling tolerances are not uniform relative-error
+bounds for arbitrary samples, subnormal gaps, or long cumulative sums.
+Input rounding can erase distinctions before the estimator receives them.
+
 ```python
 from xmath.incerto.estimators import hill_estimator
 
@@ -466,6 +562,11 @@ xi: 1.04
 #### [`hill_alpha_estimator`](incerto-api-reference.md#api-hill-alpha-estimator)
 
 `hill_alpha_estimator(x, k)`
+
+Uses the same validation and spacing calculation as `hill_estimator`.
+Zero spacing returns `inf`; a positive finite `xi` has a finite reciprocal
+only when that reciprocal is representable. No separate relative-accuracy
+guarantee is made for reciprocals near overflow.
 
 ```python
 from xmath.incerto.estimators import hill_alpha_estimator
@@ -510,6 +611,12 @@ The cutoff is known; statistical calibration assumes an exact iid Pareto model.
 
 `hill_stability(x, k_values=None, *, num=100)`
 
+Uses cumulative sums of the same nonnegative spacings as `hill_estimator`,
+with the same tie behavior and numerical limits. Scalar and vector estimates
+are compared at `1e-14` in the rescaling test above and at `1e-12` in
+`tests/test_incerto_numerical_reliability.py::test_hill_scalar_vector_consistency`;
+their different summation orders need not give bit-identical values.
+
 ```python
 from xmath.incerto.estimators import hill_stability
 
@@ -526,6 +633,43 @@ xi: [0.6931, 1.04]
 alpha: [1.443, 0.9618]
 ```
 
+
+(api-hill-stability-bootstrap)=
+#### [`hill_stability_bootstrap`](incerto-api-reference.md#api-hill-stability-bootstrap)
+
+`hill_stability_bootstrap(x, k_values, *, replicates=1000, confidence=0.95, random_state=None)`
+
+Resample the whole positive finite vector with replacement. Keep each integer
+`k` fixed; share each replicate across the curve. Return the
+[`hill_stability`](incerto-api-reference.md#api-hill-stability) fields plus
+`lower`, `upper`, and `finite_replicates` arrays. The `lower` and `upper`
+percentiles are **conditional on a finite estimate** at each `k`, using linear
+interpolation. Infinite estimates from zero log spacings are omitted;
+`finite_replicates` counts the retained estimates. Excluding more than 5% of
+replicates at any `k` emits a `RuntimeWarning` with the affected `k` values and
+excluded counts. No finite replicates for any `k` raises `ValueError`.
+At least two replicates and a confidence level strictly between 0 and 1 are
+required. Integer seeds select NumPy's default PCG64 generator.
+
+Intervals are pointwise resampling summaries, not simultaneous confidence
+bands or an assurance of extreme-value bootstrap coverage. They omit
+threshold choice, model error, and dependence. See the
+[layoffs example](incerto-layoffs-tails.md) for the empirical use.
+
+```python
+from xmath.incerto.estimators import hill_stability_bootstrap
+
+result = hill_stability_bootstrap([1, 2, 4, 8, 16], [2], replicates=40, random_state=7)
+print(f"Hill alpha: {result['alpha'][0]:.3f}")
+print(f"Finite replicates: {result['finite_replicates'][0]}")
+```
+
+**Output**
+
+```text
+Hill alpha: 0.962
+Finite replicates: 39
+```
 
 (api-running-mean)=
 #### [`running_mean`](incerto-api-reference.md#api-running-mean)
@@ -2503,4 +2647,269 @@ print(f"Two-sided p: {lr['p_value']:.3f}")
 ```text
 R=5.000; normalized R=1.400
 Two-sided p: 0.161
+```
+
+
+## Maxima and hidden tails
+
+These helpers implement the exact models in [chapter 9](incerto-scoft-ch9.md).
+Counts are integers from 1 through $10^9$ (normal norming requires at least
+3); booleans and fractional counts raise `ValueError`. Parameters are
+scalars unless an array argument is explicitly stated. No helper fits a
+threshold or certifies an empirical tail law.
+
+(api-extremes-precision)=
+### Numerical domains and tested precision
+
+“Exact” describes a population formula or distribution, not exact arithmetic.
+The implementation uses float64 and SciPy. Domain checks reject invalid
+numeric inputs as documented below; successful validation does not promise
+relative accuracy for every finite floating-point parameter.
+
+- Pareto hidden moments are mathematically finite for `p < alpha`;
+  otherwise they return `inf`. On the finite-moment branch, detected numerical
+  overflow raises `FloatingPointError`, and underflow may return zero.
+  Mathematical hidden fractions lie between zero and one for `p < alpha`;
+  floating-point evaluation can return values above one near `p = alpha`.
+  The undefined fraction for `p >= alpha` returns `nan`.
+- Normal norming has positive finite scale and finite center on the allowed
+  count range; normal maximum CDF values are finite in $[0,1]$, with values
+  0 and 1 at the infinite endpoints. Very small probabilities may round to
+  zero and probabilities near one may round to one.
+- The frozen Beta law has bounded support. The inverse-gamma constructor
+  checks that its scale is positive and finite, but its mean exists only
+  for `count > 1` and variance only for `count > 2`; its upper-end quantile
+  is infinite. Subsequent SciPy method calls can overflow or return `nan`
+  for their own arguments even after construction succeeds.
+- Gaussian hidden-mean quadrature returns a finite value on success or
+  raises `RuntimeError` when its convergence checks fail. `abs_error` is an
+  estimate. The requested absolute/relative tolerances are `1e-14` and
+  `2e-9`; these are stopping criteria, not rigorous error bounds.
+
+The numerical comparisons below live in `tests/test_incerto_extremes.py`.
+Each relative tolerance applies only to that test's parameter grid and
+reference calculation; `pytest.approx` comparisons also allow its default
+absolute tolerance `1e-12`. Agreement with numerical quadrature is not
+certification.
+
+| Test name | Checked comparison |
+| --- | --- |
+| `test_hidden_moment_against_direct_density_integral` | Four moderate parameter triples and a rescaling; relative tolerance `1e-8` |
+| `test_expected_fraction_against_maximum_quantile_integral` | Counts 1, 2, 10, 1000 and four exponent/order pairs; `2e-8` |
+| `test_exponent_cdf_against_gamma_pivot` | Counts 1, 2, 5, 30; exponents 0.8, 1.5, 3; CDF comparison `1e-12` |
+| `test_normal_norming_and_exact_cdf` | Counts 3, 10, 1000, $10^9$; Mills survival/density identities `2e-13` |
+| `test_gaussian_hidden_mean_against_density_integral` | Counts 1, 2, 10, 100, 10000; `1e-8` against a different integral |
+
+The same file tests invalid counts/parameters, exact missing-mass identities,
+specified overflow/underflow outcomes, and selected huge-parameter power
+cancellations. Those regressions do not establish a global relative-error
+bound: extreme exponents, nearly cancelling powers, large-count beta
+evaluations, and subnormal results remain outside such a guarantee.
+The seven helpers accept no user callbacks. Callbacks passed to methods of
+returned SciPy distributions, such as `law.expect(func)`, and their numerical
+integration errors are not validated or covered by these tests.
+
+(api-pareto-hidden-moment)=
+### `pareto_hidden_moment(threshold, alpha, *, x_m=1, p=1)`
+
+Exact $\mathbb E[X^p\mathbf1_{\{X>t\}}]$ for Pareto Type I. The threshold
+$t$ may be an array; every entry must be finite and at least the positive
+finite cutoff `x_m`. The exponent is positive finite and `p` is finite
+and nonnegative. Returns `inf` for `p >= alpha`. Detected overflow on the
+finite-moment branch raises `FloatingPointError`; underflow may return zero.
+Scalar input produces a Python float. See the
+[derivation](incerto-hidden-tail.md#hidden-tail-pareto).
+
+```python
+from xmath.incerto.extremes import pareto_hidden_moment
+
+for p in (0, 1, 2):
+    value = pareto_hidden_moment(4, 1.5, p=p)
+    print(f"p={p}: tail contribution={value:.4g}")
+```
+
+**Output**
+
+```text
+p=0: tail contribution=0.125
+p=1: tail contribution=1.5
+p=2: tail contribution=inf
+```
+
+Invalid thresholds and unrepresentable finite results raise distinct errors:
+
+```python
+from xmath.incerto.extremes import pareto_hidden_moment
+
+for name, call in (
+    ("below cutoff", lambda: pareto_hidden_moment(.5, 2)),
+    ("overflow", lambda: pareto_hidden_moment(1e200, 4, x_m=1e200, p=2)),
+):
+    try:
+        call()
+    except (ValueError, FloatingPointError) as error:
+        print(f"{name}: {type(error).__name__}")
+```
+
+**Output**
+
+```text
+below cutoff: ValueError
+overflow: FloatingPointError
+```
+
+(api-expected-pareto-hidden-fraction)=
+### `expected_pareto_hidden_fraction(n, alpha, *, p=1)`
+
+Expected fraction of the population moment beyond the maximum of `n` iid
+exact Pareto draws. Positive finite `alpha`, finite nonnegative `p`.
+The cutoff cancels. Returns `nan` for `p >= alpha`, where a fraction of
+the infinite moment is not defined. For `p=0`, returns exactly `1/(n+1)`
+up to floating-point rounding. It is not an estimate of sample-mean bias.
+
+```python
+from xmath.incerto.extremes import expected_pareto_hidden_fraction
+
+for p in (0, 1, 2):
+    print(f"p={p}: fraction={expected_pareto_hidden_fraction(1000, 1.5, p=p):.4g}")
+```
+
+**Output**
+
+```text
+p=0: fraction=0.000999
+p=1: fraction=0.08928
+p=2: fraction=nan
+```
+
+(api-maximum-missing-mass)=
+### `maximum_missing_mass(n)`
+
+Frozen SciPy Beta(1,n) law of $\bar F(M_n)$ under iid sampling from a
+continuous CDF. Methods include `cdf`, `sf`, `ppf`, `mean`, and `rvs`.
+The law concerns probabilities, not missing moment contributions. Atoms,
+dependence and substituting a fitted CDF need separate analysis.
+
+```python
+from xmath.incerto.extremes import maximum_missing_mass
+
+law = maximum_missing_mass(20)
+for q in (0, .1, 1):
+    print(f"q={q:g}: cdf={law.cdf(q):.4g}, sf={law.sf(q):.4g}")
+```
+
+**Output**
+
+```text
+q=0: cdf=0, sf=1
+q=0.1: cdf=0.8784, sf=0.1216
+q=1: cdf=1, sf=0
+```
+
+(api-pareto-exponent-sampling)=
+### `pareto_exponent_sampling(alpha, count, *, debiased=False)`
+
+Frozen inverse-gamma sampling law for a true exponent `alpha > 0` and
+`count` log-excesses. Known fixed cutoff: `count` is sample size.
+Fixed-$k$ Hill in an iid exact Pareto sample: `count=k`, with $k<n$.
+The caller must enforce this sampling interpretation. Original estimates
+have shape `count`, scale `count*alpha`; debiasing retains the shape and
+uses `(count-1)*alpha`, requiring `count>=2`. Nonrepresentable scale
+raises `FloatingPointError`. General Pareto-type tails and selected
+thresholds are outside the exact law. [Proof](incerto-hill-estimator.md#hill-sampling-law).
+
+```python
+from xmath.incerto.extremes import pareto_exponent_sampling
+
+for corrected in (False, True):
+    law = pareto_exponent_sampling(1.5, 10, debiased=corrected)
+    print(f"corrected={corrected}: mean={law.mean():.4g}, P(estimate<=1)={law.cdf(1):.4g}")
+```
+
+**Output**
+
+```text
+corrected=False: mean=1.667, P(estimate<=1)=0.06985
+corrected=True: mean=1.5, P(estimate<=1)=0.1353
+```
+
+(api-gaussian-maximum-norming)=
+### `gaussian_maximum_norming(n, *, method="mills")`
+
+Returns Python floats `(a_n, b_n)` for the standard-normal maximum
+normalized as $(M_n-b_n)/a_n$. Requires integer $n\ge3$.
+`mills` uses the exact normal quantile at survival $1/n$ and the
+survival/density ratio there. `asymptotic` uses the explicit square-root
+logarithmic scale and log-log centering correction. Other methods raise
+`ValueError`. [Both choices and the proof](incerto-generalized-extreme-value.md#gev-gaussian-maxima).
+
+```python
+from xmath.incerto.extremes import gaussian_maximum_norming
+
+for n in (2, 100):
+    try:
+        a, b = gaussian_maximum_norming(n)
+        print(f"n={n}: scale={a:.4g}, center={b:.4g}")
+    except ValueError as error:
+        print(f"n={n}: {error}")
+```
+
+**Output**
+
+```text
+n=2: count must lie between 3 and 1000000000
+n=100: scale=0.3752, center=2.326
+```
+
+(api-gaussian-maximum-cdf)=
+### `gaussian_maximum_cdf(x, n)`
+
+Exact CDF $\Phi(x)^n$ for iid standard-normal draws, evaluated through
+log-CDFs. Scalar or array `x` can include infinities; `nan` raises
+`ValueError`. Returns a float or matching NumPy array. Underflow returns
+zero. It evaluates the raw maximum; apply norming constants separately.
+
+```python
+from xmath.incerto.extremes import gaussian_maximum_cdf
+
+for x in (-float("inf"), 0, 3, float("inf"), float("nan")):
+    try:
+        print(f"x={x:g}: cdf={gaussian_maximum_cdf(x, 100):.4g}")
+    except ValueError as error:
+        print(f"x={x:g}: {error}")
+```
+
+**Output**
+
+```text
+x=-inf: cdf=0
+x=0: cdf=7.889e-31
+x=3: cdf=0.8736
+x=inf: cdf=1
+x=nan: x must not contain nan
+```
+
+(api-expected-gaussian-hidden-mean)=
+### `expected_gaussian_hidden_mean(n)`
+
+Numerical integration of the exact $\mathbb E[\phi(M_n)]$ normal-model
+formula, in standard-deviation units. Returns `value` and `abs_error`;
+the latter is QUADPACK's estimate, not a certified error bound. All maxima,
+including negative ones, enter the integral. An exponential-variable
+transformation avoids integrating a narrow density at large `n`.
+Nonconvergence raises `RuntimeError`. No simulation or Gumbel approximation.
+
+```python
+from xmath.incerto.extremes import expected_gaussian_hidden_mean
+
+result = expected_gaussian_hidden_mean(1)
+for name, value in result.items():
+    print(f"{name}: {value:.4g}")
+```
+
+**Output**
+
+```text
+value: 0.2821
+abs_error: 3.768e-10
 ```

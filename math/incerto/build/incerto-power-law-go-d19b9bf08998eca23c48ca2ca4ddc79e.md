@@ -27,7 +27,9 @@ symbol $\alpha$ for this $a$. All package `alpha` values below follow the
 survival convention.
 
 :::{note} Worked example
-A worked real-data example will be added later. All examples here are synthetic.
+The [tech layoffs example](incerto-layoffs-tails.md) applies these methods
+to event counts and workforce log losses. The examples on this theory page
+remain synthetic.
 :::
 
 (csn-gof-bootstrap)=

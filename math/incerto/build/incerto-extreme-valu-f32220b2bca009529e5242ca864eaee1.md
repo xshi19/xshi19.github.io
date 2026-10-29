@@ -21,8 +21,10 @@ standardized generalized extreme-value (GEV)
 CDF,
 
 $$
-H_\xi(z)=\exp\left[-(1+\xi z)^{-1/\xi}\right],
-\qquad 1+\xi z>0,\quad \xi\ne0,
+\begin{gathered}
+H_\xi(z)=\exp\left[-(1+\xi z)^{-1/\xi}\right],\\
+1+\xi z>0,\qquad\xi\ne0,
+\end{gathered}
 $$
 
 with the Gumbel boundary case
@@ -187,11 +189,12 @@ For a realized positive right-tail sample
 $x_{1:n}\le \cdots \le x_{n:n}$, the Hill estimate is
 
 $$
-\widehat\xi_{k,n}^{H}
-=
-\frac1k\sum_{j=1}^{k}
-\log\left(\frac{x_{n-j+1:n}}{x_{n-k:n}}\right),
-\qquad 1\le k<n.
+\begin{gathered}
+\widehat\xi_{k,n}^{H}\\
+=\frac1k\sum_{j=1}^{k}
+\log\left(\frac{x_{n-j+1:n}}{x_{n-k:n}}\right),\\
+1\le k<n.
+\end{gathered}
 $$
 
 The value of $k$ selects the number of upper order statistics.  An EVI estimate
@@ -229,6 +232,32 @@ sample fits may disagree and depend on the chosen threshold.
 Positive $\xi$ leaves a power tail, $\xi=0$ gives exponential GPD
 excesses, and negative $\xi$ ends at a finite endpoint. Agreement between
 finite-sample estimates would be a diagnostic, not proof of the tail model.
+
+(evi-chapter-nine)=
+## Three parent models, one shape convention
+
+Chapter 9's [Gaussian normalization](incerto-generalized-extreme-value.md#gev-gaussian-maxima)
+and [normal excess limit](incerto-pickands-balkema-de-haan.md#pbdh-chapter-nine)
+both give $\xi=0$. Exact Pareto gives $\xi=1/\alpha$ in both views.
+For a uniform parent on $[0,b]$, $n(b-M_n)/b$ tends to an exponential
+law with rate one: for $t\ge0$, eventually
+
+$$
+\begin{aligned}
+&P\left(\frac{n(b-M_n)}b>t\right)\\
+&\quad=(1-t/n)^n\longrightarrow e^{-t}.
+\end{aligned}
+$$
+
+Equivalently, setting $a_n=b/n$ and $b_n=b-b/n$ gives the GEV limit
+$H_{-1}(z)=e^{z-1}$ for $z\le1$, extended by one above. Its threshold
+excesses are exactly GPD with $\xi=-1$. The three calculations agree
+without treating every fitted positive Hill value as evidence for $\xi>0$.
+
+The [inverse-gamma sampling law](incerto-hill-estimator.md#hill-sampling-law)
+is specific to exact Pareto observations and fixed retained counts. It is
+not a general sampling law for an EVI estimator. SCoFT v4 §§9.1–9.1.3,
+pp. 171–177, supplies the chapter context [@taleb2025scoftv4].
 
 ## Caveats
 

@@ -42,12 +42,10 @@ It is the $\xi>0$ member of the
 $\xi=1/\alpha$, location $\mu=1$, and scale $\sigma=\xi$,
 
 $$
-H_{\xi,1,\xi}(y)
-=
-\exp\left[-y^{-1/\xi}\right]
-=
-\Phi_\alpha(y),
-\qquad y>0.
+\begin{gathered}
+H_{\xi,1,\xi}(y)=\exp[-y^{-1/\xi}]\\
+=\Phi_\alpha(y),\qquad y>0.
+\end{gathered}
 $$
 
 The phrase Frechet-type refers to distributions whose normalized maxima
@@ -88,21 +86,18 @@ For [Pareto Type I](./incerto-pareto.md) with lower cutoff $x_m$ and exponent $\
 take $a_n=x_m n^{1/\alpha}$.  Then for fixed $y>0$ and all large enough $n$,
 
 $$
-\mathbb P(M_n/a_n\le y)
-=
-\left(1-\frac{1}{ny^\alpha}\right)^n
-\to
-\exp(-y^{-\alpha})
-=
-\Phi_\alpha(y).
+\begin{aligned}
+&P(M_n/a_n\le y)\\
+&\quad=\left(1-\frac{1}{ny^\alpha}\right)^n\\
+&\quad\longrightarrow\exp(-y^{-\alpha})=\Phi_\alpha(y).
+\end{aligned}
 $$
 
-The same shape parameter is therefore seen in two coordinates:
+The Pareto-type survival exponent $\alpha$ and the extreme-value index
+$\xi$ therefore satisfy:
 
 $$
-\alpha \quad \text{for the Pareto-type survival exponent},
-\qquad
-\xi=\frac1\alpha \quad \text{for the extreme-value index}.
+\xi=\frac1\alpha>0.
 $$
 
 ## Tail behavior
@@ -115,9 +110,10 @@ $$
 =
 1-\exp(-y^{-\alpha})
 \sim
-y^{-\alpha},
-\qquad y\to\infty.
+y^{-\alpha}
 $$
+
+as $y\to\infty$.
 
 Thus the Frechet survival tail is regularly varying with index $-\alpha$.
 This is why the $\xi>0$ GEV regime is also the Pareto-type regime: the
@@ -180,6 +176,48 @@ n=64: cdf(1)=0.365, limit=0.3679
 ```
 
 Regenerate both figures with `uv run python demos/incerto/distribution_cards.py`.
+
+(frechet-regular-variation)=
+## A power tail need not have a constant multiplier
+
+SCoFT v4 §9.1.1, pp. 173–174, motivates the power-tail/Fréchet link
+[@taleb2025scoftv4]. We prove its sufficient direction without replacing
+a slowly varying factor by a constant. Assume iid draws with
+$\bar F(x)=x^{-\alpha}L(x)$ eventually, where $\alpha>0$ and $L$ is
+positive and slowly varying. Choose $a_n\to\infty$ such that
+$n\bar F(a_n)\to1$. For an eventually continuous, strictly decreasing
+survival, the tail quantile solving $\bar F(a_n)=1/n$ is one such choice.
+For fixed $y>0$, regular variation gives
+
+$$
+\begin{aligned}
+&n\bar F(a_ny)\\
+&\quad=n\bar F(a_n)\frac{\bar F(a_ny)}{\bar F(a_n)}\\
+&\longrightarrow y^{-\alpha}.
+\end{aligned}
+$$
+
+Taking $n\log(1-\bar F(a_ny))$ proves the Fréchet maximum limit.
+This proves the stated direction with an admissible normalization;
+the general converse remains a cited domain-of-attraction result.
+The exact Pareto scale $x_mn^{1/\alpha}$ does not apply to every $L$.
+
+A separate fixed-block fact is worth distinguishing. For fixed integer
+$n$, as $x\to\infty$,
+
+$$
+\begin{aligned}
+P(M_n>x)&=1-(1-\bar F(x))^n\\
+&\sim n\bar F(x).
+\end{aligned}
+$$
+
+The binomial expansion proves this equivalence, so a fixed-block maximum
+preserves the regularly varying tail exponent. This limit sends the
+threshold to infinity with $n$ fixed; the Fréchet limit sends $n$ to
+infinity after rescaling. Neither implies an exact finite-block Fréchet law.
+The [hidden-tail calculation](incerto-hidden-tail.md#hidden-tail-pareto)
+uses the exact Pareto maximum and therefore keeps finite-sample corrections.
 
 ## Caveats
 

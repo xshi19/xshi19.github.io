@@ -21,6 +21,8 @@ across fat-tail arguments.
 - [Asymmetric payoffs and exposure](./incerto-asymmetric-payoffs.md)
 - [Size and decentralized exposure](./incerto-decentralization.md)
 
+- [Exact Pareto exponent sampling law](./incerto-hill-estimator.md#hill-sampling-law)
+
 Return to the [Incerto reading paths](./incerto/index.md), or browse the
 [theorem](./incerto-theorem-concepts.md), [method](./incerto-method-concepts.md),
 and [distribution](./incerto-distribution-concepts.md) indexes.

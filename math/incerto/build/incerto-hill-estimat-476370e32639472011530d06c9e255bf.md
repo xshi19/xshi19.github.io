@@ -193,6 +193,158 @@ k=5000: xi=0.58, truth=0.5882
 Regenerate all panels with `uv run python demos/incerto/tail_estimation.py`.
 The same mixture sample supplies the coordinated threshold diagnostics.
 
+(hill-sampling-law)=
+## Exact sample-exponent distribution
+
+Appendix E.1, p. 191, of SCoFT v4 motivates finite-sample calibration
+[@taleb2025scoftv4]. We prove the exact law under a continuous iid Pareto
+model. Regular variation alone does not give this law at a finite threshold.
+
+First suppose the lower cutoff $x_m$ is known. The log-excesses
+$Y_i=\log(X_i/x_m)$ are independent exponentials with rate $\alpha$.
+With $m$ observations, let $T=\sum_{i=1}^mY_i$. Multiplication of their
+Laplace transforms, $(\alpha/(\alpha+s))^m$, identifies the law
+
+$$
+\begin{gathered}
+T\sim\operatorname{Gamma}(m,\text{rate }\alpha),\\
+\widehat\xi=T/m,\qquad\widehat\alpha=m/T.
+\end{gathered}
+$$
+
+For Hill, take a deterministic $k<n$, put $m=k$, and set
+$Y_j=\log(X_{n-j+1:n}/X_{n-k:n})$ for the retained observations. These
+ordered log-excesses are not independent. Conditional on the threshold,
+the *unordered* upper observations have the law of $k$ iid draws above
+it. Exponential memorylessness gives iid exponential excesses after
+subtracting the log threshold, with a law independent of that threshold.
+Their sum therefore has the same Gamma law. This conditional-order-statistic
+argument follows by factoring the iid joint density on either side of
+the threshold; sorting adds the constant $k!$ and leaves a symmetric sum
+unchanged. A data-selected $k$ need not retain this calibration.
+
+Changing variables $T=m/a$ proves the inverse-gamma density
+
+$$
+\begin{gathered}
+f_{\widehat\alpha}(a)\\
+=\frac{(m\alpha)^m}{\Gamma(m)}
+ a^{-m-1}e^{-m\alpha/a},\\
+a>0.
+\end{gathered}
+$$
+
+Integrating $T^{-q}$ against the Gamma density yields
+
+$$
+\begin{gathered}
+\mathbb E[\widehat\alpha^q]
+=(m\alpha)^q\frac{\Gamma(m-q)}{\Gamma(m)},\\
+q<m.
+\end{gathered}
+$$
+
+For positive orders $q\ge m$, the integral diverges at $T=0$. Hence
+
+$$
+\begin{gathered}
+\mathbb E[\widehat\alpha]=\frac{m\alpha}{m-1},\quad m>1,\\
+\operatorname{Var}(\widehat\alpha)
+=\frac{m^2\alpha^2}{(m-1)^2(m-2)},\\
+m>2.
+\end{gathered}
+$$
+
+The corrected estimate $(m-1)\widehat\alpha/m$ is unbiased for $m>1$.
+Its inverse-gamma shape stays $m$; its scale becomes $(m-1)\alpha$.
+Debiasing does not increase the shape to $m+1$. The uncorrected estimate
+has infinite mean when $m=1$, and no finite variance when $m\le2$.
+In contrast, $\widehat\xi$ is unbiased with variance $1/(m\alpha^2)$.
+The usual exponential CLT and delta method give
+$\sqrt m(\widehat\alpha-\alpha)\Rightarrow\mathcal N(0,\alpha^2)$
+for fixed $\alpha>0$; the exact small-$m$ law remains asymmetric.
+
+Use [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling).
+
+```python
+from xmath.incerto.extremes import pareto_exponent_sampling
+
+for m in (1, 2, 10):
+    law = pareto_exponent_sampling(1.5, m)
+    print(f"m={m}: mean={law.mean():.4g}, variance={law.var():.4g}")
+law = pareto_exponent_sampling(1.5, 10, debiased=True)
+print(f"corrected m=10: mean={law.mean():.4g}, variance={law.var():.4g}")
+```
+
+**Output**
+
+```text
+m=1: mean=inf, variance=inf
+m=2: mean=3, variance=inf
+m=10: mean=1.667, variance=0.3472
+corrected m=10: mean=1.5, variance=0.2812
+```
+
+(hill-sampling-figure)=
+```{figure} ../assets/figures/incerto/hill-sampling-law.svg
+:alt: Exact inverse-gamma densities for exponent estimates at retained counts 5 and 30, followed by their sampling quantiles and means. Seeded empirical CDF errors compare independent Hill estimates to the exact law.
+
+True $\alpha=1.5$. Top: exact inverse-gamma densities for $m=5,30$;
+curves outside the shown exponent range remain part of the laws. Middle:
+median, 10th/90th sampling quantiles and biased mean across $m=3$ to $100$.
+Bottom: empirical CDF minus exact CDF for 4,000 independent Pareto samples
+of size 200 at each fixed $k=5,30$, PCG64 seeds 2026102905/2026102930.
+Every estimate is retained; the plotted exponent range is a viewport,
+not a truncation rule. The last panel is numerical evidence for the
+implementation, not a proof of the sampling law or a fitted-data test.
+```
+
+Regenerate with `uv run python demos/incerto/extreme_values.py`.
+An exponent interval comes from the Gamma pivot $\alpha T$, whose shape
+is $m$ and rate is one. Selecting a threshold by looking at the same data
+requires additional calibration; the exact fixed-$k$ law is not that calibration.
+The [plug-in discussion](incerto-plug-in-tail-estimation.md#plugin-exponent-truncation)
+separates debiasing, conditional selection and clipping.
+
+(hill-ties-arithmetic)=
+## Ties and nonnegative log spacings
+
+Write descending values as $d_1\ge\cdots\ge d_n>0$. Telescoping gives
+
+$$
+\begin{gathered}
+\widehat\xi_{k,n}\\
+=\frac1k\sum_{j=1}^k j\log(d_j/d_{j+1}).
+\end{gathered}
+$$
+
+Each summand is nonnegative. This identity gives a stable computation of
+the curve without subtracting two large sums of absolute logarithms.
+It does not repair rounded or discrete data into a continuous Pareto sample.
+
+Use [`hill_estimator`](incerto-api-reference.md#api-hill-estimator),
+[`hill_stability`](incerto-api-reference.md#api-hill-stability), and
+[`mean_excess`](incerto-api-reference.md#api-mean-excess).
+
+```python
+from xmath.incerto.estimators import hill_estimator, hill_stability, mean_excess
+
+x = [10.0]*20
+curve = hill_stability(x, [18])
+print(f"direct xi={hill_estimator(x, 18):.4g}")
+print(f"curve xi={curve['xi'][0]:.4g}, alpha={curve['alpha'][0]:.4g}")
+excess = mean_excess(x, [10])
+print(f"strict count={int(excess['exceedances'][0])}, mean excess={excess['mean_excess'][0]:.4g}")
+```
+
+**Output**
+
+```text
+direct xi=0
+curve xi=0, alpha=inf
+strict count=0, mean excess=nan
+```
+
 ## Failure modes
 
 - Hill is a right-tail estimator for strictly positive data: every realized

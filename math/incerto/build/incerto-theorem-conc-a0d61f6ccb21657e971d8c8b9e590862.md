@@ -18,6 +18,8 @@ asymptotics. Each note states its assumptions and defines its notation.
 - [Ruin and repeated exposure](./incerto-ruin.md)
 - [Time averages and ensemble averages](./incerto-ergodicity.md)
 
+- [The tail beyond the sample maximum](./incerto-hidden-tail.md)
+
 Return to the [Incerto reading paths](./incerto/index.md), or browse the
 [theorem](./incerto-theorem-concepts.md), [method](./incerto-method-concepts.md),
 and [distribution](./incerto-distribution-concepts.md) indexes.

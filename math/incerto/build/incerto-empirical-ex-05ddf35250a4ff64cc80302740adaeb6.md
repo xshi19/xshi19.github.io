@@ -5,6 +5,7 @@ title: Empirical Examples
 Empirical example pages keep data illustrations small, reproducible, and linked
 back to the concept pages that carry the mathematical claims.
 
+- [Tech Layoffs — Counts and Workforce Losses](incerto-layoffs-tails.md)
 - [S&P 500 Tail Diagnostics](incerto-sp500-tail.md)
 - [Amazon Book Rank Tail Diagnostics](incerto-amazon-bookrank.md)
 - [NYC Dog-Name Frequency Tail Diagnostics](incerto-nyc-dog-name-tail.md)

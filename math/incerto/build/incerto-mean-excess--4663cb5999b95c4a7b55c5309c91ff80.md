@@ -74,31 +74,29 @@ $$
 For $u\ge x_m$ and $\alpha>1$,
 
 $$
-e(u)
-=
-\mathbb E[X-u\mid X>u]
-=
-\int_0^\infty \mathbb P(X-u>y\mid X>u)\,dy.
+\begin{gathered}
+e(u)=\mathbb E[X-u\mid X>u]\\
+=\int_0^\infty P(X-u>y\mid X>u)\,dy.
+\end{gathered}
 $$
 
 Taking the ratio $\bar F(u+y)/\bar F(u)$ for $y\ge0$ gives
 
 $$
-\mathbb P(X-u>y\mid X>u)
-=
-\left(1+\frac{y}{u}\right)^{-\alpha}.
+\begin{aligned}
+&\mathbb P(X-u>y\mid X>u)\\
+&\quad=\left(1+\frac{y}{u}\right)^{-\alpha}.
+\end{aligned}
 $$
 
 Therefore
 
 $$
-e(u)
-=
-\int_0^\infty \left(1+\frac{y}{u}\right)^{-\alpha}\,dy
-=
-u\int_1^\infty z^{-\alpha}\,dz
-=
-\frac{u}{\alpha-1}.
+\begin{aligned}
+e(u)&=\int_0^\infty\left(1+\frac yu\right)^{-\alpha}\,dy\\
+&=u\int_1^\infty z^{-\alpha}\,dz\\
+&=\frac{u}{\alpha-1}.
+\end{aligned}
 $$
 
 For a generalized Pareto distribution, the threshold-stability property gives
@@ -124,7 +122,10 @@ For observations $x_1,\ldots,x_n$, let $k(u)=\sum_i\mathbf1_{\{x_i>u\}}$.
 The empirical diagnostic is
 
 $$
-\widehat e_n(u)=\frac{\sum_{i:x_i>u}(x_i-u)}{k(u)},\qquad k(u)>0.
+\begin{gathered}
+\widehat e_n(u)=\frac{\sum_{i:x_i>u}(x_i-u)}{k(u)},\\
+k(u)>0.
+\end{gathered}
 $$
 
 For the fixed observations $(1,2,2,4)$ at $u=2$, only $4$ exceeds the
@@ -140,8 +141,10 @@ $x_F=\sup\{x:F(x)<1\}$ and $u<x_F$, conditioning on $X>u$ gives
 $0<X-u\le x_F-u$ almost surely. Taking conditional expectations proves
 
 $$
-0\le e(u)\le x_F-u,
-\qquad e(u)\longrightarrow0\quad\text{as }u\uparrow x_F.
+\begin{gathered}
+0\le e(u)\le x_F-u,\\
+e(u)\longrightarrow0\quad\text{as }u\uparrow x_F.
+\end{gathered}
 $$
 
 This bound does not imply monotonicity. For example, if
@@ -193,6 +196,30 @@ u=4: count=0, mean_excess=nan
 Regenerate the figure with `uv run python demos/incerto/tail_estimation.py`.
 The [threshold comparison](incerto-tail-threshold-selection.md#threshold-synthetic-figures)
 adds the shared mixture sample, whose body changes the population curve below $3$.
+
+(mean-excess-hidden-tail)=
+## From overshoot to an unconditional tail contribution
+
+For an integrable upper tail with $\bar F(u)>0$, conditioning proves
+
+$$
+\mathbb E[X\mathbf1_{\{X>u\}}]
+=\bar F(u)\{u+e(u)\}.
+$$
+
+The factor $\bar F(u)$ and the threshold term $u$ are both needed.
+For an exact Pareto parent with $\alpha>1$, the formula agrees with the
+[hidden mean above a sample maximum](incerto-hidden-tail.md#hidden-tail-pareto).
+For $\alpha\le1$, both the conditional mean excess and the hidden
+first moment are infinite at every finite admissible threshold, even
+though a nonempty finite exceedance sample yields a finite empirical mean excess.
+
+At the observed maximum, the empirical excess has no observations and
+is undefined. The existing runnable count example prints `nan` there;
+it does not supply evidence for a bounded population. The finite-endpoint
+bound and nonmonotone counterexample earlier on this page still apply.
+SCoFT v4 §§9.2–9.3, pp. 177–181, motivates this distinction
+[@taleb2025scoftv4].
 
 ## Caveats
 

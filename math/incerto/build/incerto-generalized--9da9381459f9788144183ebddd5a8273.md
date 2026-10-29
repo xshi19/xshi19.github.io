@@ -155,6 +155,110 @@ This compares an exact finite-block CDF with its limit; it is not a GEV fit
 or an assessment of sampling uncertainty. The standard Frechet limit has GEV
 parameters $(\xi,\mu,\sigma)=(5/9,1,5/9)$ on the normalized scale.
 
+(gev-gaussian-maxima)=
+## Gaussian maxima and normalization
+
+SCoFT v4 §9.1.2, pp. 174–176, compares exact normal maxima with their
+Gumbel limit [@taleb2025scoftv4]. We use the maxima CDF
+$\Lambda(z)=\exp(-e^{-z})$ throughout. For iid standard normals,
+independence and differentiation give the exact identities
+
+$$
+\begin{aligned}
+P(M_n\le x)&=\Phi(x)^n,\\
+f_{M_n}(x)&=n\phi(x)\Phi(x)^{n-1}.
+\end{aligned}
+$$
+
+Here $\Phi$ and $\phi$ are the standard normal CDF and density. Choose
+
+$$
+\begin{gathered}
+b_n=\Phi^{-1}(1-1/n),\\
+a_n=\frac{1-\Phi(b_n)}{\phi(b_n)}.
+\end{gathered}
+$$
+
+These quantile/Mills-ratio constants are given by Gasull, Jolis and Utzet,
+§2, pp. 3–4, Eqs. (7)–(9) [@gasull2015normalmaxima]. We prove convergence
+for this choice. Integration by parts bounds the normal survival, for $t>0$,
+by $t\phi(t)/(1+t^2)$ below and $\phi(t)/t$ above: the upper bound follows
+from $x/t\ge1$, and for the lower bound use
+$\bar\Phi(t)=\phi(t)/t-\int_t^\infty\phi(x)/x^2\,dx$
+and bound the last integral by $\bar\Phi(t)/t^2$.
+Thus $a_nb_n\to1$ and $a_n\to0$. For fixed $z$, the same bounds give
+
+$$
+\begin{gathered}
+\frac{\bar\Phi(b_n+a_nz)}{\bar\Phi(b_n)}\\
+\sim\frac{b_n}{b_n+a_nz}
+\exp(-b_na_nz)\\
+{}\qquad\times\exp\left(-\frac{a_n^2z^2}{2}\right)\\
+\longrightarrow e^{-z}.
+\end{gathered}
+$$
+
+Since $n\bar\Phi(b_n)=1$, taking logarithms of the exact maximum CDF
+proves $P((M_n-b_n)/a_n\le z)\to\Lambda(z)$. This proves a fixed-$z$
+limit; it does not bound a relative density error far into the tail.
+
+A commonly used explicit alternative is
+
+$$
+\begin{gathered}
+s_n=\sqrt{2\log n},\qquad \widetilde a_n=1/s_n,\\
+\widetilde b_n=s_n-\frac{\log\log n+\log(4\pi)}{2s_n}.
+\end{gathered}
+$$
+
+The normal-tail bounds imply
+$b_n=s_n+O(\log\log n/s_n)$. Substitution into
+$b_n^2=2\log n-2\log b_n-\log(2\pi)+O(b_n^{-2})$
+then gives $b_n-\widetilde b_n=O((\log\log n)^2/s_n^3)$.
+Consequently $\widetilde a_n/a_n\to1$ and
+$(\widetilde b_n-b_n)/a_n\to0$, proving the same limit.
+Their finite-$n$ errors can differ. A CDF limit supplies neither a universal
+finite-block accuracy threshold nor a relative tail-error guarantee.
+
+Use [`gaussian_maximum_norming`](incerto-api-reference.md#api-gaussian-maximum-norming)
+and [`gaussian_maximum_cdf`](incerto-api-reference.md#api-gaussian-maximum-cdf).
+
+```python
+from xmath.incerto.extremes import gaussian_maximum_norming, gaussian_maximum_cdf
+
+for method in ("mills", "asymptotic"):
+    a, b = gaussian_maximum_norming(100, method=method)
+    print(f"{method}: a={a:.4g}, b={b:.4g}, cdf at z=1={gaussian_maximum_cdf(b+a, 100):.4g}")
+for x in (-float("inf"), float("inf")):
+    print(f"x={x:g}: cdf={gaussian_maximum_cdf(x, 100):.4g}")
+```
+
+**Output**
+
+```text
+mills: a=0.3752, b=2.326, cdf at z=1=0.7077
+asymptotic: a=0.3295, b=2.366, cdf at z=1=0.7034
+x=-inf: cdf=0
+x=inf: cdf=1
+```
+
+```{figure} ../assets/figures/incerto/gaussian-maxima.svg
+:alt: Exact normalized normal-maximum CDFs approach Gumbel with increasing block size. Separate CDF and density error panels at size 100 compare Mills-ratio and explicit asymptotic normalizations.
+
+Top: exact normal maxima with the quantile/Mills-ratio constants, at
+$n=10,100,10000$, and the Gumbel limit. Lower panels: signed
+CDF and density differences from Gumbel at $n=100$, for both choices
+of constants. The normalized density includes the Jacobian $a_n$.
+These are population calculations on $z\in[-3,5]$, not simulated fits,
+global error suprema, or relative errors at arbitrarily rare levels.
+```
+
+Regenerate with `uv run python demos/incerto/extreme_values.py`.
+For a normal parent with mean $\mu$ and standard deviation $\sigma>0$,
+replace $(a_n,b_n)$ by $(\sigma a_n,\mu+\sigma b_n)$.
+The [hidden-tail normal integral](incerto-hidden-tail.md#hidden-tail-gaussian)
+uses the exact maximum law without either limiting approximation.
+
 ## Caveats
 
 - Block maxima discard within-block information.  Threshold methods may use

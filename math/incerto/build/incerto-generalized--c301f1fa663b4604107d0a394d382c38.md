@@ -19,10 +19,11 @@ excesses.  With location zero, an excess variable $Y\ge0$ has shape
 $\xi$ and scale $\beta>0$ when
 
 $$
+\begin{gathered}
 G_{\xi,\beta}(y)
-=
-1-\left(1+\frac{\xi y}{\beta}\right)^{-1/\xi},
-\qquad \xi\ne0,
+=1-\left(1+\frac{\xi y}{\beta}\right)^{-1/\xi},\\
+\xi\ne0,
+\end{gathered}
 $$
 
 for $y\ge0$ with $1+\xi y/\beta>0$. For $y<0$ the CDF is zero;
@@ -114,8 +115,10 @@ $\xi,\beta$ and $u\ge0$ satisfies $\beta+\xi u>0$, then, for admissible
 $y\ge0$ and $\xi\ne0$,
 
 $$
-\frac{\bar G_{\xi,\beta}(u+y)}{\bar G_{\xi,\beta}(u)}
+\begin{gathered}
+\frac{\bar G_{\xi,\beta}(u+y)}{\bar G_{\xi,\beta}(u)}\\
 =\left(1+\frac{\xi y}{\beta+\xi u}\right)^{-1/\xi}.
+\end{gathered}
 $$
 
 For $\xi=0$, the ratio is $e^{-y/\beta}$. Thus excesses have the same
@@ -126,9 +129,10 @@ The Pareto Type I distribution is an exact generalized Pareto excess model.
 If $X$ has Pareto tail exponent $\alpha$ and threshold $u\ge x_m$, then
 
 $$
-\mathbb P(X-u>y\mid X>u)
-=
-\left(1+\frac{y}{u}\right)^{-\alpha}.
+\begin{aligned}
+&\mathbb P(X-u>y\mid X>u)\\
+&\quad=\left(1+\frac{y}{u}\right)^{-\alpha}.
+\end{aligned}
 $$
 
 This is the generalized Pareto survival function with
@@ -151,14 +155,54 @@ A concrete choice of shape and scale illustrates both the survival and moments.
 For $\xi=0.4$ and $\beta=2$, direct substitution gives
 
 $$
-\bar G(y)=(1+0.2y)^{-2.5},\qquad
-\mathbb E[Y]=\frac{10}{3},\qquad
+\begin{gathered}
+\bar G(y)=(1+0.2y)^{-2.5},\\
+\mathbb E[Y]=\frac{10}{3},\\
 \operatorname{Var}(Y)=\frac{500}{9}.
+\end{gathered}
 $$
 
 Thus $\bar G(0)=1$, $\bar G(1)=1.2^{-2.5}$,
 $\bar G(5)=2^{-2.5}$, and $\bar G(10)=3^{-2.5}$.
 These are formula evaluations, with no numerical fitting or simulation.
+
+(gpd-moment-integrals)=
+## Deriving the moment boundaries
+
+We prove the moment formulas used above by integrating survival. Let $b$
+be the upper support endpoint, possibly infinite. For nonnegative $Y$,
+Tonelli's theorem gives
+
+$$
+\begin{gathered}
+\mathbb E[Y]=\int_0^b\bar G(y)\,dy,\\
+\mathbb E[Y^2]=2\int_0^b y\bar G(y)\,dy.
+\end{gathered}
+$$
+
+For $\xi\ne0$, substitute $v=1+\xi y/\beta$ in the first integral.
+For $\xi\ne1$, its antiderivative is $\beta v^{1-1/\xi}/(\xi-1)$.
+At the appropriate endpoint this gives $\beta/(1-\xi)$ when $\xi<1$.
+At $\xi=1$ the integral diverges logarithmically, and it also diverges for
+$\xi>1$. Expanding $y=\beta(v-1)/\xi$
+in the second integral similarly gives
+
+$$
+\begin{gathered}
+\mathbb E[Y^2]=\frac{2\beta^2}{(1-\xi)(1-2\xi)},\\
+\xi<1/2.
+\end{gathered}
+$$
+
+Subtracting the squared mean gives the variance stated above. For
+$\xi=0$, exponential integration gives the same formulas directly.
+Positive shape $1/2\le\xi<1$ has infinite variance; at $\xi\ge1$
+the ordinary variance about a finite mean is undefined. Negative shape
+has bounded support, so all these integrals are finite.
+
+The [chapter 9 guide](incerto-scoft-ch9.md) connects these exact-model
+boundaries to the [PBDH theorem](incerto-pickands-balkema-de-haan.md#pbdh-chapter-nine).
+A fitted GPD mean does not automatically estimate the true tail mean accurately.
 
 ## Caveats
 

@@ -1,6 +1,8 @@
 # Xiang Shi
 
-Quant · Risk · Fat tails · Applied math · Engineering · Cyberpsychosis
+Quant · Risk · Applied math · Engineering &
+
+[Looooooooooong tail](https://safarithedoxie.com/)
 
 ## About
 
@@ -11,6 +13,8 @@ The thread through all of it is the same annoying fact: real data has fat tails,
 [normix](https://github.com/xshi19/normix) is my attempt to make that less painful. It's a JAX package for normal variance mixture distributions, with generalized hyperbolic as the main case, and it covers fitting them to data and computing risk measures under them. Longer write-ups are in the [math notes](https://xshi19.github.io/math/), shorter ones on the [blog](https://xshi19.github.io/blog/).
 
 I also spend a lot of time pair-programming with AI agents, which is probably worth a post once I have figured out what I actually think about it. [My Cursor profile](https://cursor.com/@xshi) has the receipts.
+
+The little dog in my avatar is my dachshund, [Safari](https://safarithedoxie.com/).
 
 ## Contact
 

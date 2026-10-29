@@ -1,6 +1,8 @@
 # Xiang Shi
 
-> Quant · Risk · Fat tails · Applied math · Engineering · Cyberpsychosis
+> Quant · Risk · Applied math · Engineering &
+
+[Looooooooooong tail](https://safarithedoxie.com/)
 
 ## Pages
 - [About](https://xshi19.github.io/about/): PhD work on heavy-tailed distributions at Stony Brook, risk models, normix, and pair-programming with AI agents.

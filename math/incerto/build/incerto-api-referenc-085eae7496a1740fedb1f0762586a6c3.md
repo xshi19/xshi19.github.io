@@ -77,8 +77,8 @@ return types, and numerical limits.
 
 The [empirical examples](incerto-empirical-example-concepts.md) link to committed
 demo scripts and static figures. Dataset loading does not fetch by default.
-The [S&P method](incerto-sp500-tail.md) explains the deliberately absent financial
-cache. The separate [Normix API](https://xshi19.github.io/normix/) remains
+The [S&P study](incerto-sp500-tail.md) reports dated derived statistics from a
+local cache; raw prices are not distributed. The separate [Normix API](https://xshi19.github.io/normix/) remains
 maintained upstream; this educational package does not vendor Normix.
 
 ## Function reference
@@ -320,9 +320,13 @@ print(cache_path("example.csv", data_dir="/tmp/incerto-example-data").as_posix()
 (api-load-sp500-prices)=
 #### [`load_sp500_prices`](incerto-api-reference.md#api-load-sp500-prices)
 
-`load_sp500_prices(*, data_dir=None, fetch=False)`
+`load_sp500_prices(*, data_dir=None, fetch=False, provider="fred", end_date=None)`
 
-Load S&P 500 daily closes from the local cache, optionally fetching FRED.
+Read the local cache without fetching by default. If absent and `fetch=True`,
+fetch from `fred` (default) or `yahoo`; Yahoo lazily imports optional yfinance.
+`end_date` is an inclusive `YYYY-MM-DD` cutoff, also applied on cached reads
+without rewriting the file. Fewer than two selected closes raises
+[`DatasetNotAvailable`](incerto-api-reference.md#api-datasetnotavailable).
 
 (api-load-amazon-bookrank)=
 #### [`load_amazon_bookrank`](incerto-api-reference.md#api-load-amazon-bookrank)
@@ -341,16 +345,38 @@ Load the NYC Open Data dog-name frequency snapshot.
 (api-write-sp500-fred-cache)=
 #### [`write_sp500_fred_cache`](incerto-api-reference.md#api-write-sp500-fred-cache)
 
-`write_sp500_fred_cache(destination, *, url=FRED_SP500_CSV_URL)`
+`write_sp500_fred_cache(destination, *, url=FRED_SP500_CSV_URL, end_date=None)`
 
-Fetch and clean the public FRED S&P 500 CSV into an untracked cache.
+Fetch FRED's price index. Discard missing, non-finite and nonpositive closes;
+sort dates and keep the last usable duplicate. `end_date` is inclusive.
+Require two retained dates before writing; malformed payloads raise
+[`DatasetNotAvailable`](incerto-api-reference.md#api-datasetnotavailable).
+
+(api-write-sp500-yahoo-cache)=
+#### [`write_sp500_yahoo_cache`](incerto-api-reference.md#api-write-sp500-yahoo-cache)
+
+`write_sp500_yahoo_cache(destination, *, end_date=None)`
+
+Fetch Yahoo Finance `^GSPC` with yfinance's `period="max"`, `interval="1d"`
+and `auto_adjust=False`. Select `Close`, including the single-ticker
+MultiIndex form. Skip missing, non-finite and nonpositive values; sort dates,
+keep the last usable duplicate and drop dates after inclusive `end_date`.
+Write only `date,close` in the local cache. No total-return adjustment or
+fallback to another provider. Missing yfinance, a failed request or fewer
+than two usable dates raises
+[`DatasetNotAvailable`](incerto-api-reference.md#api-datasetnotavailable)
+before the destination is written. Install the optional `yahoo` extra only
+for fetching; tests mock the network and do not require it.
 
 (api-write-sp500-cache-from-csv)=
 #### [`write_sp500_cache_from_csv`](incerto-api-reference.md#api-write-sp500-cache-from-csv)
 
-`write_sp500_cache_from_csv(source, destination)`
+`write_sp500_cache_from_csv(source, destination, *, end_date=None)`
 
-Clean a local S&P 500-like CSV into the standard untracked cache.
+Clean a local price CSV with the same cutoff, sorting and duplicate rules.
+Prefer the `close`, `Close`, then `SP500` column; accept `Adj Close` only if
+none of those exists. Skip blank, dot, non-finite and nonpositive closes.
+Dates must parse as `YYYY-MM-DD`. At least two retained dates are required.
 
 (api-write-amazon-bookrank-snapshot)=
 #### [`write_amazon_bookrank_snapshot`](incerto-api-reference.md#api-write-amazon-bookrank-snapshot)

@@ -28,13 +28,22 @@ mean for a risk estimator.
 
 ## Data, clock, and estimands
 
-No observed S&P sample or empirical result is distributed with this page.
-The code reads the same authorized local cache as the existing tail page,
-with fetching disabled. FRED's SP500 series is a daily closing **price**
-index, without dividends; its redistribution restrictions remain applicable
-[@fred2026sp500]. The currently documented FRED window contains ten years
-of history, so it cannot reproduce the source's much longer historical
-experiment or its discussion of 1987.
+We use Yahoo Finance `^GSPC` daily **Close**, fetched locally on
+**2026-10-30**, with `auto_adjust=False` [@yahoo2026gspc]. This is a
+**price index**, not a dividend-reinvested total-return series. The default
+return window is **1928-01-03 through 2026-10-29**: 24,824 close-to-close
+log returns from 24,825 closes. The 1927-12-30 close anchors the first
+return. We exclude the supplied 2026-10-30 intraday row.
+
+The full available history includes early crises and 1987; it also pools
+different market regimes and historical index coverage. We do not assume a
+homogeneous iid law. The [tail page](incerto-sp500-tail.md#sp500-data)
+gives the fetch and local-import commands. The cache remains ignored by Git;
+under the Yahoo source-use terms we do not redistribute prices
+[@yahoo2026terms]. Only derived statistics and diagnostic plots appear here.
+FRED remains an alternate provider [@fred2026sp500], with a shorter available
+history; it is not the input to these outputs. The examples read the local
+cache with fetching disabled and an inclusive 2026-10-29 cutoff.
 
 For strictly positive, chronologically ordered closes $P_t$, define
 
@@ -144,6 +153,15 @@ Each horizon uses its own sample mean; the daily baseline uses all returns.
 The result is descriptive. It neither estimates a unique tail exponent
 nor carries an iid confidence interval for dependent market returns.
 
+In this sample, disjoint-block excess kurtosis is **18.77, 7.66, 12.04**
+at horizons 1, 5, and 21. It falls and then rises. The overlapping values
+are **18.77, 9.77, 9.91**; these windows reuse observations. Both curves
+remain far above zero, but neither identifies a population fourth moment.
+Disjoint 5- and 21-return blocks give plug-in kappa **0.12 and 0.10**.
+Splitting the returns in half changes those values to **0.22, 0.20** in
+the first half and **0.03, -0.04** in the second. Kappa here is sensitive
+to the sample window and need not lie between zero and one.
+
 ```python
 from xmath.incerto.diagnostics import aggregation_diagnostics
 
@@ -227,6 +245,12 @@ panel shows exact population ratios for a unit-minimum Pareto with exponent
 1.5 and a unit exponential. Neither panel contains S&P observations.
 ```
 
+The observed full-path maximum drawdown is **86.19%**, from the running
+peak on **1929-09-16** to the trough on **1932-06-01** in this provider's
+history. The second-half price path, beginning at the 1977-08-03 anchor,
+has maximum drawdown **56.78%**. These are fractional price declines over
+ordered paths, not daily log losses or total-return drawdowns.
+
 (sp500-ms)=
 ## Fourth-moment concentration and the MS plot
 
@@ -248,6 +272,14 @@ total. It is not literally that observation's share of *central kurtosis*:
 recentering and the variance denominator change when an observation is
 removed. The report keeps those quantities separate and repeats them on
 the first and second halves of the available series.
+
+For the full sample, the largest absolute daily return contributes
+**25.22%** of the raw fourth-power total. It is the **1987-10-19** loss;
+removing that observation changes daily sample excess kurtosis from
+**18.77 to 13.76**. The corresponding fourth-power shares in the two halves
+are **9.67% and 53.54%**. The same event dominates the shorter second-half
+total more strongly. These are concentration and deletion diagnostics,
+not tests that a fourth moment is infinite.
 
 Finite-path instability cannot identify an infinite moment. It also cannot
 establish regular variation. Even at the population level, an infinite
@@ -344,6 +376,14 @@ path. All continuous iid parents share the harmonic record-count expectation,
 despite having different moment properties. These are individual paths.
 ```
 
+The observed returns have **17 strict upper records and 13 strict lower
+records**, against a continuous-iid reference mean **10.70** and variance
+**9.05** for each side. There are **313 zero returns**, retained in these
+counts and the aggregation calculations. Rounded closes, ties, dependence,
+and changes in volatility prevent treating the benchmark as a calibrated
+test here. The sample log-return extrema are **-22.90% and 15.37%**;
+these percentages describe logarithmic changes, not simple returns.
+
 For gain/loss asymmetry, compare positive $r_t$ with positive $-r_t$, using
 the same threshold rules and showing each side's retained counts. Our report
 uses [`hill_alpha_estimator`](incerto-api-reference.md#api-hill-alpha-estimator)
@@ -353,54 +393,134 @@ The two sides' quantile thresholds need not have equal magnitudes.
 [model comparison](incerto-power-law-goodness-of-fit.md) remain necessary;
 a few different fitted exponents do not establish population asymmetry.
 
-(sp500-local-run)=
-## Run on the existing local cache
+At retained fractions 5%, 10%, and 20% of each positive-side sample,
+gain-side Hill exponents are **2.58, 2.41, 2.11** and loss-side exponents
+are **2.59, 2.26, 1.94**. Losses have the smaller fitted exponent at the
+two broader fractions, but not at 5%. Conditional mean/threshold ratios
+at each side's 95th percentile are **1.59 for gains and 1.57 for losses**.
+Thus these choices do not support a threshold-independent ordering of
+the two population tails. The [loss-tail study](incerto-sp500-tail.md)
+also examines smaller fixed counts of extremes.
 
-Use [`DatasetNotAvailable`](incerto-api-reference.md#api-datasetnotavailable),
-[`load_sp500_prices`](incerto-api-reference.md#api-load-sp500-prices), and
+```{figure} ../assets/figures/incerto/sp500-observed-diagnostics.svg
+:alt: Three stacked observed-data panels compare aggregation kurtosis, fourth-power concentration over time, and strict return record counts against the continuous-iid reference mean.
+
+Yahoo Close-derived returns, 1928-01-03–2026-10-29. Aggregation uses the
+specified block rules. The lower panels sample 300 chronological prefixes
+for display; the statistics use every return in each prefix. The 1987 jump
+in fourth-power concentration and the subsequent decline are properties of
+this finite path. No raw prices or full return sequence are exported.
+```
+
+(sp500-local-run)=
+## Reproduce the observed results
+
+Use [`load_sp500_prices`](incerto-api-reference.md#api-load-sp500-prices) and
 [`sp500_diagnostics`](incerto-api-reference.md#api-sp500-diagnostics).
 The last helper reuses [`PriceSeries.log_returns`](incerto-api-reference.md#api-priceseries-log-returns).
 
 :::{dropdown} Code: inspect a local return series
 
 ```python
-from xmath.incerto.datasets import DatasetNotAvailable, load_sp500_prices
-from xmath.incerto.diagnostics import sp500_diagnostics
+import numpy as np
+from xmath.incerto.datasets import load_sp500_prices
+from xmath.incerto.diagnostics import sp500_diagnostics, sample_excess_kurtosis
 
-try:
-    prices = load_sp500_prices(fetch=False)
-except DatasetNotAvailable:
-    print("No local S&P cache; empirical diagnostics remain uncomputed.")
-else:
-    result = sp500_diagnostics(prices)
-    print(f"Window: {result['start']} to {result['end']}; returns={result['returns']}")
-    full = result["windows"]["full"]
-    print(f"Maximum drawdown: {full['drawdown']:.4f}")
-    for row in full["aggregation"]:
-        print(f"h={row['horizon']}: blocks={row['blocks']}, kurtosis={row['excess_kurtosis']:.4g}, kappa={row['kappa']:.4g}")
-    for side, tail in full["tails"].items():
-        print(f"{side}: {tail['n']} positive observations")
-        for point in tail["hill"]:
-            print(f"  k={point['k']}: alpha={point['alpha']:.4g}")
+prices = load_sp500_prices(fetch=False, end_date="2026-10-29")
+dates, returns = prices.log_returns()
+result = sp500_diagnostics(prices)
+print(f"Return window: {dates[0]} to {dates[-1]}; returns={len(returns)}")
+print(f"Zero returns: {result['zero_returns']}; largest calendar gap: {result['max_calendar_gap_days']} days")
+for name, window in result["windows"].items():
+    print(f"{name}: price anchors {window['start']} to {window['end']}; returns={window['n']}")
+    print(f"  Maximum drawdown: {100 * window['drawdown']:.2f}%")
+    for row in window["aggregation"]:
+        print(f"  h={row['horizon']}: blocks={row['blocks']}, dropped={row['dropped']}, excess kurtosis={row['excess_kurtosis']:.2f}, kappa={row['kappa']:.2f}")
+    print(f"  Fourth-power maximum share: {100 * window['moment_shares']['4']:.2f}%")
+full = result["windows"]["full"]
+for row in full["overlapping"]:
+    print(f"Overlapping h={row['horizon']}: blocks={row['blocks']}, excess kurtosis={row['excess_kurtosis']:.2f}, kappa={row['kappa']:.2f}")
+rec = full["records"]
+print(f"Records upper/lower: {rec['upper']:.0f}/{rec['lower']:.0f}; iid mean={rec['iid_mean']:.2f}, variance={rec['iid_variance']:.2f}")
+print(f"Log-return extrema (%): {100 * rec['minimum']:.2f}, {100 * rec['maximum']:.2f}")
+largest = int(np.argmax(np.abs(returns)))
+reduced = np.delete(returns, largest)
+print(f"Largest absolute return date: {dates[largest]}; excess kurtosis without it: {sample_excess_kurtosis(reduced):.2f}")
+trough = int(np.argmax(1 - prices.close / np.maximum.accumulate(prices.close)))
+peak = int(np.argmax(prices.close[:trough + 1]))
+print(f"Maximum drawdown peak/trough dates: {prices.date[peak]}, {prices.date[trough]}")
+for side, tail in full["tails"].items():
+    print(f"{side}: {tail['n']} positive observations")
+    for point in tail["hill"]:
+        print(f"  k={point['k']}: alpha={point['alpha']:.2f}")
+    for point in tail["conditional"]:
+        print(f"  threshold={100 * point['threshold']:.2f}% log, count={point['exceedances']:.0f}, conditional mean / threshold={point['ratio']:.2f}")
 ```
 
 **Output**
 
 ```text
-No local S&P cache; empirical diagnostics remain uncomputed.
+Return window: 1928-01-03 to 2026-10-29; returns=24824
+Zero returns: 313; largest calendar gap: 12 days
+full: price anchors 1927-12-30 to 2026-10-29; returns=24824
+  Maximum drawdown: 86.19%
+  h=1: blocks=24824, dropped=0, excess kurtosis=18.77, kappa=nan
+  h=5: blocks=4964, dropped=4, excess kurtosis=7.66, kappa=0.12
+  h=21: blocks=1182, dropped=2, excess kurtosis=12.04, kappa=0.10
+  Fourth-power maximum share: 25.22%
+first_half: price anchors 1927-12-30 to 1977-08-03; returns=12412
+  Maximum drawdown: 86.19%
+  h=1: blocks=12412, dropped=0, excess kurtosis=14.83, kappa=nan
+  h=5: blocks=2482, dropped=2, excess kurtosis=7.96, kappa=0.22
+  h=21: blocks=591, dropped=1, excess kurtosis=11.05, kappa=0.20
+  Fourth-power maximum share: 9.67%
+second_half: price anchors 1977-08-03 to 2026-10-29; returns=12412
+  Maximum drawdown: 56.78%
+  h=1: blocks=12412, dropped=0, excess kurtosis=24.53, kappa=nan
+  h=5: blocks=2482, dropped=2, excess kurtosis=6.23, kappa=0.03
+  h=21: blocks=591, dropped=1, excess kurtosis=13.30, kappa=-0.04
+  Fourth-power maximum share: 53.54%
+Overlapping h=1: blocks=24824, excess kurtosis=18.77, kappa=nan
+Overlapping h=5: blocks=24820, excess kurtosis=9.77, kappa=0.12
+Overlapping h=21: blocks=24804, excess kurtosis=9.91, kappa=0.08
+Records upper/lower: 17/13; iid mean=10.70, variance=9.05
+Log-return extrema (%): -22.90, 15.37
+Largest absolute return date: 1987-10-19; excess kurtosis without it: 13.76
+Maximum drawdown peak/trough dates: 1929-09-16, 1932-06-01
+gain: 13018 positive observations
+  k=650: alpha=2.58
+  k=1301: alpha=2.41
+  k=2603: alpha=2.11
+  threshold=1.11% log, count=2604, conditional mean / threshold=1.78
+  threshold=1.60% log, count=1302, conditional mean / threshold=1.65
+  threshold=2.18% log, count=651, conditional mean / threshold=1.59
+loss: 11493 positive observations
+  k=574: alpha=2.59
+  k=1149: alpha=2.26
+  k=2298: alpha=1.94
+  threshold=1.18% log, count=2299, conditional mean / threshold=1.87
+  threshold=1.76% log, count=1150, conditional mean / threshold=1.70
+  threshold=2.49% log, count=575, conditional mean / threshold=1.57
 ```
 :::
 
 `uv run python demos/incerto/sp500_diagnostics.py` regenerates the synthetic
-figures and prints the complete local-cache report when data are present.
+figures and the derived observed figure, and prints the complete local report.
 It uses disjoint horizons 1, 5, and 21, then repeats with overlapping windows;
 incomplete disjoint suffixes are dropped and counted. It also reports
 subwindow dates, drawdowns, extrema, record counts, MS shares for powers
 1–4, both tail fits, and the
 [frozen holdout comparison](incerto-ml-econometrics.md#pipeline-holdout).
-At least 44 closes are required to form a 21-return block in each half.
+The helper requires at least 44 closes.
 Such a small sample is sufficient to execute the code, not to support a
 tail conclusion.
+
+Both halves contain 12,412 returns. The first ends on 1977-08-03; the
+second begins on 1977-08-04, using the previous close as its anchor.
+The full sample's longest gap between closes is 12 calendar days.
+We retain that close-to-close change; a return observation is therefore
+not always one calendar day. The disjoint 5- and 21-return calculations
+discard respectively four and two returns at the end.
 
 Choose windows and thresholds before interpreting results. Preserve the
 data source, retrieval date, checksum, and excluded observations with each
@@ -413,7 +533,8 @@ question. No market model or tail exponent is selected by this page.
 
 SCoFT v4 §§10.1–10.3, pp. 193–205 [@taleb2025scoftv4] motivates these
 diagnostics. The aggregation and record identities above are proved under
-their stated assumptions; the figures are synthetic or analytic examples.
+their stated assumptions. Captions distinguish synthetic/model examples
+from the dated Yahoo-derived diagnostic figure.
 We do not reproduce the book's empirical figures, numerical verdicts, or
 claim that moment instability establishes a power law. Definition 10.1
 on p. 200 is replaced by the conditional-mean identity stated here, with

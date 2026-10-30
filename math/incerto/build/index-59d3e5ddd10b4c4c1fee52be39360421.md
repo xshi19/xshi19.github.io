@@ -158,6 +158,14 @@ from a shared scale, derives its mutual information, and separates finite
 sample statistics from population moments. [Density geometry](../incerto-iso-density-tail-geometry.md)
 compares identical marginals under different joint laws.
 
+## Return diagnostics and statistical pipelines
+
+[S&P diagnostics](../incerto-sp500.md) separates aggregation, drawdowns,
+moment concentration and record counts. [Tail assumptions in statistical
+pipelines](../incerto-ml-econometrics.md) compares frozen risk estimators
+and derives hinge weights from slopes. Empirical S&P results require an
+authorized local cache; the published figures use specified synthetic models.
+
 ## Reading and reference
 
 - [Empirical examples](../incerto-empirical-example-concepts.md): two committed
@@ -170,9 +178,10 @@ compares identical marginals under different joint laws.
   [Chapter 4 — Finite-moment fat tails](../incerto-scoft-ch4.md),
   [Chapter 5 — Subexponentials and power laws](../incerto-scoft-ch5.md),
   [Chapter 6 — Thick tails in higher dimensions](../incerto-scoft-ch6.md),
-  [Chapter 7 — Averages and limit laws](../incerto-scoft-ch7.md), and
-  [Chapter 8 — How much averaging helps](../incerto-scoft-ch8.md), and
-  [Chapter 9 — Maxima and hidden tails](../incerto-scoft-ch9.md).
+  [Chapter 7 — Averages and limit laws](../incerto-scoft-ch7.md),
+  [Chapter 8 — How much averaging helps](../incerto-scoft-ch8.md),
+  [Chapter 9 — Maxima and hidden tails](../incerto-scoft-ch9.md), and
+  [Chapter 10 — Diagnosing returns](../incerto-scoft-ch10.md).
 - [External guides](../incerto-external-reading.md), including
   [Embrechts, Klüppelberg, and Mikosch](../incerto-reading-embrechts.md).
 - [Concept graph](../incerto-dependency-dag.md), with a plain linked fallback.

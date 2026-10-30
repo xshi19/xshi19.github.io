@@ -25,6 +25,11 @@ zero-return and rising-price days are excluded. Here $P_t$ denotes an index
 level, not the probability law $P$ in the
 [shared notation](https://xshi19.github.io/math/notation/).
 
+The [chapter-10 diagnostics](incerto-sp500.md) reuse this cache for
+aggregation, drawdowns, moment concentration, records, and gain/loss
+comparisons. The [pipeline note](incerto-ml-econometrics.md) adds a frozen
+chronological risk-estimator comparison.
+
 ## Data availability
 
 No S&P index levels or derived empirical figures are distributed with this

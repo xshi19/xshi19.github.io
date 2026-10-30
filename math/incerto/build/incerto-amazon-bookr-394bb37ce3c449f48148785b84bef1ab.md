@@ -55,7 +55,7 @@ diagnostic:
 
 1. Load the CC0 snapshot.
 2. Plot weekly sales against weekly average rank on log-log axes.
-3. Plot empirical sales survival on log-log axes.
+3. Plot sales against positive rank plotting positions on log-log axes.
 4. Apply [Hill Estimator](incerto-hill-estimator.md) sensitivity checks to
    positive weekly sales above a small reporting cutoff.
 
@@ -91,7 +91,14 @@ are threshold-sensitive descriptions of this sample.
 
 Figure regeneration: `uv run python demos/incerto/amazon_bookrank.py`.
 
-![amazon bookrank diagnostic 1](../assets/incerto/figures/amazon-bookrank-1.svg)
+```{figure} ../assets/incerto/figures/amazon-bookrank-1.svg
+:alt: Three stacked panels compare Amazon sales with rank, sales tail plotting positions, and Hill exponent sensitivity.
+
+The committed CC0 snapshot supplies all observations. The middle panel uses
+$1-i/(n+1)$ at ordered positive sales: rank plotting positions, not strict
+empirical survival. Ties receive different ordinates and the maximum stays
+above zero. The transformations and fitted Hill estimates are unchanged.
+```
 
 
 The log-log fit captures a broad rank-size direction, but

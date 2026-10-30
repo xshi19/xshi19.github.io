@@ -66,9 +66,9 @@ it is a visual summary, not a claim that dog naming follows an exact law.
 
 ## Global fit and threshold sensitivity
 
-The survival plot compares the data with the blog's global lognormal baseline.
-Below it, two roomier panels use only upper frequencies and expose the
-threshold choice.  The generalized Pareto fit uses the
+The tail plot compares rank plotting positions with the blog's global
+lognormal baseline. Below it, stacked Hill, GPD-shape, and exceedance-count
+panels expose threshold sensitivity.  The generalized Pareto fit uses the
 [GPD](incerto-generalized-pareto.md) shape parameter $\xi$; the Hill
 panel reports the Pareto tail exponent
 $\widehat\alpha=1/\widehat\xi$.  These symbols follow the shared
@@ -99,15 +99,33 @@ The bundled aggregate is read locally in an editable checkout.
 
 Figure regeneration: `uv run python demos/incerto/nyc_dog_name_tail.py`.
 
-![nyc dog name tail diagnostic 1](../assets/incerto/figures/nyc-dog-name-tail-1.svg)
+```{figure} ../assets/incerto/figures/nyc-dog-name-tail-1.svg
+:alt: License-period frequency decreases with name popularity rank on log-log axes.
 
-![nyc dog name tail diagnostic 2](../assets/incerto/figures/nyc-dog-name-tail-2.svg)
+Committed NYC name aggregates; the dashed log-log regression is descriptive.
+Counts refer to license periods, not distinct dogs.
+```
 
-![nyc dog name tail diagnostic 3](../assets/incerto/figures/nyc-dog-name-tail-3.svg)
+```{figure} ../assets/incerto/figures/nyc-dog-name-tail-2.svg
+:alt: Positive rank plotting positions across name frequencies depart from a whole-sample lognormal survival fit.
+
+The data curve uses $1-i/(n+1)$ at sorted frequencies. These are rank plotting
+positions: tied frequencies receive different ordinates, and the largest
+frequency has a positive ordinate. They are not the strict empirical
+survival function, which groups ties and is zero at the maximum. The dashed
+curve is the fitted continuous lognormal survival.
+```
+
+```{figure} ../assets/incerto/figures/nyc-dog-name-tail-3.svg
+:alt: Stacked panels show Hill exponents, GPD shapes and declining exceedance counts as the frequency threshold increases.
+
+Same snapshot and fitting rules as before; the separate count panel makes
+the reduction in observations visible without a second vertical axis.
+```
 
 
-The survival view adds a finding beyond the global distribution label: the
-empirical far-right curve lies above the whole-sample lognormal fit.  The tail
+The tail view adds a finding beyond the global distribution label: the
+far-right rank-position curve lies above the whole-sample lognormal fit.  The tail
 panels then show that this extra upper-tail mass does not settle into a broad,
 flat Hill region.  The GPD shape estimate also falls as the threshold rises
 while the number of exceedances shrinks.  The data therefore do not support

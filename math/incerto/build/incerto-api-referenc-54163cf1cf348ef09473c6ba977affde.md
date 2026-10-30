@@ -31,6 +31,7 @@ for implementations and use local `help()` for the installed version.
 
 | Module | Entry points and purpose |
 | --- | --- |
+| `xmath.incerto.diagnostics` | [`aggregate_returns`](incerto-api-reference.md#api-aggregate-returns), [`sample_excess_kurtosis`](incerto-api-reference.md#api-sample-excess-kurtosis), [`maximum_drawdown`](incerto-api-reference.md#api-maximum-drawdown), [`moment_share_path`](incerto-api-reference.md#api-moment-share-path), [`record_counts`](incerto-api-reference.md#api-record-counts), [`conditional_tail_ratio`](incerto-api-reference.md#api-conditional-tail-ratio), [`aggregation_diagnostics`](incerto-api-reference.md#api-aggregation-diagnostics), [`chronological_tail_check`](incerto-api-reference.md#api-chronological-tail-check), [`sp500_diagnostics`](incerto-api-reference.md#api-sp500-diagnostics), [`hinge_payoff`](incerto-api-reference.md#api-hinge-payoff); [chapter 10 diagnostics](incerto-scoft-ch10.md) |
 | `xmath.incerto.extremes` | [`pareto_hidden_moment`](incerto-api-reference.md#api-pareto-hidden-moment), [`expected_pareto_hidden_fraction`](incerto-api-reference.md#api-expected-pareto-hidden-fraction), [`maximum_missing_mass`](incerto-api-reference.md#api-maximum-missing-mass), [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling), [`gaussian_maximum_norming`](incerto-api-reference.md#api-gaussian-maximum-norming), [`gaussian_maximum_cdf`](incerto-api-reference.md#api-gaussian-maximum-cdf), [`expected_gaussian_hidden_mean`](incerto-api-reference.md#api-expected-gaussian-hidden-mean); [chapter 9 maxima and hidden tails](incerto-scoft-ch9.md) |
 | `xmath.incerto.concentration` | [`kappa_from_mads`](incerto-api-reference.md#api-kappa-from-mads), [`stable_kappa`](incerto-api-reference.md#api-stable-kappa), [`gaussian_sum_mad`](incerto-api-reference.md#api-gaussian-sum-mad), [`gamma_sum_mad`](incerto-api-reference.md#api-gamma-sum-mad), [`student_sum_mad`](incerto-api-reference.md#api-student-sum-mad), [`estimate_sum_mad`](incerto-api-reference.md#api-estimate-sum-mad), [`lognormal_sum_mad`](incerto-api-reference.md#api-lognormal-sum-mad), [`normal_location_mixture_sum_mad`](incerto-api-reference.md#api-normal-location-mixture-sum-mad), [`gaussian_equivalent_n`](incerto-api-reference.md#api-gaussian-equivalent-n); [finite-sample concentration](incerto-kappa.md) and [sample sufficiency](incerto-moment-estimation.md#moment-estimation-sufficiency) |
 | `xmath.incerto.gas_speeds` | [`chi_speed`](incerto-api-reference.md#api-chi-speed), [`sample_chi_speed`](incerto-api-reference.md#api-sample-chi-speed), [`fit_speed_models`](incerto-api-reference.md#api-fit-speed-models), [`speed_fit_table`](incerto-api-reference.md#api-speed-fit-table), [`speed_qq`](incerto-api-reference.md#api-speed-qq), [`squared_speed_ks`](incerto-api-reference.md#api-squared-speed-ks), [`speed_fit_figure`](incerto-api-reference.md#api-speed-fit-figure); [Rayleigh chamber speeds](incerto-rayleigh-speed.md) and fitted comparisons |
@@ -2912,4 +2913,293 @@ for name, value in result.items():
 ```text
 value: 0.2821
 abs_error: 3.768e-10
+```
+
+## Return diagnostics and extrapolation
+
+These helpers require finite real inputs and perform no data acquisition.
+The numerical contracts are checked on the examples and test grids, not
+by a uniform floating-point error bound. A finite sample statistic does
+not establish the corresponding population moment's existence.
+
+(api-aggregate-returns)=
+### `aggregate_returns(returns, horizon, *, overlap=False)`
+
+Sum chronological log returns in consecutive disjoint blocks, dropping
+and never padding an incomplete suffix. `overlap=True` uses every window.
+Require an integer horizon between one and the sample size; arithmetic
+overflow raises `FloatingPointError`.
+
+```python
+from xmath.incerto.diagnostics import aggregate_returns
+
+for overlap in (False, True):
+    values = aggregate_returns([1, -2, 4, -8, 16], 2, overlap=overlap)
+    print(f"overlap={overlap}: " + ", ".join(f"{v:g}" for v in values))
+try:
+    aggregate_returns([1, 2], 3)
+except ValueError as error:
+    print(type(error).__name__)
+```
+
+**Output**
+
+```text
+overlap=False: -1, -4
+overlap=True: -1, 2, -4, 8
+ValueError
+```
+
+(api-sample-excess-kurtosis)=
+### `sample_excess_kurtosis(sample)`
+
+Central sample fourth moment divided by the squared central second moment,
+minus three, using divisor `n` and no bias correction. Translation and
+scaling avoid unscaled fourth powers. See the
+[population identity and sample limitations](incerto-sp500.md#sp500-aggregation).
+
+```python
+from xmath.incerto.diagnostics import sample_excess_kurtosis
+
+for sample in ([1], [2, 2], [-1, 1], [-1e308, 1e308]):
+    print(f"Excess kurtosis: {sample_excess_kurtosis(sample):.3f}")
+```
+
+**Output**
+
+```text
+Excess kurtosis: nan
+Excess kurtosis: nan
+Excess kurtosis: -2.000
+Excess kurtosis: -2.000
+```
+
+(api-maximum-drawdown)=
+### `maximum_drawdown(prices)`
+
+Largest fractional decline from a running peak, including the initial
+price. Requires strictly positive finite prices, in chronological order.
+Returns a fraction, without annualization or a log transformation.
+
+```python
+from xmath.incerto.diagnostics import maximum_drawdown
+
+for prices in ([100], [100, 110, 120], [100, 120, 90, 140, 84, 110]):
+    print(f"Maximum drawdown: {maximum_drawdown(prices):.3f}")
+try:
+    maximum_drawdown([100, 0])
+except ValueError as error:
+    print(type(error).__name__)
+```
+
+**Output**
+
+```text
+Maximum drawdown: 0.000
+Maximum drawdown: 0.000
+Maximum drawdown: 0.400
+ValueError
+```
+
+(api-moment-share-path)=
+### `moment_share_path(sample, p=4.0)`
+
+Prefix maximum divided by prefix sum of raw absolute powers, for finite
+real `p > 0`. The sum is scaled by the running maximum; logarithmic
+rescaling avoids forming powers. Overflowing log rescalings raise
+`FloatingPointError`.
+
+```python
+from xmath.incerto.diagnostics import moment_share_path
+
+for sample in ([0, 0, 1, -2], [1e-300, 1e300]):
+    print(", ".join(f"{v:.4f}" for v in moment_share_path(sample)))
+```
+
+**Output**
+
+```text
+nan, nan, 1.0000, 0.9412
+1.0000, 1.0000
+```
+
+(api-record-counts)=
+### `record_counts(sample)`
+
+Return arrays `upper`, `lower`, `maximum`, `minimum`, `iid_mean` and
+`iid_variance`. The last two are reference sequences for **each** record
+count under iid continuous sampling; they are not estimates or p-values.
+See the [rank proof](incerto-sp500.md#sp500-records).
+
+```python
+from xmath.incerto.diagnostics import record_counts
+
+result = record_counts([2, 2, 1, 3, 3, 0])
+for key, values in result.items():
+    print(key + ": " + ", ".join(f"{v:.3f}" for v in values))
+```
+
+**Output**
+
+```text
+upper: 1.000, 1.000, 1.000, 2.000, 2.000, 2.000
+lower: 1.000, 1.000, 2.000, 2.000, 2.000, 3.000
+maximum: 2.000, 2.000, 2.000, 3.000, 3.000, 3.000
+minimum: 2.000, 2.000, 1.000, 1.000, 1.000, 0.000
+iid_mean: 1.000, 1.500, 1.833, 2.083, 2.283, 2.450
+iid_variance: 0.000, 0.250, 0.472, 0.660, 0.820, 0.959
+```
+
+(api-conditional-tail-ratio)=
+### `conditional_tail_ratio(sample, thresholds, *, min_exceedances=1)`
+
+Return strict-exceedance counts, mean excess, threshold and conditional
+mean divided by threshold. Thresholds must be positive. This wraps
+[`mean_excess`](incerto-api-reference.md#api-mean-excess) and uses its minimum
+count rule; it does not estimate a model beyond the observed maximum.
+
+```python
+from xmath.incerto.diagnostics import conditional_tail_ratio
+
+result = conditional_tail_ratio([-3, 0, 2, 2, 4, 8], [2, 4, 8], min_exceedances=2)
+for count, value in zip(result["exceedances"], result["ratio"]):
+    print(f"count={count:.0f}, ratio={value:.3f}")
+```
+
+**Output**
+
+```text
+count=2, ratio=3.000
+count=1, ratio=nan
+count=0, ratio=nan
+```
+
+(api-aggregation-diagnostics)=
+### `aggregation_diagnostics(returns, horizons=(1, 5, 21), *, overlap=False)`
+
+Return one dictionary per horizon: `horizon`, `blocks`, `dropped`,
+`excess_kurtosis`, `mad`, and `kappa`. MAD is unscaled mean absolute
+deviation about each horizon's sample mean. Kappa compares it with the
+all-observation daily MAD. The underlying
+[`kappa_from_mads`](incerto-api-reference.md#api-kappa-from-mads) domain
+requires nondecreasing MAD; this wrapper exposes a decreasing empirical
+MAD as `nan`. It does not clip values into a proposed population range.
+
+```python
+from xmath.incerto.diagnostics import aggregation_diagnostics
+
+for sample in ([1, 1, -1, -1], [1, -1, 1, -1], [0, 0, 0, 0], [-2, -1, -2, 1]):
+    row = aggregation_diagnostics(sample, (2,))[0]
+    print(f"blocks={row['blocks']}, MAD={row['mad']:.3f}, kappa={row['kappa']:.3f}")
+```
+
+**Output**
+
+```text
+blocks=2, MAD=2.000, kappa=1.000
+blocks=2, MAD=0.000, kappa=nan
+blocks=2, MAD=0.000, kappa=nan
+blocks=2, MAD=1.000, kappa=-inf
+```
+
+(api-chronological-tail-check)=
+### `chronological_tail_check(returns, *, train_size=None, probability=0.95)`
+
+Fit loss cutoffs on an initial training period; evaluate strict exceedances
+on the remaining period. Default split is `floor(n/2)`. Require at least
+two training returns and one test return, with probability strictly between
+zero and one. Gaussian fitting uses `ddof=0`; empirical quantiles use
+`method="higher"`. Output includes train/test sizes, thresholds, hit counts,
+frequencies, and mean losses among hits. No confidence intervals are supplied.
+
+```python
+from xmath.incerto.diagnostics import chronological_tail_check
+
+for test in (0.0, -0.1):
+    result = chronological_tail_check([-.02, 0, .02, test], train_size=3)
+    for method in ("gaussian", "empirical"):
+        row = result[method]
+        print(f"{method}: cutoff={row['threshold']:.4f}, hits={row['exceedances']}, severity={row['mean_exceedance_loss']:.4f}")
+```
+
+**Output**
+
+```text
+gaussian: cutoff=0.0269, hits=0, severity=nan
+empirical: cutoff=0.0200, hits=0, severity=nan
+gaussian: cutoff=0.0269, hits=1, severity=0.1000
+empirical: cutoff=0.0200, hits=1, severity=0.1000
+```
+
+(api-sp500-diagnostics)=
+### `sp500_diagnostics(prices)`
+
+Accept a [`PriceSeries`](incerto-api-reference.md#api-priceseries); validate
+at least 44 strictly positive finite closes with strictly increasing finite
+dates. Reuse [`PriceSeries.log_returns`](incerto-api-reference.md#api-priceseries-log-returns),
+then report full/first-half/second-half diagnostics, disjoint and overlapping
+horizons 1/5/21, raw-power MS shares, records/extrema, gain/loss Hill fits,
+conditional means and a chronological holdout. The first return in the
+second half uses the last training close as its starting price; no return
+observation appears in both halves. Calendar gaps are reported, never filled.
+
+Tail rules: retain 5%, 10%, and 20% of positive-side observations for Hill
+(round down, at least one); use positive-side 80th/90th/95th percentiles for
+conditional means, with at least five strict exceedances. Thin or absent
+sides produce empty fits or `nan`, not an invented exponent. See the
+[local-cache example](incerto-sp500.md#sp500-local-run).
+
+:::{dropdown} Code: run the pipeline on synthetic prices
+
+```python
+import numpy as np
+from xmath.incerto.datasets import PriceSeries
+from xmath.incerto.diagnostics import sp500_diagnostics
+
+returns = .01 * np.sin(np.arange(300)) + .001
+closes = 100 * np.exp(np.r_[0, np.cumsum(returns)])
+dates = np.datetime64("2020-01-01") + np.arange(len(closes))
+prices = PriceSeries("synthetic", dates, closes, "invented example")
+result = sp500_diagnostics(prices)
+print(f"Synthetic returns: {result['returns']}")
+for name, window in result["windows"].items():
+    print(f"{name}: n={window['n']}, drawdown={window['drawdown']:.4f}")
+```
+
+**Output**
+
+```text
+Synthetic returns: 300
+full: n=300, drawdown=0.0176
+first_half: n=150, drawdown=0.0176
+second_half: n=150, drawdown=0.0176
+```
+:::
+
+(api-hinge-payoff)=
+### `hinge_payoff(x, knots, slopes, *, value_at_first=0.0)`
+
+Evaluate a continuous piecewise-linear function. Require `m >= 1` finite
+strictly increasing knots and `m+1` finite slopes; the anchor value is at
+the first knot. Scalars and arrays of finite real inputs retain their shape.
+Outside the knots, extrapolate with the first/last slope. Coefficients of
+hinges are successive slope differences. Arithmetic overflow raises
+`FloatingPointError`; unbounded extrapolation is a model choice.
+
+```python
+from xmath.incerto.diagnostics import hinge_payoff
+
+values = hinge_payoff([-1, 0, 1, 2, 3], [0, 2], [.5, 1.5, -.5])
+print("Values: " + ", ".join(f"{v:.2f}" for v in values))
+try:
+    hinge_payoff([0, 1], [1, 1], [0, 1, 2])
+except ValueError as error:
+    print(type(error).__name__)
+```
+
+**Output**
+
+```text
+Values: -0.50, 0.00, 1.50, 3.00, 2.50
+ValueError
 ```

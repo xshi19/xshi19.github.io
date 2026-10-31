@@ -199,3 +199,11 @@ observations.
 
 [The tail beyond the sample maximum](../incerto-hidden-tail.md) separates
 missing probability, hidden moment contributions, and empirical CDF accuracy.
+
+## Calibration and forecast losses
+
+[Probability calibration](../incerto-calibration-payoff.md) separates event
+frequencies, conditional severity, and the sampling distribution of a score.
+[Point forecasts](../incerto-point-forecast.md) connect amount losses to their
+moment requirements. The [chapter 11 guide](../incerto-scoft-ch11.md) maps
+these calculations to the source and links the model figures.

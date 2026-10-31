@@ -262,3 +262,9 @@ The moment, contamination, hinge, angle, and smoothing statements above
 have explicit arguments; the controlled examples are numerical
 illustrations. No universal superiority of an activation function or
 risk estimator follows from them.
+
+Chapter 11 uses this same representation when [evaluating a specified
+nonlinear exposure](incerto-calibration-payoff.md#calibration-nonlinear).
+Its [calibration definition](incerto-calibration-payoff.md#calibration-definition)
+concerns conditional event frequencies; calibration of geometric slopes here
+is a different use of the word.

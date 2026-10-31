@@ -31,6 +31,7 @@ for implementations and use local `help()` for the installed version.
 
 | Module | Entry points and purpose |
 | --- | --- |
+| `xmath.incerto.calibration` | [`tail_bet_payoffs`](incerto-api-reference.md#api-tail-bet-payoffs), [`pareto_tail_bet`](incerto-api-reference.md#api-pareto-tail-bet), [`lognormal_tail_bet`](incerto-api-reference.md#api-lognormal-tail-bet), [`binary_tally_distribution`](incerto-api-reference.md#api-binary-tally-distribution), [`brier_score`](incerto-api-reference.md#api-brier-score), [`brier_score_distribution`](incerto-api-reference.md#api-brier-score-distribution), [`beta_brier_moments`](incerto-api-reference.md#api-beta-brier-moments), [`beta_brier_cdf`](incerto-api-reference.md#api-beta-brier-cdf), [`simulate_brier_scores`](incerto-api-reference.md#api-simulate-brier-scores), [`calibration_curve`](incerto-api-reference.md#api-calibration-curve), [`point_forecast_loss`](incerto-api-reference.md#api-point-forecast-loss); [chapter 11 scores and payoffs](incerto-scoft-ch11.md) |
 | `xmath.incerto.diagnostics` | [`aggregate_returns`](incerto-api-reference.md#api-aggregate-returns), [`sample_excess_kurtosis`](incerto-api-reference.md#api-sample-excess-kurtosis), [`maximum_drawdown`](incerto-api-reference.md#api-maximum-drawdown), [`moment_share_path`](incerto-api-reference.md#api-moment-share-path), [`record_counts`](incerto-api-reference.md#api-record-counts), [`conditional_tail_ratio`](incerto-api-reference.md#api-conditional-tail-ratio), [`aggregation_diagnostics`](incerto-api-reference.md#api-aggregation-diagnostics), [`chronological_tail_check`](incerto-api-reference.md#api-chronological-tail-check), [`sp500_diagnostics`](incerto-api-reference.md#api-sp500-diagnostics), [`hinge_payoff`](incerto-api-reference.md#api-hinge-payoff); [chapter 10 diagnostics](incerto-scoft-ch10.md) |
 | `xmath.incerto.extremes` | [`pareto_hidden_moment`](incerto-api-reference.md#api-pareto-hidden-moment), [`expected_pareto_hidden_fraction`](incerto-api-reference.md#api-expected-pareto-hidden-fraction), [`maximum_missing_mass`](incerto-api-reference.md#api-maximum-missing-mass), [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling), [`gaussian_maximum_norming`](incerto-api-reference.md#api-gaussian-maximum-norming), [`gaussian_maximum_cdf`](incerto-api-reference.md#api-gaussian-maximum-cdf), [`expected_gaussian_hidden_mean`](incerto-api-reference.md#api-expected-gaussian-hidden-mean); [chapter 9 maxima and hidden tails](incerto-scoft-ch9.md) |
 | `xmath.incerto.concentration` | [`kappa_from_mads`](incerto-api-reference.md#api-kappa-from-mads), [`stable_kappa`](incerto-api-reference.md#api-stable-kappa), [`gaussian_sum_mad`](incerto-api-reference.md#api-gaussian-sum-mad), [`gamma_sum_mad`](incerto-api-reference.md#api-gamma-sum-mad), [`student_sum_mad`](incerto-api-reference.md#api-student-sum-mad), [`estimate_sum_mad`](incerto-api-reference.md#api-estimate-sum-mad), [`lognormal_sum_mad`](incerto-api-reference.md#api-lognormal-sum-mad), [`normal_location_mixture_sum_mad`](incerto-api-reference.md#api-normal-location-mixture-sum-mad), [`gaussian_equivalent_n`](incerto-api-reference.md#api-gaussian-equivalent-n); [finite-sample concentration](incerto-kappa.md) and [sample sufficiency](incerto-moment-estimation.md#moment-estimation-sufficiency) |
@@ -3229,3 +3230,352 @@ except ValueError as error:
 Values: -0.50, 0.00, 1.50, 3.00, 2.50
 ValueError
 ```
+
+### Calibration and forecast losses
+
+Module: `xmath.incerto.calibration`. These are specified model calculations,
+not fitted forecasting systems; see [chapter 11](incerto-scoft-ch11.md).
+Each random experiment uses a local PCG64 generator. Exact-law terminology
+refers to the mathematical distribution; floating-point evaluation is not
+an interval error certificate.
+
+(api-tail-bet-payoffs)=
+#### [`tail_bet_payoffs`](incerto-api-reference.md#api-tail-bet-payoffs)
+
+`tail_bet_payoffs(values, threshold)` computes strict binary, excess and
+tail-level payoffs with the input array's shape, including a scalar shape.
+Inputs must be finite and the threshold scalar. Nonfinite inputs are
+rejected; an unrepresentable difference raises `OverflowError`.
+
+```python
+from xmath.incerto.calibration import tail_bet_payoffs
+
+for key, value in tail_bet_payoffs([2, 3, 7], 3).items():
+    print(key + ": " + ", ".join(f"{x:.1f}" for x in value))
+try:
+    tail_bet_payoffs([float("nan")], 3)
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+binary: 0.0, 0.0, 1.0
+excess: 0.0, 0.0, 4.0
+tail_level: 0.0, 0.0, 7.0
+ValueError: values must be finite
+```
+
+(api-pareto-tail-bet)=
+#### [`pareto_tail_bet`](incerto-api-reference.md#api-pareto-tail-bet)
+
+`pareto_tail_bet(alpha, threshold, *, xm=1.0)` uses an exact Type-I Pareto
+law, with finite `alpha>0` and `threshold>=xm>0`. The tail and excess means
+are unconditional. Logarithmic evaluation avoids multiplying a rounded-zero
+probability by a huge threshold. Mathematical divergence, probability
+underflow, and representational overflow are separate cases.
+
+:::{dropdown} Code: moment boundary and floating-point range
+```python
+from xmath.incerto.calibration import pareto_tail_bet
+
+for a in (.8, 1, 1.5, 3):
+    r = pareto_tail_bet(a, 4)
+    print(f"alpha={a:.1f}: p={r['probability']:.4f}, tail={r['tail_mean']:.3f}, excess={r['excess_mean']:.3f}")
+r = pareto_tail_bet(2, 1e200)
+print(f"Underflow: p={r['probability']:.1f}, excess={r['excess_mean']:.3g}")
+try:
+    pareto_tail_bet(1.01, 1e308, xm=1e308)
+except OverflowError as error:
+    print(type(error).__name__ + ": " + str(error))
+try:
+    pareto_tail_bet(2, .5)
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+alpha=0.8: p=0.3299, tail=inf, excess=inf
+alpha=1.0: p=0.2500, tail=inf, excess=inf
+alpha=1.5: p=0.1250, tail=1.500, excess=1.000
+alpha=3.0: p=0.0156, tail=0.094, excess=0.031
+Underflow: p=0.0, excess=1e-200
+OverflowError: finite payoff mean exceeds floating-point range
+ValueError: require finite alpha>0 and threshold>=xm>0
+```
+:::
+
+(api-lognormal-tail-bet)=
+#### [`lognormal_tail_bet`](incerto-api-reference.md#api-lognormal-tail-bet)
+
+`lognormal_tail_bet(sigma, *, mean=1.0)` sets the threshold equal to the
+fixed mean in the [lognormal model](incerto-calibration-payoff.md#calibration-lognormal).
+Requires finite `sigma>=0` and finite `mean>0`. The strict event at zero
+scale differs from its positive-scale limit. Small excess means use `erf`
+to avoid subtraction of nearly equal CDFs.
+
+```python
+from xmath.incerto.calibration import lognormal_tail_bet
+
+for s in (0, 1e-20, 1, 10):
+    r = lognormal_tail_bet(s)
+    print(f"s={s:.3g}: p={r['probability']:.4f}, excess={r['excess_mean']:.3g}")
+```
+
+**Output**
+
+```text
+s=0: p=0.0000, excess=0
+s=1e-20: p=0.5000, excess=3.99e-21
+s=1: p=0.3085, excess=0.383
+s=10: p=0.0000, excess=1
+```
+
+(api-binary-tally-distribution)=
+#### [`binary_tally_distribution`](incerto-api-reference.md#api-binary-tally-distribution)
+
+`binary_tally_distribution(n, p)` supplies the fraction grid and binomial
+masses for iid Bernoulli outcomes. Integer `1<=n<=100000`, finite `0<=p<=1`.
+The full grid remains at degenerate probabilities, with zero masses elsewhere.
+Rare masses can underflow in floating-point evaluation.
+
+```python
+from xmath.incerto.calibration import binary_tally_distribution
+
+for p in (0, .5, 1):
+    fraction, mass = binary_tally_distribution(3, p)
+    print(f"p={p:.1f}: " + ", ".join(f"{v:.3f}" for v in mass))
+```
+
+**Output**
+
+```text
+p=0.0: 1.000, 0.000, 0.000, 0.000
+p=0.5: 0.125, 0.375, 0.375, 0.125
+p=1.0: 0.000, 0.000, 0.000, 1.000
+```
+
+(api-brier-score)=
+#### [`brier_score`](incerto-api-reference.md#api-brier-score)
+
+`brier_score(forecasts, outcomes)` averages squared errors for equal,
+nonempty one-dimensional vectors. Forecasts must be finite in `[0,1]`;
+outcomes must be zero or one. No weighting or broadcasting is implicit.
+This is the binary `[0,1]` convention, not the doubled two-category score.
+
+```python
+from xmath.incerto.calibration import brier_score
+
+for q in (0, .5, 1):
+    print(f"q={q:.1f}: {brier_score([q, q], [0, 1]):.3f}")
+try:
+    brier_score([], [])
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+q=0.0: 0.500
+q=0.5: 0.250
+q=1.0: 0.500
+ValueError: forecasts and outcomes must be equal nonempty vectors
+```
+
+(api-brier-score-distribution)=
+#### [`brier_score_distribution`](incerto-api-reference.md#api-brier-score-distribution)
+
+`brier_score_distribution(n, p, q)` supplies sorted score values and masses
+for a fixed forecast `q` with iid Bernoulli(`p`) outcomes. Count/probability
+bounds match [`binary_tally_distribution`](incerto-api-reference.md#api-binary-tally-distribution).
+Zero masses are omitted; duplicate floating-point score values are merged.
+
+```python
+from xmath.incerto.calibration import brier_score_distribution
+
+for q in (.2, .5, 1):
+    score, mass = brier_score_distribution(2, .2, q)
+    print(f"q={q:.1f}")
+    for s, w in zip(score, mass):
+        print(f"  score={s:.3f}, mass={w:.3f}")
+```
+
+**Output**
+
+```text
+q=0.2
+  score=0.040, mass=0.640
+  score=0.340, mass=0.320
+  score=0.640, mass=0.040
+q=0.5
+  score=0.250, mass=1.000
+q=1.0
+  score=0.000, mass=0.040
+  score=0.500, mass=0.320
+  score=1.000, mass=0.640
+```
+
+(api-beta-brier-moments)=
+#### [`beta_brier_moments`](incerto-api-reference.md#api-beta-brier-moments)
+
+`beta_brier_moments(a, b, *, p=None, n=1)` computes a one-score mean,
+one-score variance, and iid-average variance from beta integrals.
+`p=None` selects calibrated outcomes conditional on each forecast; numeric
+`p` selects independent Bernoulli outcomes. The numerical domain is
+`0.001<=a,b<=10000`, integer `1<=n<=100000`, and finite `0<=p<=1` when
+supplied. This shape restriction is computational, not a mathematical limit
+of the beta formulas. A detected negative variance raises `ArithmeticError`
+instead of being silently clamped.
+
+```python
+from xmath.incerto.calibration import beta_brier_moments
+
+for p in (.5, None):
+    result = beta_brier_moments(1, 1, p=p, n=20)
+    print("calibrated" if p is None else "independent")
+    for name, value in result.items():
+        print(f"  {name}: {value:.5f}")
+```
+
+**Output**
+
+```text
+independent
+  mean: 0.33333
+  score_variance: 0.08889
+  average_variance: 0.00444
+calibrated
+  mean: 0.16667
+  score_variance: 0.03889
+  average_variance: 0.00194
+```
+
+(api-beta-brier-cdf)=
+#### [`beta_brier_cdf`](incerto-api-reference.md#api-beta-brier-cdf)
+
+`beta_brier_cdf(z, a, b, *, p=None)` evaluates the *one-score* CDF,
+using incomplete beta functions. Same joint-law and shape conventions as
+[`beta_brier_moments`](incerto-api-reference.md#api-beta-brier-moments).
+Output has the shape of `z`, with a zero-dimensional array for a scalar.
+Infinite endpoints are accepted; NaN is rejected. It does not approximate
+an average of multiple scores by this one-score distribution.
+
+```python
+from xmath.incerto.calibration import beta_brier_cdf
+
+z = [-float("inf"), 0, .25, 1, float("inf")]
+for p in (.5, None):
+    print(", ".join(f"{v:.3f}" for v in beta_brier_cdf(z, 1, 1, p=p)))
+try:
+    beta_brier_cdf(float("nan"), 1, 1)
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+0.000, 0.000, 0.500, 1.000, 1.000
+0.000, 0.000, 0.750, 1.000, 1.000
+ValueError: z must not contain NaN
+```
+
+(api-simulate-brier-scores)=
+#### [`simulate_brier_scores`](incerto-api-reference.md#api-simulate-brier-scores)
+
+`simulate_brier_scores(a, b, n, *, p=None, repetitions=10000, seed=1107)`
+simulates independent averages under the same joint-law convention as
+[`beta_brier_moments`](incerto-api-reference.md#api-beta-brier-moments).
+There are at most 20 million forecast/outcome pairs, `n<=100000`, and
+`repetitions<=1000000`; both counts are positive integers. The seed is a
+nonnegative integer. Batches contain at most 100,000 pairs. No replicate
+is removed or capped, and the process-global random state is untouched.
+
+```python
+from xmath.incerto.calibration import simulate_brier_scores
+
+scores = simulate_brier_scores(2, 5, 20, repetitions=5, seed=11)
+print(", ".join(f"{s:.4f}" for s in scores))
+try:
+    simulate_brier_scores(2, 5, 100000)
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+0.0998, 0.1433, 0.2221, 0.2042, 0.1990
+ValueError: at most 20000000 forecast/outcome pairs are allowed
+```
+
+(api-calibration-curve)=
+#### [`calibration_curve`](incerto-api-reference.md#api-calibration-curve)
+
+`calibration_curve(forecasts, outcomes, *, bins=10)` uses equal-width
+intervals `[left,right)`, with the final interval including one.
+Integer `1<=bins<=10000`; input validation matches
+[`brier_score`](incerto-api-reference.md#api-brier-score).
+It computes bin edges, counts, mean forecasts, and event frequencies;
+no fit, smoothing, or confidence interval is included.
+
+```python
+from xmath.incerto.calibration import calibration_curve
+
+curve = calibration_curve([0, .25, 1], [0, 1, 1], bins=4)
+for n, q, d in zip(curve["count"], curve["forecast_mean"], curve["event_frequency"]):
+    print(f"n={n}, forecast={q:.2f}, frequency={d:.2f}")
+```
+
+**Output**
+
+```text
+n=1, forecast=0.00, frequency=0.00
+n=1, forecast=0.25, frequency=1.00
+n=0, forecast=nan, frequency=nan
+n=1, forecast=1.00, frequency=1.00
+```
+
+(api-point-forecast-loss)=
+#### [`point_forecast_loss`](incerto-api-reference.md#api-point-forecast-loss)
+
+`point_forecast_loss(actual, forecast, *, metric="absolute", scale=None)`
+computes broadcast elementwise absolute, squared, sMAPE or MASE errors.
+Finite inputs only; averaging is explicit at the call site. sMAPE uses the
+`[0,2]` convention and assigns zero at `(0,0)`. MASE requires a separately
+computed positive finite scalar training scale; other metrics reject
+`scale`. Rescaling protects sMAPE and MASE from some intermediate overflows;
+an unrepresentable resulting loss raises `OverflowError`.
+
+:::{dropdown} Code: zero convention, normalization, and overflow
+```python
+from xmath.incerto.calibration import point_forecast_loss
+
+for metric in ("absolute", "squared", "smape"):
+    result = point_forecast_loss([0, 2, 5], [0, 1, 1], metric=metric)
+    print(metric + ": " + ", ".join(f"{v:.3f}" for v in result))
+print(f"MASE: {float(point_forecast_loss(5, 1, metric='mase', scale=2)):.2f}")
+print(f"Large sMAPE: {float(point_forecast_loss(1e308, -1e308, metric='smape')):.1f}")
+for metric, scale in (("mase", 0), ("squared", None)):
+    try:
+        point_forecast_loss(1e200, 0, metric=metric, scale=scale)
+    except (ValueError, OverflowError) as error:
+        print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+absolute: 0.000, 1.000, 4.000
+squared: 0.000, 1.000, 16.000
+smape: 0.000, 0.667, 1.333
+MASE: 2.00
+Large sMAPE: 2.0
+ValueError: MASE requires a positive finite training scale
+OverflowError: loss exceeds floating-point range
+```
+:::

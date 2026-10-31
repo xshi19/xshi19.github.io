@@ -5,6 +5,8 @@ title: Methods
 Method pages describe diagnostics, estimators, and modeling moves that recur
 across fat-tail arguments.
 
+- [Probability calibration versus payoff accuracy](incerto-calibration-payoff.md)
+- [Point forecasts under heavy-tailed losses](incerto-point-forecast.md)
 - [Tail assumptions in statistical pipelines](incerto-ml-econometrics.md)
 - [Moment estimation and its limits](./incerto-moment-estimation.md)
 - [Kappa and finite-sample concentration](./incerto-kappa.md)

@@ -35,7 +35,7 @@
 - [别了， Yann LeCun](https://xshi19.github.io/zh/blog/farewell-yann-lecun.md): 2024-11-12. HTML: https://xshi19.github.io/zh/blog/farewell-yann-lecun/
 
 ## Public code
-- [normix](https://github.com/xshi19/normix): JAX package for normal variance mixture distributions (generalized hyperbolic and relatives), with fitting and risk measures.
+- [normix](https://xshi19.github.io/normix/): JAX package for normal variance mixture distributions (generalized hyperbolic and relatives), with fitting and risk measures.
 
 ## Related sites (independently maintained)
 - [Mathematical notes](https://xshi19.github.io/math/)

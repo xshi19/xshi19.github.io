@@ -31,6 +31,7 @@ for implementations and use local `help()` for the installed version.
 
 | Module | Entry points and purpose |
 | --- | --- |
+| `xmath.incerto.forecasting` | [`stable_average_scale`](incerto-api-reference.md#api-stable-average-scale), [`quantile_loss`](incerto-api-reference.md#api-quantile-loss), [`bounded_to_dual`](incerto-api-reference.md#api-bounded-to-dual), [`dual_to_bounded`](incerto-api-reference.md#api-dual-to-bounded), [`pareto_forecast_scores`](incerto-api-reference.md#api-pareto-forecast-scores); [chapter 12 forecasts and tail risk](incerto-scoft-ch12.md) |
 | `xmath.incerto.calibration` | [`tail_bet_payoffs`](incerto-api-reference.md#api-tail-bet-payoffs), [`pareto_tail_bet`](incerto-api-reference.md#api-pareto-tail-bet), [`lognormal_tail_bet`](incerto-api-reference.md#api-lognormal-tail-bet), [`binary_tally_distribution`](incerto-api-reference.md#api-binary-tally-distribution), [`brier_score`](incerto-api-reference.md#api-brier-score), [`brier_score_distribution`](incerto-api-reference.md#api-brier-score-distribution), [`beta_brier_moments`](incerto-api-reference.md#api-beta-brier-moments), [`beta_brier_cdf`](incerto-api-reference.md#api-beta-brier-cdf), [`simulate_brier_scores`](incerto-api-reference.md#api-simulate-brier-scores), [`calibration_curve`](incerto-api-reference.md#api-calibration-curve), [`point_forecast_loss`](incerto-api-reference.md#api-point-forecast-loss); [chapter 11 scores and payoffs](incerto-scoft-ch11.md) |
 | `xmath.incerto.diagnostics` | [`aggregate_returns`](incerto-api-reference.md#api-aggregate-returns), [`sample_excess_kurtosis`](incerto-api-reference.md#api-sample-excess-kurtosis), [`maximum_drawdown`](incerto-api-reference.md#api-maximum-drawdown), [`moment_share_path`](incerto-api-reference.md#api-moment-share-path), [`record_counts`](incerto-api-reference.md#api-record-counts), [`conditional_tail_ratio`](incerto-api-reference.md#api-conditional-tail-ratio), [`aggregation_diagnostics`](incerto-api-reference.md#api-aggregation-diagnostics), [`chronological_tail_check`](incerto-api-reference.md#api-chronological-tail-check), [`sp500_diagnostics`](incerto-api-reference.md#api-sp500-diagnostics), [`hinge_payoff`](incerto-api-reference.md#api-hinge-payoff); [chapter 10 diagnostics](incerto-scoft-ch10.md) |
 | `xmath.incerto.extremes` | [`pareto_hidden_moment`](incerto-api-reference.md#api-pareto-hidden-moment), [`expected_pareto_hidden_fraction`](incerto-api-reference.md#api-expected-pareto-hidden-fraction), [`maximum_missing_mass`](incerto-api-reference.md#api-maximum-missing-mass), [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling), [`gaussian_maximum_norming`](incerto-api-reference.md#api-gaussian-maximum-norming), [`gaussian_maximum_cdf`](incerto-api-reference.md#api-gaussian-maximum-cdf), [`expected_gaussian_hidden_mean`](incerto-api-reference.md#api-expected-gaussian-hidden-mean); [chapter 9 maxima and hidden tails](incerto-scoft-ch9.md) |
@@ -3577,5 +3578,208 @@ MASE: 2.00
 Large sMAPE: 2.0
 ValueError: MASE requires a positive finite training scale
 OverflowError: loss exceeds floating-point range
+```
+:::
+
+## Point forecasts and bounded transforms
+
+These model helpers use `xmath.incerto.forecasting`. They do not fit data or
+certify a predictive model. Array inputs preserve their shape; quantile losses
+broadcast. Floating-point comparisons are tested at stated cases, not uniformly
+certified over all parameters. Endpoint rounding can lose inverse information.
+
+(api-stable-average-scale)=
+#### [`stable_average_scale`](incerto-api-reference.md#api-stable-average-scale)
+
+`stable_average_scale(alpha, n, *, scale=1.0)`
+
+The iid symmetric stable CF convention is
+$\exp(i\mu t-|\sigma t|^\alpha)$. The average has scale
+$\sigma n^{1/\alpha-1}$, with $0<\alpha\le2$, positive finite `scale`,
+and integer $1\le n\le2^{53}$. This is not a standard deviation.
+
+```python
+from xmath.incerto.forecasting import stable_average_scale
+
+for alpha in (.8, 1, 1.5, 2):
+    print(f"alpha={alpha:g}: {stable_average_scale(alpha, 100):.3f}")
+for alpha in (0, 3):
+    try:
+        stable_average_scale(alpha, 100)
+    except ValueError as error:
+        print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+alpha=0.8: 3.162
+alpha=1: 1.000
+alpha=1.5: 0.215
+alpha=2: 0.100
+ValueError: alpha must be finite and positive
+ValueError: alpha must not exceed 2
+```
+
+(api-quantile-loss)=
+#### [`quantile_loss`](incerto-api-reference.md#api-quantile-loss)
+
+`quantile_loss(actual, forecast, *, tau=0.5)`
+
+Pinball loss weights underprediction by `tau` and overprediction by
+`1-tau`, for finite real inputs and scalar $0<\tau<1$. Its finite-risk
+quantile optimization and bounded paired differences are proved on the
+[concept page](incerto-point-forecast.md#point-forecast-quantiles).
+
+```python
+from xmath.incerto.forecasting import quantile_loss
+
+print(", ".join(f"{v:.2f}" for v in quantile_loss([1, 3, 20], 3, tau=.9)))
+print(f"large finite loss: {float(quantile_loss(1e308, -1e308)):.2e}")
+for tau in (0, 1):
+    try:
+        quantile_loss(1, 0, tau=tau)
+    except ValueError as error:
+        print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+0.20, 0.00, 15.30
+large finite loss: 1.00e+308
+ValueError: tau must lie strictly between zero and one
+ValueError: tau must lie strictly between zero and one
+```
+
+(api-bounded-to-dual)=
+#### [`bounded_to_dual`](incerto-api-reference.md#api-bounded-to-dual)
+
+`bounded_to_dual(values, *, upper)`
+
+The zero-lower-endpoint transform is $-H\log(1-x/H)$ on $[0,H]$,
+where `upper` is a positive finite $H$. It has an extended value at $H$.
+It assumes no tail law. `log1p` preserves small ratios; a gap-based
+logarithm handles the interior near $H$.
+
+```python
+from xmath.incerto.forecasting import bounded_to_dual
+
+print(", ".join(f"{z:.3f}" for z in bounded_to_dual([0, 1, 99, 100], upper=100)))
+for x in (-1, 101, float("nan"), float("inf")):
+    try:
+        bounded_to_dual(x, upper=100)
+    except ValueError as error:
+        print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+0.000, 1.005, 460.517, inf
+ValueError: values must lie in [0, upper]
+ValueError: values must lie in [0, upper]
+ValueError: values must contain finite values
+ValueError: values must contain finite values
+```
+
+(api-dual-to-bounded)=
+#### [`dual_to_bounded`](incerto-api-reference.md#api-dual-to-bounded)
+
+`dual_to_bounded(values, *, upper)`
+
+The inverse is $H(1-e^{-z/H})$ for nonnegative $z$, including positive
+infinity. A finite large coordinate can round to the endpoint. This
+rounding is not a recovered endpoint atom in a fitted probability law.
+
+```python
+from xmath.incerto.forecasting import dual_to_bounded, bounded_to_dual
+
+for z in (0, 1, 100, 1e6, float("inf")):
+    x = dual_to_bounded(z, upper=100)
+    back = bounded_to_dual(x, upper=100)
+    print(f"z={z:g}: physical={x:.3f}, round trip={back:.3f}")
+try:
+    dual_to_bounded(-1, upper=100)
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+z=0: physical=0.000, round trip=0.000
+z=1: physical=0.995, round trip=1.000
+z=100: physical=63.212, round trip=100.000
+z=1e+06: physical=100.000, round trip=inf
+z=inf: physical=100.000, round trip=inf
+ValueError: dual values must be nonnegative
+```
+
+(api-pareto-forecast-scores)=
+#### [`pareto_forecast_scores`](incerto-api-reference.md#api-pareto-forecast-scores)
+
+`pareto_forecast_scores(alpha, n, forecast, *, xm=1.0, repetitions=2000, seed=0)`
+
+Each iid exact-Pareto test sample produces its mean and average absolute,
+squared, and sMAPE losses against one fixed forecast. The result is a dict
+of arrays with one entry per replication. It reuses
+[`point_forecast_loss`](incerto-api-reference.md#api-point-forecast-loss),
+including its zero convention. All metrics share the same observations.
+Integer seeds select PCG64. Require positive finite `alpha`/`xm`, finite
+`forecast`, positive integer sizes, $n\le10^6$ and at most 50 million draws.
+No fitted forecasts, censoring, data selection or standard errors are implied.
+
+```python
+from xmath.incerto.forecasting import pareto_forecast_scores
+
+scores = pareto_forecast_scores(1.5, 100, 2, repetitions=3, seed=1209)
+for metric, values in scores.items():
+    print(metric + ": " + ", ".join(f"{v:.3f}" for v in values))
+try:
+    pareto_forecast_scores(1.5, 1000000, 2, repetitions=51)
+except ValueError as error:
+    print(type(error).__name__ + ": " + str(error))
+```
+
+**Output**
+
+```text
+mean: 2.134, 2.327, 3.664
+absolute: 1.088, 1.252, 2.482
+squared: 3.076, 7.159, 280.829
+smape: 0.460, 0.462, 0.400
+ValueError: experiment exceeds draw budget or size limit
+```
+
+The following distinguishes numerical overflow from a mathematical endpoint
+or infinite expected risk. No nonfinite realization is silently removed.
+
+:::{dropdown} Code: arithmetic failures remain visible
+```python
+from xmath.incerto.forecasting import (
+    stable_average_scale, bounded_to_dual, quantile_loss, pareto_forecast_scores,
+)
+
+cases = (
+    ("scale", lambda: stable_average_scale(.01, 100000, scale=1e100)),
+    ("dual", lambda: bounded_to_dual(9e307, upper=1e308)),
+    ("score", lambda: quantile_loss(1.7e308, -1.7e308, tau=.9)),
+    ("draws", lambda: pareto_forecast_scores(.001, 100, 1, repetitions=2, seed=12)),
+)
+for name, run in cases:
+    try:
+        run()
+    except (FloatingPointError, OverflowError) as error:
+        print(f"{name}: {type(error).__name__}")
+```
+
+**Output**
+
+```text
+scale: FloatingPointError
+dual: FloatingPointError
+score: OverflowError
+draws: FloatingPointError
 ```
 :::

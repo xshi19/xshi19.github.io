@@ -19,3 +19,7 @@ synthetic iid samples to compare mean and median behavior.
 The [chapter 8 experiments](incerto-scoft-ch8.md) compare exact sum deviations,
 seeded lognormal/Pareto estimates, and Gaussian-equivalent sample sizes.
 These are model calculations, not observed-data studies.
+
+The [chapter 12 experiments](incerto-scoft-ch12.md) use synthetic Pareto
+samples to compare forecast scores and exact capped-loss models to separate
+a shared median from tail harm. They contain no pandemic observations.

@@ -180,8 +180,10 @@ authorized local cache; the published figures use specified synthetic models.
   [Chapter 6 — Thick tails in higher dimensions](../incerto-scoft-ch6.md),
   [Chapter 7 — Averages and limit laws](../incerto-scoft-ch7.md),
   [Chapter 8 — How much averaging helps](../incerto-scoft-ch8.md),
-  [Chapter 9 — Maxima and hidden tails](../incerto-scoft-ch9.md), and
-  [Chapter 10 — Diagnosing returns](../incerto-scoft-ch10.md).
+  [Chapter 9 — Maxima and hidden tails](../incerto-scoft-ch9.md),
+  [Chapter 10 — Diagnosing returns](../incerto-scoft-ch10.md),
+  [Chapter 11 — Calibration and payoffs](../incerto-scoft-ch11.md), and
+  [Chapter 12 — Point forecasts and tail risk](../incerto-scoft-ch12.md).
 - [External guides](../incerto-external-reading.md), including
   [Embrechts, Klüppelberg, and Mikosch](../incerto-reading-embrechts.md).
 - [Concept graph](../incerto-dependency-dag.md), with a plain linked fallback.
@@ -207,3 +209,6 @@ frequencies, conditional severity, and the sampling distribution of a score.
 [Point forecasts](../incerto-point-forecast.md) connect amount losses to their
 moment requirements. The [chapter 11 guide](../incerto-scoft-ch11.md) maps
 these calculations to the source and links the model figures.
+The [chapter 12 guide](../incerto-scoft-ch12.md) extends the same note to
+mean-error scaling, score comparisons, predictive ranges and action-dependent
+pandemic forecasts, with synthetic bounded-loss examples.

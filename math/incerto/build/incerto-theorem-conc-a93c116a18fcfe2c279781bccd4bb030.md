@@ -27,3 +27,8 @@ and [distribution](./incerto-distribution-concepts.md) indexes.
 The [calibration note](incerto-calibration-payoff.md#calibration-tally) derives
 finite tally and Brier laws; the [point-forecast note](incerto-point-forecast.md#point-forecast-targets)
 proves the finite-risk mean/median targets and their moment boundaries.
+
+The [probability-conflation note](incerto-probability-conflation.md#conflation-inverse-probability)
+proves a beta-to-Pareto quantile-moment boundary. The
+[risk-measures note](incerto-risk-measures.md#risk-alpha-convexity) proves
+quantile and ES convexity under common-cutoff exponent uncertainty.

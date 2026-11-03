@@ -23,3 +23,7 @@ These are model calculations, not observed-data studies.
 The [chapter 12 experiments](incerto-scoft-ch12.md) use synthetic Pareto
 samples to compare forecast scores and exact capped-loss models to separate
 a shared median from tail harm. They contain no pandemic observations.
+
+The [chapter 13 experiments](incerto-scoft-ch13.md) compare specified
+probability and exponent uncertainty models, with a repeated synthetic
+Hill-fit experiment. Infinite fitted ES values remain in the record.

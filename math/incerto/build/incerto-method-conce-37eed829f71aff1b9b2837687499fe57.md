@@ -5,6 +5,8 @@ title: Methods
 Method pages describe diagnostics, estimators, and modeling moves that recur
 across fat-tail arguments.
 
+- [Tail probabilities, payoffs, and error propagation](incerto-probability-conflation.md)
+- [VaR, expected shortfall, and tail uncertainty](incerto-risk-measures.md)
 - [Probability calibration versus payoff accuracy](incerto-calibration-payoff.md)
 - [Point forecasts under heavy-tailed losses](incerto-point-forecast.md):
   mean-error scaling, paired scores, predictive quantiles and bounded tail risk

@@ -31,6 +31,7 @@ for implementations and use local `help()` for the installed version.
 
 | Module | Entry points and purpose |
 | --- | --- |
+| `xmath.incerto.risk_measures` | [`pareto_risk`](incerto-api-reference.md#api-pareto-risk), [`discrete_risk`](incerto-api-reference.md#api-discrete-risk), [`pareto_mixture_risk`](incerto-api-reference.md#api-pareto-mixture-risk), [`beta_pareto_quantile_moment`](incerto-api-reference.md#api-beta-pareto-quantile-moment); [chapter 13 probability and payoff risk](incerto-scoft-ch13.md) |
 | `xmath.incerto.forecasting` | [`stable_average_scale`](incerto-api-reference.md#api-stable-average-scale), [`quantile_loss`](incerto-api-reference.md#api-quantile-loss), [`bounded_to_dual`](incerto-api-reference.md#api-bounded-to-dual), [`dual_to_bounded`](incerto-api-reference.md#api-dual-to-bounded), [`pareto_forecast_scores`](incerto-api-reference.md#api-pareto-forecast-scores); [chapter 12 forecasts and tail risk](incerto-scoft-ch12.md) |
 | `xmath.incerto.calibration` | [`tail_bet_payoffs`](incerto-api-reference.md#api-tail-bet-payoffs), [`pareto_tail_bet`](incerto-api-reference.md#api-pareto-tail-bet), [`lognormal_tail_bet`](incerto-api-reference.md#api-lognormal-tail-bet), [`binary_tally_distribution`](incerto-api-reference.md#api-binary-tally-distribution), [`brier_score`](incerto-api-reference.md#api-brier-score), [`brier_score_distribution`](incerto-api-reference.md#api-brier-score-distribution), [`beta_brier_moments`](incerto-api-reference.md#api-beta-brier-moments), [`beta_brier_cdf`](incerto-api-reference.md#api-beta-brier-cdf), [`simulate_brier_scores`](incerto-api-reference.md#api-simulate-brier-scores), [`calibration_curve`](incerto-api-reference.md#api-calibration-curve), [`point_forecast_loss`](incerto-api-reference.md#api-point-forecast-loss); [chapter 11 scores and payoffs](incerto-scoft-ch11.md) |
 | `xmath.incerto.diagnostics` | [`aggregate_returns`](incerto-api-reference.md#api-aggregate-returns), [`sample_excess_kurtosis`](incerto-api-reference.md#api-sample-excess-kurtosis), [`maximum_drawdown`](incerto-api-reference.md#api-maximum-drawdown), [`moment_share_path`](incerto-api-reference.md#api-moment-share-path), [`record_counts`](incerto-api-reference.md#api-record-counts), [`conditional_tail_ratio`](incerto-api-reference.md#api-conditional-tail-ratio), [`aggregation_diagnostics`](incerto-api-reference.md#api-aggregation-diagnostics), [`chronological_tail_check`](incerto-api-reference.md#api-chronological-tail-check), [`sp500_diagnostics`](incerto-api-reference.md#api-sp500-diagnostics), [`hinge_payoff`](incerto-api-reference.md#api-hinge-payoff); [chapter 10 diagnostics](incerto-scoft-ch10.md) |
@@ -3783,3 +3784,209 @@ score: OverflowError
 draws: FloatingPointError
 ```
 :::
+
+### Quantiles and tail uncertainty
+
+These helpers are in `xmath.incerto.risk_measures`; the
+[chapter 13 guide](incerto-scoft-ch13.md) links their mathematical arguments.
+`tail_probability` is the upper-tail mass $p$, with confidence $1-p$.
+All four return Python floats, either directly or in a `var`/`es` dict.
+They evaluate specified laws; none fits a distribution or certifies a forecast.
+
+(api-pareto-risk)=
+#### [`pareto_risk`](incerto-api-reference.md#api-pareto-risk)
+
+`pareto_risk(alpha, tail_probability, *, xm=1.0)`
+
+Exact Type-I Pareto VaR and ES for finite scalar `alpha>0`, `xm>0`, and
+`0<tail_probability<1`. Log evaluation preserves finite results whose
+intermediate power would overflow. Mathematical infinite ES is distinct
+from an unrepresentable finite answer. See the
+[Pareto risk derivation](incerto-risk-measures.md#risk-pareto).
+
+```python
+from xmath.incerto.risk_measures import pareto_risk
+
+for alpha in (.8, 1, 2):
+    r = pareto_risk(alpha, .01)
+    print(f"alpha={alpha:g}: VaR={r['var']:.2f}, ES={r['es']:.2f}")
+r = pareto_risk(.5, 1e-200, xm=1e-300)
+print(f"scaled quantile: {r['var']:.2e}")
+```
+
+**Output**
+
+```text
+alpha=0.8: VaR=316.23, ES=inf
+alpha=1: VaR=100.00, ES=inf
+alpha=2: VaR=10.00, ES=20.00
+scaled quantile: 1.00e+100
+```
+
+:::{dropdown} Rejected endpoints, NaN, infinity, and finite overflow
+
+```python
+from xmath.incerto.risk_measures import pareto_risk
+
+cases = (
+    ("p=0", lambda: pareto_risk(2, 0)),
+    ("p=1", lambda: pareto_risk(2, 1)),
+    ("NaN", lambda: pareto_risk(float('nan'), .1)),
+    ("infinite exponent", lambda: pareto_risk(float('inf'), .1)),
+    ("overflow", lambda: pareto_risk(.1, 1e-100)),
+)
+for name, call in cases:
+    try:
+        call()
+    except (ValueError, FloatingPointError) as error:
+        print(f"{name}: {type(error).__name__}")
+```
+
+**Output**
+
+```text
+p=0: ValueError
+p=1: ValueError
+NaN: ValueError
+infinite exponent: ValueError
+overflow: FloatingPointError
+```
+
+:::
+
+(api-discrete-risk)=
+#### [`discrete_risk`](incerto-api-reference.md#api-discrete-risk)
+
+`discrete_risk(values, probabilities, tail_probability)`
+
+Finite nonnegative losses with equal, nonempty one-dimensional vectors.
+Probabilities lie in `[0,1]`, sum to one within `1e-12`, and are then
+normalized. Zero-mass values are ignored. Repeated values need not be
+merged by the caller. ES fills the upper probability mass, including a
+fraction of the quantile atom; VaR uses the lower-quantile convention.
+Tail calculations avoid forming `1-p`, preserving small tail probabilities.
+
+```python
+from xmath.incerto.risk_measures import discrete_risk
+
+for p in (.1, .05):
+    r = discrete_risk([0, 5, 20], [.85, .1, .05], p)
+    print(f"tail mass={p:.2f}: VaR={r['var']:.1f}, ES={r['es']:.1f}")
+r = discrete_risk([7, 7, 100], [.2, .8, 0], .1)
+print(f"constant law: VaR={r['var']:.1f}, ES={r['es']:.1f}")
+```
+
+**Output**
+
+```text
+tail mass=0.10: VaR=5.0, ES=12.5
+tail mass=0.05: VaR=5.0, ES=20.0
+constant law: VaR=7.0, ES=7.0
+```
+
+```python
+from xmath.incerto.risk_measures import discrete_risk
+
+for values, probabilities in (([], []), ([float('nan')], [1]), ([-1], [1]), ([1], [.5])):
+    try:
+        discrete_risk(values, probabilities, .1)
+    except ValueError as error:
+        print(type(error).__name__)
+```
+
+**Output**
+
+```text
+ValueError
+ValueError
+ValueError
+ValueError
+```
+
+(api-pareto-mixture-risk)=
+#### [`pareto_mixture_risk`](incerto-api-reference.md#api-pareto-mixture-risk)
+
+`pareto_mixture_risk(alphas, probabilities, tail_probability, *, xm=1.0)`
+
+Risk of a finite mixture with one common positive finite cutoff, exponents
+in `[0.001,1000]`, and `0<p<1`. The probability-vector contract is the same
+as [`discrete_risk`](incerto-api-reference.md#api-discrete-risk).
+The solver finds the quantile in log coordinates using log-sum-exp survival
+and Brent's method, with `expm1`/`log1p` evaluation near tail probability one.
+It then integrates the tail at that common quantile.
+This is a numerical root with an analytic tail integral, not an average
+of component risk measures. Finite-result overflow raises `FloatingPointError`.
+All input exponents are validated, including those with zero weight.
+
+```python
+from xmath.incerto.risk_measures import pareto_mixture_risk
+
+for alphas, weights in (([1.2, 2.8], [.5, .5]), ([.8, 2], [.1, .9]), ([.8, 2], [0, 1])):
+    r = pareto_mixture_risk(alphas, weights, .01)
+    print(f"VaR={r['var']:.2f}, ES={r['es']:.2f}")
+try:
+    pareto_mixture_risk([0, 2], [.5, .5], .01)
+except ValueError as error:
+    print(type(error).__name__)
+```
+
+**Output**
+
+```text
+VaR=26.17, ES=156.38
+VaR=22.64, ES=inf
+VaR=10.00, ES=20.00
+ValueError
+```
+
+(api-beta-pareto-quantile-moment)=
+#### [`beta_pareto_quantile_moment`](incerto-api-reference.md#api-beta-pareto-quantile-moment)
+
+`beta_pareto_quantile_moment(a, b, alpha, order, *, xm=1.0)`
+
+Positive-order raw moments of the random threshold $x_m\Pi^{-1/\alpha}$
+for an assumed beta-distributed report $\Pi$. Scalar beta shapes are
+in `[0.001,10000]`; `alpha>0`, `xm>0`, and `order>=0` are finite.
+The order-zero result is one. This uses a log-beta ratio inside the
+[proved moment domain](incerto-probability-conflation.md#conflation-inverse-probability)
+and checks divergence before evaluation. With `b=1` it uses an elementary
+log ratio to avoid cancellation. Finite positive underflow/overflow raises
+`FloatingPointError`; no uniform relative-error certificate is claimed.
+
+```python
+from xmath.incerto.risk_measures import beta_pareto_quantile_moment
+
+for order in (0, 1, 2):
+    value = beta_pareto_quantile_moment(2, 3, 1, order)
+    print(f"order={order}: {value:.3f}")
+try:
+    beta_pareto_quantile_moment(2, 3, 2, -1)
+except ValueError as error:
+    print(type(error).__name__)
+```
+
+**Output**
+
+```text
+order=0: 1.000
+order=1: 4.000
+order=2: inf
+ValueError
+```
+
+```python
+from xmath.incerto.risk_measures import beta_pareto_quantile_moment
+
+for xm in (1e-300, 1e300):
+    try:
+        beta_pareto_quantile_moment(3, 1, 1, 2, xm=xm)
+    except FloatingPointError as error:
+        print(type(error).__name__)
+```
+
+**Output**
+
+```text
+FloatingPointError
+FloatingPointError
+```

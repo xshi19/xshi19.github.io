@@ -212,3 +212,9 @@ these calculations to the source and links the model figures.
 The [chapter 12 guide](../incerto-scoft-ch12.md) extends the same note to
 mean-error scaling, score comparisons, predictive ranges and action-dependent
 pandemic forecasts, with synthetic bounded-loss examples.
+
+The [chapter 13 guide](../incerto-scoft-ch13.md) connects
+[probability error and payoff error](../incerto-probability-conflation.md)
+to [VaR, expected shortfall and exponent uncertainty](../incerto-risk-measures.md).
+The examples separate fixed-event calibration from the information needed
+to estimate an unbounded exposure.

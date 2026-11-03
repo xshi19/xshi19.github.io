@@ -5,7 +5,7 @@ options:
     id: calibration-payoff
     type: method
     prerequisites: [asymmetric-payoffs, moment-estimation]
-    related: [point-forecast, ml-econometrics]
+    related: [point-forecast, ml-econometrics, probability-conflation, risk-measures]
     tags: [calibration, scoring, payoffs]
 ---
 
@@ -16,7 +16,8 @@ already separates gain frequency from expected gain; here we derive the
 sampling laws of event scores and compare them with unbounded exposures.
 
 The source context is SCoFT v4, chapter 11, §§11.1–11.5 and §11.7,
-printed pp. 220–240 [@taleb2025scoftv4]. The calculations below are original
+printed pp. 220–240, extended by chapter 13, §§13.2–13.5,
+pp. 253–259 [@taleb2025scoftv4]. The calculations below are original
 model arguments. They do not establish a result about participants in
 psychology experiments, forecasters, or financial markets.
 
@@ -567,10 +568,119 @@ severity belong in the payoff or loss function. The
 [point-forecast note](incerto-point-forecast.md) derives what changes when
 we score amounts rather than event indicators.
 
+(calibration-payoff-error)=
+## From score regret to a decision error
+
+The [probability-conflation note](incerto-probability-conflation.md#conflation-score-gap)
+proves that even zero Brier regret cannot bound severity error over a
+class with unrestricted tail payoffs. The gap can also be decomposed
+within one prediction problem. Fix an event $D$, let $p=P(D=1)>0$,
+and let $V\ge0$ be an integrable severity on that event. Write
+$m=\mathbb E[V\mid D=1]$. A probability estimate $q$ and finite
+severity estimate $\widehat m$ imply the estimated exposure $q\widehat m$.
+Adding and subtracting $p\widehat m$ proves
+
+$$
+\begin{aligned}
+|q\widehat m-pm|
+&\le |\widehat m|\,|q-p|\\
+&\quad+p|\widehat m-m|.
+\end{aligned}
+$$
+
+For a constant probability report, let
+$\Delta_B=R_B(q)-R_B(p)=(q-p)^2$. If severity is known exactly,
+$\widehat m=m\le H<\infty$, the bound reduces to
+
+$$
+|qm-pm|\le H\sqrt{\Delta_B}.
+$$
+
+Thus probability accuracy does control expected exposure when a severity
+bound and a correct conditional-severity model are supplied. A common
+cap on $V$ bounds $m$ but does not remove the second term when severity
+is estimated incorrectly. Brier calibration addresses neither that term
+nor uncertainty about the cap.
+
+For the exact Pareto excess model, hold $u,p$ fixed as in
+[equal-probability comparisons](#calibration-tail-models). If both the true
+exponent $\alpha$ and the fitted exponent $\widehat\alpha$ exceed one,
+the payoff error with the correct probability report is exactly
+
+$$
+\begin{gathered}
+|\widehat C-C|
+=\frac{up|\widehat\alpha-\alpha|}
+ { (\alpha-1)(\widehat\alpha-1)},\\
+\frac{|\widehat C-C|}{C}
+=\frac{|\widehat\alpha-\alpha|}{\widehat\alpha-1}.
+\end{gathered}
+$$
+
+Subtracting the two reciprocal formulas proves these identities. As the
+fitted exponent approaches one, even a small absolute exponent error
+can imply a large relative payoff error. The probability regret remains
+zero because the minima are adjusted to preserve $p$. A fixed-cutoff
+exponent comparison is a different model, treated in
+[VaR/ES uncertainty](incerto-risk-measures.md#risk-alpha-convexity).
+
+Use [`pareto_tail_bet`](incerto-api-reference.md#api-pareto-tail-bet).
+
+```python
+from xmath.incerto.calibration import pareto_tail_bet
+
+u, p, alpha = 5, .1, 1.1
+true = pareto_tail_bet(alpha, u, xm=u*p**(1/alpha))["excess_mean"]
+for estimate in (1.2, 1.05, 1.01):
+    fitted = pareto_tail_bet(estimate, u, xm=u*p**(1/estimate))["excess_mean"]
+    print(f"alpha estimate={estimate:.2f}: payoff error={abs(fitted-true):.2f}, probability regret=0")
+```
+
+**Output**
+
+```text
+alpha estimate=1.20: payoff error=2.50, probability regret=0
+alpha estimate=1.05: payoff error=5.00, probability regret=0
+alpha estimate=1.01: payoff error=45.00, probability regret=0
+```
+
+A bounded binary decision shows why better probabilities can matter.
+Suppose inaction incurs $hD$, while an action costs $c$ and prevents
+that loss completely, with known $h,c>0$. Comparing expected costs
+proves that the action is preferred exactly when $ph>c$, with a tie at
+equality. This is a model assumption about effectiveness, not an empirical
+claim. The following two probability reports lie on opposite sides of
+the decision threshold $c/h$.
+
+Use [`finite_payoff_mean`](incerto-api-reference.md#api-finite-payoff-mean).
+
+```python
+from xmath.incerto.lecture_risk import finite_payoff_mean
+
+for probability in (.04, .06):
+    inaction = finite_payoff_mean([1-probability, probability], [0, 100])
+    action = 5
+    choice = "act" if action < inaction else "wait"
+    print(f"p={probability:.2f}: inaction={inaction:.1f}, action={action:.1f}, choose {choice}")
+```
+
+**Output**
+
+```text
+p=0.04: inaction=4.0, action=5.0, choose wait
+p=0.06: inaction=6.0, action=5.0, choose act
+```
+
+For unbounded severity, the same expected-cost comparison needs the
+appropriate finite payoff expectation or an explicitly chosen alternative
+criterion. Calibration remains an event property; decision quality is
+assessed under the specified exposure and action set.
+
 ## Sources and reproduction
 
-The [chapter 11 guide](incerto-scoft-ch11.md) maps every section to its v4
-locator and records the main qualifications to the source. The elementary
+The [chapter 11 guide](incerto-scoft-ch11.md) and
+[chapter 13 guide](incerto-scoft-ch13.md) map sections to their v4
+locators and record the main qualifications to the source. The elementary
 payoff, convexity, score, binomial and beta statements above are proved
 here; the general iid finite-variance CLT is cited from Durrett,
 *Probability: Theory and Examples*, fifth edition,

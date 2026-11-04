@@ -25,6 +25,12 @@
       "target": "dispersion-ratio"
     },
     {
+      "id": "dependency:calibration-payoff->forecast-martingale",
+      "kind": "dependency",
+      "source": "calibration-payoff",
+      "target": "forecast-martingale"
+    },
+    {
       "id": "dependency:calibration-payoff->point-forecast",
       "kind": "dependency",
       "source": "calibration-payoff",
@@ -805,6 +811,12 @@
       "target": "sp500-tail"
     },
     {
+      "id": "reference:forecast-martingale->probability-conflation",
+      "kind": "reference",
+      "source": "forecast-martingale",
+      "target": "probability-conflation"
+    },
+    {
       "id": "reference:generalized-central-limit-theorem->karamata",
       "kind": "reference",
       "source": "generalized-central-limit-theorem",
@@ -1399,6 +1411,18 @@
       "target": "moment-estimation"
     },
     {
+      "id": "related:forecast-martingale->point-forecast",
+      "kind": "related",
+      "source": "forecast-martingale",
+      "target": "point-forecast"
+    },
+    {
+      "id": "related:forecast-martingale->probability-conflation",
+      "kind": "related",
+      "source": "forecast-martingale",
+      "target": "probability-conflation"
+    },
+    {
       "id": "related:generalized-central-limit-theorem->point-forecast",
       "kind": "related",
       "source": "generalized-central-limit-theorem",
@@ -1603,6 +1627,10 @@
           "x": 390.0,
           "y": 272.72727272727275
         },
+        "forecast-martingale": {
+          "x": 1290.0,
+          "y": 400.0
+        },
         "frechet": {
           "x": 690.0,
           "y": 333.3333333333333
@@ -1645,7 +1673,7 @@
         },
         "layoffs-tails": {
           "x": 1290.0,
-          "y": 750.0
+          "y": 800.0
         },
         "lln-failure": {
           "x": 390.0,
@@ -1673,7 +1701,7 @@
         },
         "ml-econometrics": {
           "x": 1290.0,
-          "y": 500.0
+          "y": 600.0
         },
         "moment-estimation": {
           "x": 990.0,
@@ -1705,7 +1733,7 @@
         },
         "point-forecast": {
           "x": 1290.0,
-          "y": 250.0
+          "y": 200.0
         },
         "power-law-fitting": {
           "x": 990.0,
@@ -1767,203 +1795,207 @@
       "nodes": {
         "amazon-bookrank": {
           "x": 90.0,
-          "y": 390.61617190393866
+          "y": 359.04828329310055
         },
         "asymmetric-payoffs": {
-          "x": 553.6402077469447,
-          "y": 111.16895042405316
+          "x": 643.8890759712814,
+          "y": 458.1368030833653
         },
         "body-shoulder-tail": {
-          "x": 418.1760141058186,
-          "y": 472.05881504079036
+          "x": 322.42238401681914,
+          "y": 310.4898146671489
         },
         "calibration-payoff": {
-          "x": 457.6061883267423,
-          "y": 187.7666814877501
+          "x": 566.7752458978332,
+          "y": 494.82942864293386
         },
         "cauchy-running": {
-          "x": 694.061896555451,
-          "y": 506.83745005527
+          "x": 752.5839176321431,
+          "y": 314.8015139315004
         },
         "cramer-condition": {
-          "x": 558.013772684997,
-          "y": 466.03822129395024
+          "x": 493.4002760197375,
+          "y": 225.17359282706488
         },
         "decentralization": {
-          "x": 603.4886891946943,
-          "y": 138.1084663343696
+          "x": 696.9484392513393,
+          "y": 422.72292095739704
         },
         "dispersion-ratio": {
-          "x": 493.6539665044033,
-          "y": 590.0
+          "x": 495.71378813681076,
+          "y": 473.02097558047205
         },
         "double-pareto": {
-          "x": 575.0277906403142,
-          "y": 241.15561388658895
+          "x": 416.9883811220297,
+          "y": 223.3390915176504
         },
         "ergodicity": {
           "x": 830.0,
-          "y": 353.42410849406366
+          "y": 240.98447677946584
         },
         "extreme-value-index": {
-          "x": 220.83854427021848,
-          "y": 267.4677864678472
+          "x": 247.20200543322986,
+          "y": 496.52095515686653
+        },
+        "forecast-martingale": {
+          "x": 762.4418076359082,
+          "y": 546.2898202533679
         },
         "frechet": {
-          "x": 261.22588354509264,
-          "y": 132.3723600011815
+          "x": 302.66470252105546,
+          "y": 561.0599953565118
         },
         "generalized-central-limit-theorem": {
-          "x": 472.87357283927395,
-          "y": 375.40977982106074
+          "x": 541.2196870338116,
+          "y": 374.28755965950984
         },
         "generalized-extreme-value": {
-          "x": 181.13847289844728,
-          "y": 193.47400550841343
+          "x": 268.3731257462041,
+          "y": 590.0
         },
         "generalized-pareto": {
-          "x": 129.6916212520445,
-          "y": 269.7032066485461
+          "x": 176.30404203518168,
+          "y": 530.2351712393761
         },
         "hidden-tail": {
-          "x": 353.3404672190429,
-          "y": 191.43798213651422
+          "x": 406.6265018024482,
+          "y": 496.07438657201203
         },
         "hill-estimator": {
-          "x": 243.07150044093606,
-          "y": 333.0857596334536
+          "x": 271.46315195026307,
+          "y": 453.20971566027015
         },
         "inference-asymmetry": {
-          "x": 502.7999654413226,
-          "y": 90.0
+          "x": 605.8887516379973,
+          "y": 421.7986032518586
         },
         "iso-density-tail-geometry": {
-          "x": 638.6613061558144,
-          "y": 517.3158648365645
+          "x": 309.5694656595248,
+          "y": 109.76878895019681
         },
         "kappa": {
-          "x": 508.6574366040661,
-          "y": 450.15019862607795
+          "x": 590.4848014929308,
+          "y": 350.47119811270073
         },
         "karamata": {
-          "x": 362.2881232626883,
-          "y": 358.9952230175506
+          "x": 339.8432383121657,
+          "y": 384.58210747082535
         },
         "layoffs-tails": {
-          "x": 194.81596812799143,
-          "y": 415.27380753314617
+          "x": 163.9259029821276,
+          "y": 442.86952778877287
         },
         "lln-failure": {
-          "x": 521.4988336843232,
-          "y": 406.15451238560644
+          "x": 519.4233595250482,
+          "y": 307.6710691564798
         },
         "lln-preasymptotic": {
-          "x": 416.8917082187963,
-          "y": 417.51683161477206
+          "x": 460.58309617127134,
+          "y": 321.0958443391744
         },
         "max-to-sum-ratio": {
-          "x": 513.5913590448947,
-          "y": 360.26936685518666
+          "x": 360.21200362013485,
+          "y": 279.6920873360226
         },
         "maximum-entropy": {
-          "x": 663.2807523551731,
-          "y": 267.9157222466836
+          "x": 536.9046260125423,
+          "y": 186.56919030991608
         },
         "mean-excess-function": {
-          "x": 235.9628653905739,
-          "y": 192.82743145356028
+          "x": 352.3828384960209,
+          "y": 567.4879646519842
         },
         "mixture-uncertainty": {
-          "x": 624.110789770832,
-          "y": 337.86514185410954
+          "x": 574.2769620195522,
+          "y": 260.67756589190924
         },
         "ml-econometrics": {
-          "x": 315.1075050935798,
-          "y": 216.17440040082477
+          "x": 437.3815056624367,
+          "y": 569.9563083129526
         },
         "moment-estimation": {
-          "x": 487.65614087102745,
-          "y": 321.73364355558203
+          "x": 510.8694834018404,
+          "y": 391.93123614479714
         },
         "multivariate-tails": {
-          "x": 650.9937652270114,
-          "y": 396.1931332666277
+          "x": 464.6958212670675,
+          "y": 169.57982838466134
         },
         "nyc-dog-name-tail": {
-          "x": 147.10087785037632,
-          "y": 455.78998931052774
+          "x": 93.17282938542965,
+          "y": 423.10231267543503
         },
         "pareto": {
-          "x": 395.33486686783954,
-          "y": 297.9482207110581
+          "x": 389.73560524176474,
+          "y": 385.0508934552403
         },
         "pareto-moment-existence": {
-          "x": 457.24645375365367,
-          "y": 274.0936902220962
+          "x": 464.5421326752312,
+          "y": 389.21366475461434
         },
         "pickands-balkema-de-haan": {
-          "x": 262.17673662214304,
-          "y": 239.7811983632216
+          "x": 324.02402357655876,
+          "y": 513.0045405385576
         },
         "plug-in-tail-estimation": {
-          "x": 331.17378750900787,
-          "y": 285.84208735036043
+          "x": 388.34629631829034,
+          "y": 457.4084397450364
         },
         "point-forecast": {
-          "x": 453.2678090128107,
-          "y": 238.94320373608159
+          "x": 544.9378654013847,
+          "y": 464.9378621405591
         },
         "power-law-fitting": {
-          "x": 258.46645038560314,
-          "y": 425.9783682589258
+          "x": 203.6460536596836,
+          "y": 381.4547600766039
         },
         "power-law-goodness-of-fit": {
-          "x": 298.8119155403186,
-          "y": 478.96559917679195
+          "x": 196.4392961296574,
+          "y": 328.5014062451323
         },
         "probability-conflation": {
-          "x": 459.8796647838614,
-          "y": 106.5928912126
+          "x": 637.5615408932385,
+          "y": 540.8176400601087
         },
         "rayleigh-speed": {
-          "x": 798.901417171984,
-          "y": 276.609149413424
+          "x": 595.4273858197243,
+          "y": 90.0
         },
         "regular-variation": {
-          "x": 428.6603822054498,
-          "y": 316.5866434045447
+          "x": 371.9318916601117,
+          "y": 354.48408176704635
         },
         "risk-measures": {
-          "x": 355.0745775111609,
-          "y": 130.88350621437544
+          "x": 498.5785047303745,
+          "y": 565.3636508676182
         },
         "ruin": {
-          "x": 657.7654823450437,
-          "y": 175.8627721262077
+          "x": 695.630479881045,
+          "y": 360.9450984828043
         },
         "sp500": {
-          "x": 316.44266676525825,
-          "y": 366.20440972540104
+          "x": 344.11080759477716,
+          "y": 445.36090003553846
         },
         "sp500-tail": {
-          "x": 150.62934220135242,
-          "y": 305.1329720166219
+          "x": 223.4167822510423,
+          "y": 566.871011249712
         },
         "subexponentiality": {
-          "x": 593.7157943461189,
-          "y": 426.64085438787987
+          "x": 362.8472225885455,
+          "y": 196.63461450377673
         },
         "survival-tail-ratio": {
-          "x": 688.5180431046589,
-          "y": 380.6301709630763
+          "x": 277.085873149652,
+          "y": 165.29725042401282
         },
         "tail-class-catalog": {
-          "x": 554.2175642634858,
-          "y": 333.90760901405883
+          "x": 437.80355217228026,
+          "y": 265.7698664360353
         },
         "tail-threshold-selection": {
-          "x": 277.4005382529575,
-          "y": 343.8778542296608
+          "x": 261.4928032263417,
+          "y": 426.51102488012884
         }
       },
       "width": 920
@@ -2373,6 +2405,19 @@
       "url": "/math/incerto/incerto-calibration-payoff/"
     },
     {
+      "id": "forecast-martingale",
+      "path": "content/incerto-forecast-martingale.md",
+      "status": "active",
+      "tags": [
+        "forecasting",
+        "martingales",
+        "uncertainty"
+      ],
+      "title": "Probability forecasts as martingales",
+      "type": "method",
+      "url": "/math/incerto/incerto-forecast-martingale/"
+    },
+    {
       "id": "rayleigh-speed",
       "path": "content/incerto-rayleigh-speed.md",
       "status": "active",
@@ -2601,14 +2646,14 @@
   ],
   "schema_version": 2,
   "stats": {
-    "dependency_edge_count": 92,
-    "node_count": 50,
-    "reference_edge_count": 123,
-    "related_edge_count": 40,
+    "dependency_edge_count": 93,
+    "node_count": 51,
+    "reference_edge_count": 124,
+    "related_edge_count": 42,
     "type_counts": {
       "distribution": 9,
       "empirical-example": 8,
-      "method": 20,
+      "method": 21,
       "theorem": 13
     }
   },
@@ -2659,6 +2704,7 @@
     "calibration-payoff",
     "power-law-goodness-of-fit",
     "sp500",
+    "forecast-martingale",
     "point-forecast",
     "layoffs-tails",
     "ml-econometrics",

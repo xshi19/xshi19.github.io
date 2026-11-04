@@ -27,3 +27,7 @@ a shared median from tail harm. They contain no pandemic observations.
 The [chapter 13 experiments](incerto-scoft-ch13.md) compare specified
 probability and exponent uncertainty models, with a repeated synthetic
 Hill-fit experiment. Infinite fitted ES values remain in the record.
+
+The [chapter 14 experiments](incerto-scoft-ch14.md) simulate exact bounded
+share and binary-forecast paths, with independent-path revision diagnostics.
+They use no election observations.

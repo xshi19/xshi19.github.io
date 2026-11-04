@@ -5,7 +5,7 @@ title: 'Reading Guide: Statistical Consequences of Fat Tails'
 Taleb, N. N. (2025). *Statistical Consequences of Fat Tails*, third edition.
 [arXiv:2001.10488v4](https://arxiv.org/abs/2001.10488v4)
 
-The chapter 1–13 guides use this edition, printed pp. 3–6, 7–21, 25–68,
+The chapter 1–14 guides use this edition, printed pp. 3–6, 7–21, 25–68,
 69–89, 91–105 and 107–120; chapter 5 also covers appendix B, pp. 127–133,
 and chapter 6 covers appendix A, pp. 121–125. Chapter 7 covers
 pp. 137–152 and appendices C/D, pp. 183–188. Chapter 8 covers
@@ -15,6 +15,7 @@ and Appendices F/G, pp. 207–216. Chapter 11 covers pp. 219–240,
 including its tally and Brier-score appendix. Chapter 12 covers
 pp. 241–246, on point forecasts, evaluation, and pandemic tail risk.
 Chapter 13 covers pp. 253–260, on probability/payoff error and risk measures.
+Chapter 14 covers pp. 261–273, on martingale forecasts and revision constraints.
 Each guide maps checked section/page locators to the relevant concept notes.
 
 Each chapter page is a reading guide that links to the relevant concept notes.
@@ -38,3 +39,4 @@ fills notation gaps, adds proofs, and connects ideas.
 | [Chapter 11 — Calibration and payoffs](incerto-scoft-ch11.md) | Event probabilities, severity and forecast scores | [Calibration and payoffs](incerto-calibration-payoff.md), [Point forecasts](incerto-point-forecast.md) |
 | [Chapter 12 — Point forecasts and tail risk](incerto-scoft-ch12.md) | Mean-error scaling, score instability, bounds and precaution | [Point forecasts](incerto-point-forecast.md), [Stable limits](incerto-generalized-central-limit-theorem.md), [Kappa](incerto-kappa.md) |
 | [Chapter 13 — Probability and payoff risk](incerto-scoft-ch13.md) | Binary scores, severity, quantile error and parameter uncertainty | [Probability conflation](incerto-probability-conflation.md), [Calibration](incerto-calibration-payoff.md), [VaR and ES](incerto-risk-measures.md) |
+| [Chapter 14 — Forecasts through time](incerto-scoft-ch14.md) | Conditional probabilities, binary valuation, and revision budgets | [Forecast martingales](incerto-forecast-martingale.md), [Calibration](incerto-calibration-payoff.md) |

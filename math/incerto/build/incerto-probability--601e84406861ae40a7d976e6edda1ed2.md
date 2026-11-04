@@ -23,6 +23,10 @@ and §13.6, pp. 259–260 [@taleb2025scoftv4].
 The [chapter guide](incerto-scoft-ch13.md) records the section map and
 qualifications. All examples below are synthetic.
 
+The [forecast-martingale note](incerto-forecast-martingale.md) addresses
+the separate question of how probabilities for the same event evolve
+through time under one law and an increasing information set.
+
 (conflation-score-gap)=
 ## A binary score does not identify a payoff mean
 

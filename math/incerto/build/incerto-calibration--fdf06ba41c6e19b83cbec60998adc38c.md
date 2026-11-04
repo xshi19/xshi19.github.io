@@ -15,6 +15,11 @@ conditional severity unspecified. The [asymmetric-payoff note](incerto-asymmetri
 already separates gain frequency from expected gain; here we derive the
 sampling laws of event scores and compare them with unbounded exposures.
 
+For repeated reports on one fixed event, the
+[forecast-martingale note](incerto-forecast-martingale.md#forecast-assessor)
+connects conditional Brier optimality with coherent updating and an
+expected squared-revision budget.
+
 The source context is SCoFT v4, chapter 11, §§11.1–11.5 and §11.7,
 printed pp. 220–240, extended by chapter 13, §§13.2–13.5,
 pp. 253–259 [@taleb2025scoftv4]. The calculations below are original

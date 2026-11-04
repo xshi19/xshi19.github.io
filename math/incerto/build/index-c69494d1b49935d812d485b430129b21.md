@@ -218,3 +218,9 @@ The [chapter 13 guide](../incerto-scoft-ch13.md) connects
 to [VaR, expected shortfall and exponent uncertainty](../incerto-risk-measures.md).
 The examples separate fixed-event calibration from the information needed
 to estimate an unbounded exposure.
+
+The [chapter 14 guide](../incerto-scoft-ch14.md) adds
+[forecasts through time](../incerto-forecast-martingale.md): conditional
+probability martingales, bounded share models, and the expected budget for
+forecast revisions. Synthetic paths distinguish this budget from a
+pathwise ceiling.

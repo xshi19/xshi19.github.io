@@ -31,6 +31,7 @@ for implementations and use local `help()` for the installed version.
 
 | Module | Entry points and purpose |
 | --- | --- |
+| `xmath.incerto.martingales` | [`gaussian_binary_probability`](incerto-api-reference.md#api-gaussian-binary-probability), [`probit_binary_probability`](incerto-api-reference.md#api-probit-binary-probability), [`simulate_probit_forecasts`](incerto-api-reference.md#api-simulate-probit-forecasts), [`forecast_revision_summary`](incerto-api-reference.md#api-forecast-revision-summary); [chapter 14 forecasts through time](incerto-scoft-ch14.md) |
 | `xmath.incerto.risk_measures` | [`pareto_risk`](incerto-api-reference.md#api-pareto-risk), [`discrete_risk`](incerto-api-reference.md#api-discrete-risk), [`pareto_mixture_risk`](incerto-api-reference.md#api-pareto-mixture-risk), [`beta_pareto_quantile_moment`](incerto-api-reference.md#api-beta-pareto-quantile-moment); [chapter 13 probability and payoff risk](incerto-scoft-ch13.md) |
 | `xmath.incerto.forecasting` | [`stable_average_scale`](incerto-api-reference.md#api-stable-average-scale), [`quantile_loss`](incerto-api-reference.md#api-quantile-loss), [`bounded_to_dual`](incerto-api-reference.md#api-bounded-to-dual), [`dual_to_bounded`](incerto-api-reference.md#api-dual-to-bounded), [`pareto_forecast_scores`](incerto-api-reference.md#api-pareto-forecast-scores); [chapter 12 forecasts and tail risk](incerto-scoft-ch12.md) |
 | `xmath.incerto.calibration` | [`tail_bet_payoffs`](incerto-api-reference.md#api-tail-bet-payoffs), [`pareto_tail_bet`](incerto-api-reference.md#api-pareto-tail-bet), [`lognormal_tail_bet`](incerto-api-reference.md#api-lognormal-tail-bet), [`binary_tally_distribution`](incerto-api-reference.md#api-binary-tally-distribution), [`brier_score`](incerto-api-reference.md#api-brier-score), [`brier_score_distribution`](incerto-api-reference.md#api-brier-score-distribution), [`beta_brier_moments`](incerto-api-reference.md#api-beta-brier-moments), [`beta_brier_cdf`](incerto-api-reference.md#api-beta-brier-cdf), [`simulate_brier_scores`](incerto-api-reference.md#api-simulate-brier-scores), [`calibration_curve`](incerto-api-reference.md#api-calibration-curve), [`point_forecast_loss`](incerto-api-reference.md#api-point-forecast-loss); [chapter 11 scores and payoffs](incerto-scoft-ch11.md) |
@@ -3989,4 +3990,227 @@ for xm in (1e-300, 1e300):
 ```text
 FloatingPointError
 FloatingPointError
+```
+
+## Forecast martingales
+
+These helpers implement the [Gaussian and bounded probit models](incerto-forecast-martingale.md).
+The new module reuses [`brier_score`](incerto-api-reference.md#api-brier-score)
+for score summaries. They make no data requests or market-calibration claims.
+
+(api-gaussian-binary-probability)=
+#### [`gaussian_binary_probability`](incerto-api-reference.md#api-gaussian-binary-probability)
+
+`gaussian_binary_probability(mean, sigma, remaining, *, threshold=.5)`
+
+Strict Gaussian terminal-event probability. `mean` is a finite scalar or
+nonempty array. `sigma` and `remaining` are finite nonnegative scalars;
+`threshold` is any finite scalar. Returns a float or an array matching
+`mean`. The remaining standard deviation is `sigma*sqrt(remaining)`.
+The example executes the deterministic tie, tiny-tail rounding, and
+nonfinite-input cases.
+
+:::{dropdown} Code: Gaussian values and boundaries
+```python
+from xmath.incerto.martingales import gaussian_binary_probability
+
+for sigma in (.08, 0, 1e-200):
+    values = gaussian_binary_probability([.46, .5, .54], sigma, 1)
+    print(f"scale={sigma:.1g}: " + ", ".join(f"{p:.3f}" for p in values))
+for value in (float("nan"), float("inf")):
+    try:
+        gaussian_binary_probability(.54, value, 1)
+    except ValueError as error:
+        print(type(error).__name__)
+```
+
+**Output**
+
+```text
+scale=0.08: 0.309, 0.500, 0.691
+scale=0: 0.000, 0.000, 1.000
+scale=1e-200: 0.000, 0.500, 1.000
+ValueError
+ValueError
+```
+:::
+
+(api-probit-binary-probability)=
+#### [`probit_binary_probability`](incerto-api-reference.md#api-probit-binary-probability)
+
+`probit_binary_probability(share, sigma, remaining, *, threshold=.5)`
+
+Exact terminal-event probability for the drift-corrected probit model.
+`share` is a finite scalar or nonempty array in `[0,1]`; `threshold` is
+strictly between zero and one. `sigma` and `remaining` are finite
+nonnegative scalars. Sigma is the latent diffusion scale; its square
+times the horizon is dimensionless. Shape and scalar-return conventions
+match the Gaussian helper. Endpoints use the absorbing extension;
+floating-point CDF saturation is retained.
+
+A 400-digit reference audit of 233 evaluations measured maximum absolute
+errors of `1.12e-16` for ordinary inputs and `4.92e-14` for adjacent floats.
+Errors up to about `2.6e-8` were observed only for shares around `1e-16`
+just above the `1e-8` latent-gap cutoff, where rounded inverse-normal
+values are subtracted directly. Below the cutoff, the existing algorithm
+uses the midpoint inverse-CDF derivative. These measured errors are not
+global error bounds.
+
+```python
+from xmath.incerto.martingales import probit_binary_probability
+
+for sigma in (0, .8, 10):
+    values = probit_binary_probability([0, .5, .54, 1], sigma, 1)
+    print(f"scale={sigma:.1f}: " + ", ".join(f"{p:.3f}" for p in values))
+print(f"positive variance tie: {probit_binary_probability(.7, .8, 1, threshold=.7):.3f}")
+```
+
+**Output**
+
+```text
+scale=0.0: 0.000, 0.000, 1.000, 1.000
+scale=0.8: 0.000, 0.500, 0.558, 1.000
+scale=10.0: 0.000, 0.500, 0.540, 1.000
+positive variance tie: 0.583
+```
+
+```python
+from xmath.incerto.martingales import probit_binary_probability
+
+for share in (-.1, 1.1, float("nan"), float("inf")):
+    try:
+        probit_binary_probability(share, .8, 1)
+    except ValueError as error:
+        print(type(error).__name__)
+```
+
+**Output**
+
+```text
+ValueError
+ValueError
+ValueError
+ValueError
+```
+
+(api-simulate-probit-forecasts)=
+#### [`simulate_probit_forecasts`](incerto-api-reference.md#api-simulate-probit-forecasts)
+
+`simulate_probit_forecasts(share, sigma, horizon, *, threshold=.5, steps=40, paths=1000, seed=0)`
+
+Exact normal transitions with a PCG64 generator. Initial share and
+threshold are scalar interior probabilities, horizon is positive, and
+sigma is nonnegative. Positive integrated latent variance is restricted
+to `[1e-12,50]` for this numerical experiment. Values within relative
+tolerance `8*np.finfo(float).eps` (about `1.8e-15`) of either endpoint
+are treated as that endpoint by rescaling sigma; there is no absolute
+tolerance. This accepts literal `sigma=1e-6` and `sigma=sqrt(50)` at
+horizon one. Values outside the interval beyond this tolerance are
+rejected. Steps are integers in
+`[1,10000]`; paths are positive integers and the returned grid has at
+most 2,000,000 cells. Seed is a nonnegative integer. Returns `time`,
+`latent`, `share`, `probability`, and `outcome`; matrices have shape
+`(paths, steps+1)` with terminal resolution included. The latent state
+is retained even when the CDF rounds to zero or one.
+
+```python
+from xmath.incerto.martingales import simulate_probit_forecasts
+
+sample = simulate_probit_forecasts(.54, .8, 1, paths=3, steps=4, seed=1404)
+print("times: " + ", ".join(f"{t:.2f}" for t in sample["time"]))
+for row in sample["probability"]:
+    print("forecast: " + ", ".join(f"{p:.3f}" for p in row))
+fixed = simulate_probit_forecasts(.5, 0, 1, paths=1, steps=1)
+print("deterministic tie: " + ", ".join(f"{p:.1f}" for p in fixed["probability"][0]))
+```
+
+**Output**
+
+```text
+times: 0.00, 0.25, 0.50, 0.75, 1.00
+forecast: 0.558, 0.942, 0.982, 0.999, 1.000
+forecast: 0.558, 0.486, 0.626, 0.153, 0.000
+forecast: 0.558, 0.302, 0.166, 0.271, 0.000
+deterministic tie: 0.0, 0.0
+```
+
+```python
+from xmath.incerto.martingales import simulate_probit_forecasts
+
+for sigma in (1e-8, 8, float("nan"), float("inf")):
+    try:
+        simulate_probit_forecasts(.54, sigma, 1, paths=1)
+    except ValueError as error:
+        print(type(error).__name__)
+```
+
+**Output**
+
+```text
+ValueError
+ValueError
+ValueError
+ValueError
+```
+
+At adjacent floating-point shares, the terminal comparison retains the
+original ordering. Near-equal probit differences use a local inverse-CDF
+derivative calculation; subtracting two rounded quantiles can lose it.
+
+```python
+import numpy as np
+from xmath.incerto.martingales import (
+    probit_binary_probability, simulate_probit_forecasts,
+)
+
+u = .01
+y = np.nextafter(u, 1.)
+print(f"distinct shares: {y > u}")
+print(f"tiny noise: {probit_binary_probability(y, 1e-200, 1, threshold=u):.1f}")
+fixed = simulate_probit_forecasts(y, 0, 1, threshold=u, paths=1, steps=1)
+print("fixed: " + ", ".join(f"{p:.1f}" for p in fixed["probability"][0]))
+```
+
+**Output**
+
+```text
+distinct shares: True
+tiny noise: 1.0
+fixed: 1.0, 1.0
+```
+
+(api-forecast-revision-summary)=
+#### [`forecast_revision_summary`](incerto-api-reference.md#api-forecast-revision-summary)
+
+`forecast_revision_summary(probabilities)`
+
+Accepts a finite matrix in `[0,1]` with at least one row, two columns,
+and at most 2,000,000 cells. The final column must contain only zero
+and one. Returns the mean sum of squared revisions, initial Bernoulli
+budget, their mean difference, and standard errors. It also returns
+per-step mean revisions, predictable level moments with instrument
+`p-.5`, their standard errors, a Brier curve against the terminal
+outcomes, and the row count. See the module docstring for dictionary
+keys. Standard errors use independent, identically distributed path rows,
+not time points.
+The function computes diagnostics; it does not certify coherence.
+
+```python
+from xmath.incerto.martingales import forecast_revision_summary
+
+for paths in ([[.5, 0], [.5, 1]], [[.5, .25, 1]]):
+    result = forecast_revision_summary(paths)
+    print(f"paths={result['paths']}: gap={result['budget_gap']:.3f}, SE={result['budget_gap_se']:.3f}")
+try:
+    forecast_revision_summary([[.5, .7]])
+except ValueError as error:
+    print(type(error).__name__)
+```
+
+**Output**
+
+```text
+paths=2: gap=0.000, SE=0.000
+paths=1: gap=0.375, SE=nan
+ValueError
 ```

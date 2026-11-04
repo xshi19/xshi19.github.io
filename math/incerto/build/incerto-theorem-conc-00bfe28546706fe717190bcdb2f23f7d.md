@@ -32,3 +32,7 @@ The [probability-conflation note](incerto-probability-conflation.md#conflation-i
 proves a beta-to-Pareto quantile-moment boundary. The
 [risk-measures note](incerto-risk-measures.md#risk-alpha-convexity) proves
 quantile and ES convexity under common-cutoff exponent uncertainty.
+
+The [forecast-martingale note](incerto-forecast-martingale.md#forecast-tower)
+proves the conditional-probability identity, a bounded diffusion
+construction, and the expected budget for squared forecast revisions.

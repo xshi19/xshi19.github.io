@@ -33,25 +33,26 @@ psychological claims as established facts.
 
 ## The comparison to keep visible
 
-With loss $X\ge0$, threshold $u>0$, strict survival $p_u=P(X>u)>0$,
-and finite mean excess $e(u)$,
+With loss $X\ge0$, threshold $u>0$, strict survival $\bar F(u)=P(X>u)>0$,
+and finite [mean excess](incerto-mean-excess-function.md) $e(u)$,
 
 $$
 \begin{gathered}
 \mathbb E[X\mathbf1_{\{X>u\}}]
-=p_u\{u+e(u)\},\\
-\mathbb E[(X-u)_+]=p_u e(u).
+=\bar F(u)\{u+e(u)\},\\
+\mathbb E[(X-u)_+]=\bar F(u)e(u).
 \end{gathered}
 $$
 
-Knowing $p_u$ leaves $e(u)$ unspecified. The
+Knowing $\bar F(u)$ leaves $e(u)$ unspecified. The
 [asymmetric-payoff page](incerto-asymmetric-payoffs.md) gives a finite
 example of the distinction; the
 [Pareto moment theorem](incerto-pareto-moment-existence.md) gives the
 integrability boundary, and
 [moment estimation](incerto-moment-estimation.md) separates a finite
 expectation from finite estimator variance. The source's $K$ becomes the
-canon's threshold $u$; its forecast $f_i$ becomes local $Q_i$ here,
+canon's threshold $u$; its forecast $f_i$ becomes $Q_i$ in the
+[score sampling laws](incerto-calibration-payoff.md#calibration-definition),
 leaving density and CDF notation unambiguous.
 
 ## Source qualifications

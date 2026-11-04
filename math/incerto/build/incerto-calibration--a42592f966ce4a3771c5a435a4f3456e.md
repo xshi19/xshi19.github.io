@@ -24,31 +24,34 @@ psychology experiments, forecasters, or financial markets.
 (calibration-contract)=
 ## Specify the event and its payoff
 
-Let $X\ge0$ be a loss amount, $u>0$ a fixed threshold, and
-$D=\mathbf1_{\{X>u\}}$. We use the strict event and the
+Let $X\ge0$ be a loss amount and $u>0$ a fixed threshold.
+We use the strict event $X>u$ and the
 [shared survival notation](https://xshi19.github.io/math/notation/)
-$p_u=\bar F(u)$. A binary contract pays one unit when $D=1$;
+$\bar F(u)=P(X>u)$. A binary contract pays $\mathbf1_{\{X>u\}}$;
 a vanilla excess contract pays $(X-u)_+=\max(X-u,0)$.
 Its expected payoff is not an option price unless a pricing measure,
 discounting convention, and contract costs have also been specified.
 
-Assume $p_u>0$. Write $T(u)$ for the unconditional tail-level mean
-and $C(u)$ for the unconditional excess mean. We prove their decomposition:
+Assume $\bar F(u)>0$. The unconditional tail-level and excess means satisfy
 
 $$
 \begin{gathered}
-T(u)=\mathbb E[X D],\\
-C(u)=\mathbb E[(X-u)_+],\\
-T(u)=u p_u+C(u),\\
-C(u)=p_u e(u).
+\begin{aligned}
+\mathbb E[X\mathbf1_{\{X>u\}}]
+&=u\bar F(u)\\
+&\quad+\mathbb E[(X-u)_+],
+\end{aligned}\\
+\mathbb E[(X-u)_+]=\bar F(u)e(u).
 \end{gathered}
 $$
 
-Indeed, $XD=uD+(X-u)_+$ pointwise. Taking nonnegative expectations
-proves the third line even when a mean is infinite. Conditioning the
-excess on $D=1$ proves the fourth, with $e(u)$ the
-[mean excess](incerto-mean-excess-function.md). Thus replacing $T(u)$ by
-$up_u$ omits the entire excess contribution.
+Indeed, $X\mathbf1_{\{X>u\}}=u\mathbf1_{\{X>u\}}+(X-u)_+$ pointwise.
+Taking nonnegative expectations proves the first identity even when a
+mean is infinite. Conditioning the excess on $X>u$ proves the second,
+with $e(u)=\mathbb E[X-u\mid X>u]$ the
+[mean excess](incerto-mean-excess-function.md), possibly $+\infty$ here.
+Thus replacing $\mathbb E[X\mathbf1_{\{X>u\}}]$ by
+$u\bar F(u)$ omits the entire excess contribution.
 
 A threshold, horizon, units, and observation rule can define a disaster
 indicator under any tail law. Fat tails do not make measurable events
@@ -85,29 +88,33 @@ tail_level: 0.0, 0.0, 5.0, 20.0
 (calibration-tail-models)=
 ## Equal event probabilities leave severity open
 
+For the model comparisons, write $T(u)=\mathbb E[X\mathbf1_{\{X>u\}}]$
+for the unconditional tail-level mean and $C(u)=\mathbb E[(X-u)_+]$
+for the unconditional excess mean.
+
 For an exact Pareto law with $u\ge x_m>0$ and $\alpha>1$, the
 [Pareto moment calculation](incerto-pareto-moment-existence.md) gives
 
 $$
 \begin{gathered}
-p_u=(x_m/u)^\alpha,\\
-C(u)=\frac{u p_u}{\alpha-1},\\
-\frac{T(u)}{u p_u}=\frac{\alpha}{\alpha-1}.
+\bar F(u)=(x_m/u)^\alpha,\\
+C(u)=\frac{u\bar F(u)}{\alpha-1},\\
+\frac{T(u)}{u\bar F(u)}=\frac{\alpha}{\alpha-1}.
 \end{gathered}
 $$
 
 The excess formula also follows directly by integrating
 $C(u)=\int_u^\infty\bar F(v)\,dv$, justified by the preceding
-indicator identity and Tonelli's theorem. For $\alpha\le1$, both payoff
+indicator identity and Tonelli's theorem. For $0<\alpha\le1$, both payoff
 means are infinite. The binary payoff remains bounded in every case.
 
 For an exponential loss of mean $b>0$, the same integration yields
-$C(u)=b p_u$ and $T(u)/(up_u)=1+b/u$. These exact models explain why
+$C(u)=b\bar F(u)$ and $T(u)/(u\bar F(u))=1+b/u$. These exact models explain why
 substituting the threshold for conditional severity can have very different
 relative errors. The limiting ratio alone is not a definition of all thin
 or heavy tails. The [Weibull example](incerto-scoft-ch5.md) with survival
 $\exp(-\sqrt x)$ is subexponential, but its mean excess
-$2\sqrt u+2$ gives $T(u)/(up_u)\to1$. See also the
+$2\sqrt u+2$ gives $T(u)/(u\bar F(u))\to1$. See also the
 [mean-excess corollary](incerto-pickands-balkema-de-haan.md#pbdh-mean-excess-corollary)
 for the hypotheses needed to pass from tail-law limits to means.
 
@@ -115,8 +122,8 @@ For any fixed $0<p<1$ and $u>0$, choose $x_m=u p^{1/\alpha}$.
 All these Pareto laws have the same event probability $p$, while
 $C(u)=up/(\alpha-1)$ is unbounded as $\alpha\downarrow1$.
 No statistic of this single indicator alone identifies that payoff mean.
-Defining $p^*=T(u)/u$ converts an expected amount to threshold units;
-$p^*$ can exceed one and is then certainly not a probability. Even when
+Dividing $T(u)$ by $u$ converts an expected amount to threshold units;
+the ratio can exceed one and is then certainly not a probability. Even when
 it lies below one, it is not the probability of the original event.
 
 Use [`pareto_tail_bet`](incerto-api-reference.md#api-pareto-tail-bet).
@@ -145,7 +152,7 @@ Infinite-mean boundary: inf
 :alt: A step payoff and an excess payoff at threshold four; below them, Pareto excess means rise sharply near exponent one although the event probability stays at two percent.
 
 Exact model curves. Top: strict binary and excess payoffs at $u=4$;
-the open step endpoint excludes equality. Bottom: $u=10$, $p_u=0.02$,
+the open step endpoint excludes equality. Bottom: $u=10$, $\bar F(u)=0.02$,
 $1.05\le\alpha\le4$, with $x_m$ adjusted as above. Probability is
 held fixed; the excess mean is in loss units. No observed data or fitted
 exponent enters either panel.
@@ -229,7 +236,7 @@ mixture payoff: take $A$ uniform on $(1,2)$ and $u=x_m=1$; then
 $\mathbb E[1/(A-1)]=\infty$.
 
 The mixture probability is $\mathbb E[e^{-A\ell}]$. Consequently the
-ratio $T(u)/(up_u)$ in the mixture weights each exponent by its probability
+ratio $T(u)/(u\bar F(u))$ in the mixture weights each exponent by its probability
 of exceeding $u$. It is generally neither the ratio evaluated at
 $\mathbb EA$ nor the unweighted average of the conditional ratios.
 This distinction prevents a Jensen comparison of one quantity from being
@@ -258,7 +265,8 @@ Mixture excess: 2.778; mean-exponent model: 1.000
 ## Calibration and the Brier score
 
 Let $Q\in[0,1]$ be the announced probability and $D\in\{0,1\}$ the
-outcome. Here $Q$ is local forecast notation, not a probability measure.
+outcome; for the threshold event above, $D=\mathbf1_{\{X>u\}}$.
+Here $Q$ is local forecast notation, not a probability measure.
 Calibration means $\mathbb E[D\mid Q]=Q$ almost surely. It concerns
 conditional frequencies among comparable forecasts. A constant forecast
 $Q=p$ is calibrated whenever $P(D=1)=p$, even if it cannot distinguish
@@ -284,7 +292,8 @@ calibration identifies a severity distribution. Among calibrated forecasts,
 $\mathbb E R=\mathbb E[Q(1-Q)]$: more informative forecasts can have lower
 scores than the calibrated constant forecast.
 
-For $n\ge1$ pairs define $B_n=n^{-1}\sum_i R_i$. Pointwise,
+For $n\ge1$ forecast–outcome pairs $(Q_i,D_i)$ with scores $R_i$,
+define $B_n=n^{-1}\sum_i R_i$. Pointwise,
 $0\le B_n\le1$, with **no independence assumption**. Every positive
 moment and every real exponential moment is finite. Boundedness does not
 imply small standardized kurtosis or fast averaging under dependence.
@@ -430,12 +439,12 @@ s=\sqrt z,\qquad 0<z<1.
 $$
 
 There are no endpoint atoms for positive beta shapes. Let $\mathrm B$
-denote the beta function and $M_r=\mathbb E[R^r]$. Integrating the
+denote the beta function. Integrating the
 powers against the joint density proves, for $r>0$,
 
 $$
 \begin{aligned}
-M_r&=(1-p)\frac{\mathrm B(a+2r,b)}{\mathrm B(a,b)}\\
+\mathbb E[R^r]&=(1-p)\frac{\mathrm B(a+2r,b)}{\mathrm B(a,b)}\\
 &\quad+p\frac{\mathrm B(a,b+2r)}{\mathrm B(a,b)}.
 \end{aligned}
 $$
@@ -449,22 +458,21 @@ variables and beta integrals give
 
 $$
 \begin{gathered}
-h_{\rm cal}(z)=\frac{1-s}{2s}H(s),\\
-H(s)=f_{a,b}(s)+f_{a,b}(1-s),\\
+h_{\rm cal}(z)=\frac{1-s}{2s}\{f_{a,b}(s)+f_{a,b}(1-s)\},\\
 s=\sqrt z,\qquad 0<z<1,
 \end{gathered}
 $$
 
 $$
 \begin{aligned}
-M_r&=\frac{\mathrm B(a+2r,b+1)}{\mathrm B(a,b)}\\
+\mathbb E[R^r]&=\frac{\mathrm B(a+2r,b+1)}{\mathrm B(a,b)}\\
 &\quad+\frac{\mathrm B(a+1,b+2r)}{\mathrm B(a,b)}.
 \end{aligned}
 $$
 
 For iid *pairs* $(Q_i,D_i)$, either model gives
-$\mathbb E B_n=M_1$ and
-$\operatorname{Var}(B_n)=(M_2-M_1^2)/n$.
+$\mathbb E B_n=\mathbb E R$ and
+$\operatorname{Var}(B_n)=\{\mathbb E[R^2]-(\mathbb E R)^2\}/n$.
 Writing $\phi_R(t)=\mathbb E[e^{itR}]$, independence also gives the
 exact characteristic function
 
@@ -574,7 +582,7 @@ we score amounts rather than event indicators.
 The [probability-conflation note](incerto-probability-conflation.md#conflation-score-gap)
 proves that even zero Brier regret cannot bound severity error over a
 class with unrestricted tail payoffs. The gap can also be decomposed
-within one prediction problem. Fix an event $D$, let $p=P(D=1)>0$,
+within one prediction problem. Fix an event indicator $D$, let $p=P(D=1)>0$,
 and let $V\ge0$ be an integrable severity on that event. Write
 $m=\mathbb E[V\mid D=1]$. A probability estimate $q$ and finite
 severity estimate $\widehat m$ imply the estimated exposure $q\widehat m$.
@@ -588,14 +596,15 @@ $$
 \end{aligned}
 $$
 
-For a constant probability report, let
-$\Delta_B=R_B(q)-R_B(p)=(q-p)^2$. If severity is known exactly,
+For a constant probability report, the excess expected Brier score
+over the truthful report is $(q-p)^2$. If severity is known exactly,
 $\widehat m=m\le H<\infty$, the bound reduces to
 
 $$
-|qm-pm|\le H\sqrt{\Delta_B}.
+|qm-pm|\le H|q-p|.
 $$
 
+The right side is $H$ times the square root of the Brier regret.
 Thus probability accuracy does control expected exposure when a severity
 bound and a correct conditional-severity model are supplied. A common
 cap on $V$ bounds $m$ but does not remove the second term when severity
@@ -605,14 +614,15 @@ nor uncertainty about the cap.
 For the exact Pareto excess model, hold $u,p$ fixed as in
 [equal-probability comparisons](#calibration-tail-models). If both the true
 exponent $\alpha$ and the fitted exponent $\widehat\alpha$ exceed one,
-the payoff error with the correct probability report is exactly
+let $\widehat C(u)$ denote the fitted excess mean.
+The payoff error with the correct probability report is exactly
 
 $$
 \begin{gathered}
-|\widehat C-C|
+|\widehat C(u)-C(u)|
 =\frac{up|\widehat\alpha-\alpha|}
  { (\alpha-1)(\widehat\alpha-1)},\\
-\frac{|\widehat C-C|}{C}
+\frac{|\widehat C(u)-C(u)|}{C(u)}
 =\frac{|\widehat\alpha-\alpha|}{\widehat\alpha-1}.
 \end{gathered}
 $$

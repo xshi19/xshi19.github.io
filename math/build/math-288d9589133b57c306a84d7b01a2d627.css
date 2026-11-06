@@ -445,6 +445,14 @@ html.dark article.content tbody tr:hover td {
     overflow-wrap: break-word;
   }
 
+  /* Reading and section maps are three prose columns. The 12rem floor
+     pushes the last column past a ~390px viewport. Let those cells wrap
+     inside the table wrapper; wider grids keep the floor and scroll. */
+  article.content :is(#reading-map, #section-map) + .overflow-auto > table:not(:has(tr > :nth-child(4))) :is(th, td) {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
   /* MyST's display wrapper is a flex child; allow it to shrink to the
      reading column, leaving the KaTeX display as the only math scroller. */
   article.content .overflow-x-auto:has(> .katex-display) {
@@ -462,15 +470,22 @@ html.dark article.content tbody tr:hover td {
     min-width: 100%;
   }
 
-  /* Keep long inline math within prose; tables already scroll as a whole. */
+  /* Keep long inline math within prose; tables already scroll as a whole.
+     KaTeX cancels a 2px script spacer with .vlist-t2 { margin-right: -2px }.
+     That spacer still counts as scrollable overflow, so a scrollport that
+     hugs the glyphs paints a bar under short subscripts. End padding covers
+     it; border-box keeps the padding inside max-width. */
   article.content :not(.katex-display) > .katex:not(table .katex) {
     position: relative;
     display: inline-block;
+    box-sizing: border-box;
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     vertical-align: middle;
     padding-block: 0.15em;
+    padding-inline-end: 2px;
+    scrollbar-width: thin;
   }
 }
 

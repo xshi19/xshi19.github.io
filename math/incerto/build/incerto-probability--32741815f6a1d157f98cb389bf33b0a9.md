@@ -30,24 +30,27 @@ through time under one law and an increasing information set.
 (conflation-score-gap)=
 ## A binary score does not identify a payoff mean
 
-Let $X\ge0$ be a loss, $u>0$ a fixed threshold, and
-$D=\mathbf1_{\{X>u\}}$. Write $p=P(D=1)$ and let $q\in[0,1]$
-be a constant probability report. In the
-[shared notation](https://xshi19.github.io/math/notation/), $p=\bar F(u)$.
-The Brier loss is $(q-D)^2$. Its excess expected loss above the true
-report is
+Let $X\ge0$ be a loss, $u>0$ a fixed threshold, and $q\in[0,1]$
+a constant probability report for the strict event $X>u$. Use the
+[shared survival notation](https://xshi19.github.io/math/notation/)
+$\bar F(u)=P(X>u)$. The Brier loss is $(q-\mathbf1_{\{X>u\}})^2$.
+Its expected value is
 
 $$
-\begin{gathered}
-\mathbb E[(q-D)^2]=p(1-p)+(q-p)^2,\\
-R_B(q)-R_B(p)=(q-p)^2.
-\end{gathered}
+\begin{aligned}
+\mathbb E[(q-\mathbf1_{\{X>u\}})^2]
+&=\bar F(u)\{1-\bar F(u)\}\\
+&\quad+\{q-\bar F(u)\}^2.
+\end{aligned}
 $$
 
-Expanding the square and using $D^2=D$ proves both identities.
-They measure an error in an event probability. They contain no conditional
-severity. In particular, a calibrated report $q=p$ need not have a small
-raw Brier score: the term $p(1-p)$ is the outcome's irreducible variation.
+Expanding the square and using
+$\mathbf1_{\{X>u\}}^2=\mathbf1_{\{X>u\}}$ proves the identity.
+The excess expected loss above the true report is therefore
+$\{q-\bar F(u)\}^2$. It measures an error in an event probability and
+contains no conditional severity. In particular, a calibrated report
+$q=\bar F(u)$ need not have a small raw Brier score: the term
+$\bar F(u)\{1-\bar F(u)\}$ is the outcome's irreducible variation.
 
 We now prove that even the complete iid binary-score sampling law cannot
 bound expected excess-payoff error. Fix $0<p<1$ and $u>0$. For each
@@ -59,21 +62,21 @@ then gives
 $$
 \begin{gathered}
 P(X>u)=p,\\
-C_\alpha(u)=\mathbb E[(X-u)_+],\\
-C_\alpha(u)=\frac{up}{\alpha-1}.
+\mathbb E[(X-u)_+]=\frac{up}{\alpha-1}.
 \end{gathered}
 $$
 
-Every model yields the same Bernoulli law for $D$, hence the same score
-law for any fixed report and any iid sample size. Yet $C_\alpha(u)$
-can be arbitrarily large as $\alpha\downarrow1$. An amount estimate
+Every model yields the same Bernoulli law for $\mathbf1_{\{X>u\}}$,
+hence the same score law for any fixed report and any iid sample size.
+Yet $\mathbb E[(X-u)_+]$ can be arbitrarily large as $\alpha\downarrow1$.
+An amount estimate
 based only on $p$ therefore has unbounded possible error across these
 models, even with zero Brier regret. All means in this comparison are
 finite; an infinite mean is not needed for the counterexample.
 With the same fixed $p$ and $u$, the threshold-scaled tail-level mean is
 
 $$
-\frac{\mathbb E[X D]}{up}
+\frac{\mathbb E[X\mathbf1_{\{X>u\}}]}{up}
 =1+\frac1{\alpha-1}.
 $$
 
@@ -217,12 +220,12 @@ fixed event. The transform applies to $F(X)$ for a continuous CDF,
 not to the constant $\bar F(u)$ at a fixed threshold.
 
 We derive the positive moments of $K$ directly from the beta density.
-For order $r>0$,
+Write $\mathrm B$ for the beta function. For order $r>0$,
 
 $$
 \begin{aligned}
 \mathbb E K^r
-&=\frac{x_m^r}{B(a,b)}\\
+&=\frac{x_m^r}{\mathrm B(a,b)}\\
 &\quad\cdot\int_0^1
   p^{a-1-r/\alpha}(1-p)^{b-1}\,dp.
 \end{aligned}
@@ -233,7 +236,7 @@ is finite exactly when $a-r/\alpha>0$. Consequently,
 
 $$
 \begin{gathered}
-\mathbb E K^r=x_m^r\frac{B(a-r/\alpha,b)}{B(a,b)},\\
+\mathbb E K^r=x_m^r\frac{\mathrm B(a-r/\alpha,b)}{\mathrm B(a,b)},\\
 r<a\alpha.
 \end{gathered}
 $$
@@ -245,7 +248,7 @@ when $b>0$. Changing variables $p=(x_m/k)^\alpha$ also gives
 
 $$
 \begin{gathered}
-f_K(k)=\frac{\alpha x_m^{a\alpha}}{B(a,b)}
+f_K(k)=\frac{\alpha x_m^{a\alpha}}{\mathrm B(a,b)}
  k^{-a\alpha-1}\\
 \qquad\cdot[1-(x_m/k)^\alpha]^{b-1},\\
 k>x_m.

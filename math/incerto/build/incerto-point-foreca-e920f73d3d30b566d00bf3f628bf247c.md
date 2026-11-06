@@ -25,11 +25,9 @@ The pandemic discussion uses synthetic quantities; it does not estimate
 COVID-19 fatalities or evaluate a particular intervention.
 
 Write $d\in\mathbb R$ for a fixed point forecast and $X$ for the future
-amount. We use $\ell(d,X)$ for a loss, leaving $L$ for the slowly varying
-function in the [shared notation](https://xshi19.github.io/math/notation/).
-The expected loss $\mathbb E\ell(d,X)$ evaluates the action $d$ under a
-specified probability law. Estimating that law from observations is a
-further problem.
+amount, following the [shared notation](https://xshi19.github.io/math/notation/).
+The expected loss evaluates the action $d$ under a specified probability
+law. Estimating that law from observations is a further problem.
 
 (point-forecast-targets)=
 ## Which point minimizes expected loss?
@@ -95,10 +93,10 @@ For $\alpha>1$ the exact Pareto mean and median are
 
 $$
 \mu=\frac{\alpha x_m}{\alpha-1},
-\qquad d_{1/2}=x_m2^{1/\alpha}.
+\qquad \operatorname{median}(X)=x_m2^{1/\alpha}.
 $$
 
-The median formula follows from $F(d_{1/2})=1/2$.
+The median formula follows from $F(x_m2^{1/\alpha})=1/2$.
 For $d\ge x_m$, use $|X-d|=d-X+2(X-d)_+$ and the
 [excess-mean formula](incerto-calibration-payoff.md#calibration-tail-models)
 to obtain
@@ -191,14 +189,11 @@ Several denominator conventions have been called sMAPE
 [@hyndman2014smape]. The convention used here is
 
 $$
-\begin{gathered}
-\ell_{\rm s}(d,x)=\frac{2|x-d|}{|x|+|d|},\\
-|x|+|d|>0,\\
-\ell_{\rm s}(0,0)=0.
-\end{gathered}
+\frac{2|x-d|}{|x|+|d|},\qquad |x|+|d|>0,
 $$
 
-The triangle inequality proves $0\le\ell_{\rm s}\le2$. A percentage
+with score zero when $d=x=0$.
+The triangle inequality proves that the score lies in $[0,2]$. A percentage
 presentation multiplies this by 100. Thus this normalized score is bounded
 even for unbounded $X$. A statement that every M4-style score has the
 same tail class as the underlying amount would be false for this sMAPE.
@@ -414,8 +409,8 @@ Finite simulation illustrates the cited limit and does not prove it.
 ## Why a forecast leaderboard can move
 
 Evaluate a fixed forecast $d$ on iid test observations using the average
-of $\ell(d,X_i)$. The earlier tail calculation gives exact Pareto loss
-exponents $\alpha$ for absolute error and $\alpha/2$ for squared error.
+of the losses at $(d,X_i)$. The earlier tail calculation gives exact Pareto
+loss exponents $\alpha$ for absolute error and $\alpha/2$ for squared error.
 Consequently:
 
 | Score | Finite expected score | Finite score variance |
@@ -582,11 +577,13 @@ $$
 $$
 
 Thus the **whole survival curve** determines expected excess; its value
-at one threshold does not. The fixed-threshold empirical fraction has
-variance $p_u(1-p_u)/n$, where $p_u=P(X>u)$, regardless of the amount's
-moments. Its RMSE is of order $n^{-1/2}$ when $0<p_u<1$; its MSE is
-of order $n^{-1}$, not $o(n^{-1})$. For rare events its relative RMSE
-is $\sqrt{(1-p_u)/(np_u)}$, which can be large. See
+at one threshold does not. For $n$ iid observations and a fixed threshold
+$u$, the empirical fraction exceeding $u$ has variance
+$\bar F(u)\{1-\bar F(u)\}/n$, where $\bar F(u)=P(X>u)$, regardless
+of the amount's moments. Its RMSE is of order $n^{-1/2}$ when
+$0<\bar F(u)<1$; its MSE is of order $n^{-1}$, not $o(n^{-1})$.
+For rare events its relative RMSE is
+$\sqrt{\{1-\bar F(u)\}/\{n\bar F(u)\}}$, which can be large. See
 [counting exceedances](incerto-counting-exceedances.md) and
 [tail beyond the sample](incerto-hidden-tail.md) for the proofs and limits.
 
@@ -600,23 +597,24 @@ but an exponent below one cannot establish an infinite physical mean under
 that bound. Pooling events across changing populations also changes the model.
 
 A cap alone need not make a sample informative about rare, severe losses.
-Let $V$ be an unbounded exact Pareto variable and define locally
-$X_H=\min(V,H)$, with $H\ge x_m$. The survival-integral calculation in
-the [LLN note](incerto-lln-failure.md#lln-failure-truncated-mean-check) gives
+Let $V$ be an unbounded exact Pareto variable with exponent $\alpha>0$
+and minimum $x_m>0$. In this capped model, $X$ now denotes $\min(V,H)$,
+with $x_m\le H<\infty$. The survival-integral
+calculation in the [LLN note](incerto-lln-failure.md#lln-failure-truncated-mean-check) gives
 
 $$
-\mathbb E X_H
+\mathbb E X
 =x_m+x_m^\alpha\int_{x_m}^{H}t^{-\alpha}\,dt.
 $$
 
-Writing $h=H/x_m$, for $\alpha\ne1$ this is
+For $\alpha\ne1$ this is
 
 $$
-\mathbb E X_H
-=x_m\left(1+\frac{h^{1-\alpha}-1}{1-\alpha}\right).
+\mathbb E X
+=x_m\left(1+\frac{(H/x_m)^{1-\alpha}-1}{1-\alpha}\right).
 $$
 
-At $\alpha=1$ it is $x_m(1+\log h)$.
+At $\alpha=1$ it is $x_m\{1+\log(H/x_m)\}$.
 
 For $\alpha<1$ this mean grows as a power of the remote cap. The iid
 bounded strong law holds at every fixed $H$; no cap-independent sample
@@ -630,13 +628,14 @@ $z\ge0$ is $e^{-\alpha z}$. This explains why log spacings can support
 is erratic. It does not recover raw expected harm by exponentiating a log
 mean; nonlinear expectations require the full law.
 
-For a bounded variable, an endpoint-removing *dual transform* is a separate
-modeling device. At lower endpoint zero, write
+For any bounded variable $0\le X\le H$ with $0<H<\infty$, an
+endpoint-removing *dual transform* is a separate modeling device.
+At lower endpoint zero, write
 
 $$
 \begin{gathered}
-Z=\phi_H(X)=-H\log(1-X/H),\\
-X=\phi_H^{-1}(Z)=H(1-e^{-Z/H}).
+Z=-H\log(1-X/H),\\
+X=H(1-e^{-Z/H}).
 \end{gathered}
 $$
 
@@ -644,7 +643,7 @@ The forward map is increasing on $0\le X<H$, maps zero to zero,
 and tends to infinity at $H$. Solving the equation gives its inverse.
 For $X/H\to0$, Taylor expansion gives
 $Z=X+X^2/(2H)+O(X^3/H^2)$, so ordinary-scale observations move little.
-At the endpoint, use the extended value $\phi_H(H)=\infty$.
+At $X=H$, use the extended dual value $Z=\infty$.
 An endpoint atom remains an atom at infinity; finite dual-tail modeling
 requires handling it explicitly.
 
@@ -739,26 +738,27 @@ specified ordering, such as a mean-preserving spread. Variance alone
 does not order arbitrary models, and a saturation cap changes convexity.
 
 The decision question can be asked before one can estimate an average
-accurately. In an abstract capped-loss model, define the harm
-$J=(X_H-u)_+$ for $x_m\le u<H$. Pointwise subtraction of two caps gives
+accurately. Return to the capped model $X=\min(V,H)$, with excess harm
+$(X-u)_+$ for $x_m\le u<H$. Pointwise subtraction of two caps gives
 
 $$
-J=\min(V,H)-\min(V,u).
+(X-u)_+=\min(V,H)-\min(V,u).
 $$
 
 Suppose an action costs $c\ge0$ in the same loss units and, by assumption,
 reduces this harm by a known fraction $r\in[0,1]$. Its expected total
-loss is $c+(1-r)\mathbb E J$, compared with $\mathbb E J$ without
-action. Subtraction proves the decision rule
+loss is $c+(1-r)\mathbb E[(X-u)_+]$, compared with
+$\mathbb E[(X-u)_+]$ without action. Since $0\le(X-u)_+\le H-u<\infty$,
+both expected harms are finite. Subtraction proves the decision rule
 
 $$
-c<r\,\mathbb E J.
+c<r\,\mathbb E[(X-u)_+].
 $$
 
 This is a model-specific precaution calculation. It includes action costs
 and effectiveness; the word “uncertainty” alone does not determine either.
 Under a set of credible models, the sufficient condition
-$c<r\inf\mathbb E J$ makes the action preferable in every model in
+$c<r\inf\mathbb E[(X-u)_+]$ makes the action preferable in every model in
 that set. A catastrophe-probability constraint is another possible
 criterion; it requires an explicitly chosen tolerance.
 

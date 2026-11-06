@@ -43,30 +43,29 @@ fraction of an atom at the quantile. Consequently the strict conditional
 mean $\mathbb E[X\mid X>q_\tau]$ is not a general definition of ES.
 
 We prove the equivalent excess-payoff formula, which also handles atoms.
-Write $q=q_\tau$ and $C(t)=\mathbb E[(X-t)_+]$. Represent the loss
-by its quantile function evaluated at a uniform random variable; this has
-CDF $F$. Monotonicity gives $q_s\le q$ below $\tau$ and $q_s\ge q$
-above $\tau$, so
+Represent the loss by its quantile function evaluated at a uniform random
+variable; this has CDF $F$. Monotonicity gives $q_s\le q_\tau$ below
+$\tau$ and $q_s\ge q_\tau$ above $\tau$, so
 
 $$
 \begin{gathered}
-C(q)=\int_\tau^1(q_s-q)\,ds,\\
-\operatorname{ES}_\tau(X)=q+\frac{C(q)}p.
+\mathbb E[(X-q_\tau)_+]=\int_\tau^1(q_s-q_\tau)\,ds,\\
+\operatorname{ES}_\tau(X)=q_\tau+\frac{\mathbb E[(X-q_\tau)_+]}p.
 \end{gathered}
 $$
 
 These are nonnegative integrals and remain valid with infinity. If the
-law is continuous at $q$ with $P(X>q)=p$, ES equals the conditional
-tail mean. The unconditional tail-level quantity from the
+law is continuous at $q_\tau$ with $P(X>q_\tau)=p$, ES equals the
+conditional tail mean. The unconditional tail-level quantity from the
 [calibration note](incerto-calibration-payoff.md#calibration-contract) is
-then $T(q)=p\operatorname{ES}_\tau(X)$, not ES itself. At an atom,
-the exact expression is
+then $\mathbb E[X\mathbf1_{\{X>q_\tau\}}]=p\operatorname{ES}_\tau(X)$,
+not ES itself. At an atom, the exact expression is
 
 $$
 \begin{aligned}
 p\operatorname{ES}_\tau(X)
-&=\mathbb E[X\mathbf1_{\{X>q\}}]\\
-&\quad+q\{p-P(X>q)\}.
+&=\mathbb E[X\mathbf1_{\{X>q_\tau\}}]\\
+&\quad+q_\tau\{p-P(X>q_\tau)\}.
 \end{aligned}
 $$
 
@@ -125,7 +124,7 @@ portfolio violates subadditivity.
 
 The quantile definition also applies to real integrable losses. On that
 domain, ES is subadditive regardless of dependence. We prove this from
-the excess formula. For any real $t$, let
+the excess formula. Within this proof, for any real $t$, let
 
 $$
 J_X(t)=t+\frac{\mathbb E[(X-t)_+]}p.
@@ -185,8 +184,8 @@ q_\tau=x_m p^{-1/\alpha},\\
 $$
 
 To prove the second line, integrate the Pareto survival above $q_\tau$:
-$C(q_\tau)=pq_\tau/(\alpha-1)$, then substitute into the excess
-formula. For $0<\alpha\le1$ this integral diverges, hence ES is
+$\mathbb E[(X-q_\tau)_+]=pq_\tau/(\alpha-1)$, then substitute into the
+excess formula. For $0<\alpha\le1$ this integral diverges, hence ES is
 infinite at every interior confidence level, while VaR remains finite.
 These are exact-Pareto statements. The equality case for a general
 regularly varying law can depend on its slowly varying factor; see
@@ -215,14 +214,14 @@ alpha=3: VaR=4.64, ES=6.96
 (risk-alpha-convexity)=
 ## Random exponents: averaging model risk
 
-Hold the cutoff $x_m$ and tail mass $p$ fixed. Put $c=-\log p>0$
-and view the quantile as the function $v(a)=x_m e^{c/a}$ of an
-exponent $a>0$. Direct differentiation proves
+Hold the cutoff $x_m$ and tail mass $p\in(0,1)$ fixed. View the quantile
+as the function $v(a)=x_m p^{-1/a}$ of an exponent $a>0$.
+Since $\log p<0$, direct differentiation proves
 
 $$
 \begin{gathered}
-v'(a)=-\frac{c}{a^2}v(a),\\
-\frac{v''(a)}{v(a)}=\frac{2c}{a^3}+\frac{c^2}{a^4}>0.
+v'(a)=\frac{\log p}{a^2}v(a),\\
+\frac{v''(a)}{v(a)}=-\frac{2\log p}{a^3}+\frac{(\log p)^2}{a^4}>0.
 \end{gathered}
 $$
 
@@ -235,14 +234,14 @@ conditional models. It does not yet compute a predictive
 mixture quantile, and it is not a bias claim about an arbitrary estimator:
 if $A$ represents an estimator, its mean need not equal the true exponent.
 
-For $a>1$, put $h(a)=a v(a)/(a-1)$ and $\ell(a)=\log h(a)$.
-The ES curvature follows from
+For $a>1$, the model ES is $h(a)=a v(a)/(a-1)$.
+Its curvature follows by logarithmic differentiation:
 
 $$
 \begin{gathered}
-\ell'(a)=-\frac1{a(a-1)}-\frac{c}{a^2},\\
-\ell''(a)=\frac{2a-1}{a^2(a-1)^2}+\frac{2c}{a^3}>0,\\
-h''(a)=h(a)\{\ell''(a)+\ell'(a)^2\}>0.
+(\log h)'(a)=-\frac1{a(a-1)}+\frac{\log p}{a^2},\\
+(\log h)''(a)=\frac{2a-1}{a^2(a-1)^2}-\frac{2\log p}{a^3}>0,\\
+h''(a)=h(a)\bigl\{(\log h)''(a)+[(\log h)'(a)]^2\bigr\}>0.
 \end{gathered}
 $$
 
@@ -277,13 +276,13 @@ larger variance alone is not.
 
 Now specify $X\mid A\sim\operatorname{Pareto}(A,x_m)$ with the
 same fixed $x_m$ in every component, $A>0$ almost surely, and finite
-$a_0=\mathbb E A$. For $x>x_m$ put $t=\log(x/x_m)>0$.
-Convexity of $a\mapsto e^{-at}$ proves
+$a_0=\mathbb E A$. For $x>x_m$, convexity of
+$a\mapsto(x_m/x)^a$ proves
 
 $$
 \begin{gathered}
-\bar F_{\rm mix}(x)=\mathbb E[e^{-At}],\\
-\bar F_{\rm mix}(x)\ge e^{-a_0t}.
+\bar F_{\rm mix}(x)=\mathbb E[(x_m/x)^A],\\
+\bar F_{\rm mix}(x)\ge(x_m/x)^{a_0}.
 \end{gathered}
 $$
 
@@ -296,15 +295,15 @@ inequality is specific to this common-cutoff exponent mixture. Holding
 a median or mean fixed by changing $x_m$ is a different comparison.
 
 The mixture's VaR is finite: dominated convergence gives
-$\mathbb E[e^{-At}]\to0$ as $t\to\infty$. Its mean and ES can
+$\mathbb E[(x_m/x)^A]\to0$ as $x\to\infty$. Its mean and ES can
 still be infinite. With $A$ uniform on $(1,2)$, Tonelli gives an
 infinite mixture mean, hence infinite ES; truncating the loss below any
 finite quantile cannot remove that infinite tail mean.
 
 There is also a sharp distinction between mixture VaR and average model
-VaR. With $A$ uniform on $(0,1)$, $\mathbb E[e^{c/A}]=\infty$
-for any $c>0$, while mixture VaR stays finite. The first claim follows
-by substituting $z=1/A$: the resulting integral of $e^{cz}/z^2$
+VaR. With $A$ uniform on $(0,1)$, $\mathbb E[p^{-1/A}]=\infty$
+for every $0<p<1$, while mixture VaR stays finite. The first claim follows
+by substituting $z=1/A$: the resulting integral of $p^{-z}/z^2$
 diverges. No identity interchanges averaging a quantile with mixing laws.
 
 Use [`pareto_mixture_risk`](incerto-api-reference.md#api-pareto-mixture-risk)

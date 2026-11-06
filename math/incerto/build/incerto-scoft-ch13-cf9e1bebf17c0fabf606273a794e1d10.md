@@ -35,13 +35,13 @@ performance commentary is outside these notes.
 
 ## One equation, two kinds of information
 
-For a nonnegative loss, threshold $u>0$, and $p_u=P(X>u)>0$,
+For a nonnegative loss $X$, threshold $u>0$, and $\bar F(u)=P(X>u)>0$,
 Tonelli's theorem gives the tail-level mean
 
 $$
 \begin{aligned}
 \mathbb E[X\mathbf1_{\{X>u\}}]
-&=up_u\\
+&=u\bar F(u)\\
 &\quad+\int_u^\infty\bar F(v)\,dv.
 \end{aligned}
 $$

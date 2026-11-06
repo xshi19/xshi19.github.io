@@ -39,7 +39,7 @@ For iid symmetric stable errors with index $0<\alpha\le2$ and
 unit characteristic-function scale, the sample average has scale
 
 $$
-s_n=n^{1/\alpha-1}.
+n^{1/\alpha-1}.
 $$
 
 This is an exact distributional identity, proved in the note. It describes
@@ -82,8 +82,10 @@ The note supplies precise replacements for several broad source claims:
 - Exact Pareto means diverge at $\alpha\le1$; a fixed bounded fatality
   variable has all positive moments. Moment boundaries for general regular
   variation depend on the slowly varying factor.
-- A fixed-threshold survival fraction has MSE $p(1-p)/n$. The complete
-  survival curve determines expected excess; one probability does not.
+- For $n$ iid observations at a fixed threshold $u$, the survival fraction has MSE
+  $\bar F(u)\{1-\bar F(u)\}/n$, where $\bar F(u)=P(X>u)$.
+  The complete survival curve determines expected excess; one probability
+  does not.
 - Infinite variance of an amount does not make every score or paired
   comparison unstable. Bounded scores and bounded paired differences
   retain finite-variance iid guarantees.

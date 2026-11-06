@@ -23,7 +23,7 @@ SCoFT v4 §§9.2–9.3, pp. 177–181, motivates the comparison
 (hidden-tail-missing-mass)=
 ## Missing probability
 
-Let $X_1,\ldots,X_n$ be iid from a continuous CDF $F$, let
+For an integer $n\ge1$, let $X_1,\ldots,X_n$ be iid from a continuous CDF $F$, let
 $M_n=\max_iX_i$, and write $\bar F=1-F$. Define the random missing mass
 $U_n=\bar F(M_n)$. The probability integral transform makes the
 $F(X_i)$ independent uniform variables, so, for $0\le u\le1$,
@@ -94,10 +94,10 @@ $$
 For $p\ge\alpha$ this integral diverges for every finite $t$; the
 [population moment](incerto-pareto-moment-existence.md) is infinite.
 There is then no finite moment fraction to report. For $p<\alpha$, let
-$r=1-p/\alpha>0$ and define the random fraction
+$r=1-p/\alpha>0$. The random fraction is
 
 $$
-R_{n,p}=\frac{T_p(M_n)}{\mathbb E[X^p]}=U_n^r.
+\frac{T_p(M_n)}{\mathbb E[X^p]}=U_n^r.
 $$
 
 This uses a new population draw $X$ independent of the sample defining
@@ -105,7 +105,7 @@ $M_n$. It does not assign unobserved values to that sample. Transforming
 the Beta law proves, for $0\le h\le1$,
 
 $$
-P(R_{n,p}\le h)=1-(1-h^{1/r})^n.
+P(U_n^r\le h)=1-(1-h^{1/r})^n.
 $$
 
 Integrating against the Beta density gives the exact expected fraction,
@@ -113,7 +113,7 @@ with $B$ and $\Gamma$ denoting beta and gamma functions:
 
 $$
 \begin{aligned}
-\mathbb E[R_{n,p}]&=nB(1+r,n)\\
+\mathbb E[U_n^r]&=nB(1+r,n)\\
 &=\frac{\Gamma(n+1)\Gamma(1+r)}{\Gamma(n+1+r)}\\
 &\sim\Gamma(1+r)n^{-r}.
 \end{aligned}
@@ -170,11 +170,14 @@ explains the modeling required to estimate a missing contribution.
 (hidden-tail-gaussian)=
 ## Comparison with a normal parent
 
-For standard normal $X$, write $\phi$ for its density and $\Phi$ for its
-CDF. Since $\phi'(x)=-x\phi(x)$, direct integration gives, for every real $t$,
+In this section, take $X_1,\ldots,X_n$ iid standard normal, let $M_n$ be
+their maximum, and let $X$ be an independent draw from the same law.
+Write $\phi$ for its density and $\Phi$ for its CDF, and use $T_1$ for
+this parent's tail contribution. Since
+$\phi'(x)=-x\phi(x)$, direct integration gives, for every real $t$,
 
 $$
-\mathbb E[X\mathbf1_{\{X>t\}}]=\phi(t).
+T_1(t)=\mathbb E[X\mathbf1_{\{X>t\}}]=\phi(t).
 $$
 
 The exact maximum density is $n\phi(t)\Phi(t)^{n-1}$. Consequently,
@@ -188,14 +191,22 @@ $$
 
 All maxima are included, even negative ones. This is a positive upper-tail
 contribution, not a fraction of the normal mean, which is zero. For a
-centered normal with standard deviation $\sigma$, multiply this expression
+centered normal with standard deviation $\sigma>0$, multiply this expression
 by $\sigma$; dividing by $\sigma$ recovers the displayed quantity.
 
-For stable numerical integration set $W=-n\log\Phi(M_n)$. Its survival
-is $e^{-w}$ for $w\ge0$, since $\Phi(M_n)$ has CDF $v^n$. Thus $W$ is
-exponential with rate one, and the integral can be evaluated as
-$\mathbb E[\phi(\Phi^{-1}(e^{-W/n}))]$. This is an exact change of variables;
-the helper's quadrature is numerical and reports an estimated integration error.
+For stable numerical integration, change the integration coordinate via
+$t\leftarrow-n\log\Phi(t)$. In the next display, $t$ denotes this
+transformed coordinate. Since $\Phi(M_n)$ has CDF $v^n$ on $[0,1]$,
+the transformed maximum $-n\log\Phi(M_n)$ has survival $e^{-t}$ for
+$t\ge0$, hence an exponential law with rate one. Thus
+
+$$
+\mathbb E[T_1(M_n)]
+=\int_0^\infty\phi\!\left(\Phi^{-1}(e^{-t/n})\right)e^{-t}\,dt.
+$$
+
+This is an exact change of variables; the helper's quadrature is numerical
+and reports an estimated integration error.
 
 Use [`expected_gaussian_hidden_mean`](incerto-api-reference.md#api-expected-gaussian-hidden-mean).
 
@@ -238,13 +249,14 @@ $$
 $$
 
 At a fixed, nonrandom $u$, independence makes the numerator binomial
-with success probability $q=\bar F(u)$. The empirical survival fraction
-has expectation $q$ and variance $q(1-q)/n$. For $0<q<1$ the ordinary Bernoulli CLT gives
+with success probability $\bar F(u)$. The empirical survival fraction
+has expectation $\bar F(u)$ and variance $\bar F(u)\{1-\bar F(u)\}/n$.
+For $0<\bar F(u)<1$ the ordinary Bernoulli CLT gives
 
 $$
 \begin{gathered}
-\sqrt n\bigl(\widehat{\bar F}_n(u)-q\bigr)\\
-\Rightarrow\mathcal N(0,q(1-q)).
+\sqrt n\bigl(\widehat{\bar F}_n(u)-\bar F(u)\bigr)\\
+\Rightarrow\mathcal N\!\left(0,\bar F(u)\{1-\bar F(u)\}\right).
 \end{gathered}
 $$
 

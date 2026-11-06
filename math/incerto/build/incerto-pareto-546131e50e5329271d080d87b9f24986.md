@@ -241,7 +241,7 @@ $$
 $$
 
 The equality holds in the extended nonnegative reals, including atoms at
-$u$. For Pareto with $\alpha>1$ it becomes
+$u$. For Pareto with $\alpha>1$ and $u\ge x_m$ it becomes
 $\bar F(u)\alpha u/(\alpha-1)$. For $\alpha=3/2$, $x_m=1$, and $u=4$,
 the probability is $1/8$, the mean excess is $8$, the conditional mean is
 $12$, and the tail contribution is $3/2$. Replacing that contribution by
@@ -293,17 +293,19 @@ the infinite-mean cases without replacing infinity by a finite cutoff.
 ## Why the known-cutoff likelihood formula needs conditions
 
 We prove the estimator stated above for $n\ge1$ iid exact Pareto observations,
-known $x_m>0$, and observed $x_i\ge x_m$. Let
-$D=\sum_i\log(x_i/x_m)$. Terms independent of $\alpha$ can be omitted from
-the log likelihood, leaving
+known $x_m>0$, and observed $x_i\ge x_m$. Up to terms independent of
+$\alpha$, the log likelihood $\ell$ and its derivatives are
 
 $$
-\ell(\alpha)=n\log\alpha-\alpha D+\text{constant},\qquad
-\ell'(\alpha)=\frac n\alpha-D,\qquad
-\ell''(\alpha)=-\frac n{\alpha^2}<0.
+\begin{aligned}
+\ell(\alpha)&=n\log\alpha-\alpha\sum_{i=1}^n\log(x_i/x_m)+\text{constant},\\
+\ell'(\alpha)&=\frac n\alpha-\sum_{i=1}^n\log(x_i/x_m),\\
+\ell''(\alpha)&=-\frac n{\alpha^2}<0.
+\end{aligned}
 $$
 
-If $D>0$, the unique maximizer is $n/D$. If $D=0$, every observation equals
+If $\sum_{i=1}^n\log(x_i/x_m)>0$, the unique maximizer is
+$n/\sum_{i=1}^n\log(x_i/x_m)$. If the sum is zero, every observation equals
 $x_m$ and $\ell$ increases without bound as $\alpha\to\infty$. Observations
 below $x_m$ are outside this model's support. A threshold estimated from the
 same sample changes the problem; this proof supplies no guarantee for that fit.
@@ -350,30 +352,37 @@ $\mathbb E[X^p]<\infty$ if and only if $p<\alpha$, for $p>0$, as proved in
 ### Exact-Pareto boundary calculation
 
 We prove the two normalizations used above for $\alpha=1$.
+Without loss of generality, assume $x_m=1$ within this calculation:
+divide each observation by the positive cutoff $x_m$, and let
+$X_i$, $S_n$, and $M_n$ now denote the rescaled observations, sum, and
+maximum. This scaling preserves $M_n/S_n$ and turns the two normalizations
+into $M_n/n$ and $S_n/(n\log n)$.
 For $z>0$ and sufficiently large $n$, independence gives
 
 $$
-\mathbb P\!\left(\frac{M_n}{x_m n}\le z\right)
+\mathbb P\!\left(\frac{M_n}{n}\le z\right)
 =\left(1-\frac{1}{nz}\right)^n\longrightarrow e^{-1/z}.
 $$
 
-For the sum, write $V_i=X_i/x_m$ and, for $n\ge3$, set $b_n=n\log n$ and
-$T_{i,n}=V_i\mathbf1_{\{V_i\le b_n\}}$. Integration of the density
-$v^{-2}$ on $[1,b_n]$ gives
-$\mathbb E[T_{i,n}]=\log b_n$ and
-$\mathbb E[T_{i,n}^2]=b_n-1$. Hence
+For the sum, truncate at $n\log n$: for $n\ge3$, set
+$T_{i,n}=X_i\mathbf1_{\{X_i\le n\log n\}}$. Integration of the density
+$x^{-2}$ on $[1,n\log n]$ gives
+$\mathbb E[T_{i,n}]=\log(n\log n)$ and
+$\mathbb E[T_{i,n}^2]=n\log n-1$. Hence
 
 $$
 \operatorname{Var}\!\left(\frac{\sum_{i=1}^nT_{i,n}}{n\log n}\right)
-\le\frac{b_n}{n(\log n)^2}=\frac{1}{\log n}\longrightarrow0.
+\le\frac{n\log n}{n(\log n)^2}=\frac{1}{\log n}\longrightarrow0.
 $$
 
-The normalized expectation $\log b_n/\log n$ tends to $1$.
+The normalized expectation $\log(n\log n)/\log n$ tends to $1$.
 Chebyshev's inequality gives convergence in probability for the truncated sum.
-The union bound $\mathbb P(\max_{i\le n}V_i>b_n)\le n/b_n=1/\log n$
-transfers that convergence to $S_n/(x_m n\log n)$. Dividing the tight
+The union bound $\mathbb P(M_n>n\log n)\le n/(n\log n)=1/\log n$
+transfers that convergence to $S_n/(n\log n)$. Dividing the tight
 normalized maximum by this normalized sum and by $\log n$ proves
-$M_n/S_n\to0$ in probability.
+$M_n/S_n\to0$ in probability. Returning to the original units restores
+the normalizations $M_n/(x_m n)$ and $S_n/(x_m n\log n)$; from here on,
+$X_i$, $S_n$, and $M_n$ again denote the original, unscaled quantities.
 
 ### Fixed-size rare-event calculation
 
@@ -414,10 +423,10 @@ $$
 $$
 
 The lower bound uses nonnegativity; the upper bound holds because a sum
-above $x$ has some term above $x/n$. Put $a=\min_i\alpha_i$.
+above $x$ has some term above $x/n$.
 The [logarithmic regular-variation consequence](incerto-regular-variation.md#regular-variation-representation)
-makes both bounds $x^{-a+o(1)}$, so
-$\log P(S>x)/\log x\to-a$. These bounds establish a logarithmic
+makes both bounds $x^{-\min_i\alpha_i+o(1)}$, so
+$\log P(S>x)/\log x\to-\min_i\alpha_i$. These bounds establish a logarithmic
 exponent, not a limiting survival constant or full regular variation of
 every dependent sum. If one allows signed variables, take a symmetric
 power-tailed $V$ and $(X_1,X_2)=(V,-V)$: both have right power tails but
@@ -482,9 +491,9 @@ the earlier three max-to-sum regimes remain unchanged.
 - A finite theoretical mean can still be practically hard to estimate when
   $\alpha$ is close to 1.  The issue is pre-asymptotic behavior, not merely the
   formal existence of $\mathbb E[X]$.
-- The exact failure mode depends on the moment order.  At $p=\alpha$, the
-  cutoff moment grows like $\log b$; for $p>\alpha$, it grows like
-  $b^{p-\alpha}$.
+- The exact failure mode depends on the moment order. As the upper cutoff
+  $b\ge x_m$ tends to infinity, the cutoff moment grows like $\log b$ at
+  $p=\alpha$ and like $b^{p-\alpha}$ for $p>\alpha$.
 - Do not estimate high moments of heavy-tailed samples without checking whether
   those moments are implied by the fitted tail exponent.
 

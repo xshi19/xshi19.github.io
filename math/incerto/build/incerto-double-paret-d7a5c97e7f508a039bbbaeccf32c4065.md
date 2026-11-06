@@ -56,11 +56,12 @@ $$
 \mathbb P(|X|>x)=(1+x)^{-\alpha}.
 $$
 
-More generally, a location-scale version $Z=\mu+sX$ with $s>0$ has density
+More generally, the location-scale version $\mu+sX$, with $\mu\in\mathbb R$
+and $s>0$, has density
 
 $$
-f_Z(z)=\frac{\alpha}{2s}
-\left(1+\frac{|z-\mu|}{s}\right)^{-(\alpha+1)}.
+f_{\mu+sX}(x)=\frac{\alpha}{2s}
+\left(1+\frac{|x-\mu|}{s}\right)^{-(\alpha+1)}.
 $$
 
 The ordinary mean exists and equals $0$ exactly when $\alpha>1$.  For
@@ -222,23 +223,25 @@ power law with a Student law. We keep the normalized density $\alpha/2$
 above on each side and derive both matching scales. Equal exponents do
 not imply equal moments or equal leading tail constants.
 
-Let $T_\nu$ have the unit-scale Student density, with $\nu=\alpha>0$,
-and let $Z=sT_\alpha$, $s>0$. Its right tail satisfies
+Let $T_\alpha$ initially have the unit-scale Student law with $\alpha>0$
+degrees of freedom. Rescale $T_\alpha\leftarrow sT_\alpha$, where $s>0$;
+throughout this comparison, $T_\alpha$ denotes the rescaled Student variable.
+Its right tail satisfies
 
 $$
-P(Z>x)\sim C_\alpha s^\alpha x^{-\alpha},\qquad
+P(T_\alpha>x)\sim C_\alpha s^\alpha x^{-\alpha},\qquad
 C_\alpha=\frac{\Gamma((\alpha+1)/2)\alpha^{\alpha/2-1}}
                   {\sqrt\pi\,\Gamma(\alpha/2)}.
 $$
 
 We prove the constant from the density. Factoring $x^2/(\alpha s^2)$
 out of $1+x^2/(\alpha s^2)$ in the Student density gives
-$f_Z(x)\sim\alpha C_\alpha s^\alpha x^{-\alpha-1}$.
+$f_{T_\alpha}(x)\sim\alpha C_\alpha s^\alpha x^{-\alpha-1}$.
 For each $\varepsilon>0$, this density lies between $1\pm\varepsilon$
 times its leading power beyond a fixed threshold. Integrating those bounds
 from $x$ to infinity and letting $\varepsilon\downarrow0$ gives the
 displayed survival asymptotic. For positive orders $p$, the same comparison
-proves $\mathbb E|Z|^p<\infty$ exactly when $p<\alpha$; the density is
+proves $\mathbb E|T_\alpha|^p<\infty$ exactly when $p<\alpha$; the density is
 bounded near zero.
 
 The double-Pareto right-tail constant is $1/2$ at scale one. Matching it

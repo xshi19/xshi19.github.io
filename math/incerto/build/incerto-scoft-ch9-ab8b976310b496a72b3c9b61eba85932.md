@@ -37,14 +37,14 @@ $L$ becomes $x_m$; $L(x)$ retains its slowly varying meaning. The
 [shared canon](https://xshi19.github.io/math/notation/) distinguishes
 $\bar F=1-F$, threshold $u$, and mean excess $e(u)$.
 
-A compact comparison summarizes the exact Pareto calculation. For
-$\alpha>1$, let $r=1-1/\alpha$, $\mu=\mathbb E[X]$, and
-$T_1(t)=\mathbb E[X\mathbf1_{\{X>t\}}]$. Then
+A compact comparison summarizes the exact Pareto calculation. For an iid
+Pareto sample of size $n\ge1$ with $\alpha>1$ and $x_m>0$, let $X$ be an
+independent draw from the same law and put $r=1-1/\alpha$. Then
 
 $$
 \begin{gathered}
 \mathbb E[\bar F(M_n)]=\frac1{n+1},\\
-\frac{\mathbb E[T_1(M_n)]}{\mu}\\
+\frac{\mathbb E[X\mathbf1_{\{X>M_n\}}]}{\mathbb E[X]}\\
 =\frac{\Gamma(n+1)\Gamma(1+r)}{\Gamma(n+1+r)}.
 \end{gathered}
 $$

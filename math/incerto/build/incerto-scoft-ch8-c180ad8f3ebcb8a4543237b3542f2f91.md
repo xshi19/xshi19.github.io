@@ -35,8 +35,9 @@ arXiv:1802.05495v3; book locators below always refer to v4.
 
 ## Qualifications and notation
 
-We write $M(n)=\mathbb E|S_n-n\mu|$, require $\mathbb E|X|<\infty$,
-and retain both indices in
+For iid summands with mean $\mu$ and $\mathbb E|X|<\infty$, write
+$M(n)=\mathbb E|S_n-n\mu|$. For integers $n>n_0\ge1$ with
+$M(n)>M(n_0)>0$, retain both indices in
 
 $$
 \kappa_{n_0,n}=2-\frac{\log(n/n_0)}{\log(M(n)/M(n_0))}.
@@ -48,7 +49,7 @@ $\nu$; $\alpha$ names the stable index or a stated power-tail exponent.
 The [shared notation](https://xshi19.github.io/math/notation/) fixes sums
 and means. These distinctions prevent several incorrect inferences:
 
-- Stable sum growth $n^{1/\alpha}$ gives $\kappa=2-\alpha$.
+- Stable sum growth $n^{1/\alpha}$ gives $\kappa_{n_0,n}=2-\alpha$.
   The finite-first-moment endpoint excludes index one.
 - Kappa need not lie in $[0,1]$, even for a uniquely unimodal density.
   The triangular example proves this without a simulation.

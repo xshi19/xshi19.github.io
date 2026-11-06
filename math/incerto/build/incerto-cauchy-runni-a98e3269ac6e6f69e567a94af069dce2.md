@@ -56,8 +56,8 @@ constant. This argument alone does not classify every possible pathwise
 limit. It also does not say that successive running averages are independent:
 they share observations.
 
-The population quantile is
-$Q(p)=\mu+\sigma\tan(\pi(p-1/2))$, $0<p<1$.
+The population $p$-quantile is
+$\mu+\sigma\tan(\pi(p-1/2))$, $0<p<1$.
 Consequently the interquartile range of every $\bar X_n$ is $2\sigma$.
 By contrast, sample medians consistently estimate $\mu$. For fixed
 $\varepsilon>0$, the strong law applied to the indicators

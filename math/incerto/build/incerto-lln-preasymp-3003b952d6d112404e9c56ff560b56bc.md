@@ -17,7 +17,7 @@ title: Pre-Asymptotic LLN Behavior
 This synthetic example plots running means
 
 $$
-\bar X_n=\frac{S_n}{n}
+\bar X_n=\frac1n\sum_{i=1}^nX_i
 $$
 
 for iid [Pareto Type I](incerto-pareto.md) samples with $x_m=1$.  The
@@ -29,7 +29,7 @@ target contrast is:
   $\bar X_n\to\alpha/(\alpha-1)$, but convergence can still be slow when
   $\alpha$ is close to 1.
 
-The symbols $\bar X_n$, $S_n$, $\alpha$, and $x_m$ follow the shared
+The symbols $\bar X_n$, $X_i$, $\alpha$, and $x_m$ follow the shared
 [notation table](https://xshi19.github.io/math/notation/).
 
 ## What the simulation isolates

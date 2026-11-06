@@ -27,8 +27,8 @@ $\bar X_n\to\mathbb EX_1$ almost surely. We cite the strong law from
 @durrett2019probability, Theorem 2.4.1, p. 76. Variance need not exist.
 We prove the weak law under the same iid integrability assumption here.
 
-Let $X_i^{(c)}=\max(-c,\min(X_i,c))$. For fixed $c$, independence and
-Chebyshev give
+For a cutoff $c>0$, let $X_i^{(c)}=\max(-c,\min(X_i,c))$.
+For fixed $c$, independence and Chebyshev give
 
 $$
 \begin{gathered}
@@ -98,21 +98,16 @@ bounded truncation, and then letting the cutoff rise.  The Pareto threshold
 condition is not reproved here; it is supplied by
 [Pareto Moment Existence](./incerto-pareto-moment-existence.md).
 
-For a cutoff $c>0$, define the truncated variable
+For a cutoff $c>0$, each truncated variable $\min(X_i,c)$ is bounded,
+so the strong law of large numbers gives
 
 $$
-X_i^{(c)}=\min(X_i,c).
-$$
-
-Each $X_i^{(c)}$ is bounded, so the strong law of large numbers gives
-
-$$
-\frac1n\sum_{i=1}^n X_i^{(c)}
+\frac1n\sum_{i=1}^n\min(X_i,c)
 \xrightarrow{\text{a.s.}}
 \mathbb E[\min(X,c)].
 $$
 
-Since $X_i\ge X_i^{(c)}$,
+Since $X_i\ge\min(X_i,c)$,
 
 $$
 \liminf_{n\to\infty}\frac{S_n}{n}
@@ -229,11 +224,11 @@ See [Karamata's theorem](./incerto-karamata.md) for the tail-integral criterion.
 ## The LLN for higher absolute moments
 
 For iid $X_i$ and a fixed $p>0$, apply the same theorems to
-$Z_i=|X_i|^p$. If $\mathbb E|X|^p<\infty$, the empirical absolute
+$|X_i|^p$. If $\mathbb E|X|^p<\infty$, the empirical absolute
 moment converges almost surely to that expectation. If it is infinite,
 the nonnegative divergence proof above gives
 $n^{-1}\sum_i|X_i|^p\to\infty$ almost surely. This proves both claims
-without requiring a finite variance of $Z_i$.
+without requiring a finite variance of $|X_i|^p$.
 
 For exact Pareto, the [moment gate](incerto-pareto-moment-existence.md)
 is $p<\alpha$. A finite variance of its empirical $p$th moment instead

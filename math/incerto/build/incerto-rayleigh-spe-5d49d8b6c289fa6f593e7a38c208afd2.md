@@ -168,13 +168,13 @@ Positive support and skewness alone do not identify a family.
 (rayleigh-speed-energy)=
 ## Squared speed and energy
 
-Let $Q=V^2$ and let $\varepsilon=mV^2/2$ be kinetic energy. The change
-of variable from $v$ to $q$ has Jacobian $1/(2\sqrt q)$, so under $h_s$,
+Let $\varepsilon=mV^2/2$ be kinetic energy. For squared speed $V^2$, the
+change of variable $q=v^2$ gives $dv/dq=1/(2\sqrt q)$, so under $h_s$,
 
 $$
 \begin{gathered}
 \begin{aligned}
-p_Q(q)&=\frac{h_s(\sqrt q)}{2\sqrt q}\\
+p_{V^2}(q)&=\frac{h_s(\sqrt q)}{2\sqrt q}\\
 &=\frac{c^s}{\Gamma(s)}q^{s-1}e^{-cq},
 \end{aligned}\\
 q>0.
@@ -192,11 +192,11 @@ $$
 
 For the 2D chamber, $s=1$: squared speed is exponential with mean
 $2kT/m$, and kinetic energy is exponential with mean $kT$.
-For $R=1/Q$, a second Jacobian gives
+For reciprocal squared speed $1/V^2$, a second Jacobian gives
 
 $$
 \begin{gathered}
-p_R(r)=\frac{c^s}{\Gamma(s)}r^{-s-1}e^{-c/r},\\
+p_{1/V^2}(r)=\frac{c^s}{\Gamma(s)}r^{-s-1}e^{-c/r},\\
 r>0.
 \end{gathered}
 $$

@@ -37,8 +37,7 @@ $S_n=\sum_{i=1}^nX_i$, as in the
 $$
 \begin{aligned}
 M(n)&=\mathbb E|S_n-n\mu|,\\
-A(n)&=\mathbb E|\bar X_n-\mu|\\
-&=M(n)/n.
+\mathbb E|\bar X_n-\mu|&=M(n)/n.
 \end{aligned}
 $$
 
@@ -125,7 +124,7 @@ $$
 \begin{aligned}
 M(n)&=n^{1/\alpha}M(1),\\
 \kappa_{n_0,n}&=2-\alpha,\\
-A(n)/M(1)&=n^{1/\alpha-1}.
+\frac{M(n)}{nM(1)}&=n^{1/\alpha-1}.
 \end{aligned}
 $$
 
@@ -171,12 +170,12 @@ $2\int_0^\infty x f_\nu(x)\,dx$; the remaining integral is
 $\int_1^\infty v^{-(\nu+1)/2}\,dv=2/(\nu-1)$.
 The gamma recurrence yields the displayed expression.
 
-There is also a two-summand closed form. Write $a=\nu/2$ and
+There is also a two-summand closed form. Represent the summands as
 $X_i=\sqrt{\nu/(2G_i)}Z_i$, where the $G_i$ are independent
-Gamma$(a,1)$ and the $Z_i$ are independent standard normals, independent
+Gamma$(\nu/2,1)$ and the $Z_i$ are independent standard normals, independent
 of the $G_i$. Set $T=G_1+G_2$, $B=G_1/T$. The change of variables has
 Jacobian $T$ and factorizes the joint density into independent
-Gamma$(2a,1)$ and Beta$(a,a)$ densities. Conditional normal absolute
+Gamma$(\nu,1)$ and Beta$(\nu/2,\nu/2)$ densities. Conditional normal absolute
 moments therefore give
 
 $$
@@ -211,8 +210,8 @@ Integration by parts, then $u=\sqrt3t$, gives
 
 $$
 \begin{aligned}
-I_n&=\int_0^\infty(1+u)^{n-1}e^{-nu}\,du,\\
-M(n)&=\frac{2\sqrt3}{\pi}\,nI_n,\\
+M(n)&=\frac{2\sqrt3}{\pi}\,n
+\int_0^\infty(1+u)^{n-1}e^{-nu}\,du,\\
 \frac{M(n)}{M(1)}
 &=e^n n^{1-n}\Gamma(n,n),\\
 \Gamma(n,n)&=\int_n^\infty t^{n-1}e^{-t}\,dt.
@@ -252,48 +251,56 @@ approximated by a Gaussian at every threshold.
 More generally, take any iid law with variance $0<\sigma^2<\infty$.
 The classical CLT is cited in the
 [limit-law note](incerto-generalized-central-limit-theorem.md).
-The normalized centered sums have second moment $\sigma^2$; hence
-$\mathbb E[|Y_n|\mathbf1_{|Y_n|>K}]\le\sigma^2/K$ for
-$Y_n=(S_n-n\mu)/\sqrt n$. This proves uniform integrability, so
+The normalized centered sums $Y_n=(S_n-n\mu)/\sqrt n$ have second
+moment $\sigma^2$; hence
+$\mathbb E[|Y_n|\mathbf1_{|Y_n|>K}]\le\sigma^2/K$ for $K>0$.
+This proves uniform integrability, so
 
 $$
 \begin{aligned}
-M(n)/\sqrt n&\longrightarrow c,\\
-c&=\sigma\sqrt{2/\pi},\\
+M(n)/\sqrt n&\longrightarrow\sigma\sqrt{2/\pi},\\
 \log n\;\kappa_{1,n}
-&\longrightarrow4\log\frac{c}{M(1)}.
+&\longrightarrow4\log\frac{\sigma\sqrt{2/\pi}}{M(1)}.
 \end{aligned}
 $$
 
-To obtain the last line, write
-$\log(M(n)/M(1))=\tfrac12\log n+\log(c/M(1))+o(1)$
-and substitute in the definition. The logarithmic behavior can reflect
+To obtain the last line, substitute the expansion
+
+$$
+\begin{aligned}
+\log\frac{M(n)}{M(1)}
+&=\tfrac12\log n\\
+&\quad+\log\frac{\sigma\sqrt{2/\pi}}{M(1)}+o(1)
+\end{aligned}
+$$
+
+in the definition. The logarithmic behavior can reflect
 the mismatch between the one-observation MAD and its Gaussian calibration.
-If $c=M(1)$, the constant vanishes and this argument gives no nonzero
-leading rate. Kappa approaching zero does not identify the far tail.
+If $\sigma\sqrt{2/\pi}=M(1)$, the constant vanishes and this argument gives
+no nonzero leading rate. Kappa approaching zero does not identify the far tail.
 
 (kappa-gamma)=
 ## Exponential and gamma sums
 
 Let each summand have Gamma shape $r>0$ and scale $\theta>0$.
 Here $\theta$ is a local scale, not a natural parameter. The sum has
-shape $a=nr$, mean $a\theta$, and
+shape $nr$, mean $nr\theta$, and
 
 $$
-M(n)=\frac{2\theta\,a^a e^{-a}}{\Gamma(a)}.
+M(n)=\frac{2\theta\,(nr)^{nr}e^{-nr}}{\Gamma(nr)}.
 $$
 
 We derive this using
-$\mathbb E|V-\mathbb EV|=2\mathbb E(V-\mathbb EV)_+$.
+$\mathbb E|S_n-nr\theta|=2\mathbb E(S_n-nr\theta)_+$.
 After scaling by $\theta$, the integral is
 
 $$
-\frac{2\theta}{\Gamma(a)}
-\int_a^\infty(t-a)t^{a-1}e^{-t}\,dt.
+\frac{2\theta}{\Gamma(nr)}
+\int_{nr}^\infty(t-nr)t^{nr-1}e^{-t}\,dt.
 $$
 
 Integration by parts gives
-$\Gamma(a+1,a)=a\Gamma(a,a)+a^ae^{-a}$,
+$\Gamma(nr+1,nr)=nr\Gamma(nr,nr)+(nr)^{nr}e^{-nr}$,
 which evaluates the integral. At $r=1$, the parent is exponential
 with rate $1/\theta$. Stirling's formula or the preceding finite-variance
 argument gives
@@ -352,30 +359,37 @@ centered exposures. It makes no claim about empirical returns or optimal weights
 
 Let $X=e^{\mu_\ell+\sigma_\ell Z}$ with standard-normal $Z$ and
 $\sigma_\ell>0$. These are log-location and log-scale, not the mean and
-standard deviation of $X$. Write $m=\mathbb EX=e^{\mu_\ell+\sigma_\ell^2/2}$.
+standard deviation of $X$. Its mean is
+$\mu=\mathbb EX=e^{\mu_\ell+\sigma_\ell^2/2}>0$.
 Completing the square in the truncated normal integral gives
 
 $$
-M(1)=2m\left[2\Phi(\sigma_\ell/2)-1\right].
+M(1)=2\mu\left[2\Phi(\sigma_\ell/2)-1\right].
 $$
 
-For example, use $M(1)=2\mathbb E(X-m)_+$ and the threshold
+For example, use $M(1)=2\mathbb E(X-\mu)_+$ and the threshold
 $Z=\sigma_\ell/2$. Exponential tilting shifts the normal mean by
 $\sigma_\ell$, giving the formula. Sums of independent lognormals are
 not generally lognormal. Matching a sum's first two moments to another
 lognormal gives an approximation, not an identity or a proved bound on kappa.
 
-The mismatch can be checked with third moments. For a mean-one lognormal,
-put $v=e^{\sigma_\ell^2}-1>0$. Its moments
-$\mathbb EV^j=e^{j(j-1)\sigma_\ell^2/2}$ give variance $v$ and third
+The mismatch can be checked with third moments. Normalize $X\leftarrow X/\mu$.
+Through the numerical calculation below, $X$ denotes the mean-one variable
+$e^{\sigma_\ell Z-\sigma_\ell^2/2}$, $X_i$ are independent copies, and
+$S_n$ is their sum. We retain $\mu$ as the original mean, so
+$M(n)=\mu\mathbb E|S_n-n|$ restores the original units. This positive
+rescaling preserves skewness and kappa.
+
+Write $v=\operatorname{Var}(X)=e^{\sigma_\ell^2}-1>0$. The moments
+$\mathbb EX^j=e^{j(j-1)\sigma_\ell^2/2}$ give third
 centered moment $v^2(v+3)$. Independence makes the variance of the average
 $v/n$ and its third centered moment $v^2(v+3)/n^2$. The skewnesses of
 the actual average and a moment-matched lognormal are therefore
 
 $$
 \begin{aligned}
-g_{\rm sum}&=(v+3)\sqrt{v/n},\\
-g_{\rm fit}&=(v/n+3)\sqrt{v/n}.
+\operatorname{skew}(\bar X_n)&=(v+3)\sqrt{v/n},\\
+\operatorname{skew}(\text{fitted lognormal})&=(v/n+3)\sqrt{v/n}.
 \end{aligned}
 $$
 
@@ -385,32 +399,31 @@ be the exact sum law; it does not quantify its approximation error.
 We prove the three limits at the scope used in §8.6.2, pp. 166–168.
 For fixed $\sigma_\ell$, finite variance and the previous argument give
 $\kappa_{1,n}\to0$ as $n\to\infty$.
-For fixed integer $n>1$, scale invariance lets us use the mean-one variable
-$V_\sigma=e^{\sigma Z-\sigma^2/2}$. Define its Gaussian approximation
-error $D_\sigma$. As $\sigma\downarrow0$,
+For fixed integer $n>1$, use the same mean-one $X$ to examine the
+Gaussian approximation error. As $\sigma_\ell\downarrow0$,
 
 $$
 \begin{aligned}
-D_\sigma&=\frac{V_\sigma-1}{\sigma}-Z,\\
-\mathbb E D_\sigma^2&=\frac{e^{\sigma^2}-1}{\sigma^2}-1\\
+\mathbb E\left[\left(\frac{X-1}{\sigma_\ell}-Z\right)^2\right]
+&=\frac{e^{\sigma_\ell^2}-1}{\sigma_\ell^2}-1\\
 &\longrightarrow0.
 \end{aligned}
 $$
 
-This identity follows from $\mathbb E V_\sigma^2=e^{\sigma^2}$ and
-$\mathbb E[ZV_\sigma]=\sigma$. A finite sum preserves $L^2$ convergence,
+This identity follows from $\mathbb EX^2=e^{\sigma_\ell^2}$ and
+$\mathbb E[ZX]=\sigma_\ell$. A finite sum preserves $L^2$ convergence,
 which implies convergence of absolute expectations. Thus the MAD ratio
 tends to $\sqrt n$, and kappa tends to zero.
 
-As $\sigma\to\infty$, couple a fixed finite set of normal variables.
-Each $V_{\sigma,i}\to0$ almost surely, although its mean remains one.
-For $T_\sigma=\sum_{i=1}^nV_{\sigma,i}$,
+As $\sigma_\ell\to\infty$, couple a fixed finite set of normal variables.
+Each $X_i=e^{\sigma_\ell Z_i-\sigma_\ell^2/2}\to0$ almost surely,
+although its mean remains one. For their sum $S_n$,
 
 $$
 \begin{aligned}
-&\mathbb E|T_\sigma-n|\\
-&\quad=2n-2\mathbb E\min(T_\sigma,n),\\
-&\mathbb E\min(T_\sigma,n)\longrightarrow0.
+&\mathbb E|S_n-n|\\
+&\quad=2n-2\mathbb E\min(S_n,n),\\
+&\mathbb E\min(S_n,n)\longrightarrow0.
 \end{aligned}
 $$
 
@@ -420,30 +433,36 @@ law still has all power moments and belongs to the Gaussian domain of attraction
 
 ### A bounded numerical calculation
 
-For nonnegative integrable sums, the exact lower-deviation identity is
+For any nonnegative integrable sum, its mean absolute deviation is twice
+its expected shortfall below its mean. With the normalized lognormal sums
+and the original mean $\mu$ retained above, this identity gives
 
 $$
-M(n)=2\mathbb E(nm-S_n)_+.
+M(n)=2\mu\mathbb E(n-S_n)_+.
 $$
 
 For the mean-one lognormal, condition on the first $n-1$ summands and put
-$a=n-\sum_{i<n}V_{\sigma,i}$. If $a\le0$, the conditional payoff is zero.
+$a=n-\sum_{i<n}X_i$. If $a\le0$, the conditional payoff is zero.
 For $a>0$, completing the square gives
 
 $$
 \begin{aligned}
-h(a)&=\mathbb E(a-V_\sigma)_+,\\
-d&=\log(a)/\sigma+\sigma/2,\\
-h(a)&=a\Phi(d)-\Phi(d-\sigma).
+\mathbb E[(a-X_n)_+\mid a]
+&=a\Phi\!\left(\frac{\log a}{\sigma_\ell}+\frac{\sigma_\ell}{2}\right)\\
+&\quad-\Phi\!\left(\frac{\log a}{\sigma_\ell}-\frac{\sigma_\ell}{2}\right).
 \end{aligned}
 $$
 
-The simulated payoff lies between zero and $n$. Multiplying its sample
-average by $2m$ estimates $M(n)$ without estimating an unbounded upper-tail
+Here the expectation integrates over $X_n$ with the first $n-1$ summands
+fixed. The simulated payoff lies between zero and $n$. Multiplying its sample
+average by $2\mu$ estimates $M(n)$ without estimating an unbounded upper-tail
 payoff. This uses a known model mean. It is not available merely because a
 dataset contains only small observations.
 
 Use [`lognormal_sum_mad`](incerto-api-reference.md#api-lognormal-sum-mad).
+Its `mu` and `sigma` arguments are $\mu_\ell$ and $\sigma_\ell$;
+the example uses $\mu_\ell=0$, so the original mean is
+$\mu=e^{\sigma_\ell^2/2}$.
 The standard error below describes Monte Carlo integration, not uncertainty
 about the assumed lognormal law.
 
@@ -508,8 +527,9 @@ Negative kappa says only that this MAD grows more slowly than the Gaussian
 benchmark across the chosen sizes.
 
 The source's separated Gaussian mixture is another example. For
-$X=aR+\sigma Z$, with independent equiprobable $R\in\{-1,1\}$ and
-standard-normal $Z$, condition on the number $K$ of positive signs:
+$a\in\mathbb R$ and $\sigma>0$, let $X=aR+\sigma Z$, where
+$R\in\{-1,1\}$ is equiprobable and $Z$ is independent standard normal.
+Condition on the number $K$ of positive signs:
 
 $$
 \begin{aligned}
@@ -518,7 +538,8 @@ S_n\mid K&\sim N(a(2K-n),n\sigma^2).
 \end{aligned}
 $$
 
-If $H(b,s)=\mathbb E|b+sZ|$, splitting the normal integral at $-b/s$ gives
+For $b\in\mathbb R$ and $s>0$, let $H(b,s)=\mathbb E|b+sZ|$.
+Splitting the normal integral at $-b/s$ gives
 
 $$
 \begin{aligned}

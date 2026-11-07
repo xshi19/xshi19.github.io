@@ -40,15 +40,16 @@ For every real $q>0$, the absolute moment factors, including infinite values:
 
 $$
 \begin{gathered}
-\mathbb E|X|^q=c_q\mathbb E[Y^{q/2}],\\
-c_q=\frac{2^{q/2}\Gamma((q+1)/2)}{\sqrt\pi}.
+\mathbb E|X|^q=\mathbb E|Z|^q\,\mathbb E[Y^{q/2}],\\
+\mathbb E|Z|^q=\frac{2^{q/2}\Gamma((q+1)/2)}{\sqrt\pi}.
 \end{gathered}
 $$
 
 We prove this identity by independence and Tonelli's theorem applied to the
-nonnegative product $Y^{q/2}|Z|^q$. In the normal integral for $c_q$, the
-substitution $t=z^2/2$ gives the displayed gamma integral. Thus the moment
-exists exactly when the mixing moment exists. Symmetry alone does not make
+nonnegative product $Y^{q/2}|Z|^q$. In the normal integral for
+$\mathbb E|Z|^q$, substituting $z^2/2$ as the integration variable gives
+the displayed gamma integral. The Gaussian factor is positive and finite, so the moment exists
+exactly when the mixing moment exists. Symmetry alone does not make
 an odd signed moment exist; absolute integrability is still required.
 
 If $0<\mathbb EY<\infty$, then $\mathbb E|X|<\infty$, $\mathbb EX=0$ and
@@ -116,7 +117,7 @@ $$
 
 Then $\mathbb EY=1$, $\mathbb EY^2=25.75$ and kurtosis is $77.25$.
 All moments and the MGF remain finite. More generally, fixing $0<c<1$ and
-putting probability $0<p<1$ on $b=[1-(1-p)c]/p$ and $1-p$ on $c$ preserves
+putting probability $0<p<1$ on $[1-(1-p)c]/p$ and $1-p$ on $c$ preserves
 $\mathbb EY=1$, while $\mathbb EY^2$ diverges as $p\downarrow0$.
 Each fixed $p>0$ still gives a finite Gaussian mixture. A rare state can
 make a finite moment hard to estimate without making it infinite.
@@ -160,7 +161,7 @@ normal, independent of $Z$, and $\tau>0$. Completing the square gives
 $$
 \begin{gathered}
 \mathbb EY^r=e^{(r^2-r)\tau^2/2},\\
-\mathbb E|X|^q=c_q e^{q(q-2)\tau^2/8}.
+\mathbb E|X|^q=\mathbb E|Z|^q\,e^{q(q-2)\tau^2/8}.
 \end{gathered}
 $$
 
@@ -172,8 +173,8 @@ of every order therefore do not imply a finite MGF. Nor does this construction
 have a finite power-tail exponent: a regularly varying survival with finite
 positive exponent would force sufficiently high moments to diverge.
 
-**Gamma precision.** Let $Q=1/Y$ have gamma shape $\nu/2$ and rate $\nu/2$,
-with $\nu>0$. Integrating the conditional density gives
+**Gamma precision.** Let the precision $1/Y$ have gamma shape and rate
+both $\nu/2$, with $\nu>0$. Integrating the conditional density gives
 
 $$
 \begin{aligned}
@@ -182,13 +183,13 @@ f_X(x)&=\frac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\Gamma(\nu/2)}\\
 \end{aligned}
 $$
 
-Indeed the integrand is proportional to
-$q^{(\nu+1)/2-1}e^{-(\nu+x^2)q/2}$, a gamma integral. This is Student's
+Indeed, integrating over precision $g=1/y>0$, the integrand is proportional to
+$g^{(\nu+1)/2-1}e^{-(\nu+x^2)g/2}$, a gamma integral. This is Student's
 $t$ law at unit **scale**. Its density is asymptotic to a positive constant
 times $|x|^{-\nu-1}$; integrating that comparison gives a survival exponent
 $\alpha=\nu$. The moment identity above reduces to an integral of
-$q^{(\nu-q_0)/2-1}$ near zero for moment order $q_0>0$, so
-$\mathbb E|X|^{q_0}<\infty$ exactly when $q_0<\nu$.
+$g^{(\nu-q)/2-1}$ near zero for moment order $q>0$, so
+$\mathbb E|X|^q<\infty$ exactly when $q<\nu$.
 For $\nu>2$ its variance is $\nu/(\nu-2)$, not 1.
 
 These are proved model calculations. SCoFT v4 §4.2, pp. 74–75 supplies the

@@ -134,22 +134,23 @@ is nevertheless zero. For $\nu\le2$, zero off-diagonal scatter is **not**
 a zero Pearson correlation: that population coefficient is undefined.
 
 There is also a direct joint-tail test without moment assumptions. For
-$u>0$, put $p_u(y)=2\bar\Phi(u/\sqrt y)$, with $\bar\Phi$ the standard
+$u>0$ and $y>0$,
+$P(|X_1|>u\mid Y=y)=2\bar\Phi(u/\sqrt y)$, with $\bar\Phi$ the standard
 normal survival. Conditional independence gives
 
 $$
 \begin{aligned}
 &P(|X_1|>u,|X_2|>u)\\
 &\quad-P(|X_1|>u)^2
-=\operatorname{Var}(p_u(Y))>0.
+=\operatorname{Var}\!\left(2\bar\Phi(u/\sqrt Y)\right)>0.
 \end{aligned}
 $$
 
-The variance is positive because $p_u$ is strictly increasing and the
-mixing law is nondegenerate. Independent Student coordinates have zero
-excess instead. These bounded indicator probabilities exist even for Cauchy
-marginals. They do not by themselves specify an asymptotic tail-dependence
-coefficient.
+The variance is positive because $y\mapsto2\bar\Phi(u/\sqrt y)$ is
+strictly increasing and the mixing law is nondegenerate. Independent Student
+coordinates have zero excess instead. These bounded indicator probabilities
+exist even for Cauchy marginals. They do not by themselves specify an
+asymptotic tail-dependence coefficient.
 
 (multivariate-information)=
 ## Mutual information without second moments
@@ -169,13 +170,14 @@ The [KL inequality](incerto-maximum-entropy.md#maximum-entropy-shannon)
 gives nonnegativity and equality exactly at independence. No variance
 appears in the definition, but integrability must still be checked.
 
-We derive the Student value. Write $h_d=-\mathbb E\log f_d(X)$ and let
+We derive the Student value. Write
+$h_d(\nu,\Sigma)=-\mathbb E\log f_d(X)$ and let
 $\psi_0(z)=d\log\Gamma(z)/dz$ denote the digamma function, distinct from
 the shared canon's log-partition symbol. In whitened polar coordinates,
 $Q=(X-\mu)^T\Sigma^{-1}(X-\mu)$ satisfies
 
 $$
-U=\frac{Q}{\nu+Q}\sim\operatorname{Beta}(d/2,\nu/2).
+\frac{Q}{\nu+Q}\sim\operatorname{Beta}(d/2,\nu/2).
 $$
 
 Indeed the radial density is proportional to
@@ -184,7 +186,8 @@ the beta density. Differentiating its normalizing integral in the second
 parameter gives
 $\mathbb E\log(1+Q/\nu)=\psi_0((\nu+d)/2)-\psi_0(\nu/2)$.
 The differentiation is justified on compact subsets of positive parameters
-by integrable endpoint powers times $|\log(1-u)|$.
+by integrable endpoint powers times $|\log(1-v)|$, where $v\in(0,1)$
+is the beta integration variable.
 The beta integral is the cited input
 ([DLMF 5.12.1](https://dlmf.nist.gov/5.12#E1)). Substitution into the
 normalized log density now proves
@@ -242,7 +245,8 @@ coefficient undefined, rather than zero.
 Hold $n-1$ observations fixed and replace the last pair by $(t,ct)$,
 where $c\ne0$ and $n\ge2$. For the uncentered cosine the leading
 numerator is $ct^2$, and the norm product is $|c|t^2$.
-For the centered statistic, write $H=I_n-\mathbf1\mathbf1^T/n$.
+For the centered statistic, write $H=I_n-\mathbf1\mathbf1^T/n$ for the
+centering matrix.
 Here $e_n$ is the last coordinate unit vector and $\mathbf1$ is the
 all-ones vector. The leading vectors are $tHe_n$ and $ctHe_n$ with
 $\|He_n\|^2=1-1/n>0$. Both coefficients therefore tend to
@@ -323,7 +327,8 @@ least-squares regression with an intercept and nonconstant columns,
 write $S_{AB}=\sum_i(A_i-\bar A)(B_i-\bar B)$ for centered sums.
 The normal equations give $\hat a=S_{XV}/S_{XX}$ and fitted centered
 response $\hat a(X_i-\bar X)$. Its sum of squares is
-$S_{XV}^2/S_{XX}$, so fitted $R_n^2=S_{XV}^2/(S_{XX}S_{VV})=r_n^2$.
+$S_{XV}^2/S_{XX}$, so fitted $R_n^2=S_{XV}^2/(S_{XX}S_{VV})=r_n^2$,
+where $r_n$ is the centered sample correlation.
 This proves the connection to the population target. For the expectation
 statement, extend $R_n^2$ by zero on samples with a constant column.
 The strong law makes both denominators positive eventually almost surely;

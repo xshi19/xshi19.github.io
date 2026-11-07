@@ -85,12 +85,12 @@ version of the one-big-jump intuition in
 For the same sum level $s$, the normal and Cauchy axial-to-equal ratios are
 
 $$
-R_{\mathrm N}(s)=e^{-s^2/4},
+\text{Normal: }e^{-s^2/4},
 \qquad
-R_{\mathrm C}(s)=\frac{(1+s^2/4)^2}{1+s^2}.
+\text{Cauchy: }\frac{(1+s^2/4)^2}{1+s^2}.
 $$
 
-| Sum level $s$ | Normal ratio $R_{\mathrm N}(s)$ | Cauchy ratio $R_{\mathrm C}(s)$ |
+| Sum level $s$ | Normal ratio | Cauchy ratio |
 | --- | --- | --- |
 | $4$ | $0.018316$ | $25/17\approx1.471$ |
 | $8$ | $1.1254\times10^{-7}$ | $289/65\approx4.446$ |
@@ -101,11 +101,14 @@ Normal equal splits dominate axial splits more strongly as $s$ increases;
 Cauchy axial splits eventually dominate equal splits.
 
 The axial points are comparison points, not the exact Cauchy maximizers for
-finite positive $s$. To locate those maximizers, minimize the denominator
-$D(x)=(1+x^2)(1+(s-x)^2)$ along the line. Its derivative factors as
+finite positive $s$. To locate the maximizers, without loss of generality,
+assume $s\ge0$: reflecting both coordinates preserves the density and
+changes the sign of the sum. Minimize the denominator
+$(1+x^2)(1+(s-x)^2)$ along the line. Its derivative factors as
 
 $$
-D'(x)=2(2x-s)(x^2-sx+1).
+\frac{d}{dx}\left[(1+x^2)(1+(s-x)^2)\right]
+=2(2x-s)(x^2-sx+1).
 $$
 
 For $s>2$, the two minima occur at
@@ -159,11 +162,11 @@ positive area. It is not a large-sum probability.
 ## Switching correlation can destroy ellipticality
 
 Consider an equal mixture of two centered bivariate normals with unit
-marginal variances and correlations $r$ and $-r$, where $0<r<1$.
+marginal variances and correlations $\rho$ and $-\rho$, where $0<\rho<1$.
 Its covariance is $I_2$, and conditioning gives characteristic function
 
 $$
-\varphi(t_1,t_2)=e^{-(t_1^2+t_2^2)/2}\cosh(rt_1t_2).
+\varphi(t_1,t_2)=e^{-(t_1^2+t_2^2)/2}\cosh(\rho t_1t_2).
 $$
 
 We prove that this mixture is not elliptical. For a nondegenerate elliptical
@@ -172,7 +175,7 @@ scatter: whitening gives a rotationally invariant law, whose covariance
 commutes with every orthogonal matrix and hence is scalar. Thus an
 elliptical law with covariance $I_2$ must be spherical. But the displayed
 characteristic function at $(v,0)$ is $e^{-v^2/2}$, whereas at
-$(v/\sqrt2,v/\sqrt2)$ it is $e^{-v^2/2}\cosh(rv^2/2)$.
+$(v/\sqrt2,v/\sqrt2)$ it is $e^{-v^2/2}\cosh(\rho v^2/2)$.
 For $v\ne0$ these differ at the same radius. This disproves sphericality
 and hence ellipticality. Both marginal laws remain standard normal.
 

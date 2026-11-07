@@ -140,13 +140,13 @@ identity for the distribution of their sum. Since differential entropies
 can be negative, a universal superadditive/subadditive label needs further
 conditions. This distinction matters in §B.2, pp. 129–130.
 
-To see where the family in that section comes from, write $J=\int f^q$
-and prescribe an escort mean $m_q$. For admissible variations at a positive
-density, differentiation of the numerator and denominator gives
+To see where the family in that section comes from, prescribe an escort
+mean $m_q$. For admissible variations at a positive density,
+differentiation of the numerator and denominator gives
 
 $$
-\delta\left(\frac{\int xf^q}{J}\right)
-=\frac qJ\int (x-m_q)f(x)^{q-1}\delta f(x)\,dx.
+\delta\left(\frac{\int xf^q}{\int f^q}\right)
+=\frac q{\int f^q}\int (x-m_q)f(x)^{q-1}\delta f(x)\,dx.
 $$
 
 A stationary density for $S_q$ subject to normalization and that constraint
@@ -154,7 +154,7 @@ therefore satisfies, for Lagrange multipliers $\lambda_0,\lambda_1$,
 
 $$
 -q f(x)^{q-1}\left[\frac1{q-1}
-       +\frac{\lambda_1}{J}(x-m_q)\right]-\lambda_0=0.
+       +\frac{\lambda_1}{\int f^q}(x-m_q)\right]-\lambda_0=0.
 $$
 
 This is a necessary interior stationarity calculation, with variations for
@@ -177,7 +177,8 @@ $[0,1/((1-q)\beta)]$, with density zero beyond that endpoint.
 At $q=1$ define $f_{1,\beta}(x)=\beta e^{-\beta x}$ for $x\ge0$.
 We now prove normalization, the tail exponent, and the mean distinctions.
 
-Substitution $v=1+(q-1)\beta x$ gives an unnormalized integral
+Substituting the affine factor $1+(q-1)\beta x$ as the integration variable
+gives an unnormalized integral
 $1/[\beta(2-q)]$ in both ranges. On the infinite support it converges
 only for $q<2$; $q=2$ diverges logarithmically and $q>2$ also fails.
 The survival on the interior of the support is
@@ -219,8 +220,9 @@ the normalization step in §B.2, pp. 132–133.
 ## A worked comparison at fixed log-moment
 
 Set $x_m=1$, $m=1/2$. In the coordinate $Z=\log X$, the maximizer is
-exponential with rate $2$. A competitor with the same mean is gamma with
-shape $2$ and rate $4$, density $16z e^{-4z}$ on $z>0$.
+exponential with rate $2$ and density $g_Z(z)=2e^{-2z}$ on $z\ge0$.
+A competitor with the same mean is gamma with shape $2$ and rate $4$,
+density $f_Z(z)=16z e^{-4z}$ on $z>0$.
 Transforming back gives a log-gamma density $16\log(x)x^{-5}$ for $x\ge1$.
 Both meet the log-moment constraint, but their ordinary means differ:
 $2$ for the Pareto and $(4/3)^2=16/9$ for the competitor.

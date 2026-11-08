@@ -126,7 +126,8 @@ shape and updated scale $\beta+\xi u$. Combining this with the GPD mean
 gives the [mean-excess formula](./incerto-mean-excess-function.md).
 
 The Pareto Type I distribution is an exact generalized Pareto excess model.
-If $X$ has Pareto tail exponent $\alpha$ and threshold $u\ge x_m$, then
+If $X$ has Pareto tail exponent $\alpha>0$ and threshold $u\ge x_m>0$, then
+for $y\ge0$,
 
 $$
 \begin{aligned}
@@ -180,12 +181,16 @@ $$
 \end{gathered}
 $$
 
-For $\xi\ne0$, substitute $v=1+\xi y/\beta$ in the first integral.
-For $\xi\ne1$, its antiderivative is $\beta v^{1-1/\xi}/(\xi-1)$.
+For $\xi\ne0$, change variables $y\leftarrow1+\xi y/\beta$ in both
+integrals; in this paragraph, $y$ denotes the transformed integration
+coordinate. The integration limits become $1$ to $0$ for $\xi<0$ and
+$1$ to $\infty$ for $\xi>0$, with differential factor $\beta/\xi$.
+For $\xi\ne1$, the transformed first integral's antiderivative is
+$\beta y^{1-1/\xi}/(\xi-1)$.
 At the appropriate endpoint this gives $\beta/(1-\xi)$ when $\xi<1$.
 At $\xi=1$ the integral diverges logarithmically, and it also diverges for
-$\xi>1$. Expanding $y=\beta(v-1)/\xi$
-in the second integral similarly gives
+$\xi>1$. The excess factor in the second integral becomes
+$\beta(y-1)/\xi$, which similarly gives
 
 $$
 \begin{gathered}

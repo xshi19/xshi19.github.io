@@ -133,10 +133,11 @@ already includes $n^{1/\alpha}$.
 | $100$ | $0.366032$ | $0.367879$ |
 | $600$ | $0.367573$ | $0.367879$ |
 
-For fixed $y>0$, set $t=y^{-\alpha}$. Expanding the logarithm gives
+For fixed $y>0$, expanding the logarithm gives
 
 $$
-n\log(1-t/n)=-t-\frac{t^2}{2n}+O(n^{-2}).
+n\log(1-y^{-\alpha}/n)
+=-y^{-\alpha}-\frac{y^{-2\alpha}}{2n}+O(n^{-2}).
 $$
 
 This explains the finite-block correction for an exact Pareto parent at a

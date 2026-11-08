@@ -16,8 +16,8 @@ options:
 
 The extreme-value index $\xi$ is the tail-shape parameter of an extreme-value
 domain of attraction.  It is not defined by assuming a
-[Pareto-type](./incerto-pareto.md) tail.  Let $H_\xi$ denote the
-standardized generalized extreme-value (GEV)
+[Pareto-type](./incerto-pareto.md) tail. Let $H_\xi=H_{\xi,0,1}$ denote the
+standardized [generalized extreme-value (GEV)](./incerto-generalized-extreme-value.md)
 CDF,
 
 $$
@@ -190,7 +190,7 @@ $x_{1:n}\le \cdots \le x_{n:n}$, the Hill estimate is
 
 $$
 \begin{gathered}
-\widehat\xi_{k,n}^{H}\\
+\widehat\xi_{k,n}\\
 =\frac1k\sum_{j=1}^{k}
 \log\left(\frac{x_{n-j+1:n}}{x_{n-k:n}}\right),\\
 1\le k<n.
@@ -239,7 +239,7 @@ finite-sample estimates would be a diagnostic, not proof of the tail model.
 Chapter 9's [Gaussian normalization](incerto-generalized-extreme-value.md#gev-gaussian-maxima)
 and [normal excess limit](incerto-pickands-balkema-de-haan.md#pbdh-chapter-nine)
 both give $\xi=0$. Exact Pareto gives $\xi=1/\alpha$ in both views.
-For a uniform parent on $[0,b]$, $n(b-M_n)/b$ tends to an exponential
+For a uniform parent on $[0,b]$ with $b>0$, $n(b-M_n)/b$ tends to an exponential
 law with rate one: for $t\ge0$, eventually
 
 $$

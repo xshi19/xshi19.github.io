@@ -85,7 +85,8 @@ at those two values.
 (tail-threshold-selection-diagnostics)=
 Consider the population model from the source example: with probability
 $0.82$, $X$ is uniform on $[1,3]$; with probability $0.18$, it is Pareto
-with cutoff $3$ and exponent $\alpha=1.7=17/10$. Thus
+with cutoff $3$ and exponent $\alpha=1.7=17/10$. Its survival function
+$\bar F(u)=P(X>u)$ is
 
 $$
 \begin{gathered}

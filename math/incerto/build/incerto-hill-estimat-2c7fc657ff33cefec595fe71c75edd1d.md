@@ -90,16 +90,16 @@ $$
 \mathbb P(X>x)=\left(\frac{x_m}{x}\right)^\alpha,\qquad x\ge x_m.
 $$
 
-Define $Y=\log(X/x_m)$. For $y\ge0$,
+For $y\ge0$,
 
 $$
-\mathbb P(Y>y)
+\mathbb P(\log(X/x_m)>y)
 =
 \mathbb P(X>x_m e^y)
 =e^{-\alpha y},
 $$
 
-so $Y$ is exponential with mean $1/\alpha$.  Equivalently,
+so $\log(X/x_m)$ is exponential with mean $1/\alpha$. Equivalently,
 
 $$
 \mathbb E\left[\log\left(\frac{X}{u}\right)\mid X>u\right]
@@ -201,9 +201,9 @@ Appendix E.1, p. 191, of SCoFT v4 motivates finite-sample calibration
 model. Regular variation alone does not give this law at a finite threshold.
 
 First suppose the lower cutoff $x_m$ is known. The log-excesses
-$Y_i=\log(X_i/x_m)$ are independent exponentials with rate $\alpha$.
-With $m$ observations, let $T=\sum_{i=1}^mY_i$. Multiplication of their
-Laplace transforms, $(\alpha/(\alpha+s))^m$, identifies the law
+$\log(X_i/x_m)$ are independent exponentials with rate $\alpha$.
+With $m$ observations, let $T=\sum_{i=1}^m\log(X_i/x_m)$. Multiplication of their
+Laplace transforms, $(\alpha/(\alpha+s))^m$ for $s\ge0$, identifies the law
 
 $$
 \begin{gathered}
@@ -212,9 +212,9 @@ T\sim\operatorname{Gamma}(m,\text{rate }\alpha),\\
 \end{gathered}
 $$
 
-For Hill, take a deterministic $k<n$, put $m=k$, and set
-$Y_j=\log(X_{n-j+1:n}/X_{n-k:n})$ for the retained observations. These
-ordered log-excesses are not independent. Conditional on the threshold,
+For Hill, take a deterministic $k<n$ and put $m=k$. The retained
+log-excesses $\log(X_{n-j+1:n}/X_{n-k:n})$, $j=1,\ldots,k$, are ordered
+and are not independent. Conditional on the threshold,
 the *unordered* upper observations have the law of $k$ iid draws above
 it. Exponential memorylessness gives iid exponential excesses after
 subtracting the log threshold, with a law independent of that threshold.
@@ -309,12 +309,12 @@ separates debiasing, conditional selection and clipping.
 (hill-ties-arithmetic)=
 ## Ties and nonnegative log spacings
 
-Write descending values as $d_1\ge\cdots\ge d_n>0$. Telescoping gives
+Using the same ascending order statistics, telescoping gives
 
 $$
 \begin{gathered}
 \widehat\xi_{k,n}\\
-=\frac1k\sum_{j=1}^k j\log(d_j/d_{j+1}).
+=\frac1k\sum_{j=1}^k j\log\left(\frac{x_{n-j+1:n}}{x_{n-j:n}}\right).
 \end{gathered}
 $$
 

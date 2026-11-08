@@ -17,39 +17,40 @@ options:
 
 ## Statement
 
-For a right-tail survival function $\bar F(x)=\mathbb P(X>x)$, the survival
+For a right-tail survival function $\bar F(u)=\mathbb P(X>u)$, the survival
 tail-ratio diagnostic is
 
 $$
-Q_F(x)=\frac{\bar F(x)^2}{\bar F(2x)},
+Q_F(u)=\frac{\bar F(u)^2}{\bar F(2u)},
 $$
 
-where $\bar F(2x)>0$.  With iid copies $X_1$ and $X_2$, the numerator is
+where $\bar F(2u)>0$.  With iid copies $X_1$ and $X_2$, the numerator is
 
 $$
-\bar F(x)^2=\mathbb P(X_1>x,\ X_2>x).
+\bar F(u)^2=\mathbb P(X_1>u,\ X_2>u).
 $$
 
-Thus $Q_F(x)$ compares a two-coordinate moderate-extreme event with a
+Thus $Q_F(u)$ compares a two-coordinate moderate-extreme event with a
 one-coordinate double-threshold event.  It is a tail-geometry diagnostic, not
 an estimator by itself.
 
-Here $x>0$ is the comparison threshold, $F$ is the CDF, and
+Here $u>0$ is the comparison threshold, $F$ is the CDF, and
 $\alpha>0$, $x_m>0$ are the Pareto exponent and lower cutoff.
-$Q_F$ is distinct from the regular-variation ratio $\bar F(tx)/\bar F(x)$.
+$Q_F$ is distinct from the regular-variation ratio $\bar F(tu)/\bar F(u)$
+for a fixed multiplier $t>0$. All limits below send $u\to\infty$.
 
 ## Calibration cases
 
 The diagnostic separates three useful geometries:
 
-| Tail model | $Q_F(x)$ behavior | Reading |
+| Tail model | $Q_F(u)$ behavior | Reading |
 | --- | --- | --- |
-| Pareto, $\bar F(x)=(x_m/x)^\alpha$ | $2^\alpha(x_m/x)^\alpha\to0$ | A single doubled observation is eventually more likely than two independent observations above $x$. |
-| Exponential, $\bar F(x)=e^{-\lambda x}$ | $1$ | Two $x$-exceedances and one $2x$-exceedance have the same exponential cost. |
-| Standard normal | $\sim \sqrt{2/\pi}\,e^{x^2}/x\to\infty$ | Two moderate extremes are much more likely than one doubled extreme. |
+| Pareto, $\bar F(u)=(x_m/u)^\alpha$ | $2^\alpha(x_m/u)^\alpha\to0$ | A single doubled observation is eventually more likely than two independent observations above $u$. |
+| Exponential, $\bar F(u)=e^{-\lambda u}$, $\lambda>0$ | $1$ | Two $u$-exceedances and one $2u$-exceedance have the same exponential cost. |
+| Standard normal | $\sim \sqrt{2/\pi}\,e^{u^2}/u\to\infty$ | Two moderate extremes are much more likely than one doubled extreme. |
 
-The Pareto calculation is exact once $x\ge x_m$.  The normal calculation uses
-Mills' ratio, $\bar\Phi(x)\sim e^{-x^2/2}/(\sqrt{2\pi}x)$, for the
+The Pareto calculation is exact once $u\ge x_m$.  The normal calculation uses
+Mills' ratio, $\bar\Phi(u)\sim e^{-u^2/2}/(\sqrt{2\pi}u)$, for the
 standard Gaussian tail. This also follows from the complementary-error
 function expansion in [NIST DLMF, Section 7.12](https://dlmf.nist.gov/7.12).
 
@@ -57,52 +58,52 @@ The [regular variation](./incerto-regular-variation.md) connection is simple.
 If $\bar F\in RV_{-\alpha}$ with $\alpha>0$, then
 
 $$
-\frac{\bar F(2x)}{\bar F(x)}\to 2^{-\alpha}.
+\frac{\bar F(2u)}{\bar F(u)}\to 2^{-\alpha}.
 $$
 
 Therefore
 
 $$
-Q_F(x)
+Q_F(u)
 =
-\frac{\bar F(x)}{\bar F(2x)/\bar F(x)}
+\frac{\bar F(u)}{\bar F(2u)/\bar F(u)}
 \sim
-2^\alpha\bar F(x)
+2^\alpha\bar F(u)
 \to0.
 $$
 
 So regularly varying tails fall on the one-big-jump side of this diagnostic.
 That agrees with [subexponentiality](./incerto-subexponentiality.md), though
-$Q_F(x)\to0$ is only a diagnostic ratio and not the full convolution-tail
+$Q_F(u)\to0$ is only a diagnostic ratio and not the full convolution-tail
 definition.
 
 ## Static calibration
 
 (survival-tail-ratio-diagnostic)=
 For an exact Pareto law with $x_m=1$ and $\alpha=1.5$,
-$Q_F(x)=(2/x)^{3/2}$ for $x\ge1$. The exponential comparison is exactly one
+$Q_F(u)=(2/u)^{3/2}$ for $u\ge1$. The exponential comparison is exactly one
 at every positive threshold.
 
-| Threshold $x$ | Pareto $Q_F(x)$ | Exponential $Q_F(x)$ |
+| Threshold $u$ | Pareto $Q_F(u)$ | Exponential $Q_F(u)$ |
 | --- | --- | --- |
 | $2$ | $1$ | $1$ |
 | $4$ | $2^{-3/2}\approx0.353553$ | $1$ |
 | $8$ | $1/8$ | $1$ |
 | $16$ | $2^{-9/2}\approx0.044194$ | $1$ |
 
-A heavy-tailed model can therefore have $Q_F(x)\ge1$ at finite thresholds;
+A heavy-tailed model can therefore have $Q_F(u)\ge1$ at finite thresholds;
 the asymptotic direction and the range inspected both matter. For the normal,
 substitution of Mills' ratio gives
 
 $$
-Q_\Phi(x)\sim
-\frac{e^{-x^2}/(2\pi x^2)}{e^{-2x^2}/(2\sqrt{2\pi}x)}
-=\sqrt{\frac2\pi}\frac{e^{x^2}}x.
+Q_\Phi(u)\sim
+\frac{e^{-u^2}/(2\pi u^2)}{e^{-2u^2}/(2\sqrt{2\pi}u)}
+=\sqrt{\frac2\pi}\frac{e^{u^2}}u.
 $$
 
 Student-t tails with positive degrees of freedom (including the Cauchy case)
 are regularly varying, so the preceding regular-variation argument gives
-$Q_F(x)\to0$. These are population calculations, not empirical fits.
+$Q_F(u)\to0$. These are population calculations, not empirical fits.
 
 (tail-ratio-borderline)=
 ## What a borderline ratio does and does not establish
@@ -111,13 +112,13 @@ SCoFT v4 §§5.0.2–5.0.3, pp. 93–95 [@taleb2025scoftv4], motivates
 this event comparison with exponential and sigmoid survivals. We derive
 their values here and keep them separate from a convolution-tail criterion.
 
-For centered logistic survival $\bar F(x)=1/(1+e^{2kx})$, $k>0$,
+For centered logistic survival $\bar F(u)=1/(1+e^{2ku})$, $k>0$,
 
 $$
-Q_F(x)=\frac{1+e^{4kx}}{(1+e^{2kx})^2}\longrightarrow1.
+Q_F(u)=\frac{1+e^{4ku}}{(1+e^{2ku})^2}\longrightarrow1.
 $$
 
-This law is light-tailed. Its density is bounded by a constant times
+This law is light-tailed. Its density at $x\in\mathbb R$ is bounded by a constant times
 $e^{-2k|x|}$, so its MGF is finite for $|\theta|<2k$ by comparison
 with an exponential integral on each half-line. The density is
 $\tfrac{k}{2}\operatorname{sech}^2(kx)$, the [`hypsecant2`](incerto-api-reference.md#api-hypsecant2) helper's law
@@ -126,16 +127,17 @@ The name identifies this squared-secant convention, not the ordinary
 hyperbolic-secant distribution.
 
 For a centered Laplace law with scale $b>0$, the right survival is
-$\tfrac12e^{-x/b}$ on $x\ge0$, giving $Q_F(x)=1/2$.
-More generally, $\bar F(x)\sim c e^{-\lambda x}$ implies $Q_F(x)\to c$.
+$\tfrac12e^{-u/b}$ on $u\ge0$, giving $Q_F(u)=1/2$.
+More generally, $\bar F(u)\sim c e^{-\lambda u}$ with $c,\lambda>0$
+implies $Q_F(u)\to c$.
 Translating $X$ by $d$ changes that constant to $ce^{\lambda d}$.
 Thus the value one is not an invariant boundary between light and heavy
 tails. It reflects the tail prefactor as well as its decay.
 
-For Weibull survival $e^{-x^\beta}$ on $x\ge0$,
+For Weibull survival $e^{-u^\beta}$ on $u\ge0$, with shape $\beta>0$,
 
 $$
-\log Q_F(x)=(2^\beta-2)x^\beta.
+\log Q_F(u)=(2^\beta-2)u^\beta.
 $$
 
 It tends to $-\infty$, zero, or $+\infty$ as $\beta<1$, $\beta=1$,
@@ -189,15 +191,15 @@ No random sampling or empirical fitting is involved.
 
 ## Caveats
 
-- $Q_F(x)$ is a distribution-level diagnostic.  A finite empirical estimate can
+- $Q_F(u)$ is a distribution-level diagnostic.  A finite empirical estimate can
   be dominated by sampling noise because both the numerator and denominator
   involve rare events.
-- The iid interpretation of $\bar F(x)^2$ fails under dependence.  Clustered
+- The iid interpretation of $\bar F(u)^2$ fails under dependence.  Clustered
   extremes need their own dependence model before this ratio can be read as a
   joint-event probability.
 - The ratio uses right tails.  Two-sided returns, losses, and absolute values
   require an explicit transformation before the diagnostic is applied.
-- $Q_F(x)\to0$ is compatible with one-big-jump geometry, but it is not a
+- $Q_F(u)\to0$ is compatible with one-big-jump geometry, but it is not a
   replacement for the convolution-tail definition of
   [Subexponentiality](./incerto-subexponentiality.md).
 

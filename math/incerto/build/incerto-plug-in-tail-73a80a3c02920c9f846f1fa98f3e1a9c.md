@@ -217,15 +217,15 @@ a finite target mean. These are fit-status frequencies, not error bars.
 ```
 
 For any true $\alpha>0$, the earlier logarithmic transformation gives
-$T_n=\sum_i\log(X_i/x_m)\sim\mathrm{Gamma}(n,\text{rate }\alpha)$.
-The fit is infinite exactly when $T_n\ge n$. Thus
+$n\widehat\xi_n=\sum_i\log(X_i/x_m)\sim\mathrm{Gamma}(n,\text{rate }\alpha)$.
+The fit is infinite exactly when $\widehat\xi_n\ge1$. Thus
 
 $$
-P(\widehat\mu_n=\infty)=P(T_n\ge n).
+P(\widehat\mu_n=\infty)=P(\widehat\xi_n\ge1).
 $$
 
 The Gamma law follows by multiplying the exponential MGFs
-$(\alpha/(\alpha-t))^n$; the boundary event has probability zero.
+$(\alpha/(\alpha-t))^n$ for $t<\alpha$; the boundary event has probability zero.
 This derives the exact probability used in the figure. A finite estimate
 can occur even when the true mean is infinite. At the boundary $\alpha=1$,
 the ordinary CLT for the log-excesses gives an infinite-fit probability
@@ -257,8 +257,8 @@ tests whether an empirical dataset is Pareto.
 (plugin-tail-body)=
 ## When only the tail is modeled
 
-Let $X\ge0$ and fix a threshold $u>0$ with tail probability
-$q_u=\mathbb P(X>u)>0$. Suppose the conditional tail is exactly Pareto:
+Let $X\ge0$ have CDF $F$ and fix a threshold $u>0$ with tail probability
+$\bar F(u)=\mathbb P(X>u)>0$. Suppose the conditional tail is exactly Pareto:
 
 $$
 \begin{gathered}
@@ -274,12 +274,12 @@ $e(u)=\mathbb E[X-u\mid X>u]$. Splitting the expectation at $u$ yields
 $$
 \begin{aligned}
 \mu&=\mathbb E[X\mathbf1_{\{X\le u\}}]\\
-&\quad+q_u\frac{u\alpha}{\alpha-1}.
+&\quad+\bar F(u)\frac{u\alpha}{\alpha-1}.
 \end{aligned}
 $$
 
 For an iid sample, let $k=\sum_i\mathbf1_{\{X_i>u\}}$ be the exceedance count.
-Estimate $q_u$ by $k/n$ and fit $\widehat\alpha_u$ from those exceedances.
+Estimate $\bar F(u)$ by $k/n$ and fit $\widehat\alpha_u$ from those exceedances.
 When $k>0$ and $\widehat\alpha_u>1$, a body-plus-tail estimate is
 
 $$
@@ -319,14 +319,15 @@ interval for a Hill fit with a selected threshold.
 (plugin-hidden-tail)=
 ## A missing contribution requires a tail model
 
-The [hidden-tail result](incerto-hidden-tail.md#hidden-tail-pareto) gives,
-for an exact Pareto parent and $\alpha>1$,
+The [hidden-tail result](incerto-hidden-tail.md#hidden-tail-pareto) gives
+the unconditional contribution $T_1(u)=\mathbb E[X\mathbf1_{\{X>u\}}]$,
+for an exact Pareto parent and $\alpha>1$:
 
 $$
 \begin{gathered}
-T_1(t)=\frac{\alpha x_m}{\alpha-1}
-       \left(\frac{x_m}{t}\right)^{\alpha-1},\\
-t\ge x_m.
+T_1(u)=\frac{\alpha x_m}{\alpha-1}
+       \left(\frac{x_m}{u}\right)^{\alpha-1},\\
+u\ge x_m.
 \end{gathered}
 $$
 
@@ -334,7 +335,9 @@ Replacing $\alpha$ by an estimate turns this into a model-based tail
 contribution. It does not make the true population's unobserved tail
 empirical. With a tail-only model, its fitted mass and body contribution
 must also be included, as in the preceding decomposition. In particular,
-adding the true-model $T_1(M_n)$ to a sample mean produces upward bias:
+with $M_n=\max_iX_i$ and $X$ an independent draw from the same parent,
+adding the true-model $T_1(M_n)$ to a sample mean
+produces upward bias:
 a finite-mean iid sample mean is already unbiased, and the added term has
 a strictly positive expectation.
 
@@ -342,25 +345,32 @@ a strictly positive expectation.
 ## Debiasing, conditional selection, and clipping
 
 The [inverse-gamma law](incerto-hill-estimator.md#hill-sampling-law)
-provides exact calibration for a known Pareto cutoff. Let
-$A=(m-1)\widehat\alpha/m$, $m>1$, and fix $h>1$. Its density $f_A$
-has inverse-gamma shape $m$ and scale $(m-1)\alpha$. Conditioning on a
-retained estimate has density
+provides exact calibration for a known Pareto cutoff. For $m>1$ iid
+observations from that exact model, first write the known-cutoff estimate as
+$\widehat\alpha=m/\sum_{i=1}^m\log(X_i/x_m)$, with positive denominator
+almost surely. Debias it by
+$\widehat\alpha\leftarrow(m-1)\widehat\alpha/m$; in this subsection,
+$\widehat\alpha$ now denotes the corrected estimate. Fix $h>1$.
+Its density $f_{\widehat\alpha}$ has inverse-gamma shape $m$ and scale
+$(m-1)\alpha$. Conditional on $\widehat\alpha>h$, the density is
 
 $$
-f_{A\mid A>h}(a)=\frac{f_A(a)}{P(A>h)},\qquad a>h.
+\frac{f_{\widehat\alpha}(a)}{P(\widehat\alpha>h)},\qquad a>h.
 $$
 
-This is a conditional law, not the original estimator's unconditional
-sampling law. Clipping $A$ to $\max(A,h)$ instead gives an atom of size
-$P(A\le h)$ at $h$ and retains the original density above it. Either
-choice changes the estimator or the samples being reported. Under
+This is a conditional law, not the corrected estimator's unconditional
+sampling law. Clipping $\widehat\alpha$ to $\max(\widehat\alpha,h)$ instead
+gives an atom of size $P(\widehat\alpha\le h)$ at $h$ and retains the
+unconditional density above it. Either choice changes the estimator or
+the samples being reported. Under
 conditioning, the plug-in mean is bounded above by $x_mh/(h-1)$;
 clipping attains this bound at its atom. Neither operation preserves
 unbiasedness or establishes mean-squared-error superiority.
 
 Use [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling)
-to expose the selection mass instead of silently omitting estimates:
+to expose the selection mass instead of silently omitting estimates.
+The $h=1$ row reports that mass at the mean boundary, where the finite
+upper bound above does not apply.
 
 ```python
 from xmath.incerto.extremes import pareto_exponent_sampling
@@ -381,8 +391,8 @@ h=1.3: retained=0.3088, excluded or clipped=0.6912
 Appendix E, pp. 189–191, especially E.1, is the SCoFT v4 source context
 [@taleb2025scoftv4]. Its finite-sample calibration must be restricted to
 an exact Pareto model, with known cutoff or the fixed-$k$ Hill experiment.
-A general slowly varying factor need not be constant. The earlier
-singularity proof still rules out finite unconditional MSE for the
+A general slowly varying factor need not be constant. The
+[singularity proof below](#plugin-caveats) rules out finite unconditional MSE for the
 unregularized plug-in mean, even when central error quantiles look small.
 
 (plugin-caveats)=

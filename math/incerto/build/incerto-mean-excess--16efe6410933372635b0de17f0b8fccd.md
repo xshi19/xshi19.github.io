@@ -14,13 +14,17 @@ options:
 
 ## Statement
 
-For a random variable $X$ and a threshold $u$ with $\mathbb P(X>u)>0$ and finite
-conditional expectation above $u$, the mean excess function is
+For a real random variable $X$ with CDF $F$ and a finite threshold $u$ with
+$\bar F(u)=\mathbb P(X>u)>0$, the mean excess function is
 
 $$
-e(u)=\mathbb E[X-u\mid X>u].
+e(u)=\mathbb E[X-u\mid X>u]
+=\frac{\mathbb E[(X-u)_+]}{\bar F(u)}.
 $$
 
+Here $(X-u)_+=\max(X-u,0)$. The conditional excess is nonnegative, so
+this definition allows $e(u)=+\infty$; it is finite exactly when that
+excess is integrable.
 It measures the expected overshoot beyond $u$ after the threshold has already
 been crossed.  For a [Pareto Type I](./incerto-pareto.md) tail with
 exponent $\alpha>1$ and $u\ge x_m$,
@@ -89,12 +93,13 @@ $$
 \end{aligned}
 $$
 
-Therefore
+In the second line below, substitute $y\leftarrow1+y/u$ and reuse $y$
+for the transformed integration coordinate, whose limits are $1$ and $\infty$:
 
 $$
 \begin{aligned}
 e(u)&=\int_0^\infty\left(1+\frac yu\right)^{-\alpha}\,dy\\
-&=u\int_1^\infty z^{-\alpha}\,dz\\
+&=u\int_1^\infty y^{-\alpha}\,dy\\
 &=\frac{u}{\alpha-1}.
 \end{aligned}
 $$

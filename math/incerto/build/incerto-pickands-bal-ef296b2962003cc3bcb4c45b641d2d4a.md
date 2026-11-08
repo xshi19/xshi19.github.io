@@ -16,14 +16,14 @@ options:
 
 ## Statement
 
-Let $F$ be a distribution function with finite or infinite right endpoint
-$x_F=\sup\{x:F(x)<1\}$.  For a high threshold $u<x_F$, define the conditional
-excess distribution
+Let $F$ be the distribution function of $X$, with survival $\bar F=1-F$
+and finite or infinite right endpoint $x_F=\sup\{x:F(x)<1\}$.
+For a high threshold $u<x_F$, define the conditional excess distribution
 
 $$
 \begin{gathered}
 F_u(y)=P(X-u\le y\mid X>u)\\
-=\frac{F(u+y)-F(u)}{1-F(u)},\\
+=\frac{F(u+y)-F(u)}{\bar F(u)},\\
 0\le y<x_F-u.
 \end{gathered}
 $$
@@ -100,7 +100,7 @@ record the statement and use exact Pareto algebra as a checkable special
 case.
 
 If $X$ is Pareto Type I with lower cutoff $x_m$ and tail exponent $\alpha$,
-then for $u\ge x_m$,
+then for $u\ge x_m>0$, $\alpha>0$, and $y\ge0$,
 
 $$
 \begin{gathered}
@@ -125,10 +125,10 @@ they have it at every threshold above $x_m$.
 
 (pbdh-threshold-excess-fit)=
 For $\alpha=1.7=17/10$, the population excess parameters are
-$\xi=10/17$ and $\beta(u)=10u/17$. The scaled excess
-$Z=(X-u)/u$, conditional on $X>u$, has survival $(1+z)^{-1.7}$.
+$\xi=10/17$ and $\beta(u)=10u/17$. Conditional on $X>u$, the scaled
+excess $(X-u)/u$ has survival $(1+z)^{-1.7}$ at $z\ge0$.
 
-| Threshold $u\ge x_m$ | Shape $\xi$ | Scale $\beta(u)$ | $\mathbb P(Z>1\mid X>u)$ |
+| Threshold $u\ge x_m$ | Shape $\xi$ | Scale $\beta(u)$ | $\mathbb P(X-u>u\mid X>u)$ |
 | --- | --- | --- | --- |
 | $x_m$ | $10/17$ | $10x_m/17$ | $2^{-1.7}$ |
 | $2x_m$ | $10/17$ | $20x_m/17$ | $2^{-1.7}$ |
@@ -163,7 +163,7 @@ $$
 
 Thus $\xi=0$ with asymptotic excess scale $1/u$, whereas exact Pareto
 has $\xi=1/\alpha$ and scale $u/\alpha$. A bounded example is uniform
-on $[0,b]$: above $0\le u<b$ its excess is exactly uniform on $[0,b-u]$,
+on $[0,b]$, $b>0$: above $0\le u<b$ its excess is exactly uniform on $[0,b-u]$,
 a GPD with $\xi=-1$ and $\beta(u)=b-u$.
 
 These three cases can be compared with
@@ -203,12 +203,12 @@ $\xi<1$. This gives the following stronger conclusion.
 
 Let $F\in\operatorname{MDA}(H_{\xi,0,1})$ with $\xi<1$, and let
 $x_F=\sup\{x:F(x)<1\}$ be its finite or infinite right endpoint. Assume
-$\mathbb E[(X-u_0)^+]<\infty$ for some finite $u_0<x_F$, where
-$r^+=\max(r,0)$. For $u_0\le u<x_F$, write $\bar F(u)=1-F(u)>0$ and
+$\mathbb E[(X-u_0)_+]<\infty$ for some finite $u_0<x_F$, where
+$r_+=\max(r,0)$. For $u_0\le u<x_F$, we have $\bar F(u)>0$ and
 define the [mean excess](incerto-mean-excess-function.md) by
 
 $$
-e(u)=\frac{\mathbb E[(X-u)^+]}{\bar F(u)}.
+e(u)=\frac{\mathbb E[(X-u)_+]}{\bar F(u)}.
 $$
 
 For any positive PBdH scale $\beta(u)$ giving the GPD limit of shape
@@ -246,16 +246,16 @@ at infinity with index $-1/\xi<-1$.
 $e(u)\sim\xi u/(1-\xi)$. Division by $\beta(u)\sim\xi u$
 proves the claim in this case.
 
-If $\xi<0$, put $v=x_F-u$ and $R(v)=\bar F(x_F-v)$.
-The finite-endpoint characterization makes $R$ regularly varying at zero
-with index $-1/\xi>0$. Karamata's theorem at zero gives
+If $\xi<0$, the finite-endpoint characterization makes
+$v\mapsto\bar F(x_F-v)$ regularly varying at zero with index $-1/\xi>0$.
+Changing variables to distance from the endpoint, Karamata's theorem at zero gives
 
 $$
-e(u)=\frac{\int_0^v R(s)\,ds}{R(v)}
-\sim\frac{v}{1-1/\xi}.
+e(u)=\frac{\int_0^{x_F-u}\bar F(x_F-v)\,dv}{\bar F(u)}
+\sim\frac{x_F-u}{1-1/\xi}.
 $$
 
-Since $\beta(u)\sim-\xi v$, this again gives $1/(1-\xi)$.
+Since $\beta(u)\sim-\xi(x_F-u)$, this again gives $1/(1-\xi)$.
 
 For $\xi=0$, the cited Gumbel representation supplies an equivalent
 smooth tail $g$ and a positive auxiliary function $a$: near $x_F$,
@@ -267,14 +267,14 @@ $$
 
 Here $u_1<x_F$ is fixed; $a$ is locally absolutely continuous with
 $a'(u)\to0$ (where defined). This smoothness belongs to the equivalent
-tail, and is not an extra assumption on $F$. Set $Q=ag$. Then
-$Q'=(a'-1)g$ almost everywhere. Also $Q(u)\to0$: at a finite endpoint,
+tail, and is not an extra assumption on $F$. The product satisfies
+$(ag)'=(a'-1)g$ almost everywhere. Also $a(u)g(u)\to0$: at a finite endpoint,
 $a'$ bounded makes $a$ bounded and $g\to0$; at infinity, $a(u)=O(u)$
-and a positive limit of the eventually decreasing $Q$ would force
+and a positive limit of the eventually decreasing product $ag$ would force
 $g(u)\ge C/u$ for some $C>0$, contradicting the assumed finite tail
 integral.
 
-Write $I(u)=\int_u^{x_F}g(t)\,dt$. Integration of the identity for $Q'$
+Write $I(u)=\int_u^{x_F}g(t)\,dt$. Integration of the identity for $(ag)'$
 therefore gives, for every $\varepsilon>0$ and all sufficiently high $u$,
 
 $$

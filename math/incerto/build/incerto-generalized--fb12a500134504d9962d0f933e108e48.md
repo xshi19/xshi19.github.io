@@ -159,8 +159,8 @@ parameters $(\xi,\mu,\sigma)=(5/9,1,5/9)$ on the normalized scale.
 ## Gaussian maxima and normalization
 
 SCoFT v4 §9.1.2, pp. 174–176, compares exact normal maxima with their
-Gumbel limit [@taleb2025scoftv4]. We use the maxima CDF
-$\Lambda(z)=\exp(-e^{-z})$ throughout. For iid standard normals,
+Gumbel limit [@taleb2025scoftv4]. The limiting maxima CDF is
+$H_{0,0,1}(z)=\exp(-e^{-z})$. For iid standard normals,
 independence and differentiation give the exact identities
 
 $$
@@ -170,7 +170,7 @@ f_{M_n}(x)&=n\phi(x)\Phi(x)^{n-1}.
 \end{aligned}
 $$
 
-Here $\Phi$ and $\phi$ are the standard normal CDF and density. Choose
+Here $\Phi$ and $\phi$ are the standard normal CDF and density. For $n\ge2$, choose
 
 $$
 \begin{gathered}
@@ -199,7 +199,7 @@ $$
 $$
 
 Since $n\bar\Phi(b_n)=1$, taking logarithms of the exact maximum CDF
-proves $P((M_n-b_n)/a_n\le z)\to\Lambda(z)$. This proves a fixed-$z$
+proves $P((M_n-b_n)/a_n\le z)\to H_{0,0,1}(z)$. This proves a fixed-$z$
 limit; it does not bound a relative density error far into the tail.
 
 A commonly used explicit alternative is

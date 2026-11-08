@@ -32,18 +32,20 @@ identify context; each concept page identifies its proved and cited results.
 
 ## Keep the three ratios separate
 
-For iid nonnegative $X_1,X_2$ with survival $\bar F(u)=P(X>u)>0$, define
-the following local ratios:
+For iid nonnegative $X_1,X_2$ with unbounded right support and survival
+$\bar F(u)=P(X>u)$, compare these three ratios at threshold $u>0$:
 
 $$
-A_t(u)=\frac{\bar F(tu)}{\bar F(u)},\qquad
+\frac{\bar F(tu)}{\bar F(u)},\qquad
 Q_F(u)=\frac{\bar F(u)^2}{\bar F(2u)},\qquad
 R(u)=\frac{P(X_1+X_2>u)}{2\bar F(u)}.
 $$
 
-Regular variation asks whether $A_t(u)\to t^{-\alpha}$ for every fixed
-$t>0$. Subexponentiality asks whether $R(u)\to1$. The event comparison
-$Q_F$ alone supplies neither definition. For an exponential law, $Q_F=1$
+As $u\to\infty$, regular variation with exponent $\alpha>0$ asks whether
+the first ratio tends to $t^{-\alpha}$ for every fixed $t>0$.
+Subexponentiality asks whether $R(u)\to1$. The event comparison
+$Q_F$ alone supplies neither definition. For an exponential law of rate
+$\lambda>0$, $Q_F=1$
 identically, while $R(u)=(1+\lambda u)/2$ diverges. The
 [ratio note](incerto-survival-tail-ratio.md) gives exact calculations and
 explains why translating a light-tailed variable changes the limit of $Q_F$.

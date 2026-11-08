@@ -22,7 +22,7 @@ $$
 $$
 
 For two-sided large-deviation statements, one usually asks for the moment
-generating function $M(\theta)=\mathbb E[e^{\theta X}]$ to be finite in an
+generating function $\mathbb E[e^{\theta X}]$ to be finite in an
 open neighborhood of $0$.  Equivalently, the cumulant generating function
 $\Lambda(\theta)=\log \mathbb E[e^{\theta X}]$ is finite near zero, and
 the Cramér rate function is
@@ -135,19 +135,20 @@ exponential moment.
 (cramer-bernoulli)=
 ## An optimized bound for Bernoulli averages
 
-For iid $X_i\sim\mathrm{Bernoulli}(p)$, $0<p<1$, independence gives
-$\mathbb Ee^{tS_n}=(1-p+pe^t)^n$. Markov therefore proves, for $p<q<1$,
+For iid $X_i\sim\mathrm{Bernoulli}(p)$, $0<p<1$, let $S_n=\sum_{i=1}^nX_i$.
+Independence gives $\mathbb Ee^{\theta S_n}=(1-p+pe^\theta)^n$.
+Markov therefore proves, for $p<q<1$,
 
 $$
 \begin{aligned}
 &P(S_n\ge nq)\\
-&\quad\le\inf_{t>0}\exp\Bigl\{-n\bigl[tq\\
-&\qquad-\log(1-p+pe^t)\bigr]\Bigr\}\\
+&\quad\le\inf_{\theta>0}\exp\Bigl\{-n\bigl[\theta q\\
+&\qquad-\log(1-p+pe^\theta)\bigr]\Bigr\}\\
 &\quad=e^{-nD(q\Vert p)},
 \end{aligned}
 $$
 
-where
+where the Bernoulli Kullback–Leibler divergence is
 
 $$
 \begin{aligned}
@@ -157,7 +158,7 @@ D(q\Vert p)&=q\log(q/p)\\
 $$
 
 To verify the optimum, differentiate the bracket: its derivative vanishes
-at $e^t=q(1-p)/(p(1-q))>1$, and its second derivative is negative.
+at $e^\theta=q(1-p)/(p(1-q))>1$, and its second derivative is negative.
 Substitution yields the displayed expression. At $q=1$ the bound is
 $p^n$, exactly the all-success probability. At $q\le p$ we use the trivial
 upper bound one. If $nq$ is not an integer, the event is

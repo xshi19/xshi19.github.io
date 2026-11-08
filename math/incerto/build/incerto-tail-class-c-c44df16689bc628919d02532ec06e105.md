@@ -32,8 +32,8 @@ appendix proves the convolution decomposition.
 Let $\bar F(x)=\mathbb P(X>x)$ be the survival function.  In the table,
 "regularly varying" means $\bar F\in RV_{-\alpha}$ for some $\alpha>0$, so
 $\bar F(tx)/\bar F(x)\to t^{-\alpha}$ for fixed $t>0$. Here $F$ is the CDF,
-$x$ is the threshold, and $\alpha$ is a positive tail exponent. All examples
-below have nonnegative support, with positive scale parameters, positive gamma
+$x$ is the threshold, and $\alpha$ is a positive tail exponent. All models
+in this table have nonnegative support, with positive scale parameters, positive gamma
 shape and rate, and nonzero lognormal log-variance. See [Shared notation](https://xshi19.github.io/math/notation/).
 
 | Distribution | Subexponential? | Regularly varying? | Diagnostic tail behavior |
@@ -126,8 +126,9 @@ the gamma integral.
 
 ### Proof of the lognormal moment contrast
 
-We prove both entries in the lognormal row. Let $Z\sim N(0,1)$ and
-$X=e^Z$. Completing the square gives, for every real $q$,
+We prove both entries in the lognormal row. Let $\log X\sim N(0,1)$.
+In the log-size coordinate $z=\log x$, completing the square gives,
+for every real $q$,
 
 $$
 \mathbb E X^q
@@ -330,29 +331,29 @@ $V$ be Pareto with minimum $v_m>0$, exponent $a>0$, and dimensionless
 values, and put $X=e^V$. Here $a,v_m$ are local parameters; the survival
 exponent of $X$ will be zero. This construction is motivated by SCoFT v4
 §5.5, pp. 102–103 [@taleb2025scoftv4]. Inverting the increasing transform
-proves
+gives its survival $\bar F$; differentiating gives its Lebesgue density $f$:
 
 $$
-P(X>x)=\left(\frac{v_m}{\log x}\right)^a,\quad x\ge e^{v_m},
-\qquad f_X(x)=\frac{a v_m^a}{x(\log x)^{a+1}}.
+\bar F(x)=P(X>x)=\left(\frac{v_m}{\log x}\right)^a,\quad x\ge e^{v_m},
+\qquad f(x)=\frac{a v_m^a}{x(\log x)^{a+1}}.
 $$
 
 For every fixed $t>0$, its survival ratio tends to one because
-$\log(tx)/\log x\to1$. Thus $\bar F_X\in RV_0$, outside this catalog's
+$\log(tx)/\log x\to1$. Thus $\bar F\in RV_0$, outside this catalog's
 positive-power rows. Every positive power moment diverges:
 $\mathbb EX^p=\mathbb E e^{pV}$, and the exponential factor eventually
 exceeds every polynomial in the Pareto density integral.
 
 We also prove subexponentiality directly for this example. For iid
-nonnegative $X_1,X_2$, with $M_2=\max(X_1,X_2)$,
+copies $X_1,X_2$ of this nonnegative $X$, with $M_2=\max(X_1,X_2)$,
 
 $$
 P(M_2>x)\le P(X_1+X_2>x)\le P(M_2>x/2).
 $$
 
-Both bounds divided by $2\bar F_X(x)$ tend to one: the maximum-tail
-formula is $2\bar F_X-\bar F_X^2$ and
-$\bar F_X(x/2)/\bar F_X(x)\to1$. The squeeze proves the claim.
+Both bounds divided by $2\bar F(x)$ tend to one: the maximum-tail
+formula is $2\bar F(x)-\bar F(x)^2$ and
+$\bar F(x/2)/\bar F(x)\to1$. The squeeze proves the claim.
 Thus a regularly varying survival can be subexponential even when its
 index is zero. There is no finite positive $1/\alpha$
 calibration at this index-zero boundary.
@@ -386,7 +387,7 @@ $$
 Here $K$ is Pearson kurtosis. For $m>0$ it lies below three and tends
 to one as $m/\sigma\to\infty$. Yet
 $\mathbb E e^{tX}=\cosh(mt)e^{\sigma^2t^2/2}<\infty$ for every real
-$t$. This location mixture is light-tailed. Its density has a local
+$t$. This location mixture is light-tailed. Its density $f$ has a local
 minimum at zero when $m>\sigma$: differentiating the two normal densities
 gives $f''(0)=f(0)(m^2-\sigma^2)/\sigma^4>0$.
 Thus low kurtosis can accompany a valley around the expectation.
@@ -474,12 +475,15 @@ shows what changes when one regime actually has a power tail.
 ## Appendix: convolution calculation
 
 This appendix proves the elementary two-summand convolution decomposition used
-by the subexponential diagnostic.  We work with independent continuous
-variables, then specialize to an iid lower-bounded distribution.  Discrete,
-dependent, and two-sided variants require separate assumptions.
+by the subexponential diagnostic. We work with independent variables having
+Lebesgue densities, then specialize to an iid lower-bounded distribution.
+The convolution identity also applies to two-sided laws; the subexponential
+definition above uses nonnegative summands. Discrete and dependent variants
+require separate treatment.
 
-For independent continuous random variables $X_1$ and $X_2$ with densities
-$f_1$, $f_2$ and survival functions $\bar F_1$, $\bar F_2$,
+For independent random variables $X_1$ and $X_2$ with Lebesgue densities,
+write $f_1$ for the density of $X_1$ and $\bar F_2$ for the survival
+function of $X_2$. Then
 
 $$
 \mathbb P(X_1+X_2>x)
@@ -517,7 +521,7 @@ $$
 2\int_a^{x/2} f(y)\bar F(x-y)\,dy+\bar F(x/2)^2.
 $$
 
-Dividing by $2\bar F(x)$ yields a normalized integral:
+When $\bar F(x)>0$, dividing by $2\bar F(x)$ yields a normalized integral:
 
 $$
 \begin{aligned}

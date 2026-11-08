@@ -91,12 +91,12 @@ g_v(x)=
 \exp\left(-\frac{x^2}{2v}\right).
 $$
 
-Set $y=x/\sqrt v$.  A direct differentiation gives
+Differentiating at fixed $x$ gives
 
 $$
 \frac{\partial g_v(x)}{\partial v}
 =
-\frac{g_v(x)}{2v}(y^2-1),
+\frac{g_v(x)}{2v}\left(\frac{x^2}{v}-1\right),
 $$
 
 and a second differentiation gives
@@ -104,7 +104,7 @@ and a second differentiation gives
 $$
 \frac{\partial^2 g_v(x)}{\partial v^2}
 =
-\frac{g_v(x)}{4v^2}(y^4-6y^2+3).
+\frac{g_v(x)}{4v^2}\left(\frac{x^4}{v^2}-\frac{6x^2}{v}+3\right).
 $$
 
 At $v=1$, the sign changes where
@@ -188,12 +188,13 @@ $$
 Its positive-threshold curvature boundary is $x=\sqrt{3v}$, about $1.732$
 when $v=1$. It differs from both density boundaries.
 
-For scale perturbation, write $h_\sigma(x)=g_{\sigma^2}(x)$ and
-$z=x/\sigma$. Then
+For scale perturbation, parameterize the same density as
+$g_{\sigma^2}(x)$, with $\sigma>0$. Differentiating at fixed $x$ gives
 
 $$
-\frac{\partial^2h_\sigma(x)}{\partial\sigma^2}
-=\frac{h_\sigma(x)}{\sigma^2}(z^4-5z^2+2).
+\frac{\partial^2}{\partial\sigma^2}g_{\sigma^2}(x)
+=\frac{g_{\sigma^2}(x)}{\sigma^2}
+\left(\frac{x^4}{\sigma^4}-\frac{5x^2}{\sigma^2}+2\right).
 $$
 
 At $\sigma=1$, its positive zeros are
@@ -207,7 +208,7 @@ different operation from mean-preserving variance mixing. Student scale-curvatur
 The scale calculation also has a closed form for a Student density. Write
 $h_s(x)=C_\nu s^{-1}(1+x^2/(\nu s^2))^{-(\nu+1)/2}$, where $s>0$ is
 scale, $\nu>1$ is degrees of freedom, and $C_\nu$ normalizes the density.
-Set $z=x/s$ and $t=z^2/\nu$. Logarithmic differentiation gives
+Set $t=x^2/(\nu s^2)$. Logarithmic differentiation gives
 
 $$
 s\,\partial_s\log h_s=\frac{\nu t-1}{1+t},\qquad
@@ -218,7 +219,8 @@ $$
 For the second formula, differentiate the first, using
 $\partial_st=-2t/s$, and add the square of the log derivative.
 The numerator is a quadratic with two positive roots when $\nu>1$.
-Solving in $z^2$ gives the four density-curvature boundaries
+Solving for $t$ and using $x=\pm s\sqrt{\nu t}$ gives the four
+density-curvature boundaries
 
 $$
 x=\pm s\sqrt{
@@ -283,9 +285,9 @@ Figure regeneration: `uv run python demos/incerto/finite_moments.py`. These are 
 calculations on 801 fixed points, with no random sampling. The script
 reports the finite-mixture crossings separately from the local boundaries.
 
-Let $Y$ be a positive mixing variance with $\mathbb EY<\infty$. Jensen's
+Fix $x>0$ and let $Y$ be a positive mixing variance with $\mathbb EY<\infty$. Jensen's
 inequality for survival needs convexity throughout the mixing interval. If $0<Y\le v_{\max}<\infty$
-and $x^2\ge3v_{\max}$, the displayed $T_v''(x)$ is nonnegative on that
+and $x^2\ge3v_{\max}$, the displayed $\partial_v^2T_v(x)$ is nonnegative on that
 interval, and $\mathbb E T_Y(x)\ge T_{\mathbb EY}(x)$. If instead
 $Y\ge v_{\min}>0$ and $x^2\le3v_{\min}$, its curvature is nonpositive
 and the inequality reverses. These sufficient conditions show why a

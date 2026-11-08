@@ -111,7 +111,7 @@ $\bar F(x)=x^{-\alpha}L(x)$, with $L(x)=x^\alpha\bar F(x)$ slowly varying.
 No separate survival-tail argument is needed.
 
 For the [Pareto distribution](./incerto-pareto.md) with lower cutoff
-$x_m$,
+$x_m>0$ and exponent $\alpha>0$, at thresholds $x\ge x_m$,
 
 $$
 \bar F(x)=x_m^\alpha x^{-\alpha},
@@ -131,7 +131,7 @@ L(x)=c(x)\exp\left\{\int_a^x\frac{\varepsilon(v)}v\,dv\right\},
 \qquad c(x)\to c\in(0,\infty),\quad \varepsilon(x)\to0,
 $$
 
-with measurable $c$ and locally integrable $\varepsilon(v)/v$.
+with a fixed $a>0$, measurable $c$, and locally integrable $\varepsilon(v)/v$.
 We cite the existence of this representation: @bingham1987regular,
 Theorem 1.3.1, p. 12. This is a different result from the
 [integral theorem](incerto-karamata.md).
@@ -151,17 +151,19 @@ convergence of a derivative of a log-log plot needs extra smoothness.
 
 We prove the transformation rule used in SCoFT v4 §5.2.3, p. 100
 [@taleb2025scoftv4], without differentiating a density. Let $X\ge0$ have
-$\bar F(x)=x^{-\alpha}L(x)$ eventually and let $r>0$. Then
+$\bar F(x)=x^{-\alpha}L(x)$ eventually and let $r>0$. For a threshold $u>0$,
+with the last equality valid for sufficiently large $u$,
 
 $$
-P(X^r>y)=\bar F(y^{1/r})=y^{-\alpha/r}L(y^{1/r}).
+P(X^r>u)=\bar F(u^{1/r})=u^{-\alpha/r}L(u^{1/r}).
 $$
 
 For fixed $t>0$, the ratio of the last slowly varying factors has arguments
-$t^{1/r}y^{1/r}$ and $y^{1/r}$, so it tends to one. Thus $X^r$ has
-survival exponent $\alpha/r$. Units may be fixed first by applying this
-argument to $X/x_m$. Negative powers concern the behavior near zero and
-are outside this right-tail rule. The exact Pareto payoff case is already
+$t^{1/r}u^{1/r}$ and $u^{1/r}$, so it tends to one as $u\to\infty$.
+Thus $X^r$ has survival exponent $\alpha/r$. Units may be fixed first by
+applying this argument to $X/x_m$ for a positive reference scale $x_m$.
+Negative powers concern the behavior near zero and are outside this
+right-tail rule. The exact Pareto payoff case is already
 derived in [asymmetric payoffs](incerto-asymmetric-payoffs.md#payoffs-tail-transform).
 
 ## Ratio diagnostics

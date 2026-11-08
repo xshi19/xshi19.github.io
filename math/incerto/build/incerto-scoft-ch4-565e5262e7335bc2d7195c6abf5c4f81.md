@@ -66,13 +66,16 @@ not for every tail event and every mixing interval.
 
 ## Separate a moment from its estimator
 
-For iid Pareto observations, the [moment note](incerto-moment-estimation.md#moment-estimation-gates)
-proves
+For iid Pareto observations with exponent $\alpha>0$, cutoff $x_m>0$, and
+moment order $q>0$, the [moment note](incerto-moment-estimation.md#moment-estimation-gates)
+proves, for every integer $n\ge1$,
 
 $$
-\mathbb E X^q<\infty\iff q<\alpha,\qquad
-\operatorname{Var}(\widehat m_{q,n})<\infty\iff 2q<\alpha
+\begin{gathered}
+\mathbb E X^q<\infty\iff q<\alpha,\\
+\operatorname{Var}\!\left(\frac1n\sum_{i=1}^nX_i^q\right)<\infty\iff 2q<\alpha
 \quad\text{when }q<\alpha.
+\end{gathered}
 $$
 
 At exponent 3 the second moment exists, its sample average is unbiased and
@@ -93,7 +96,7 @@ near a parameter boundary.
 | Source usage | Convention used here |
 | --- | --- |
 | Normal scale parameter | $N(\mu,v)$ uses variance as its second argument; write $v=\sigma^2$ explicitly. |
-| Stochastic variance or reciprocal variance | $Y$ is positive variance; local $Q=1/Y$ is precision. |
+| Stochastic variance or reciprocal variance | $Y$ is positive variance; $1/Y$ is precision. |
 | Student tail parameter | $\nu$ is degrees of freedom; the power-tail exponent is $\alpha=\nu$. Unit Student scale is not unit standard deviation. |
 | Mean deviation / MAD | State the center and whether the deviation is a mean or a median; our dispersion demo applies Gaussian calibration. |
 | Rising norms | $A_p$ averages powers; geometric $\ell_p$ norms sum them. Their monotonicities differ. |

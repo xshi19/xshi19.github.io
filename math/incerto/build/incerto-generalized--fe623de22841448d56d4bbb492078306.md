@@ -46,8 +46,8 @@ where $L$ is slowly varying at infinity, with tail balance
 $$
 \begin{gathered}
 \frac{\mathbb P(X>x)}{\mathbb P(|X|>x)}\to p,\\
-\frac{\mathbb P(X<-x)}{\mathbb P(|X|>x)}\to q,\\
-p+q=1.
+\frac{\mathbb P(X<-x)}{\mathbb P(|X|>x)}\to 1-p,\\
+0\le p\le1.
 \end{gathered}
 $$
 
@@ -60,7 +60,7 @@ $$
 $$
 
 where $Z_\alpha$ is an $\alpha$-stable law whose skewness is determined by
-$p-q$.  For nonnegative Pareto-type examples this reduces to a strongly
+$2p-1$.  For nonnegative Pareto-type examples this reduces to a strongly
 right-skewed stable limit, and the scaling is of order $n^{1/\alpha}$ up to a
 slowly varying factor.  When $1<\alpha<2$, the mean exists but the variance is
 infinite, so a common centering choice is $b_n=n\mathbb E[X]$.
@@ -84,8 +84,9 @@ standard choice at $\alpha=1$.
 Here $S_n=\sum_{i=1}^n X_i$ is the sum, $M_n=\max_{1\le i\le n}X_i$
 is the maximum, $\mathbb E$ is expectation, and $\Rightarrow$ denotes
 convergence in distribution. The tail exponent $\alpha$, norming constants
-$a_n$, centering constants $b_n$, tail-balance weights $p,q$, and stable limit
-$Z_\alpha$ are defined above. See [Shared notation](https://xshi19.github.io/math/notation/).
+$a_n$, centering constants $b_n$, right-tail weight $p$ (left-tail weight
+$1-p$), and stable limit $Z_\alpha$ are defined above.
+See [Shared notation](https://xshi19.github.io/math/notation/).
 
 We record the stable-limit contrast needed by the site's heavy-tail
 pages.  We do not classify every possible domain of attraction or every
@@ -216,7 +217,7 @@ We use a symmetric stable law with characteristic function
 
 $$
 \begin{gathered}
-\varphi_X(t)=\exp(i\mu t-|\sigma t|^\alpha),\\
+\mathbb E e^{itX}=\exp(i\mu t-|\sigma t|^\alpha),\\
 0<\alpha\le2,\quad\sigma>0.
 \end{gathered}
 $$
@@ -261,20 +262,22 @@ Start with $|x|=(2/\pi)\int_0^\infty(1-\cos(tx))/t^2\,dt$.
 For completeness, the integral at $x=1$ equals $\pi/2$: write
 $u^{-2}=\int_0^\infty s e^{-su}\,ds$ and use Tonelli to get
 $\int_0^\infty (1+s^2)^{-1}\,ds=\pi/2$. Scaling gives the identity
-for all $x$. Tonelli again, followed by $v=(\sigma t)^\alpha$, gives
+for all $x$. Apply Tonelli again and change the integration coordinate via
+$t\leftarrow(\sigma t)^\alpha$. In the remaining integral and its analysis,
+$t$ denotes this transformed coordinate:
 
 $$
 \begin{aligned}
 &\mathbb E|X-\mu|\\
 &\quad=\frac{2\sigma}{\pi\alpha}
-\int_0^\infty(1-e^{-v})v^{-1-1/\alpha}\,dv.
+\int_0^\infty(1-e^{-t})t^{-1-1/\alpha}\,dt.
 \end{aligned}
 $$
 
 Integration by parts makes the integral
 $\alpha\Gamma(1-1/\alpha)$; both boundary terms vanish when $\alpha>1$.
 For $\alpha\le1$, the integrand near zero is asymptotic to
-$v^{-1/\alpha}$, so the absolute moment is infinite. Symmetry and
+$t^{-1/\alpha}$, so the absolute moment is infinite. Symmetry and
 integrability give $\mathbb EX=\mu$ in the finite case. The average's
 formula now follows from the exact scale identity.
 
@@ -300,18 +303,20 @@ alpha=2: 1.128, 0.1128
 ## Cumulants measure particular aspects of convergence
 
 Let the iid summands have mean $\mu$, variance $0<\sigma^2<\infty$,
-and finite absolute moment of integer order $r\ge3$. Define the local
-$r$th cumulant by $\kappa_r(X)=i^{-r}(\log\varphi_X)^{(r)}(0)$,
-using the continuous logarithm near $\varphi_X(0)=1$. For
-$T_n=(S_n-n\mu)/(\sigma\sqrt n)$, multiplication of characteristic
-functions and the chain rule prove
+and finite absolute moment of integer order $r\ge3$. With characteristic
+function $\varphi_X(t)=\mathbb E e^{itX}$, define the local $r$th cumulant by
+$\kappa_r(X)=i^{-r}(\log\varphi_X)^{(r)}(0)$, using the continuous logarithm
+near $\varphi_X(0)=1$. Standardize $S_n\leftarrow(S_n-n\mu)/(\sigma\sqrt n)$;
+throughout this section, $S_n$ denotes the standardized sum. Multiplication
+of characteristic functions and the chain rule prove
 
 $$
-\kappa_r(T_n)=n^{1-r/2}\frac{\kappa_r(X)}{\sigma^r}.
+\kappa_r(S_n)=n^{1-r/2}\frac{\kappa_r(X)}{\sigma^r}.
 $$
 
-Thus standardized skewness decays as $n^{-1/2}$ and excess kurtosis as
-$n^{-1}$. Direct integration gives zero skewness and excess $-6/5$ for
+Thus standardized skewness decays as $n^{-1/2}$ when the third absolute
+moment is finite, and excess kurtosis as $n^{-1}$ when the fourth moment
+is finite. Direct integration gives zero skewness and excess $-6/5$ for
 $U(0,1)$; differentiating $-\log(1-t)$ gives skewness $2$ and excess
 $6$ for $\mathrm{Exp}(1)$. For iid sums, divide these excesses by $n$.
 These calculations describe moments, not a distance between CDFs.
@@ -322,7 +327,7 @@ and fourth moment three, but is discrete.
 For a CDF error bound, the cited Berry–Esseen theorem
 (@durrett2019probability, Theorem 3.4.17, p. 157) requires
 $\rho=\mathbb E|X-\mu|^3<\infty$ and gives
-$\sup_x|P(T_n\le x)-\Phi(x)|\le3\rho/(\sigma^3\sqrt n)$.
+$\sup_x|P(S_n\le x)-\Phi(x)|\le3\rho/(\sigma^3\sqrt n)$.
 The constant is sufficient, not optimal. For $U(0,1)$,
 $\rho/\sigma^3=3\sqrt3/4$; for $\mathrm{Exp}(1)$ it is $12/e-2$,
 obtained by splitting the centered absolute-moment integral at one.

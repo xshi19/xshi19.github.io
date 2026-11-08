@@ -140,13 +140,12 @@ $$
 =1-\left(1-\bar F(x)\right)^n
 $$
 
-Set $u=\bar F(x)$.  Since $u\to0$ and $n$ is fixed, the binomial expansion
-gives
+Since $\bar F(x)\to0$ and $n$ is fixed, the binomial expansion gives
 
 $$
 \begin{aligned}
-&1-(1-u)^n\\
-&\quad=nu-\binom{n}{2}u^2+O(u^3),
+&1-(1-\bar F(x))^n\\
+&\quad=n\bar F(x)-\binom{n}{2}\bar F(x)^2+O(\bar F(x)^3),
 \end{aligned}
 $$
 
@@ -154,13 +153,13 @@ and therefore
 
 $$
 \begin{aligned}
-&\frac{1-(1-u)^n}{nu}\\
-&\quad=1-\frac{n-1}{2}u+O(u^2)\\
+&\frac{1-(1-\bar F(x))^n}{n\bar F(x)}\\
+&\quad=1-\frac{n-1}{2}\bar F(x)+O(\bar F(x)^2)\\
 &\quad\to1.
 \end{aligned}
 $$
 
-Substituting back,
+Thus
 
 $$
 \mathbb P(M_n>x)
@@ -320,9 +319,9 @@ The fixed-$n$, large-threshold limit differs from the growing-sample
 subexponential even though $M_n/S_n\to0$ almost surely as $n\to\infty$.
 
 The [chapter 5 diagnostic figure](incerto-survival-tail-ratio.md#tail-ratio-borderline)
-evaluates $R(x)$ by convolution for Pareto, stretched Weibull, and exponential
-laws. The first two illustrate the cited classification; the exponential
-curve is checked against the exact formula above. The quadrature has an
+evaluates $\mathbb P(X_1+X_2>x)/(2\bar F(x))$ by convolution for Pareto,
+stretched Weibull, and exponential laws. The first two illustrate the cited
+classification; the exponential curve is checked against the exact formula above. The quadrature has an
 explicit error tolerance and cannot prove a limiting statement.
 
 ## Caveats

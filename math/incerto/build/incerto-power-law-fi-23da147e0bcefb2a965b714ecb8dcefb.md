@@ -39,8 +39,9 @@ remain synthetic.
 
 We retain the [shared notation](https://xshi19.github.io/math/notation/):
 $\alpha>0$ is the survival-tail exponent and $\xi=1/\alpha$ is the positive
-extreme-value index. Write $u=x_{\min}>0$ for the fitting threshold. On this
-page, $a$ is a local symbol for the **density or mass exponent** used by CSN:
+extreme-value index. Write $u>0$ for the fitting threshold (the code calls it
+`xmin`). On this page, $a$ is a local symbol for the **density or mass
+exponent** used by CSN:
 
 $$
 \begin{aligned}
@@ -55,10 +56,13 @@ not exactly $(x/u)^{-\alpha}$; its large-$x$ exponent is still $\alpha=a-1$.
 The change of exponent convention must precede any comparison with software
 that reports $a$.
 
-Let $N$ denote the full sample size and $n=n_{\mathrm{tail}}$ the number of
-observations satisfying $x_i\ge u$. All likelihood sums below run over those
-$n$ retained values. Equality is included, which matters for integer data and
-for thresholds chosen from observations.
+Let $n$ denote the full sample size and $k$ the number of
+observations satisfying $x_i\ge u$. At each cutoff we reindex those retained
+values as $x_1,\ldots,x_k$ for the likelihood sums. The count $k=k(u)$ varies
+with the cutoff. Equality is included, which matters for integer data and
+for thresholds chosen from observations; $k$ need not be the strict exceedance
+count. The likelihood formulas require $k\ge1$; the numerical helpers require
+at least two retained values and report the retained count as `n_tail`.
 
 (csn-continuous-mle)=
 ## Continuous likelihood and its relation to Hill
@@ -73,13 +77,13 @@ f(x\mid\alpha,u)&=\frac{\alpha}{u}(x/u)^{-(\alpha+1)},\\
 $$
 
 We derive the MLE within this exact model. Let
-$T=\sum_{i=1}^n\log(x_i/u)$. Its log likelihood and score are
+$T=\sum_{i=1}^k\log(x_i/u)$. Its log likelihood and score are
 
 $$
 \begin{aligned}
-\ell(\alpha)&=n\log\alpha-n\log u-(\alpha+1)T,\\
-\ell'(\alpha)&=n/\alpha-T,\\
-\ell''(\alpha)&=-n/\alpha^2.
+\ell(\alpha)&=k\log\alpha-k\log u-(\alpha+1)T,\\
+\ell'(\alpha)&=k/\alpha-T,\\
+\ell''(\alpha)&=-k/\alpha^2.
 \end{aligned}
 $$
 
@@ -87,8 +91,8 @@ If $T>0$, strict concavity gives a unique finite maximum:
 
 $$
 \begin{aligned}
-\widehat\alpha&=n/T,\\
-\widehat a&=1+n/T.
+\widehat\alpha&=k/T,\\
+\widehat a&=1+k/T.
 \end{aligned}
 $$
 
@@ -98,9 +102,11 @@ invent information about the tail's spread.
 
 The reciprocal estimate is the average log excess used by Hill
 [@hill1975simple]. There is a small but real counting distinction. For distinct
-continuous observations, a Hill fit above the order statistic $x_{N-k:N}$
-uses the $k$ larger observations. Setting $u=x_{N-k:N}$ and retaining equality
-in the CSN fit includes one more observation with zero log excess. Thus
+continuous observations with ascending order statistics $x_{1:n},\ldots,x_{n:n}$,
+a Hill fit above $x_{n-k:n}$ uses the $k$ larger observations, where $1\le k<n$.
+In this comparison, $k$ counts Hill's upper observations. Setting $u=x_{n-k:n}$
+and retaining equality in the CSN fit gives $k+1$ observations, including
+one zero log excess. Thus
 
 $$
 \widehat\alpha_{\mathrm{inclusive}}
@@ -141,7 +147,7 @@ with respect to counting measure:
 
 $$
 \begin{aligned}
-p(k\mid a,u)&=\frac{k^{-a}}{\zeta(a,u)},\qquad k\ge u,\\
+p(x\mid a,u)&=\frac{x^{-a}}{\zeta(a,u)},\qquad x\in\{u,u+1,\ldots\},\\
 \zeta(a,u)&=\sum_{j=u}^{\infty}j^{-a},\qquad a>1.
 \end{aligned}
 $$
@@ -154,9 +160,9 @@ Writing primes for derivatives in $a$, the score equation is
 
 $$
 \begin{aligned}
-\ell(a)&=-n\log\zeta(a,u)-a\sum_{i=1}^n\log x_i,\\
+\ell(a)&=-k\log\zeta(a,u)-a\sum_{i=1}^k\log x_i,\\
 \frac{\zeta'(\widehat a,u)}{\zeta(\widehat a,u)}
-&=-\frac1n\sum_{i=1}^n\log x_i.
+&=-\frac1k\sum_{i=1}^k\log x_i.
 \end{aligned}
 $$
 
@@ -183,7 +189,7 @@ first integer suggests
 
 $$
 \widehat a_{\mathrm{approx}}
-=1+\frac{n}{\sum_{i=1}^n\log\!\left(x_i/(u-\tfrac12)\right)}.
+=1+\frac{k}{\sum_{i=1}^k\log\!\left(x_i/(u-\tfrac12)\right)}.
 $$
 
 The half-unit correction matters: substituting $u$ in this approximation is
@@ -221,13 +227,13 @@ u=8: exact alpha=2.059; approximate alpha=2.043
 ## Choose a threshold by refitting at each candidate
 
 For each admissible threshold $u$, fit its own exponent and compute the
-Kolmogorov–Smirnov distance between the conditional empirical CDF $F_{n,u}$
+Kolmogorov–Smirnov distance between the conditional empirical CDF $F_{k,u}$
 and the fitted model CDF $F_{\widehat\alpha(u),u}$:
 
 $$
 \begin{aligned}
 D(u)&=\sup_{x\ge u}
-\left|F_{n,u}(x)-F_{\widehat\alpha(u),u}(x)\right|,\\
+\left|F_{k,u}(x)-F_{\widehat\alpha(u),u}(x)\right|,\\
 \widehat u&\in\arg\min_{u\in\mathcal U}D(u).
 \end{aligned}
 $$
@@ -243,10 +249,10 @@ For continuous data, the supremum checks both sides of every empirical jump.
 For integer data the model jumps too:
 
 $$
-F_{a,u}(k)=1-\frac{\zeta(a,k+1)}{\zeta(a,u)}.
+F_{a,u}(x)=1-\frac{\zeta(a,x+1)}{\zeta(a,u)},\qquad x\in\{u,u+1,\ldots\}.
 $$
 
-Check $k-1$ and $k$ for every observed integer $k$. These endpoints also cover
+Check $x-1$ and $x$ for every observed integer $x$. These endpoints also cover
 gaps containing no observations: the empirical CDF is constant there and the
 model CDF is monotone. Comparing just the right sides at observed values can
 miss the largest discrepancy. Use
@@ -258,9 +264,9 @@ and [`select_xmin`](incerto-api-reference.md#api-select-xmin).
 
 Synthetic iid mixture: uniform on $[1,4]$ with probability $0.7$; otherwise
 Pareto with minimum $4$ and survival exponent $1.8$. PCG64 seed 982,
-$N=6000$. The empirical curve counts strict exceedances and omits its zero
+$n=6000$. The empirical curve counts strict exceedances and omits its zero
 endpoint on log axes. The fitted line starts at the selected minimum and has
-height $n/N$ there: it represents the fitted tail's unconditional mass.
+height $k/n$ there: it represents the fitted tail's unconditional mass.
 Its height can differ from strict empirical survival by the observations
 exactly at the threshold. The population join is known only because we
 specified this simulation.
@@ -316,13 +322,13 @@ $1/\alpha^2$. The ordinary interior-MLE approximation gives
 
 $$
 \begin{aligned}
-\operatorname{se}(\widehat\alpha)&\simeq\frac{\widehat\alpha}{\sqrt n},\\
-\operatorname{se}(\widehat a)&\simeq\frac{\widehat a-1}{\sqrt n}.
+\operatorname{se}(\widehat\alpha)&\simeq\frac{\widehat\alpha}{\sqrt k},\\
+\operatorname{se}(\widehat a)&\simeq\frac{\widehat a-1}{\sqrt k}.
 \end{aligned}
 $$
 
 The second line is the familiar CSN expression, often written
-$(\widehat\alpha_{\mathrm{CSN}}-1)/\sqrt n$. Adding one changes the exponent's
+$(\widehat\alpha_{\mathrm{CSN}}-1)/\sqrt k$. Adding one changes the exponent's
 name and level, but not its standard error. This is asymptotic sampling error
 conditional on the threshold and retained count, not a finite-sample unbiased
 variance formula.
@@ -333,7 +339,7 @@ $$
 \begin{aligned}
 I(a;u)&=\frac{\zeta''(a,u)}{\zeta(a,u)}
 -\left[\frac{\zeta'(a,u)}{\zeta(a,u)}\right]^2,\\
-\operatorname{se}(\widehat a)&\simeq[nI(\widehat a;u)]^{-1/2}.
+\operatorname{se}(\widehat a)&\simeq[kI(\widehat a;u)]^{-1/2}.
 \end{aligned}
 $$
 
@@ -344,7 +350,7 @@ curvature numerically. Very steep laws or extreme numerical scales can make
 that calculation ill-conditioned.
 
 When $u$ was selected from the data, both formulas omit selection uncertainty.
-For an empirical bootstrap, resample $N$ observations with replacement from
+For an empirical bootstrap, resample $n$ observations with replacement from
 the **whole sample**, then repeat the threshold search and exponent fit.
 Retain the pairs $(\widehat\alpha^{*(b)},\widehat u^{*(b)})$. Their sample
 standard deviations estimate the two marginal errors; their covariance

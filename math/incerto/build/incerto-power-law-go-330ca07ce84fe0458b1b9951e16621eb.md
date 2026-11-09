@@ -19,12 +19,16 @@ better? The first asks about absolute goodness of fit; the second compares
 specified alternatives. Neither can be answered by a straight-looking
 log-log plot.
 
-We use iid positive observations, a full sample of size $N$, and
-$n=n_{\mathrm{tail}}$ retained values $x_i\ge u=x_{\min}$. As in the
+We use iid positive observations, a full sample of size $n$, and
+$k$ retained values $x_i\ge u>0$ (the code calls the threshold `xmin`). As in the
 [shared notation](https://xshi19.github.io/math/notation/), $\alpha>0$ is the
 survival exponent. The local density exponent is $a=\alpha+1$; CSN uses its
 symbol $\alpha$ for this $a$. All package `alpha` values below follow the
 survival convention.
+
+At a fixed cutoff, reindex the retained values as $x_1,\ldots,x_k$.
+Here $k\ge1$ includes ties at the cutoff and is returned as `n_tail` in code;
+it is not necessarily the strict exceedance count.
 
 :::{note} Worked example
 The [tech layoffs example](incerto-layoffs-tails.md) applies these methods
@@ -45,8 +49,8 @@ The semiparametric bootstrap of @clauset2009powerlaw, §4.1, constructs a null
 population with an empirical body and a fitted power-law tail. For each of
 $B$ independent replicates:
 
-1. Generate $N$ independent observations. For each draw, choose the fitted
-   tail with probability $n/N$ and the body with probability $1-n/N$.
+1. Generate $n$ independent observations. For each draw, choose the fitted
+   tail with probability $k/n$ and the body with probability $1-k/n$.
 2. A tail draw follows the fitted continuous Pareto or discrete zeta law above
    $\widehat u$. A body draw is sampled uniformly, with replacement, from the
    original observations strictly below $\widehat u$.
@@ -55,7 +59,7 @@ $B$ independent replicates:
    **rule** as before; an observed-value rule uses this replicate's values.
 4. Calculate $D_b^*$ against that replicate's fitted model on its selected tail.
 
-The tail count before refitting is binomial with parameters $N$ and $n/N$.
+The tail count before refitting is binomial with parameters $n$ and $k/n$.
 Fixing it at the observed count would define a different resampling experiment.
 If the body is empty, every draw comes from the fitted tail. The model leaves
 the body's shape unspecified; it does not pretend the whole sample is Pareto.
@@ -142,19 +146,19 @@ Distinct refitted thresholds: 33
 ## Compare normalized likelihoods on the same tail
 
 Select a common threshold $u$ and keep exactly the same observations for every
-comparison. If a candidate has unconditioned density $g(x;\theta)$ and survival
-$\bar G(u;\theta)$, its conditional tail density is
+comparison. If a candidate has unconditioned density $g(x;\theta)$ and positive
+survival $\bar G(u;\theta)>0$, its conditional tail density is
 
 $$
 \begin{aligned}
 q(x;\theta,u)&=\frac{g(x;\theta)}{\bar G(u;\theta)},\qquad x\ge u,\\
-\ell(\theta;u)&=\sum_{i=1}^n\log g(x_i;\theta)\\
-&\quad-n\log\bar G(u;\theta).
+\ell(\theta;u)&=\sum_{i=1}^k\log g(x_i;\theta)\\
+&\quad-k\log\bar G(u;\theta).
 \end{aligned}
 $$
 
 This display assumes a continuous law. For an integer law the denominator is
-$P_\theta(X\ge u)$, and numerator and denominator must both use counting
+$P_\theta(X\ge u)>0$, and numerator and denominator must both use counting
 measure. Do not compare log probability masses with log densities, or let
 one model discard observations that another model must explain.
 
@@ -164,19 +168,17 @@ normalizer afterward is generally not maximum likelihood for the conditional
 model, because that normalizer depends on the parameters.
 
 The following continuous alternatives all have support $[u,\infty)$ after
-conditioning. Each parameter is fitted on that same retained sample.
+conditioning. Each parameter is fitted on that same retained sample. Within
+each subsection, $q$ denotes that family's conditional density.
 
 ### Lognormal
 
 Let $\mu\in\mathbb R$ and $\sigma>0$ be the location and standard deviation
-of the untruncated log variable. With $\bar\Phi=1-\Phi$,
+of the untruncated log variable, and let $\Phi$ be the standard normal CDF.
 
 $$
-\begin{aligned}
-z(x)&=(\log x-\mu)/\sigma,\\
-q_{\mathrm{LN}}(x)&=\frac{\exp[-z(x)^2/2]}
-{x\sigma\sqrt{2\pi}\,\bar\Phi(z(u))}.
-\end{aligned}
+q(x)=\frac{\exp[-(\log x-\mu)^2/(2\sigma^2)]}
+{x\sigma\sqrt{2\pi}\,[1-\Phi((\log u-\mu)/\sigma)]}.
 $$
 
 The denominator accounts for the omitted lower part of the parent lognormal.
@@ -190,34 +192,40 @@ For rate $\lambda>0$, conditioning an exponential above $u$ gives
 
 $$
 \begin{aligned}
-q_{\mathrm E}(x)&=\lambda e^{-\lambda(x-u)},\\
-\widehat\lambda&=\left[\frac1n\sum_{i=1}^n(x_i-u)\right]^{-1}.
+q(x)&=\lambda e^{-\lambda(x-u)},\\
+\widehat\lambda&=\left[\frac1k\sum_{i=1}^k(x_i-u)\right]^{-1}.
 \end{aligned}
 $$
 
 This rate is determined by excesses above the cutoff. A mean of the raw
 retained values gives the wrong rate for this conditional model.
+The formula requires a positive mean excess; if every $x_i=u$, the likelihood
+increases as $\lambda\to\infty$ and has no finite maximizer.
 
 ### Stretched exponential / Weibull
 
-Write $y=x/u$, shape $k>0$, and $\beta=(u/\tau)^k>0$, where $\tau$ is the
-parent Weibull scale. Then
+Use Weibull shape $\beta>0$, as in the
+[tail-class catalog](incerto-tail-class-catalog.md), and parent scale $\tau>0$.
+Write $c=(u/\tau)^\beta>0$ for the dimensionless parameter fitted at fixed
+shape. Then
 
 $$
-q_{\mathrm W}(x)
-=\frac{k\beta}{u}y^{k-1}\exp[-\beta(y^k-1)].
+q(x)
+=\frac{\beta c}{u}(x/u)^{\beta-1}\exp[-c((x/u)^\beta-1)].
 $$
 
-The name *stretched exponential* usually refers to $0<k<1$; the implementation
-fits the full Weibull family, including the exponential case $k=1$. At fixed
-$k$, differentiating the conditional log likelihood gives
+The name *stretched exponential* usually refers to $0<\beta<1$; the implementation
+fits the full Weibull family, including the exponential case $\beta=1$. At fixed
+$\beta$, differentiating the conditional log likelihood gives
 
 $$
-\widehat\beta(k)=
-\left[\frac1n\sum_{i=1}^n(y_i^k-1)\right]^{-1}.
+\widehat c(\beta)=
+\left[\frac1k\sum_{i=1}^k((x_i/u)^\beta-1)\right]^{-1}.
 $$
 
-Profiling out $\beta$ leaves a one-dimensional numerical shape fit. Comparing
+The denominator is positive when at least one retained value exceeds $u$.
+If all $x_i=u$, there is no finite maximizing $c$ at fixed $\beta$.
+Profiling out $c$ leaves a one-dimensional numerical shape fit. Comparing
 Weibull against exponential is a nested problem; comparing Weibull against
 Pareto requires the non-nested conditions discussed below.
 
@@ -230,7 +238,7 @@ dimensionless cutoff $b=\lambda u$, with $\lambda>0$, and
 $$
 \begin{aligned}
 C(a,b)&=\int_1^\infty z^{-a}e^{-b(z-1)}\,dz,\\
-q_{\mathrm C}(x)&=\frac{(x/u)^{-a}e^{-b(x/u-1)}}{uC(a,b)}.
+q(x)&=\frac{(x/u)^{-a}e^{-b(x/u-1)}}{uC(a,b)}.
 \end{aligned}
 $$
 
@@ -247,18 +255,20 @@ likelihood-ratio comparison.
 (csn-vuong)=
 ## Non-nested comparisons: sign, normalization, and p-value
 
-For two fitted conditional densities evaluated on the same $n$ observations,
+For two fitted conditional densities evaluated on the same $k$ observations,
 let
 
 $$
 \begin{aligned}
 d_i&=\log\widehat q_1(x_i)-\log\widehat q_2(x_i),\\
-R&=\sum_{i=1}^n d_i,\qquad \bar d=R/n,\\
-s_d^2&=\frac1n\sum_{i=1}^n(d_i-\bar d)^2,\\
-Z_V&=\frac{R}{\sqrt n\,s_d}.
+R&=\sum_{i=1}^k d_i,\qquad \bar d=R/k,\\
+s_d^2&=\frac1k\sum_{i=1}^k(d_i-\bar d)^2,\\
+Z_V&=\frac{R}{\sqrt k\,s_d}.
 \end{aligned}
 $$
 
+The normalized statistic requires $s_d>0$; at $s_d=0$ the helper returns
+`nan` for the statistic and its normal-reference p-value.
 Positive $R$ favors model 1; negative $R$ favors model 2. The normalized
 statistic $Z_V$ is sometimes also called normalized $R$. Under the null that
 the two pseudo-true models have equal expected log likelihood, Vuong's
@@ -347,22 +357,22 @@ models = ("powerlaw", "lognormal", "exponential",
           "stretched_exponential", "truncated_powerlaw")
 for model in models:
     fit = fit_tail_model(x, 1, model)
-    print(f"{model}: n={fit['n_tail']}, loglik={fit['loglikelihood']:.2f}")
+    print(f"{model}: k={fit['n_tail']}, loglik={fit['loglikelihood']:.2f}")
     print(f"  status: {fit['status']}")
 ```
 
 **Output**
 
 ```text
-powerlaw: n=950, loglik=-1980.75
+powerlaw: k=950, loglik=-1980.75
   status: ok
-lognormal: n=950, loglik=-1720.13
+lognormal: k=950, loglik=-1720.13
   status: ok
-exponential: n=950, loglik=-1741.61
+exponential: k=950, loglik=-1741.61
   status: ok
-stretched_exponential: n=950, loglik=-1723.98
+stretched_exponential: k=950, loglik=-1723.98
   status: ok
-truncated_powerlaw: n=950, loglik=-1720.72
+truncated_powerlaw: k=950, loglik=-1720.72
   status: ok
 ```
 :::

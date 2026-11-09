@@ -13,9 +13,11 @@ title: Dispersion Ratio Under Fat Tails
 
 ## Statement
 
-Let $x_1,\dots,x_n$ be observed data, and compare the sample standard
-deviation with absolute-deviation scale estimates.  The repository uses
-normal-scaled versions
+Let $x_1,\dots,x_n$ be observed data, with $n\ge1$ and sample mean $\bar x$.
+Compare the sample standard deviation
+$\operatorname{Std}=[n^{-1}\sum_{i=1}^n(x_i-\bar x)^2]^{1/2}$
+with absolute-deviation scale estimates. The repository uses normal-scaled
+versions
 
 $$
 \operatorname{MeanAD}
@@ -45,9 +47,10 @@ can rise because sample standard deviation is more sensitive to isolated extreme
 The mean absolute deviation uses all observations; the median absolute
 deviation depends on their central order statistics.
 
-The sample notation $X_1,\dots,X_n$ and expectation notation follow the shared
-[notation table](https://xshi19.github.io/math/notation/).  The scale symbol $\sigma$ and the
-names `MeanAD` and `MedianAD` are local conventions for this page.
+The observed values $x_1,\dots,x_n$, scale $\sigma$, standard normal CDF $\Phi$,
+and expectation notation follow the shared
+[notation table](https://xshi19.github.io/math/notation/). The names `MeanAD`
+and `MedianAD` are local conventions for these two different calibrated scales.
 
 ## Examples
 
@@ -82,7 +85,8 @@ The ratios distinguish $0/0$ from a positive numerator over a zero denominator.
 We justify the Gaussian scale constants here; these identities do not
 establish a tail class. Integrating the standard normal density on the
 positive half-line gives $\mathbb E|Z|=2\int_0^\infty z\phi(z)\,dz=\sqrt{2/\pi}$.
-The equation $P(|Z|\le m)=2\Phi(m)-1=1/2$ gives $m=\Phi^{-1}(0.75)$.
+Since $P(|Z|\le z)=2\Phi(z)-1$ for $z\ge0$, the median of $|Z|$ is
+$\Phi^{-1}(0.75)$.
 Here $Z$ is standard normal and $\phi$ is its density.
 
 For $X\sim N(\mu,\sigma^2)$,

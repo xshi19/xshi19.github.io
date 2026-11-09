@@ -70,12 +70,12 @@ sampling, or volatility standardization is performed.
 (sp500-aggregation)=
 ## Kurtosis under aggregation
 
-For a nonconstant finite sample $x_1,\ldots,x_N$, let $\widehat m_q$ be its
-central moment with divisor $N$. We use excess kurtosis
+For a nonconstant finite sample $x_1,\ldots,x_n$, let $\widehat m_q$ be its
+central moment with divisor $n$, for $q=2,4$. We use excess kurtosis
 
 $$
 \begin{gathered}
-\widehat m_q=\frac1N\sum_{j=1}^N(x_j-\bar x)^q,\\
+\widehat m_q=\frac1n\sum_{j=1}^n(x_j-\bar x)^q,\\
 \widehat\gamma_2=\frac{\widehat m_4}{\widehat m_2^2}-3.
 \end{gathered}
 $$
@@ -93,13 +93,15 @@ $$
 $$
 
 We prove this identity, not a convergence claim about a particular market
-sample. Set $Z_i=X_i-\mathbb E[X_i]$. In the expansion of the fourth
+sample. Center $X_i\leftarrow X_i-\mathbb E[X_i]$ for this proof; $X_i$
+and $S_h$ now denote the centered variables and their sum. Centering preserves
+variance and kurtosis. In the expansion of the fourth
 power of the sum, independence and zero means eliminate terms with a
 singleton index. The surviving terms give
 
 $$
 \begin{gathered}
-\mathbb E\!\left[\left(\sum_{i=1}^h Z_i\right)^4\right]\\
+\mathbb E[S_h^4]\\
 =h\mu_4+3h(h-1)\sigma^4,\\
 \operatorname{Var}(S_h)=h\sigma^2.
 \end{gathered}
@@ -181,13 +183,11 @@ blocks=2, MAD=0.000, kappa=nan
 (sp500-drawdown)=
 ## Drawdowns and conditional tail means
 
-Define the running price peak $P_j^\star$ and maximum fractional drawdown $D_n$ by
+At date $j$, the running price peak is $\max_{0\le i\le j}P_i$.
+The maximum fractional drawdown is
 
 $$
-\begin{gathered}
-P_j^\star=\max_{0\le i\le j}P_i,\\
-D_n=\max_{0\le j\le n}\left(1-\frac{P_j}{P_j^\star}\right).
-\end{gathered}
+D_n=\max_{0\le j\le n}\left(1-\frac{P_j}{\max_{0\le i\le j}P_i}\right).
 $$
 
 This equals the largest fractional decline across ordered peak/trough pairs:
@@ -197,8 +197,8 @@ differs from a negative log-drawdown convention. A distribution of drawdowns
 also depends on the window and overlap rules; a whole-series value is one
 path statistic, not a sample of iid losses.
 
-For a positive threshold $u$ with $P(X>u)>0$, finite conditional mean, and
-mean excess $e(u)$, define
+For a positive threshold $u$ with $\bar F(u)=P(X>u)>0$, finite conditional mean,
+and [mean excess](incerto-mean-excess-function.md) $e(u)$, define
 
 $$
 \begin{gathered}
@@ -213,7 +213,7 @@ expectation. Thus $\phi(u)>1$; it cannot tend to zero. For an exact
 $\phi(u)=\alpha/(\alpha-1)$. A unit exponential instead gives
 $\phi(u)=1+1/u\to1$. These are model identities, not a characterization
 of every possible tail class. For the left tail, apply the same definition
-to $-r_t$ and condition on $-r_t>u$.
+to $\ell_t=-r_t$ and condition on $\ell_t>u$.
 
 Use [`maximum_drawdown`](incerto-api-reference.md#api-maximum-drawdown),
 [`conditional_tail_ratio`](incerto-api-reference.md#api-conditional-tail-ratio),
@@ -257,17 +257,17 @@ ordered paths, not daily log losses or total-return drawdowns.
 For $p>0$, the raw absolute-power maximum-to-sum share is
 
 $$
-Q_n^{(p)}=\frac{\max_{i\le n}|X_i|^p}
+R_n^{(p)}=\frac{\max_{i\le n}|X_i|^p}
 {\sum_{i=1}^n|X_i|^p}.
 $$
 
 The [finite-mean max-to-sum argument](incerto-max-to-sum-ratio.md) proves
-$Q_n^{(p)}\to0$ almost surely under iid sampling and
+$R_n^{(p)}\to0$ almost surely under iid sampling and
 $0<\mathbb E|X|^p<\infty$. Apply that argument to $|X|^p$; its
 nonnegativity and finite positive mean are exactly the needed assumptions.
 An all-zero finite prefix has no defined ratio.
 
-A high $Q_n^{(4)}$ says one observation dominates the raw fourth-power
+A high $R_n^{(4)}$ says one observation dominates the raw fourth-power
 total. It is not literally that observation's share of *central kurtosis*:
 recentering and the variance denominator change when an observation is
 removed. The report keeps those quantities separate and repeats them on
@@ -384,7 +384,7 @@ and changes in volatility prevent treating the benchmark as a calibrated
 test here. The sample log-return extrema are **-22.90% and 15.37%**;
 these percentages describe logarithmic changes, not simple returns.
 
-For gain/loss asymmetry, compare positive $r_t$ with positive $-r_t$, using
+For gain/loss asymmetry, compare positive $r_t$ with positive $\ell_t$, using
 the same threshold rules and showing each side's retained counts. Our report
 uses [`hill_alpha_estimator`](incerto-api-reference.md#api-hill-alpha-estimator)
 at three retained fractions and conditional means at three quantiles.

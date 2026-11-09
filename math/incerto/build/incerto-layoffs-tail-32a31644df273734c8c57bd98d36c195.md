@@ -54,22 +54,17 @@ all affect inference from this pooled sample.
 
 ## Reading a Hill plot
 
-Let $x_{(1)}\leq\cdots\leq x_{(n)}$ be the positive observations in ascending
-order. We use the $k$ largest values and the next value as the threshold:
+Let $x_{1:n}\leq\cdots\leq x_{n:n}$ be the positive observations in ascending
+order. For $1\le k<n$, we use the $k$ largest values and the next value,
+$x_{n-k:n}$, as the threshold. The Hill estimate and its reciprocal are
 
 $$
-u_k=x_{(n-k)}.
-$$
-
-The Hill estimate and its reciprocal are
-
-$$
-\widehat\xi_k=\frac{1}{k}\sum_{j=1}^{k}
-\log\frac{x_{(n-j+1)}}{u_k},
+\widehat\xi_{k,n}=\frac{1}{k}\sum_{j=1}^{k}
+\log\frac{x_{n-j+1:n}}{x_{n-k:n}},
 $$
 
 $$
-\widehat\alpha_k=1/\widehat\xi_k.
+\widehat\alpha_{k,n}=1/\widehat\xi_{k,n}.
 $$
 
 Here $\alpha$ is the survival-tail exponent, following the
@@ -82,7 +77,9 @@ Increasing $k$ brings more observations into the calculation and lowers the
 threshold. Very small $k$ uses little information; large $k$ can include the
 body of the distribution. [Threshold selection](incerto-tail-threshold-selection.md)
 explains this bias–variability tradeoff. Ties contribute zero log spacings;
-we keep them rather than jittering the observations.
+we keep them rather than jittering the observations. Thus the strict exceedance
+count can be smaller than $k$; if all selected values equal the threshold,
+$\widehat\xi_{k,n}=0$ and there is no finite reciprocal estimate.
 
 Both plots show $k$ from 25 to roughly one third of the available sample.
 The shaded **95% pointwise bootstrap intervals** are the 2.5th and 97.5th
@@ -120,33 +117,34 @@ Let $p$ denote the reported fraction of the workforce laid off. Define the
 local log-loss variable
 
 $$
-L=-\log(1-p),\qquad 0\leq p<1.
+\ell=-\log(1-p),\qquad 0\leq p<1.
 $$
 
-In this page **$L$ means workforce log loss**, not the slowly varying function
-called $L$ in the notation canon. It is dimensionless, and all logarithms are
-natural. Its inverse is
+Here $\ell$ is workforce log loss, with the same positive-loss sign convention
+as the [S&P loss variable](incerto-sp500-tail.md). It is dimensionless, and all
+logarithms are natural. The inverse maps a log loss back to the reported
+fraction:
 
 $$
-p=1-e^{-L}.
+p=1-e^{-\ell}.
 $$
 
 This is the lower-bound-zero, upper-bound-one case of Cirillo and Taleb's
 bounded-to-unbounded transformation [@cirillo2015violent] (equation 1). The
-coordinate maps $[0,1)$ onto $[0,\infty)$: $L=0$ at no loss, and $L$ diverges
+coordinate maps $[0,1)$ onto $[0,\infty)$: $\ell=0$ at no loss, and $\ell$ diverges
 as the retained fraction $1-p$ tends to zero. For example, 50%, 90%, and 99%
 cuts give log losses of 0.69, 2.30, and 4.61. Thus the transformation separates
 large proportional cuts that a bounded percentage scale compresses near 100%.
 
 Removing the coordinate's endpoint does not produce a fat tail by itself.
 For example, if a hypothetical fraction is uniform on $(0,1)$, then for
-$\ell\geq0$,
+$u\geq0$,
 
 $$
 \begin{aligned}
-&P(L>\ell)\\
-&\quad=P(p>1-e^{-\ell})\\
-&\quad=e^{-\ell}.
+&P(\ell>u)\\
+&\quad=P(p>1-e^{-u})\\
+&\quad=e^{-u}.
 \end{aligned}
 $$
 
@@ -155,7 +153,7 @@ that the transformation does not determine a tail class; the layoffs figures
 remain empirical diagnostics.
 
 **Endpoint rule:** a reported $p=1$ gives an infinite log loss. We count those
-377 events separately and exclude them from the finite-$L$ fit. We do not
+377 events separately and exclude them from the finite-log-loss fit. We do not
 replace 100% by 99% or by $1-\varepsilon$. A reported full-workforce cut need
 not establish a legal company closure. A zero fraction maps to zero and is
 excluded because Hill uses positive observations. Missing percentages are
@@ -190,8 +188,8 @@ pointwise intervals **[1.73, 2.45]** and **[1.92, 2.50]**. They are
 larger and more threshold-sensitive than the count estimates. The reported
 fractions are rounded, with many ties; a nonlinear transform preserves those
 ties. The largest included fraction is 98%, so the largest observed finite
-$L$ is only 3.91. These estimates describe that visible range. They do not
-establish a Pareto tail for $L$, and they are not exponents for raw percentages.
+$\ell$ is only 3.91. These estimates describe that visible range. They do not
+establish a Pareto tail for $\ell$, and they are not exponents for raw percentages.
 The “index about 1” conclusion applies to counts.
 
 ## Does an exact power-law tail fit?

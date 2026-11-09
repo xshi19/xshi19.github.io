@@ -79,8 +79,11 @@ general estimator comparison are not proved here.
 ## Four worked models
 
 In the [contamination example](incerto-inference-asymmetry.md#inference-separated-tails),
-a uniform law on $[0,1]$ is mixed with probability $\varepsilon$ of a
-Pareto draw starting at $b>1$. For $n$ iid observations,
+let $P$ be uniform on $[0,1]$. The mixture law $Q$ draws from $P$ with
+probability $1-\varepsilon$ and from a Pareto distribution with minimum
+$b>1$ and exponent $\alpha>1$ with probability $\varepsilon$, where
+$0<\varepsilon<1$. For $n$ iid observations, the total-variation
+distance between the product laws is
 
 $$
 d_{\mathrm{TV}}(P^{\otimes n},Q^{\otimes n})=1-(1-\varepsilon)^n.
@@ -98,7 +101,8 @@ specified spread; downside protection needs a separate payoff bound.
 
 The [ruin example](incerto-ruin.md#ruin-ensemble-time) grows resources by
 $a>1$ on each surviving step, with fixed independent failure probability
-$q\in(0,1)$. Its ensemble expectation is
+$q\in(0,1)$. With starting resources $W_0>0$ and resources $W_k$ at step
+$k$ (zero after ruin), its ensemble expectation is
 
 $$
 \mathbb E W_k=W_0[a(1-q)]^k,

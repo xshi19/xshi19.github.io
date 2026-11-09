@@ -141,7 +141,9 @@ log axes. Hill uses 100 integer counts spanning 25–2,298; mean excess uses
 These are diagnostic curves, not confidence bands or accepted tail models.
 ```
 
-For comparison, the rank-based plotting position at sorted losses $\ell_{(i)}$ is
+For comparison, reindex the positive losses as $\ell_1,\ldots,\ell_n$, where
+$n$ is the number of loss days, and write their ascending order statistics as
+$\ell_{i:n}$. The rank-based plotting position at $\ell_{i:n}$ is
 $1-i/(n+1)$; it keeps plotted probabilities positive at the largest loss.
 The strict empirical survival at a threshold $u$ is instead
 $n^{-1}\sum_{j=1}^n\mathbf1_{\{\ell_j>u\}}$, which handles ties and is zero

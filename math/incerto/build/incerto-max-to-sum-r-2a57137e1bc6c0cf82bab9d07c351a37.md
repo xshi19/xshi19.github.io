@@ -76,11 +76,11 @@ almost surely.
 For any $\varepsilon>0$, integrability implies
 
 $$
-\sum_{n=1}^{\infty}\mathbb P(X_n>\varepsilon n)<\infty,
+\sum_{n=1}^{\infty}P(X_n>\varepsilon n)<\infty,
 $$
 
 because the sum is bounded by a constant multiple of
-$\int_0^\infty\mathbb P(X>t)\,dt=\mathbb E[X]$.  By Borel--Cantelli,
+$\int_0^\infty P(X>t)\,dt=\mathbb E[X]$.  By Borel--Cantelli,
 $X_n/n\to0$ almost surely.  Therefore $M_n/n\to0$ almost surely: after a
 random finite index all new observations are at most $\varepsilon n$, while
 the finitely many old observations divided by $n$ vanish.  Hence
@@ -203,12 +203,12 @@ or approximate that distribution using many uniformly sampled subsets.
 Validity requires a limiting law for the statistic with the normalization
 appropriate to the parent tail. For example,
 for a stated exact Pareto exponent, the preceding maximum and sum limits give
-the following local normalizing factors $c_k$ for $c_kR_k$:
+the following local normalizing factors $c_j$ at sample size $j$ for $c_jR_j$:
 
-| Parent regime | $c_k$ |
+| Parent regime | $c_j$ |
 | --- | --- |
-| $\alpha>1$ | $k^{1-1/\alpha}$ |
-| $\alpha=1$ | $\log k$ |
+| $\alpha>1$ | $j^{1-1/\alpha}$ |
+| $\alpha=1$ | $\log j$ |
 | $0<\alpha<1$ | $1$ |
 
 The [Pareto note](./incerto-pareto.md#sums-and-moment-orders) proves the boundary

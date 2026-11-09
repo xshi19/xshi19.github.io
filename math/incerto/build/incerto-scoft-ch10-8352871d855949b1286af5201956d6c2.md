@@ -33,10 +33,12 @@ reproduce the source's historical S&P study.
 
 ## Quantities and source qualifications
 
-We keep $\alpha$ for the positive tail exponent, $u$ for a threshold,
-and $e(u)$ for mean excess. The source's threshold $K$ in chapter 10
+We follow the [shared notation](https://xshi19.github.io/math/notation/):
+$\alpha$ is the positive tail exponent, $u$ a threshold,
+and $e(u)$ the [mean excess](incerto-mean-excess-function.md).
+The source's threshold $K$ in chapter 10
 becomes $u$; $K_j$ remains a local hinge knot in the Appendix G treatment.
-For $u>0$ and a finite conditional mean,
+For $u>0$ with $\bar F(u)=P(X>u)>0$ and a finite conditional mean,
 
 $$
 \begin{gathered}
@@ -45,7 +47,7 @@ $$
 \end{gathered}
 $$
 
-For an exact Pareto tail with $\alpha>1$, this is
+For an exact Pareto tail with $\alpha>1$ and $u\ge x_m$, this is
 $\alpha/(\alpha-1)$; for a unit exponential it tends to one.
 The ratio is dimensionless. It cannot have limit zero or require a
 second division by $u$.

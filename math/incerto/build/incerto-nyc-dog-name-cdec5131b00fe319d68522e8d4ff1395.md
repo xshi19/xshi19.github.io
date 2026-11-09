@@ -34,6 +34,10 @@ placeholders, and return one count per name.  The result is only about 35,000
 rows instead of hundreds of thousands of license records, so the complete aggregate is
 small enough to travel with the page.
 
+The bundled snapshot has a recorded source access date of **2026-08-11**.
+It retains names and frequencies, but no license dates from which to recover
+the pooled license-period start and end dates.
+
 ## What is being estimated?
 
 Let $x_i$ be the number of included license-period records attached to the
@@ -71,7 +75,12 @@ lognormal baseline. Below it, stacked Hill, GPD-shape, and exceedance-count
 panels expose threshold sensitivity.  The generalized Pareto fit uses the
 [GPD](incerto-generalized-pareto.md) shape parameter $\xi$; the Hill
 panel reports the Pareto tail exponent
-$\widehat\alpha=1/\widehat\xi$.  These symbols follow the shared
+$\widehat\alpha_{k,n}=1/\widehat\xi_{k,n}$, using the top $k$ order statistics
+with the next value $x_{n-k:n}$ as threshold, for $1\le k<n$.
+Here $x_{i:n}$ is the $i$th ascending frequency.
+The Hill reciprocal uses Hill's own estimate of $\xi$, not the separately
+fitted GPD shape. Ties can make the strict exceedance count smaller than $k$.
+These symbols follow the shared
 [notation table](https://xshi19.github.io/math/notation/).
 
 Use [`load_nyc_dog_name_frequencies`](incerto-api-reference.md#api-load-nyc-dog-name-frequencies), [`hill_stability`](incerto-api-reference.md#api-hill-stability), [`DogNameFrequencyData.frequency_for`](incerto-api-reference.md#api-dognamefrequencydata-frequency-for).
@@ -109,8 +118,8 @@ Counts refer to license periods, not distinct dogs.
 ```{figure} ../assets/incerto/figures/nyc-dog-name-tail-2.svg
 :alt: Positive rank plotting positions across name frequencies depart from a whole-sample lognormal survival fit.
 
-The data curve uses $1-i/(n+1)$ at sorted frequencies. These are rank plotting
-positions: tied frequencies receive different ordinates, and the largest
+The data curve uses $1-i/(n+1)$ at ascending frequencies $x_{i:n}$. These are
+rank plotting positions: tied frequencies receive different ordinates, and the largest
 frequency has a positive ordinate. They are not the strict empirical
 survival function, which groups ties and is zero at the maximum. The dashed
 curve is the fitted continuous lognormal survival.

@@ -79,11 +79,11 @@ certify the population variance of the estimator.
 ### Consistency does not require estimator variance
 
 We prove convergence in probability when $m_q<\infty$, without a finite
-$2q$th moment. Set $T_i=X_i^q$ and $T_i^{(B)}=\min(T_i,B)$.
-For fixed $B$, Chebyshev's inequality gives convergence of the average of
-$T_i^{(B)}$ to its expectation, because these variables are bounded and iid.
+$2q$th moment. For a fixed truncation level $B>0$, Chebyshev's inequality
+gives convergence of the average of $\min(X_i^q,B)$ to its expectation,
+because these variables are bounded and iid.
 The omitted nonnegative part has expected average
-$\mathbb E(T_1-B)_+\to0$ as $B\to\infty$. Markov's inequality controls
+$\mathbb E(X_1^q-B)_+\to0$ as $B\to\infty$. Markov's inequality controls
 that average uniformly in $n$. For any error tolerance, first choose $B$
 to make this expectation small, then $n$ to control the bounded average.
 The triangle inequality proves $\widehat m_{q,n}\to m_q$ in probability.
@@ -141,10 +141,10 @@ density yields
 
 $$
 \begin{aligned}
-b_n&=\frac{\mathbb ER_n}{\sigma}\\
+\frac{\mathbb ER_n}{\sigma}
 &=\sqrt{\frac2n}\frac{\Gamma((n+1)/2)}{\Gamma(n/2)},\\
 \frac{\mathbb E(R_n-\sigma)^2}{\sigma^2}
-&=2(1-b_n).
+&=2\left(1-\frac{\mathbb ER_n}{\sigma}\right).
 \end{aligned}
 $$
 
@@ -248,19 +248,23 @@ We prove this with Jensen's inequality for the strictly convex function
 $t\mapsto t^{q/p}$ on $[0,\infty)$, then take a $q$th root. Equality holds
 exactly when all $|x_i|$ are equal. The inequality also holds below 1;
 those expressions are not norms. At fixed positive weights,
-$A_p\to\max_i|x_i|$ as $p\to\infty$: bound the weighted sum above by
-$M^p$ and below by $w_jM^p$ at a maximizing coordinate $j$.
+$A_p\to\max_i|x_i|$ as $p\to\infty$: at a maximizing coordinate $j$,
+bound the weighted sum above by $|x_j|^p$ and below by $w_j|x_j|^p$.
 
 For equal weights and observations $(0,0,0,4)$,
 $A_1=1$, $A_2=2$, $A_4=2\sqrt2$, and $A_\infty=4$.
 The order changes which quantity is summarized; a larger value alone
 neither proves a power law nor diagnoses estimation failure.
 
-For geometric unit balls, use the **unnormalized** norm
-$\|x\|_p=(\sum|x_i|^p)^{1/p}$. Its value decreases with $p$ at fixed
-$x$. To prove this for $x\ne0$, divide each coordinate by $\|x\|_p$;
-the resulting magnitudes are at most 1, so their $q$th powers sum to at
-most their $p$th powers, namely 1. The $p$-unit balls therefore expand.
+For geometric unit balls, use the **unnormalized** expression
+$\|x\|_p=(\sum|x_i|^p)^{1/p}$ for $p>0$, a norm when $p\ge1$.
+Its value decreases with $p$ at fixed $x$. To prove this for $0<p<q$,
+the case $x=0$ is immediate.
+For $x\ne0$, without loss of generality, assume $\|x\|_p=1$: both expressions
+scale by the same positive factor when $x$ is divided by $\|x\|_p$.
+Within this argument, $x$ now denotes that normalized vector. Its coordinate
+magnitudes are at most 1, so their $q$th powers sum to at most their $p$th
+powers, namely 1. The $p$-unit balls therefore expand.
 In two dimensions, $p=1,2,\infty$ give a diamond, circle, and square,
 with areas 2, $\pi$, and 4. The factor $n^{-1/p}$ in $A_p$ explains
 why its monotonicity goes in the other direction.
@@ -295,7 +299,7 @@ estimand or dominates every estimator under every loss.
 (moment-estimation-sufficiency)=
 ## Matching a Gaussian sample by absolute error
 
-For iid integrable observations, let $M(n)=\mathbb E|S_n-n\mu|$ and
+For iid integrable observations with mean $\mu$, let $M(n)=\mathbb E|S_n-n\mu|$ and
 assume $M(1)>0$. The [kappa note](incerto-kappa.md#kappa-definition)
 compares this sum deviation at two sizes. Here the target is the
 relative mean absolute error of the sample mean:
@@ -305,14 +309,11 @@ R(n)=\frac{M(n)}{nM(1)}.
 $$
 
 Scaling two parent laws to the same single-observation MAD makes $R(n)$
-a comparison in common units. A Gaussian sample of size $n_g$ has
-$R_g(n_g)=n_g^{-1/2}$. Define the minimum matching integer by
+a comparison in common units. For a Gaussian sample of size $n_g$, this
+relative error is $n_g^{-1/2}$. Define the minimum matching integer by
 
 $$
-\begin{aligned}
-\mathcal N_g&=\{n\ge1:R(n)\le n_g^{-1/2}\},\\
-n_*&=\min\mathcal N_g.
-\end{aligned}
+n_*=\min\{n\in\mathbb N:n\ge1,\ R(n)\le n_g^{-1/2}\}.
 $$
 
 This criterion matches one expectation of an estimation error. It does
@@ -395,14 +396,11 @@ $M(n)/M(1)=n^{1/(2-\kappa)}$ at every size, with constant $\kappa<1$,
 solving the matching inequality gives
 
 $$
-\begin{aligned}
-n_*&=\left\lceil n_g^{\,p}\right\rceil,\\
-p&=\frac{2-\kappa}{2(1-\kappa)}.
-\end{aligned}
+n_*=\left\lceil n_g^{\,(2-\kappa)/[2(1-\kappa)]}\right\rceil.
 $$
 
-For an integrable stable law, $\kappa=2-\alpha$ and
-$p=\alpha/[2(\alpha-1)]$. At $\alpha=1.5$ this is $p=1.5$.
+For an integrable stable law, $\kappa=2-\alpha$ and the exponent is
+$\alpha/[2(\alpha-1)]$. At $\alpha=1.5$ this exponent is $1.5$.
 For a general law, substituting a small-size kappa into this formula is a
 heuristic. Its kappa changes with size, so the exact equation is implicit.
 The cubic Student and exponential examples use their full MAD curves.

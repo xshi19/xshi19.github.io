@@ -17,7 +17,8 @@ title: Amazon Book Rank Tail Diagnostics
 This empirical example uses the CC0 Kaggle snapshot from @zhu2021amazonbookrank
 of Amazon book sales and weekly average sales ranks from 2001.  The cleaned
 snapshot is committed at `data/incerto/snapshots/amazon_bookrank_2001.csv` because it
-is small and redistributable.
+is small and redistributable. It contains 861 rows dated **2001-04-21 through
+2001-05-05**; the recorded source access date is **2026-05-24**.
 
 The example asks two related questions:
 
@@ -45,7 +46,7 @@ $$
 \log s_i=b_0+b_1\log r_i+\varepsilon_i.
 $$
 
-Here $b_0,b_1$ and the residuals $\varepsilon_i$ are local regression notation;
+Here $b_0$ is the intercept, $b_1$ the slope, and $\varepsilon_i$ the residual;
 the fitted slope is not automatically a Pareto exponent.
 
 ## Evidence and model comparison
@@ -60,7 +61,9 @@ diagnostic:
    positive weekly sales above a small reporting cutoff.
 
 Any resulting exponent is sample-specific and should be read as an empirical
-description, not a structural parameter of Amazon.
+description, not a structural parameter of Amazon. Below, $k$ counts the
+largest observations used from sales strictly above 10, and the reported
+$\widehat\alpha$ estimates the survival-tail exponent.
 
 Use [`load_amazon_bookrank`](incerto-api-reference.md#api-load-amazon-bookrank), [`hill_alpha_estimator`](incerto-api-reference.md#api-hill-alpha-estimator).
 
@@ -94,8 +97,9 @@ Figure regeneration: `uv run python demos/incerto/amazon_bookrank.py`.
 ```{figure} ../assets/incerto/figures/amazon-bookrank-1.svg
 :alt: Three stacked panels compare Amazon sales with rank, sales tail plotting positions, and Hill exponent sensitivity.
 
-The committed CC0 snapshot supplies all observations. The middle panel uses
-$1-i/(n+1)$ at ordered positive sales: rank plotting positions, not strict
+The committed CC0 snapshot supplies all observations. In the middle panel,
+$n$ is the number of positive sales observations and $i$ their ascending order
+index. The panel uses $1-i/(n+1)$: rank plotting positions, not strict
 empirical survival. Ties receive different ordinates and the maximum stays
 above zero. The transformations and fitted Hill estimates are unchanged.
 ```

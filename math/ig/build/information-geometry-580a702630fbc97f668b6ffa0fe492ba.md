@@ -35,25 +35,27 @@ the extreme-value index in the Incerto track.
   denotes its Jacobian matrix in specified charts, also when $f$ is a change
   of coordinates. Matrices act on column components; the transpose is
   $\mathsf T$.
-- $G_\xi(\xi)=[g_{ij}(\xi)]$ is the metric matrix in the $\xi$ chart. Thus
-  $g_\xi(v,w)=g_{ij}v^iw^j=v_\xi^{\mathsf T}G_\xi w_\xi$.
-  Once the metric is Fisher information, $G_\xi=I(\xi)$.
+- $G(\xi)=[g_{ij}(\xi)]$ is a general metric's matrix in the $\xi$ chart. Thus
+  $g_\xi(v,w)=g_{ij}v^iw^j=v_\xi^{\mathsf T}G(\xi)w_\xi$.
+  For the Fisher metric we write $I(\xi)$ for this matrix, and likewise
+  $I(\phi)$, $I(\theta)$, or $I(\eta)$ in the other charts.
   $ds^2=g_{ij}\,d\xi^i d\xi^j$ denotes the corresponding quadratic form.
 - $\Gamma_{ij}^k$ means $\nabla_{\partial_i}\partial_j=\Gamma_{ij}^k\partial_k$;
   $\Gamma_{ij,k}=g_{k\ell}\Gamma_{ij}^{\ell}$ lowers its output index. A
   superscript $(\alpha)$ identifies a connection, not a tensor index.
-- $\ell_\xi(x)=\log p_\xi(x)$, $s_i=\partial_i\ell_\xi$, and
-  $s_\xi=(s_i)$ is the column of score components. For fixed $x$, these are
-  covector components: the coordinate gradient symbol in
+- $\ell_\xi(x)=\log p_\xi(x)$, $s_{\xi,i}(x)=\partial_i\ell_\xi(x)$, and
+  $s_\xi(x)=(s_{\xi,i}(x))$ is the column of score components. For fixed $x$,
+  these are covector components: the coordinate gradient symbol in
   $s_\xi=\nabla_\xi\ell_\xi$ does not mean a Riemannian gradient.
   $\mathbb E_\xi$ means expectation under $P_\xi$; in natural coordinates we
   write $p_\theta$, $s_\theta$, and $\mathbb E_\theta$.
 
 We use matrices for explicit Jacobians and the Legendre identities
-$\eta=\nabla\psi(\theta)$ and $\nabla^2\psi^*(\eta)=(\nabla^2\psi(\theta))^{-1}$.
+$\eta(\theta)=\nabla\psi(\theta)$ and $\nabla^2\psi^*(\eta)=(\nabla^2\psi(\theta))^{-1}$.
 Here the gradients and Hessians are ordinary derivatives in the named affine
 coordinates. Their entries will be related to tensor components explicitly.
-Curve parameters are denoted by $r$, leaving $t(x)$ for sufficient statistics.
+Curve parameters are denoted by $\lambda$, leaving $t(x)$ for sufficient
+statistics. A dot denotes differentiation with respect to $\lambda$.
 $U,V,W$ denote vector fields, while $X$ denotes an observation.
 
 ## A running example: normal location and scale
@@ -92,15 +94,14 @@ With $t(x)=(x,x^2)^{\mathsf T}$, completing the square gives
 p_\theta(x)&=\exp\{\theta^{\mathsf T}t(x)-\psi(\theta)\},\\
 \psi(\theta)&=-\frac{(\theta^1)^2}{4\theta^2}
  +\frac12\log\frac{\pi}{-\theta^2},\\
-\eta&=\mathbb E_\theta[t(X)]=\nabla\psi(\theta)
+\eta(\theta)&=\mathbb E_\theta[t(X)]=\nabla\psi(\theta)
  =(\mu,\mu^2+\sigma^2)^{\mathsf T}.
 \end{aligned}
 ```
 
 Thus the second expectation coordinate is the **second raw moment**, not the
 variance. The [exponential-family note](./information-geometry-exponential-families.md#two-examples)
-derives these coordinates in the broader setting of sufficient statistics;
-its statistic $T$ is written $t$ here, following the shared canon.
+derives these coordinates in the broader setting of sufficient statistics.
 
 The inverse coordinate maps include
 
@@ -112,21 +113,22 @@ The inverse coordinate maps include
 \sigma=\sqrt{\eta^2-(\eta^1)^2}.
 ```
 
-Write $f_\phi$, $f_\theta$, and $f_\eta$ for the maps from the $\xi$ chart to
-these three charts. Direct differentiation gives
+Direct differentiation gives the Jacobians from the $\xi$ chart to the
+other three charts:
 
 ```{math}
 :label: ig-normal-chart-jacobians
 \begin{aligned}
-Df_\phi(\xi)&=\begin{pmatrix}1&0\\0&2\sigma\end{pmatrix},\\[3pt]
-Df_\theta(\xi)&=\begin{pmatrix}
+\frac{\partial\phi}{\partial\xi}&=\begin{pmatrix}1&0\\0&2\sigma\end{pmatrix},\\[3pt]
+\frac{\partial\theta}{\partial\xi}&=\begin{pmatrix}
  \sigma^{-2}&-2\mu\sigma^{-3}\\0&\sigma^{-3}
 \end{pmatrix},\\[3pt]
-Df_\eta(\xi)&=\begin{pmatrix}1&0\\2\mu&2\sigma\end{pmatrix}.
+\frac{\partial\eta}{\partial\xi}&=\begin{pmatrix}1&0\\2\mu&2\sigma\end{pmatrix}.
 \end{aligned}
 ```
 
-Their determinants are nonzero for $\sigma>0$. The inverse Jacobian is
+Their determinants are nonzero for $\sigma>0$. For an invertible coordinate
+change $f$, the inverse Jacobian is
 $Df^{-1}(f(\xi))=Df(\xi)^{-1}$; specifying its evaluation point prevents
 confusing the two directions of a coordinate change.
 
@@ -152,25 +154,26 @@ manifold need not be presented as a curved surface inside a Euclidean space.
 ### Curves define tangent vectors
 
 Fix $q\in M$ and a chart $\xi$ containing it. Two smooth curves $c_1,c_2$
-through $q$ at $r=0$ are equivalent when
+through $q$ at $\lambda=0$ are equivalent when
 
 ```{math}
-\left.\frac{d}{dr}\xi^i(c_1(r))\right|_{r=0}
+\left.\frac{d}{d\lambda}\xi^i(c_1(\lambda))\right|_{\lambda=0}
 =
-\left.\frac{d}{dr}\xi^i(c_2(r))\right|_{r=0}
+\left.\frac{d}{d\lambda}\xi^i(c_2(\lambda))\right|_{\lambda=0}
 \quad\text{for every }i.
 ```
 
 The chain rule makes this equivalence independent of the chart. A tangent
 vector is an equivalence class $v=[c]$ of such curves. Its components are
 $v^i=(\xi^i\circ c)'(0)$. Every column of $d$ real numbers is realized by a
-coordinate line $\xi(c(r))=\xi(q)+rv$ for sufficiently small $r$. These
-components give the set of classes a $d$-dimensional vector-space structure,
-called $T_qM$; coordinate changes act linearly on that space.
+coordinate line $\xi(c(\lambda))=\xi(q)+\lambda v$ for sufficiently small
+$\lambda$. These components give the set of classes a $d$-dimensional
+vector-space structure, called $T_qM$; coordinate changes act linearly on that space.
 
 For normals,
 $v=v^\mu\partial_\mu+v^\sigma\partial_\sigma$ is represented by
-$(\mu(r),\sigma(r))=(\mu+rv^\mu,\sigma+rv^\sigma)$ near $r=0$.
+$(\mu(\lambda),\sigma(\lambda))=(\mu+\lambda v^\mu,\sigma+\lambda v^\sigma)$
+near $\lambda=0$.
 The coordinates of a law and the components of a tangent vector have different
 roles: one specifies a distribution; the other specifies rates of change at
 that distribution.
@@ -194,7 +197,7 @@ A curve class defines such a derivation by
 
 ```{math}
 :label: ig-tangent-derivation
-v[F]=\left.\frac{d}{dr}F(c(r))\right|_{r=0}
+v[F]=\left.\frac{d}{d\lambda}F(c(\lambda))\right|_{\lambda=0}
 =v^i\partial_iF(q),\qquad
 \partial_i\big|_q[F]
 =\left.\frac{\partial(F\circ\xi^{-1})}{\partial\xi^i}\right|_{\xi(q)}.
@@ -214,7 +217,7 @@ $A(F)=A(\xi^i)\partial_iF(q)$. Hence $A=v^i\partial_i|_q$ with
 $v^i=A(\xi^i)$, represented by the coordinate line above. The two
 constructions are inverse, and $\{\partial_i|_q\}$ is a basis of $T_qM$.
 
-For example, the smooth function $F(P_{\mu,\sigma})=\mathbb E_\xi[X^2]
+For example, the smooth function $F(P_\xi)=\mathbb E_\xi[X^2]
 =\mu^2+\sigma^2$ satisfies
 
 ```{math}
@@ -230,7 +233,9 @@ basis vector even if the first coordinate has the same name.
 
 Let $\phi=f(\xi)$ be a transition map and set
 $A^a{}_i=\partial\phi^a/\partial\xi^i$ and
-$B^i{}_a=\partial\xi^i/\partial\phi^a$, so $B=A^{-1}$. The chain rule gives
+$B^i{}_a=\partial\xi^i/\partial\phi^a$, so $B=A^{-1}$. Write
+$\partial'_a=\partial/\partial\phi^a$ for the new coordinate basis.
+The chain rule gives
 
 ```{math}
 :label: ig-tangent-coordinate-change
@@ -266,7 +271,7 @@ Jacobian of $\phi\circ f\circ\xi^{-1}$, denoted $Df(\xi)$. Its entries are
 $\partial f^a/\partial\xi^i$, and
 $(df_qv)^a=(\partial f^a/\partial\xi^i)v^i$. Unlike a coordinate change, a
 smooth map need not be invertible or preserve dimension. The variance map
-$f:M\to(0,\infty)$, $f(P_{\mu,\sigma})=\sigma^2$, has
+$f:M\to(0,\infty)$, $f(P_\xi)=\sigma^2$, has
 $df_qv=2\sigma v^\sigma\partial_\tau$: it discards the location direction.
 
 ### Covectors and vector fields
@@ -289,7 +294,7 @@ A smooth vector field $V$ assigns $V_q\in T_qM$ at every point, with smooth
 components $V^i$ in every chart. It differentiates functions by
 $V[F]=V^i\partial_iF$. On the normal family, $V=\sigma\partial_\sigma$
 describes relative scale change. Its integral curves satisfy
-$\dot\mu=0$, $\dot\sigma=\sigma$, so $\sigma(r)=\sigma(0)e^r$.
+$\dot\mu=0$, $\dot\sigma=\sigma$, so $\sigma(\lambda)=\sigma(0)e^\lambda$.
 In the variance chart this same field is $2\tau\partial_\tau$.
 
 ## Metrics and Fisher information
@@ -305,8 +310,8 @@ $v^i=B^i{}_a v'^a$ and $w^j=B^j{}_b w'^b$ gives
 :label: ig-metric-coordinate-change
 \begin{aligned}
 g'_{ab}(\phi)&=B^i{}_a B^j{}_b g_{ij}(\xi),\\
-G_\phi(\phi)&=B^{\mathsf T}G_\xi(\xi)B
- =Df(\xi)^{-\mathsf T}G_\xi(\xi)Df(\xi)^{-1},
+G(\phi)&=B^{\mathsf T}G(\xi)B
+ =Df(\xi)^{-\mathsf T}G(\xi)Df(\xi)^{-1},
 \qquad \phi=f(\xi).
 \end{aligned}
 ```
@@ -339,13 +344,14 @@ For a piecewise smooth curve $c:[a,b]\to M$, the metric determines length and
 intrinsic distance by
 
 ```{math}
-L_g(c)=\int_a^b\sqrt{g_{ij}(\xi(c(r)))\dot\xi^i\dot\xi^j}\,dr,
+L_g(c)=\int_a^b\sqrt{g_{ij}(\xi(c(\lambda)))\dot\xi^i\dot\xi^j}\,d\lambda,
 \qquad
 d_g(q_0,q_1)=\inf_{c:q_0\to q_1}L_g(c).
 ```
 
-The infimum is over curves in the specified manifold. Restricting to a
-subfamily can increase this distance.
+Evaluate the integrand in a chart containing the curve point, splitting the
+parameter interval between charts when needed. The infimum is over curves in
+the specified manifold. Restricting to a subfamily can increase this distance.
 
 ### Scores measure changes in the law
 
@@ -358,9 +364,11 @@ third-moment assumptions where they are needed.
 Differentiating the density and its normalization gives
 
 ```{math}
-\partial_i p_\xi=p_\xi s_i,\qquad
-\mathbb E_\xi[s_i]=0,\qquad
-\left.\frac{d}{dr}\ell_{\xi(c(r))}(x)\right|_{r=0}=s_i(x)v^i.
+\begin{gathered}
+\partial_i p_\xi(x)=p_\xi(x)s_{\xi,i}(x),\qquad
+\mathbb E_\xi[s_{\xi,i}(X)]=0,\\
+\left.\frac{d}{d\lambda}\ell_{\xi(c(\lambda))}(x)\right|_{\lambda=0}=s_{\xi,i}(x)v^i.
+\end{gathered}
 ```
 
 The **Fisher metric per observation** is
@@ -368,40 +376,40 @@ The **Fisher metric per observation** is
 ```{math}
 :label: ig-fisher-score-metric
 \begin{aligned}
-g_\xi(v,w)&=\mathbb E_\xi[(s_i v^i)(s_j w^j)],\\
-g_{ij}(\xi)&=\mathbb E_\xi[s_i s_j],\qquad
-I(\xi)=\mathbb E_\xi[s_\xi s_\xi^{\mathsf T}].
+g_\xi(v,w)&=\mathbb E_\xi[(s_{\xi,i}(X)v^i)(s_{\xi,j}(X)w^j)],\\
+g_{ij}(\xi)&=\mathbb E_\xi[s_{\xi,i}(X)s_{\xi,j}(X)],\\
+I(\xi)&=\mathbb E_\xi[s_\xi(X)s_\xi(X)^{\mathsf T}].
 \end{aligned}
 ```
 
 It is positive semidefinite; our regularity assumption requires positive
 definiteness. A zero length direction would have zero first-order density
 change almost everywhere. Under reparameterization the score obeys
-$s'_a=B^i{}_a s_i$, so its covariance obeys exactly the metric transformation
-law. Invertible, parameter-independent changes of the observed variable also
-preserve Fisher information: their density Jacobian contributes a term to the
-log density whose parameter derivative is zero.
+$s_{\phi,a}(x)=B^i{}_a s_{\xi,i}(x)$, so its covariance obeys exactly the
+metric transformation law. Invertible, parameter-independent changes of the
+observed variable also preserve Fisher information: their density Jacobian
+contributes a term to the log density whose parameter derivative is zero.
 
 ### Computing the normal metric
 
 Set $Z=(X-\mu)/\sigma\sim N(0,1)$. Differentiating [](#ig-normal-density),
 
 ```{math}
-s_\mu=\frac{X-\mu}{\sigma^2}=\frac Z\sigma,
+s_{\xi,\mu}(X)=\frac{X-\mu}{\sigma^2}=\frac Z\sigma,
 \qquad
-s_\sigma=-\frac1\sigma+\frac{(X-\mu)^2}{\sigma^3}
+s_{\xi,\sigma}(X)=-\frac1\sigma+\frac{(X-\mu)^2}{\sigma^3}
  =\frac{Z^2-1}{\sigma}.
 ```
 
-The subscripts here denote covector components, not differentiation of an
-already defined score. Odd standard-normal moments vanish, and integration
-by parts gives $\mathbb E[Z^{2k}]=(2k-1)\mathbb E[Z^{2k-2}]$.
+The second subscripts here name the covector components in the $\xi$ chart,
+not differentiation of an already defined score. Odd standard-normal moments
+vanish, and integration by parts gives $\mathbb E[Z^{2k}]=(2k-1)\mathbb E[Z^{2k-2}]$.
 In particular, the second and fourth moments are $1$ and $3$. Consequently,
 
 ```{math}
 :label: ig-normal-fisher-metric
 \begin{aligned}
-G_\xi=I(\xi)&=\begin{pmatrix}\sigma^{-2}&0\\0&2\sigma^{-2}\end{pmatrix},\\
+I(\xi)&=\begin{pmatrix}\sigma^{-2}&0\\0&2\sigma^{-2}\end{pmatrix},\\
 g_\xi(v,w)&=\frac{v^\mu w^\mu+2v^\sigma w^\sigma}{\sigma^2},\\
 ds^2&=\frac{d\mu^2+2d\sigma^2}{\sigma^2}.
 \end{aligned}
@@ -417,7 +425,7 @@ Using $B=\operatorname{diag}(1,1/(2\sigma))$ in the variance chart gives
 
 ```{math}
 :label: ig-normal-fisher-charts
-G_\phi=\begin{pmatrix}\tau^{-1}&0\\0&(2\tau^2)^{-1}\end{pmatrix},
+I(\phi)=\begin{pmatrix}\tau^{-1}&0\\0&(2\tau^2)^{-1}\end{pmatrix},
 \qquad
 ds^2=\frac{d\mu^2+2d\sigma^2}{\sigma^2}
  =\frac{d\mu^2}{\tau}+\frac{d\tau^2}{2\tau^2}.
@@ -427,13 +435,13 @@ Substitution of $v^\tau=2\sigma v^\sigma$ recovers the same squared length.
 
 ### Natural and expectation coordinates
 
-In natural coordinates $s_\theta=t-\eta$, so differentiating the normalizer
-in [](#ig-normal-natural-chart) gives the matrix identities
+In natural coordinates $s_\theta(X)=t(X)-\eta(\theta)$, so differentiating the
+normalizer in [](#ig-normal-natural-chart) gives the matrix identities
 
 ```{math}
 :label: ig-normal-dual-metrics
 \begin{aligned}
-G_\theta(\theta)=I(\theta)
+I(\theta)
  &=\nabla^2\psi(\theta)=\operatorname{Cov}_\theta(t(X))\\
  &=\begin{pmatrix}
  \sigma^2&2\mu\sigma^2\\
@@ -441,7 +449,7 @@ G_\theta(\theta)=I(\theta)
  \end{pmatrix},\\
 \psi^*(\eta)&=\theta^{\mathsf T}\eta-\psi(\theta)
  =-\frac12\log\!\left(2\pi e[\eta^2-(\eta^1)^2]\right),\\
-G_\eta(\eta)&=\nabla^2\psi^*(\eta)=G_\theta(\theta(\eta))^{-1}\\
+I(\eta)&=\nabla^2\psi^*(\eta)=I(\theta(\eta))^{-1}\\
  &=\begin{pmatrix}
  \tau^{-1}+2\mu^2\tau^{-2}&-\mu\tau^{-2}\\
  -\mu\tau^{-2}&(2\tau^2)^{-1}
@@ -451,13 +459,14 @@ G_\eta(\eta)&=\nabla^2\psi^*(\eta)=G_\theta(\theta(\eta))^{-1}\\
 ```
 
 The expression for $\psi^*$ is the Legendre transform, attained at the natural
-parameter corresponding to $\eta$. Indeed, $d\eta=G_\theta d\theta$, whence
-$d\theta=G_\theta^{-1}d\eta$; the metric transformation law gives $G_\eta$.
-Here $(G_\theta)_{ij}=\partial^2\psi/(\partial\theta^i\partial\theta^j)$
-and $(G_\eta)_{ab}=\partial^2\psi^*/(\partial\eta^a\partial\eta^b)$.
+parameter $\theta=\theta(\eta)$ corresponding to $\eta$. Indeed,
+$d\eta=I(\theta)\,d\theta$, whence $d\theta=I(\theta)^{-1}d\eta$;
+the metric transformation law gives $I(\eta)$.
+Here $[I(\theta)]_{ij}=\partial^2\psi/(\partial\theta^i\partial\theta^j)$
+and $[I(\eta)]_{ab}=\partial^2\psi^*/(\partial\eta^a\partial\eta^b)$.
 The inverse of one coordinate matrix supplies the components in the other
 chart; it does not change the covariant type of the metric. The Jacobians in
-[](#ig-normal-chart-jacobians) pull both matrices back to $G_\xi$.
+[](#ig-normal-chart-jacobians) pull both matrices back to $I(\xi)$.
 An ordinary Hessian need not transform as a tensor under arbitrary nonlinear
 coordinates; these Hessian formulas use the particular affine coordinates
 $\theta$ and $\eta$.
@@ -472,20 +481,22 @@ the uniqueness theorem is cited with its finite-space hypotheses.
 ### The Hessian of KL at the diagonal
 
 Use the direction
-$D(p_\xi\|p_\zeta)=\mathbb E_\xi[\ell_\xi-\ell_\zeta]$, holding the first
+$D(p_\xi\|p_\zeta)=\mathbb E_\xi[\ell_\xi(X)-\ell_\zeta(X)]$, holding the first
 law fixed. Differentiating normalization twice yields
 
 ```{math}
-0=\mathbb E_\xi[\partial_i\partial_j\ell_\xi+s_i s_j],
-\qquad
-\mathbb E_\xi[\partial_i\partial_j\ell_\xi]=-g_{ij}.
+\begin{aligned}
+0&=\mathbb E_\xi[\partial_i\partial_j\ell_\xi(X)+s_{\xi,i}(X)s_{\xi,j}(X)],\\
+\mathbb E_\xi[\partial_i\partial_j\ell_\xi(X)]&=-g_{ij}.
+\end{aligned}
 ```
 
-Assume in addition that $\zeta\mapsto\mathbb E_\xi[\ell_\zeta]$ has a
+Assume in addition that $\zeta\mapsto\mathbb E_\xi[\ell_\zeta(X)]$ has a
 third-order Taylor remainder bounded by a constant times
-$\lVert\zeta-\xi\rVert^3$ locally. For example, locally bounded integrable
-third derivatives of the log density under $P_\xi$ suffice. Taylor expansion
-then gives
+$\lVert\zeta-\xi\rVert^3$ locally. For example, an integrable log density at
+$\xi$, together with locally bounded integrable third derivatives of the log
+density under $P_\xi$, suffices under the preceding regularity assumptions.
+Taylor expansion then gives
 
 ```{math}
 :label: ig-kl-diagonal-hessian
@@ -510,8 +521,9 @@ D\!\left(N(\mu,\sigma^2)\middle\|N(\widetilde\mu,\widetilde\sigma^2)\right)
 ```
 
 Putting $(\widetilde\mu,\widetilde\sigma)
-=(\mu+\varepsilon a,\sigma+\varepsilon b)$ at a fixed $\sigma>0$ gives
-$\varepsilon^2(a^2+2b^2)/(2\sigma^2)+O(\varepsilon^3)$, in agreement with
+=(\mu+\varepsilon v^\mu,\sigma+\varepsilon v^\sigma)$ for a fixed velocity
+$v$ at $\sigma>0$ gives
+$\varepsilon^2((v^\mu)^2+2(v^\sigma)^2)/(2\sigma^2)+O(\varepsilon^3)$, in agreement with
 [](#ig-normal-fisher-metric).
 
 ### Coarse-graining, monotonicity, and sufficiency
@@ -520,13 +532,13 @@ Let an observation $X$ pass through a parameter-independent Markov kernel
 $K(dy\mid x)$, giving $Y$. A deterministic statistic $Y=S(X)$ is a special
 case. Assume the transformed model admits densities and differentiation under
 the kernel integral, and that the original scores are square integrable.
-Denote the two score covectors by $s^X_i$ and $s^Y_i$, and their component
-columns by $s^X_\xi$ and $s^Y_\xi$. Differentiating the marginal density of
-$Y$ gives
+Denote the two score covectors by their component columns $s^X_\xi$ and
+$s^Y_\xi$, with components $s^X_{\xi,i}$ and $s^Y_{\xi,i}$. Differentiating
+the marginal density of $Y$ gives
 
 ```{math}
 :label: ig-score-under-statistic
-s^Y_i(Y)=\mathbb E_\xi[s^X_i(X)\mid Y].
+s^Y_{\xi,i}(Y)=\mathbb E_\xi[s^X_{\xi,i}(X)\mid Y].
 ```
 
 Thus the new directional score is the conditional expectation of the old one.
@@ -537,9 +549,9 @@ The conditional-variance identity proves information monotonicity:
 \begin{aligned}
 g^X_\xi(v,v)-g^Y_\xi(v,v)
  &=\mathbb E_\xi\!\left[
-   \operatorname{Var}_\xi(v^i s^X_i(X)\mid Y)\right]\geq0,\\
+   \operatorname{Var}_\xi(v^i s^X_{\xi,i}(X)\mid Y)\right]\geq0,\\
 I_X(\xi)-I_Y(\xi)
- &=\mathbb E_\xi[\operatorname{Cov}_\xi(s^X_\xi\mid Y)]\succeq0.
+ &=\mathbb E_\xi[\operatorname{Cov}_\xi(s^X_\xi(X)\mid Y)]\succeq0.
 \end{aligned}
 ```
 
@@ -565,7 +577,7 @@ equivalent to sufficiency. To prove the converse, equality in
 
 ```{math}
 \partial_i\log P_\xi(X=x\mid S(X)=S(x))
-=s^X_i(x)-s^S_i(S(x))=0.
+=s^X_{\xi,i}(x)-s^S_{\xi,i}(S(x))=0.
 ```
 
 Connectedness makes each conditional probability constant in the parameter,
@@ -629,7 +641,7 @@ and the explicit finite-simplex formulation in Theorem 2 of
 [Montúfar, Rauh, and Ay (2014)](https://www.mdpi.com/1099-4300/16/6/3207).
 
 Pulling [](#ig-chentsov-finite) back along a regular finite statistical model,
-with $u(a)=\partial_i p_\xi(a)v^i=p_\xi(a)s_i(a)v^i$, gives $cg_\xi(v,w)$.
+with $u(a)=\partial_i p_\xi(a)v^i=p_\xi(a)s_{\xi,i}(a)v^i$, gives $cg_\xi(v,w)$.
 We choose $c=1$ for information per observation. General Markov maps are
 contractions by [](#ig-fisher-monotonicity), whereas sufficient transformations
 preserve information. Requiring invariance under *every* Markov map would be
@@ -651,7 +663,7 @@ directly cover densities on $\mathbb R$.
 ### Density $L^2$ and square-root densities
 
 The raw density metric, when finite,
-$g^{\mathrm{raw}}_{ij}=\int(\partial_i p)(\partial_j p)\,d\nu$, also
+$g^{\mathrm{raw}}_{ij}=\int(\partial_i p_\xi)(\partial_j p_\xi)\,d\nu$, also
 transforms correctly under parameter changes. It depends on the reference
 measure and the measurement coordinate: for Lebesgue densities and $Y=aX$,
 $a>0$, $\int(p_Y-q_Y)^2\,dy=a^{-1}\int(p_X-q_X)^2\,dx$.
@@ -659,8 +671,8 @@ It therefore differs from Fisher geometry even though both constructions are
 covariant under reparameterization.
 
 Assuming differentiability into $L^2(\nu)$, the map $p\mapsto2\sqrt p$
-has derivative $\partial_i(2\sqrt p)=\sqrt p\,s_i$. Its pullback of the
-$L^2$ inner product is exactly $g_{ij}$. With
+has derivative $\partial_i(2\sqrt{p_\xi})=\sqrt{p_\xi}\,s_{\xi,i}$.
+Its pullback of the $L^2$ inner product is exactly $g_{ij}$. With
 $H^2(p,q)=\tfrac12\int(\sqrt p-\sqrt q)^2\,d\nu$, this gives
 $H^2(p_\xi,p_{\xi+\delta\xi})=\tfrac18g_{ij}\delta\xi^i\delta\xi^j
 +o(\lVert\delta\xi\rVert^2)$.
@@ -746,19 +758,19 @@ in both $U$ and $V$. We will use this fact to compare statistical connections.
 
 ### Along a curve: parallel transport and geodesics
 
-For a curve $c(r)$, let $V(r)=V^k(r)\partial_k|_{c(r)}$ be a vector field
-along the curve. It need not extend to a single vector field on all of $M$.
-Its covariant derivative is
+For a curve $c(\lambda)$, let $V(\lambda)=V^k(\lambda)\partial_k|_{c(\lambda)}$
+be a vector field along the curve. It need not extend to a single vector field
+on all of $M$. Its covariant derivative is
 
 ```{math}
 :label: ig-curve-covariant-derivative
-\frac{DV}{dr}:=\nabla_{\dot c}V
-=\left(\frac{dV^k}{dr}
- +\Gamma_{ij}^k(\xi(c(r)))\dot\xi^i V^j\right)\partial_k.
+\frac{DV}{d\lambda}:=\nabla_{\dot c}V
+=\left(\frac{dV^k}{d\lambda}
+ +\Gamma_{ij}^k(\xi(c(\lambda)))\dot\xi^i V^j\right)\partial_k.
 ```
 
 The transformation law makes this independent of coordinates. A field is
-**parallel** when $DV/dr=0$. Given an initial vector, this linear ODE has a
+**parallel** when $DV/d\lambda=0$. Given an initial vector, this linear ODE has a
 unique solution along a smooth curve on a compact parameter interval. It
 defines a linear isomorphism between the endpoint tangent spaces, called
 parallel transport. Reversing the curve gives its inverse. Transport generally
@@ -869,8 +881,8 @@ $\Gamma^{(0)\sigma}_{\mu\mu}
 This coefficient already shows why a horizontal line with constant scale
 and changing mean is not a Levi-Civita geodesic in the full family.
 
-Along any fixed-mean curve $c(r)=(\mu_0,\sigma(r))$, the parallel equations
-reduce to
+Along any fixed-mean curve $c(\lambda)=(\mu_0,\sigma(\lambda))$, the parallel
+equations reduce to
 
 ```{math}
 \dot V^\mu-\frac{\dot\sigma}{\sigma}V^\mu=0,
@@ -924,15 +936,16 @@ The geodesic equations are
 
 The first equation integrates to $\dot\mu/\sigma^2=\text{constant}$.
 When this constant is zero, the solutions are vertical lines,
-$\mu(r)=c$, $\sigma(r)=A e^{br}$, with $A>0$. Otherwise, in the rescaled
-coordinate $u$, the solutions trace semicircles orthogonal to the boundary
+$\mu(\lambda)=c$, $\sigma(\lambda)=\sigma(0)e^{b\lambda}$, with
+$\sigma(0)>0$ and $b\in\mathbb R$. Otherwise, in the rescaled coordinate $u$,
+the solutions trace semicircles orthogonal to the boundary
 $\sigma=0$. An affine parameterization in the original chart is
 
 ```{math}
 :label: ig-normal-lc-geodesic-solutions
 \begin{aligned}
-\mu(r)&=c+\sqrt2\,R\tanh(br+a),\\
-\sigma(r)&=R\operatorname{sech}(br+a),\qquad R>0,\quad b\ne0,\\
+\mu(\lambda)&=c+\sqrt2\,R\tanh(b\lambda+a),\\
+\sigma(\lambda)&=R\operatorname{sech}(b\lambda+a),\qquad R>0,\quad b\ne0,\\
 \frac{(\mu-c)^2}{2}+\sigma^2&=R^2.
 \end{aligned}
 ```
@@ -957,10 +970,11 @@ R^2=\frac{(\mu_0-c)^2}{2}+\sigma_0^2.
 Set
 $a=\operatorname{artanh}((\mu_0-c)/(\sqrt2R))$ and
 $b=\operatorname{artanh}((\mu_1-c)/(\sqrt2R))-a$ in
-[](#ig-normal-lc-geodesic-solutions) to join them over $0\leq r\leq1$.
+[](#ig-normal-lc-geodesic-solutions) to join them over $0\leq \lambda\leq1$.
 For equal means the corresponding segment is
-$\sigma(r)=\sigma_0^{1-r}\sigma_1^r$. In this complete hyperbolic plane,
-these segments are the unique minimizing paths up to reparameterization.
+$\sigma(\lambda)=\sigma_0^{1-\lambda}\sigma_1^\lambda$. In this complete
+hyperbolic plane, these segments are the unique minimizing paths up to
+reparameterization.
 
 ### Fisher–Rao distance between two normals
 
@@ -1014,7 +1028,7 @@ metric, and finite absolute third score moments. Define the
 
 ```{math}
 :label: ig-amari-chentsov-cubic
-C_{ijk}=\mathbb E_\xi[s_i s_j s_k],\qquad
+C_{ijk}=\mathbb E_\xi[s_{\xi,i}(X)s_{\xi,j}(X)s_{\xi,k}(X)],\qquad
 C(U,V,W)=C_{ijk}U^iV^jW^k.
 ```
 
@@ -1030,28 +1044,28 @@ coefficients with the output index lowered
 \begin{aligned}
 \Gamma^{(\alpha)}_{ij,k}
  &=\mathbb E_\xi\!\left[
- \left(\partial_i\partial_j\ell_\xi
-       +\frac{1-\alpha}{2}s_i s_j\right)s_k\right],\\
+ \left(\partial_i\partial_j\ell_\xi(X)
+       +\frac{1-\alpha}{2}s_{\xi,i}(X)s_{\xi,j}(X)\right)s_{\xi,k}(X)\right],\\
 \Gamma^{(\alpha)k}_{ij}&=g^{k\ell}\Gamma^{(\alpha)}_{ij,\ell}.
 \end{aligned}
 ```
 
 The comma separates the lowered output index; these coefficients themselves
 are not a covariant tensor. Under a change of chart, the second derivative
-of $\ell$ contributes the inhomogeneous term in
+of $\ell_\xi$ contributes the inhomogeneous term in
 [](#ig-christoffel-transformation). The coefficients are symmetric in $i,j$,
 so all these connections are torsion-free. We use the convention
 $\nabla^{(e)}=\nabla^{(1)}$ and $\nabla^{(m)}=\nabla^{(-1)}$.
 
-We can identify their relation to Levi-Civita directly. Differentiation of an
-expectation obeys
-$\partial_i\mathbb E_\xi[F]=\mathbb E_\xi[\partial_iF+Fs_i]$.
+We can identify their relation to Levi-Civita directly. For a function
+$F=F(\xi,X)$ smooth in the parameters, the stated differentiation assumptions give
+$\partial_i\mathbb E_\xi[F]=\mathbb E_\xi[\partial_iF+Fs_{\xi,i}(X)]$.
 Applying it to $g_{jk}$ gives
 
 ```{math}
 \partial_i g_{jk}
-=\mathbb E_\xi[(\partial_i\partial_j\ell)s_k]
- +\mathbb E_\xi[s_j(\partial_i\partial_k\ell)]+C_{ijk}.
+=\mathbb E_\xi[(\partial_i\partial_j\ell_\xi(X))s_{\xi,k}(X)]
+ +\mathbb E_\xi[s_{\xi,j}(X)(\partial_i\partial_k\ell_\xi(X))]+C_{ijk}.
 ```
 
 Insert this into the lowered version of the Levi-Civita formula. The mixed
@@ -1061,7 +1075,7 @@ terms cancel, leaving
 :label: ig-alpha-lc-relation
 \begin{aligned}
 \Gamma^{(0)}_{ij,k}
- &=\mathbb E_\xi[(\partial_i\partial_j\ell)s_k]+\frac12C_{ijk},\\
+ &=\mathbb E_\xi[(\partial_i\partial_j\ell_\xi(X))s_{\xi,k}(X)]+\frac12C_{ijk},\\
 \nabla^{(\alpha)}_UV
  &=\nabla^{\mathrm{LC}}_UV-\frac\alpha2 C^\sharp(U,V).
 \end{aligned}
@@ -1133,12 +1147,12 @@ geodesic equations become
 ```
 
 There is also an explicit transport comparison. Along a fixed-mean curve,
-$\alpha$-parallel transport from scale $\sigma_0$ to $\sigma(r)$ gives
+$\alpha$-parallel transport from scale $\sigma_0$ to $\sigma(\lambda)$ gives
 
 ```{math}
-V^\mu(r)=V^\mu(0)\left(\frac{\sigma(r)}{\sigma_0}\right)^{1+\alpha},
+V^\mu(\lambda)=V^\mu(0)\left(\frac{\sigma(\lambda)}{\sigma_0}\right)^{1+\alpha},
 \qquad
-V^\sigma(r)=V^\sigma(0)\left(\frac{\sigma(r)}{\sigma_0}\right)^{1+2\alpha}.
+V^\sigma(\lambda)=V^\sigma(0)\left(\frac{\sigma(\lambda)}{\sigma_0}\right)^{1+2\alpha}.
 ```
 
 For the dual connection the exponents have the opposite $\alpha$ terms.
@@ -1147,8 +1161,9 @@ generally changes when $\alpha\ne0$.
 
 ### Natural and expectation coordinates make different connections flat
 
-In the natural chart,
-$\partial_i\partial_j\ell_\theta=-\partial_i\partial_j\psi$ is independent
+In this paragraph, use $\partial_i=\partial/\partial\theta^i$ and take the
+connection and cubic-tensor components in the natural chart. Then
+$\partial_i\partial_j\ell_\theta(x)=-\partial_i\partial_j\psi$ is independent
 of the observation. Since every score has expectation zero,
 [](#ig-alpha-expectation-definition) at $\alpha=1$ gives
 $\Gamma^{(e)k}_{ij}=0$. Also
@@ -1158,11 +1173,11 @@ differentiating the covariance of $t(X)$.
 The expectation chart makes the dual mixture coefficients vanish. Here is a
 coordinate argument. The natural coordinate vector fields
 $E_i=\partial/\partial\theta^i$ are e-parallel. Let
-$F_a=\partial/\partial\eta^a$. Since $d\theta=G_\theta^{-1}d\eta$,
+$F_a=\partial/\partial\eta^a$. Since $d\theta=I(\theta)^{-1}d\eta$,
 
 ```{math}
 g(E_i,F_a)
-=\sum_j (G_\theta)_{ij}(G_\theta^{-1})_{ja}
+=\sum_j [I(\theta)]_{ij}[I(\theta)^{-1}]_{ja}
 =\begin{cases}1,&i=a,\\0,&i\ne a.\end{cases}
 ```
 
@@ -1182,24 +1197,26 @@ in their affine charts does not make the Fisher metric Euclidean.
 ### Three geodesics between two normal laws
 
 Let $P_0=N(\mu_0,\sigma_0^2)$ and $P_1=N(\mu_1,\sigma_1^2)$ with positive
-scales, and let $0\leq r\leq1$. A straight natural-coordinate segment is an
-affinely parameterized e-geodesic. In location-scale coordinates it is
+scales and natural coordinates $\theta_0,\theta_1$, and let $0\leq \lambda\leq1$.
+A straight natural-coordinate segment is an affinely parameterized e-geodesic.
+In location-scale coordinates it is
 
 ```{math}
 :label: ig-normal-e-geodesic
 \begin{aligned}
-\theta(r)&=(1-r)\theta_0+r\theta_1,\\
-\sigma_e^2(r)&=\left(\frac{1-r}{\sigma_0^2}
-                         +\frac r{\sigma_1^2}\right)^{-1},\\
-\mu_e(r)&=\sigma_e^2(r)
- \left(\frac{(1-r)\mu_0}{\sigma_0^2}
-                  +\frac{r\mu_1}{\sigma_1^2}\right).
+\theta(\lambda)&=(1-\lambda)\theta_0+\lambda\theta_1,\\
+\sigma_e^2(\lambda)&=\left(\frac{1-\lambda}{\sigma_0^2}
+                         +\frac \lambda{\sigma_1^2}\right)^{-1},\\
+\mu_e(\lambda)&=\sigma_e^2(\lambda)
+ \left(\frac{(1-\lambda)\mu_0}{\sigma_0^2}
+                  +\frac{\lambda\mu_1}{\sigma_1^2}\right).
 \end{aligned}
 ```
 
 It interpolates precision and precision-weighted mean. Its density is
-proportional to $p_0^{1-r}p_1^r$, as follows by interpolating the natural form.
-The precision stays positive, so the whole segment belongs to the family.
+proportional to $p_{\theta_0}^{1-\lambda}p_{\theta_1}^\lambda$, as follows by
+interpolating the natural form. The precision stays positive, so the whole
+segment belongs to the family.
 
 A straight expectation-coordinate segment is an affinely parameterized
 m-geodesic of the connection on this normal family:
@@ -1207,16 +1224,16 @@ m-geodesic of the connection on this normal family:
 ```{math}
 :label: ig-normal-m-geodesic
 \begin{aligned}
-\eta(r)&=(1-r)\eta_0+r\eta_1,\\
-\mu_m(r)&=(1-r)\mu_0+r\mu_1,\\
-\sigma_m^2(r)&=(1-r)\sigma_0^2+r\sigma_1^2
-                 +r(1-r)(\mu_1-\mu_0)^2.
+\eta&=(1-\lambda)\eta(\theta_0)+\lambda\eta(\theta_1),\\
+\mu_m(\lambda)&=(1-\lambda)\mu_0+\lambda\mu_1,\\
+\sigma_m^2(\lambda)&=(1-\lambda)\sigma_0^2+\lambda\sigma_1^2
+                 +\lambda(1-\lambda)(\mu_1-\mu_0)^2.
 \end{aligned}
 ```
 
 The last term follows by subtracting the square of the interpolated mean
 from the interpolated second raw moment. It keeps variance positive. This
-normal has the same first two moments as $(1-r)P_0+rP_1$, but is generally
+normal has the same first two moments as $(1-\lambda)P_0+\lambda P_1$, but is generally
 not that literal mixture: a mixture of two distinct normals need not be
 normal. Thus m-flatness of this family does not assert closure under density
 mixtures. Differentiating the two displayed paths verifies
@@ -1231,9 +1248,9 @@ For $P_0=N(0,1)$ and $P_1=N(2,1)$ the difference is explicit:
 
 | Connection | Path in $(\mu,\sigma)$ | Scale where $\mu=1$ |
 | --- | --- | --- |
-| e, $\alpha=1$ | $\mu=2r$, $\sigma=1$ | $1$ |
+| e, $\alpha=1$ | $\mu=2\lambda$, $\sigma=1$ | $1$ |
 | Levi-Civita, $\alpha=0$ | $(\mu-1)^2/2+\sigma^2=3/2$ on the joining arc | $\sqrt{3/2}$ |
-| m, $\alpha=-1$ | $\mu=2r$, $\sigma^2=1+4r(1-r)$ | $\sqrt2$ |
+| m, $\alpha=-1$ | $\mu=2\lambda$, $\sigma^2=1+4\lambda(1-\lambda)$ | $\sqrt2$ |
 
 The Levi-Civita parameter in this comparison is the affine hyperbolic
 parameter, not generally $\mu/2$. Its length is

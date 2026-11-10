@@ -31,7 +31,7 @@ symbols used here; source-specific conventions need translation.
 | Tail and stable indices; §2.1, p. 8 | $\alpha>0$ is the survival power exponent, $\xi$ the EVI; a stable-law index must be identified separately | [Exact Pareto EVI proof](incerto-extreme-value-index.md#evi-pareto-calibration) |
 | Threshold $K$, lower endpoint $x_{\min}$; §§2.2.1, 2.2.4, pp. 9–11 | $u$ is a threshold; $x_m>0$ is a Pareto minimum; $e(u)=\mathbb E[X-u\mid X>u]$ | [Conditional Pareto quantities](incerto-pareto.md#pareto-threshold-quantities) |
 | Gaussian scale and lognormal parameters; §2.1, p. 8 | Write $N(\mu,\sigma^2)$ with variance $\sigma^2$; specify $\log X\sim N(\mu,\sigma^2)$ for a lognormal | [Lognormal moments](incerto-tail-class-catalog.md#tail-class-catalog-moment-gates) |
-| Mean absolute deviation and normalized $p$ expression; §2.1, pp. 7–8 | State the center and normalization explicitly; $(n^{-1}\sum_i|x_i|^p)^{1/p}$ is a scaled norm for $p\ge1$ | [Dispersion summaries](incerto-dispersion-ratio.md) |
+| Mean absolute deviation and normalized $p$ expression; §2.1, pp. 7–8 | State the center and normalization explicitly; $(n^{-1}\sum_i\lvert x_i\rvert^p)^{1/p}$ is a scaled norm for $p\ge1$ | [Dispersion summaries](incerto-dispersion-ratio.md) |
 | Characteristic function, delta, step and special functions; §2.1, pp. 8–9 | Keep these local to the calculation; our $\theta$ remains a model parameter when used that way | [Stable-limit characteristic functions](incerto-generalized-central-limit-theorem.md); special-function identities need their own references |
 
 For a lognormal, $\mu$ is a log-location, not its ordinary mean. The catalog

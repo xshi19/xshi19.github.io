@@ -83,7 +83,7 @@ variance $1$, kurtosis $100$, and support $\{-10,0,10\}$.
 The catalog supplies a second contrast: a lognormal variable has all positive
 power moments finite but has no finite positive exponential moment. It is
 subexponential, yet not regularly varying. An exact Pareto variable has a
-positive power moment of order $q$ precisely when $q<\alpha$.
+positive power moment of order $p$ precisely when $p<\alpha$.
 The catalog [proves the lognormal moment calculations and separates the cited
 classifications](incerto-tail-class-catalog.md#tail-class-catalog-moment-gates);
 the [Pareto moment note](incerto-pareto-moment-existence.md) owns the exact

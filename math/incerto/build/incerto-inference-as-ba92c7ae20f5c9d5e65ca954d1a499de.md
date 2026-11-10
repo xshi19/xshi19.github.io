@@ -62,25 +62,25 @@ $Q$. Here $\delta$ is a test level, not the tail exponent.
 ## A bounded law and a Pareto contamination
 
 Take $P$ uniform on $[0,1]$ and $R$ an exact
-[Pareto law](incerto-pareto.md) with minimum $x_m=b>1$ and exponent
+[Pareto law](incerto-pareto.md) with minimum $x_m>1$ and exponent
 $\alpha>1$. Their supports are disjoint. The event
 $\max_i X_i>1$ has probability zero under $P^{\otimes n}$ and $d$ under
 $Q^{\otimes n}$, so the total-variation bound is an equality.
 
-For $x\ge b$ the contaminated survival and mean are
+For $x\ge x_m$ the contaminated survival and mean are
 
 $$
-\bar F_Q(x)=\varepsilon(b/x)^\alpha,
+\bar F_Q(x)=\varepsilon(x_m/x)^\alpha,
 \qquad
 \mathbb E_Q X=\frac{1-\varepsilon}{2}
-  +\varepsilon\frac{\alpha b}{\alpha-1}.
+  +\varepsilon\frac{\alpha x_m}{\alpha-1}.
 $$
 
 These follow by mixing the two survivals and the two finite means. For
 $1<\alpha\le2$, $Q$ has infinite second moment by the
 [Pareto moment calculation](incerto-pareto-moment-existence.md), although
 $P$ is bounded. For any fixed $n$, any $0<\eta<1$, and any desired positive
-mean gap, choose $0<\varepsilon\le\eta/n$, then increase $b$ until the
+mean gap, choose $0<\varepsilon\le\eta/n$, then increase $x_m$ until the
 gap is exceeded. Sample total variation stays at most $\eta$. This proves
 that a small sample-law discrepancy need not control an unbounded mean
 functional over this unrestricted family.
@@ -89,7 +89,7 @@ The order of the quantifiers matters. For each fixed $\varepsilon>0$, the
 detection probability tends to one as $n\to\infty$. The construction
 does not say that a fixed alternative can remain hidden indefinitely.
 
-For $\varepsilon=10^{-4}$, $b=10^6$, $\alpha=3/2$ and $n=1000$,
+For $\varepsilon=10^{-4}$, $x_m=10^6$, $\alpha=3/2$ and $n=1000$,
 the mean is $300.49995$ instead of $0.5$, yet the probability that all
 observations come from $P$ is approximately $0.904833$. Conditional on that
 event, the entire observed vector has the baseline law. The sample mean is

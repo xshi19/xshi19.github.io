@@ -103,7 +103,8 @@ See [hidden tails](incerto-hidden-tail.md) and
 ## Freeze the pipeline before the test period
 
 The local S&P procedure uses the first half of chronological log returns
-for fitting and the second half for evaluation. Loss is $\ell_t=-r_t$.
+for fitting and the second half for evaluation. Loss is the negative of the
+log return.
 We compare a Gaussian 95% cutoff, fitted with the training mean and
 standard deviation, with the training empirical 95th percentile. Both
 are frozen before the first test observation.
@@ -175,19 +176,20 @@ class of functions.
 A hinge $(x-K)_+=\max(x-K,0)$ has a linear right tail. We can represent
 every continuous piecewise-linear function with finitely many knots
 exactly by an affine term and a finite sum of hinges.
-Let $K_1<\cdots<K_m$ be the knots, $s_0,\ldots,s_m$ the successive
-slopes, and $a=f(K_1)$. Define slope changes $w_j=s_j-s_{j-1}$. Then
+With no knots the function is affine. Otherwise, let $K_1<\cdots<K_m$,
+$m\ge1$, be the knots and $s_0,\ldots,s_m$ the successive slopes.
+Define slope changes $w_j=s_j-s_{j-1}$. Then
 
 $$
 \begin{gathered}
-f(x)=a+s_0(x-K_1)\\
+f(x)=f(K_1)+s_0(x-K_1)\\
 \quad+\sum_{j=1}^m w_j(x-K_j)_+.
 \end{gathered}
 $$
 
 To prove the representation, differentiate away from the knots. On
 segment $j$ the slope is $s_0+\sum_{i=1}^j w_i=s_j$ by telescoping.
-The formula is continuous at every knot and equals $a$ at $K_1$.
+The formula is continuous at every knot and equals $f(K_1)$ at $K_1$.
 Those slopes and one anchor value determine the specified function.
 
 Finite hinge sums are piecewise linear, not exact representations of

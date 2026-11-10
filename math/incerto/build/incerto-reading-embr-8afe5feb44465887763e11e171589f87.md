@@ -21,7 +21,7 @@ proofs or examples.
 | Tail $\overline F$ and integrated tails | $\bar F$ | Survival function. |
 | Extreme-value index sometimes implicit in domains | $\xi$ | Shape parameter for GEV/GPD limits. |
 | Power-tail index often written through regular variation | $\alpha=1/\xi$ when $\xi>0$ | [Pareto-type](incerto-pareto.md) tail exponent. |
-| Threshold $u$ and excess $X-u$ | $u$ and $F_u$ | Peaks-over-threshold notation. |
+| Threshold $u$ and excess $X-u$ | $u$ and $F_u(y)=P(X-u\le y\mid X>u)$ | Threshold and conditional excess CDF, defined when $\bar F(u)>0$. |
 
 The canonical symbol table is [Notation](https://xshi19.github.io/math/notation/).
 

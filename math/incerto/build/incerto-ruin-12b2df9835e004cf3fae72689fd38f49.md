@@ -38,7 +38,8 @@ No heavy-tail assumption enters this calculation.
 ## What the dependence assumption can be replaced by
 
 When $P(T\ge k)>0$, define the conditional hazard
-$h_k=P(T=k\mid T\ge k)$. The chain rule gives
+$h_k=P(T=k\mid T\ge k)$. For an integer horizon $N\ge1$ with
+$P(T\ge N)>0$, the chain rule gives
 
 $$
 P(T>N)=\prod_{k=1}^N(1-h_k).
@@ -51,7 +52,8 @@ diverges, $\log(1-h_k)\le-h_k$ forces the product to zero. If the sum
 converges, eventually $h_k\le1/2$ and
 $\log(1-h_k)\ge-2h_k$. The tail log-sum then has a finite lower bound;
 the finite initial product is positive, so the infinite product is positive.
-If some reached hazard is one, ruin is certain by that step separately.
+If some reached hazard is one, ruin is certain by that step separately;
+all later survival probabilities are zero, and no later hazards are needed.
 
 A positive hazard at every step is insufficient. For
 $h_k=1/(k+1)^2$,

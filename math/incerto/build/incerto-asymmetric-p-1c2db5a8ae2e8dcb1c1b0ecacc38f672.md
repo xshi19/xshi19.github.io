@@ -10,9 +10,9 @@ options:
 ---
 
 A forecast of an event and the payoff attached to that event answer different
-questions. Let $X$ be a real random variable with CDF $F$ and let $g(X)$
-be its payoff. We use $g$ for the transformation, reserving $F$ for the CDF
-as in the [shared notation](https://xshi19.github.io/math/notation/).
+questions. Let $X$ be a real random variable and let $g(X)$ be its payoff.
+Probability notation follows the
+[shared notation](https://xshi19.github.io/math/notation/).
 An ordinary finite expected payoff requires $\mathbb E|g(X)|<\infty$.
 
 (payoffs-hit-rate)=

@@ -6,28 +6,28 @@ title: Counting exceedances
 ## A finite-sample quantity
 
 For finite real observations $x_1,\ldots,x_n$ with $n\geq 1$, define the fraction
-strictly above a finite threshold $t$ by
+strictly above a finite threshold $u$ by
 
 ```{math}
 :label: empirical-exceedance-fraction
-\widehat S_n(t)=\frac{1}{n}\sum_{i=1}^n\mathbf{1}\{x_i>t\}.
+\widehat S_n(u)=\frac{1}{n}\sum_{i=1}^n\mathbf{1}\{x_i>u\}.
 ```
 
-Here $t$ is the local name for the threshold $u$ in the
+Here $u$ is the threshold in the
 [shared notation](https://xshi19.github.io/math/notation/).
 $\widehat S_n$ describes the observations; $\bar F(u)=P(X>u)$ describes a
 population law. The symbol $S_n$ without a hat denotes a sample sum elsewhere.
 
 The strict inequality matters when an observation equals the threshold. For
-$(1,2,2,4)$ at $t=2$, only the last observation contributes, so the fraction is
+$(1,2,2,4)$ at $u=2$, only the last observation contributes, so the fraction is
 $1/4$. Counting observations greater than or equal to $2$ would give $3/4$ and
 answer a different question.
 
 ## What the count establishes
 
-Each indicator is either zero or one, so $0\leq\widehat S_n(t)\leq1$. If
-$s<t$, every observation exceeding $t$ also exceeds $s$. Therefore
-$\widehat S_n(t)\leq\widehat S_n(s)$. These statements follow directly from
+Each indicator is either zero or one, so $0\leq\widehat S_n(u)\leq1$. If
+$s<u$, every observation exceeding $u$ also exceeds $s$. Therefore
+$\widehat S_n(u)\leq\widehat S_n(s)$. These statements follow directly from
 counting; they are exact finite-sample arguments.
 
 Use [`exceedance_fraction`](incerto-api-reference.md#api-exceedance-fraction), [`empirical_survival_function`](incerto-api-reference.md#api-empirical-survival-function).
@@ -98,20 +98,25 @@ last ordinate are a different plotting convention.
 ## What iid sampling adds
 
 Now assume $X_1,\ldots,X_n$ are iid from $F$, and fix a nonrandom threshold
-$u$. Put $q=\bar F(u)$. Each indicator $I_i=\mathbf1_{\{X_i>u\}}$ has
-$\mathbb E I_i=q$ and $\operatorname{Var}(I_i)=q(1-q)$ because $I_i^2=I_i$.
+$u$. Each indicator $\mathbf1_{\{X_i>u\}}$ has mean $\bar F(u)$ and
+variance $\bar F(u)(1-\bar F(u))$, since its square equals itself.
 Independence makes the cross-covariances zero. Consequently,
 
 $$
 \begin{gathered}
-\mathbb E\widehat S_n(u)=q,\\
-\operatorname{Var}(\widehat S_n(u))=\frac{q(1-q)}n.
+\mathbb E\widehat S_n(u)=\bar F(u),\\
+\operatorname{Var}(\widehat S_n(u))=\frac{\bar F(u)(1-\bar F(u))}n.
 \end{gathered}
 $$
 
 These are exact finite-sample identities, proved by summing the indicators.
 For any fixed $\varepsilon>0$, Chebyshev's inequality gives
-$P(|\widehat S_n(u)-q|>\varepsilon)\le q(1-q)/(n\varepsilon^2)$,
+
+$$
+P(|\widehat S_n(u)-\bar F(u)|>\varepsilon)
+\le\frac{\bar F(u)(1-\bar F(u))}{n\varepsilon^2},
+$$
+
 which tends to zero. No moment assumption on $X$ is needed: the indicators
 are bounded. This argument is pointwise in a fixed $u$; it proves neither a
 uniform-in-threshold theorem nor consistency of an unbounded payoff average.

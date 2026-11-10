@@ -59,7 +59,7 @@ a relevant existing note, not a claim that all of that topic is proved here.
 | Subexponentiality; §2.2.12, pp. 13–14 | [Subexponential tails](incerto-subexponentiality.md); fix the number of iid nonnegative summands while the threshold tends to infinity |
 | Student-t proxy; §2.2.13, p. 14 | [Survival ratios](incerto-survival-tail-ratio.md); label degrees of freedom locally and distinguish this model from an exact Pareto |
 | Stochasticizing, metaprobability; §§2.2.18, 2.2.31, pp. 15–16, 20 | [Random-scale examples](incerto-scoft-ch4.md); a distribution over a parameter defines a mixture, with dependence specified separately |
-| VaR and conditional VaR; §2.2.19, p. 16 | For a nonnegative loss $X$, define a local quantile $Q(q)=\inf\{x:F(x)\ge q\}$; see the quantile and tail-mean distinction below |
+| VaR and conditional VaR; §2.2.19, p. 16 | For a nonnegative loss $X$ and $0<q<1$, define a local quantile $Q(q)=\inf\{x:F(x)\ge q\}$; see the quantile and tail-mean distinction below |
 | MS plot; §2.2.21, pp. 16–17 | [Max-to-sum ratio](incerto-max-to-sum-ratio.md); for moment order $p$ compare $\max_i X_i^p$ with $\sum_i X_i^p$, not with $(\sum_iX_i)^p$ |
 | Maximum domain of attraction; §2.2.22, p. 17 | [EVI definition and Pareto proof](incerto-extreme-value-index.md#evi-pareto-calibration); a nondegenerate normalized maximum limit is essential |
 | Tail payoff integrals; §§2.2.23–24, pp. 17–18 | [Tail contribution identity](incerto-pareto.md#pareto-threshold-quantities); $u\bar F(u)$ omits the contribution above $u$ |
@@ -101,7 +101,8 @@ These two general theorems are cited, not proved here (SCoFT v4
 bound. The [exceedance note](incerto-counting-exceedances.md) does prove a
 pointwise probability bound for its bounded indicators.
 
-By contrast, the subexponential relation compares $P(S_n>x)$ and $P(M_n>x)$
+By contrast, with $M_n=\max_{1\le i\le n}X_i$, the subexponential relation
+compares $P(S_n>x)$ and $P(M_n>x)$
 as $x\to\infty$ with $n$ fixed. It does not say that $M_n/S_n$ tends to one
 as $n$ grows. The [Pareto sums section](incerto-pareto.md#sums-and-moment-orders)
 keeps the growing-sample regimes and moment orders separate.

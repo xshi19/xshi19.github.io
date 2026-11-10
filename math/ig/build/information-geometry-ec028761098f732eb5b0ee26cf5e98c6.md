@@ -35,8 +35,8 @@ The **Fisher information matrix per observation** is
 
 ```{math}
 :label: ig-fisher-information
-I_\theta=\mathbb E_\theta[s_\theta s_\theta^\mathsf{T}],\qquad
-g_\theta(v,w)=v^\mathsf{T}I_\theta w.
+I(\theta)=\mathbb E_\theta[s_\theta s_\theta^\mathsf{T}],\qquad
+g_\theta(v,w)=v^\mathsf{T}I(\theta) w.
 ```
 
 Thus $g_\theta(v,v)$ is the mean square directional change in log density.
@@ -48,11 +48,11 @@ identifiability alone does not exclude such singular parameterizations.
 ## Local KL divergence gives the same quadratic form
 
 Differentiating the normalizer a second time, using
-$\partial_i\partial_jp=p(\partial_i\partial_j\ell+
-\partial_i\ell\,\partial_j\ell)$, gives
+$\partial_i\partial_jp_\theta=p_\theta(\partial_i\partial_j\ell_\theta+
+\partial_i\ell_\theta\,\partial_j\ell_\theta)$, gives
 
 ```{math}
-\mathbb E_\theta[\nabla_\theta^2\ell_\theta]=-I_\theta.
+\mathbb E_\theta[\nabla_\theta^2\ell_\theta]=-I(\theta).
 ```
 
 Now hold the first distribution fixed in
@@ -63,36 +63,37 @@ D_{\mathrm{KL}}(p_\theta\|p_{\theta+\delta})
 ```
 
 Taylor expansion of the second log density has a linear term with expectation
-zero and a quadratic term involving $-I_\theta$. Therefore
+zero and a quadratic term involving $-I(\theta)$. Therefore
 
 ```{math}
 :label: ig-local-kl
 D_{\mathrm{KL}}(p_\theta\|p_{\theta+\delta})
-=\frac12\delta^\mathsf{T}I_\theta\delta
+=\frac12\delta^\mathsf{T}I(\theta)\delta
  +o(\|\delta\|_2^2).
 ```
 
 This is a local expansion as $\delta\to0$ at a fixed interior parameter.
 Finite KL is generally asymmetric and is not squared Riemannian distance.
 For $n$ independent observations, scores add and their cross-covariances vanish,
-so the information matrix is $nI_\theta$.
+so the information matrix is $nI(\theta)$.
 
 ## Reparameterization changes the matrix, not the length
 
 Use a smooth invertible chart $\theta=\theta(\phi)$ and let
-$J=\partial\theta/\partial\phi$. By the chain rule,
+$J=\partial\theta/\partial\phi$. Write $s_\phi$ and $I(\phi)$ for the
+score and Fisher information in the new chart. By the chain rule,
 
 ```{math}
 s_\phi=J^\mathsf{T}s_\theta,\qquad
-I_\phi=J^\mathsf{T}I_\theta J.
+I(\phi)=J^\mathsf{T}I(\theta) J.
 ```
 
 Since $d\theta=J\,d\phi$, the two quadratic expressions agree:
 
 ```{math}
 :label: ig-fisher-invariance
-d\theta^\mathsf{T}I_\theta d\theta
-=d\phi^\mathsf{T}I_\phi d\phi.
+d\theta^\mathsf{T}I(\theta) d\theta
+=d\phi^\mathsf{T}I(\phi) d\phi.
 ```
 
 This is exactly the [metric transformation law](./information-geometry-euclidean-to-manifold.md#ig-metric-coordinate-change).
@@ -155,7 +156,7 @@ s_q(x)=\frac{x}{q}-\frac{1-x}{1-q}
 Because $\operatorname{Var}(X)=q(1-q)$,
 
 ```{math}
-I_q=\frac1{q(1-q)},\qquad ds^2=\frac{dq^2}{q(1-q)}.
+I(q)=\frac1{q(1-q)},\qquad ds^2=\frac{dq^2}{q(1-q)}.
 ```
 
 Equal small changes in probability have different local statistical sizes:
@@ -167,11 +168,11 @@ $dq/d\theta=q(1-q)$, the same metric is
 
 ```{math}
 :label: ig-bernoulli-fisher-charts
-I_\theta=q(1-q),\qquad
+I(\theta)=q(1-q),\qquad
 ds^2=q(1-q)d\theta^2=\frac{dq^2}{q(1-q)}.
 ```
 
-This agrees with $I_\theta=\psi''(\theta)$ from the
+This agrees with $I(\theta)=\psi''(\theta)$ from the
 [exponential-family calculation](./information-geometry-exponential-families.md).
 
 ## Three different uses of L2
@@ -201,15 +202,16 @@ geometry and raw density $L^2$ that parameter invariance alone cannot explain.
 
 ## Square-root densities recover Fisher geometry
 
-There is a useful $L^2(\nu)$ representation. Map a density to
-$u_\theta=2\sqrt{p_\theta}$, which has norm $2$. Assume this map is
-differentiable in $L^2(\nu)$, with derivative along $v$ given by
+There is a useful $L^2(\nu)$ representation. Each function
+$2\sqrt{p_\theta}$ has norm $2$. Assume the parameter map
+$\theta\mapsto2\sqrt{p_\theta}$ is differentiable in $L^2(\nu)$, with
+derivative along $v$ given by
 
 ```{math}
-\partial_vu_\theta=\sqrt{p_\theta}\,v^\mathsf{T}s_\theta.
+\partial_v(2\sqrt{p_\theta})=\sqrt{p_\theta}\,v^\mathsf{T}s_\theta.
 ```
 
-Then its squared $L^2(\nu)$ norm is precisely $v^\mathsf{T}I_\theta v$.
+The derivative's squared $L^2(\nu)$ norm is precisely $v^\mathsf{T}I(\theta) v$.
 This is an isometric realization of the tangent metric by square-root
 densities. It is not the raw density-difference construction above.
 
@@ -225,7 +227,7 @@ the same differentiability gives
 ```{math}
 :label: ig-local-hellinger
 H^2(p_\theta,p_{\theta+\delta})
-=\frac18\delta^\mathsf{T}I_\theta\delta+o(\|\delta\|_2^2).
+=\frac18\delta^\mathsf{T}I(\theta)\delta+o(\|\delta\|_2^2).
 ```
 
 The factors $1/2$ for KL and $1/8$ for this squared Hellinger convention

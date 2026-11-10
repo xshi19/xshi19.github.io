@@ -115,9 +115,9 @@ component. Projecting onto $\mathcal H_X$ retains it.
 
 For a finite-dimensional random vector $A$ with
 $\mathbb E[\|A\|_2^2]<\infty$, apply the scalar result to each component.
-Writing $m=\mathbb E[A\mid X]$ and $\mu=\mathbb E[A]$ gives
-$A-\mu=(A-m)+(m-\mu)$. Both cross-covariance matrices vanish by the same
-orthogonality identity. Hence
+Writing $m=\mathbb E[A\mid X]$ gives
+$A-\mathbb E[A]=(A-m)+(m-\mathbb E[A])$.
+Both cross-covariance matrices vanish by the same orthogonality identity. Hence
 
 ```{math}
 :label: ig-total-covariance

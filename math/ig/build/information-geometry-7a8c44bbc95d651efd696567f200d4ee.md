@@ -19,7 +19,7 @@ $q\in(0,1)$. Their joint mass function is
 ```
 
 The sample enters the parameter-dependent part only through the count
-$S_n=\sum_i x_i$. Conditional on $S_n=s$, all binary sequences with $s$
+$S_n=\sum_i X_i$. Conditional on $S_n=s$, all binary sequences with $s$
 successes have equal probability, independent of $q$. This directly shows
 that $S_n$ is sufficient: the conditional distribution of the full data given
 the statistic contains no further dependence on the parameter.
@@ -39,14 +39,14 @@ sufficient statistic.
 ## The general form and its domain
 
 Fix a measure $\nu$, a nonnegative carrier $h$, and a vector-valued statistic
-$T:\mathcal X\to\mathbb R^d$. Define
+$t:\mathcal X\to\mathbb R^d$. Define
 
 ```{math}
 :label: ig-exponential-family
 \begin{aligned}
-p_\theta(x)&=h(x)\exp\{\theta^\mathsf{T}T(x)-\psi(\theta)\},\\
+p_\theta(x)&=h(x)\exp\{\theta^\mathsf{T}t(x)-\psi(\theta)\},\\
 \psi(\theta)&=\log\int_{\mathcal X}
-  h(x)e^{\theta^\mathsf{T}T(x)}\,d\nu(x).
+  h(x)e^{\theta^\mathsf{T}t(x)}\,d\nu(x).
 \end{aligned}
 ```
 
@@ -54,7 +54,7 @@ The **natural parameter domain** consists of parameters where the integral is
 positive and finite. We work on its nonempty open interior $\Theta$ and assume
 the support $\{h>0\}$ is fixed. On this interior the integral admits local
 differentiation of all orders; exponential integrability in a neighborhood
-controls the moments of $T$. This is the regular setting used below.
+controls the moments of $t(X)$. This is the regular setting used below.
 
 The domain is convex: Hölder's inequality bounds the normalizing integral at
 a convex combination of two parameters by the corresponding geometric mean of
@@ -64,44 +64,49 @@ For independent observations from this family, the density factors as
 
 ```{math}
 \left(\prod_{i=1}^n h(x_i)\right)
-\exp\!\left\{\theta^\mathsf{T}\sum_{i=1}^nT(x_i)-n\psi(\theta)\right\}.
+\exp\!\left\{\theta^\mathsf{T}\sum_{i=1}^n t(x_i)-n\psi(\theta)\right\}.
 ```
 
 The factorization criterion for dominated models therefore makes
-$\sum_i T(X_i)$ sufficient. Its dimension stays fixed as $n$ grows. Sufficiency
+$\sum_i t(X_i)$ sufficient. Its dimension stays fixed as $n$ grows. Sufficiency
 alone is a broader concept: the full data are always sufficient, and converse
 characterizations of exponential families require additional hypotheses.
 
 ## Differentiating the normalizer
 
-Write $Z(\theta)=e^{\psi(\theta)}$. Differentiation under the integral yields
+Differentiating the logarithm and then the normalizing integral gives
 
 ```{math}
+\begin{aligned}
 \partial_i\psi(\theta)
-=\frac{\partial_iZ(\theta)}{Z(\theta)}
-=\int T_i(x)p_\theta(x)\,d\nu(x)
-=\mathbb E_\theta[T_i(X)].
+&=e^{-\psi(\theta)}\int_{\mathcal X}
+  t_i(x)h(x)e^{\theta^\mathsf{T}t(x)}\,d\nu(x)\\
+&=\int_{\mathcal X}t_i(x)p_\theta(x)\,d\nu(x)
+=\mathbb E_\theta[t_i(X)].
+\end{aligned}
 ```
 
-Define the expectation parameter $\eta(\theta)=\mathbb E_\theta[T(X)]$.
-Since $\partial_jp_\theta=p_\theta(T_j-\eta_j)$, a second derivative gives
+Define the expectation parameter $\eta(\theta)=\mathbb E_\theta[t(X)]$.
+Since $\partial_jp_\theta(x)=p_\theta(x)(t_j(x)-\eta_j(\theta))$,
+a second derivative gives
 
 ```{math}
 :label: ig-log-partition-moments
 \eta=\nabla\psi,\qquad
 \partial_i\partial_j\psi
-=\mathbb E_\theta[T_iT_j]-\mathbb E_\theta[T_i]\mathbb E_\theta[T_j].
+=\mathbb E_\theta[t_i(X)t_j(X)]
+ -\mathbb E_\theta[t_i(X)]\mathbb E_\theta[t_j(X)].
 ```
 
-Thus $\nabla^2\psi=\operatorname{Cov}_\theta(T)$ is positive semidefinite.
+Thus $\nabla^2\psi=\operatorname{Cov}_\theta(t(X))$ is positive semidefinite.
 For any vector $a$,
 
 ```{math}
 a^\mathsf{T}\nabla^2\psi\,a
-=\operatorname{Var}_\theta(a^\mathsf{T}T).
+=\operatorname{Var}_\theta(a^\mathsf{T}t(X)).
 ```
 
-The representation is **minimal** if no nonzero $a$ makes $a^\mathsf{T}T$
+The representation is **minimal** if no nonzero $a$ makes $a^\mathsf{T}t(x)$
 constant almost everywhere on the support. Under minimality the variance above
 is positive for every $a\ne0$, so $\psi$ is strictly convex and its gradient
 has an invertible derivative. Natural and expectation parameters are then
@@ -112,11 +117,11 @@ from boundary moments or the entire set of conceivable moment vectors.
 The score, the derivative of the log density, is
 
 ```{math}
-s_\theta(x)=\nabla_\theta\log p_\theta(x)=T(x)-\eta(\theta).
+s_\theta(x)=\nabla_\theta\log p_\theta(x)=t(x)-\eta(\theta).
 ```
 
 Its covariance is the Fisher information matrix in natural coordinates:
-$I_\theta=\nabla^2\psi$. The
+$I(\theta)=\nabla^2\psi$. The
 [Fisher note](./information-geometry-fisher-vs-l2.md) derives this metric for
 general regular models.
 
@@ -139,7 +144,7 @@ $h(x)=1$, the representation is
 
 ```{math}
 \begin{aligned}
-T(x)&=(x,x^2)^\mathsf{T},\\
+t(x)&=(x,x^2)^\mathsf{T},\\
 \theta_1&=\frac{\mu}{\sigma^2},\qquad
 \theta_2=-\frac{1}{2\sigma^2}<0,\\
 \psi(\theta)&=-\frac{\theta_1^2}{4\theta_2}
@@ -159,29 +164,32 @@ model does not automatically inherit the full family's affine coordinates.
 
 ## Likelihood becomes moment matching
 
-For observed data, let $\overline T=n^{-1}\sum_iT(x_i)$. Up to a
-parameter-independent term, the average log likelihood is
+For observed data, let $\widehat\eta=n^{-1}\sum_i t(x_i)$ be the empirical
+sufficient-statistic average. The average log likelihood is
 
 ```{math}
-\ell_n(\theta)=\theta^\mathsf{T}\overline T-\psi(\theta)+\text{constant}.
+\frac1n\sum_{i=1}^n\log p_\theta(x_i)
+=\theta^\mathsf{T}\widehat\eta-\psi(\theta)+\text{constant},
 ```
 
+where the constant is independent of $\theta$.
 An interior optimum of a full family must satisfy
 
 ```{math}
 :label: ig-moment-matching
-\nabla\psi(\widehat\theta)=\overline T.
+\nabla\psi(\widehat\theta)=\widehat\eta.
 ```
 
-Its Hessian is $-\nabla^2\psi$, so in a minimal family an interior solution is
-the unique maximum. Existence is a separate question. If all Bernoulli
-observations are successes, then $\overline T=1$ lies outside $(0,1)$ and
+The average log likelihood has Hessian $-\nabla^2\psi$, so in a minimal
+family an interior solution is the unique maximum. Existence is a separate
+question. If all Bernoulli observations are successes, then $\widehat\eta=1$
+lies outside $(0,1)$ and
 the likelihood supremum is approached as $\theta\to+\infty$; no finite natural
 parameter attains it.
 
-For a constrained parameterization $\theta=\theta(\phi)$ with Jacobian $J$,
-the stationary equation is instead
-$J^\mathsf{T}(\overline T-\eta)=0$. Matching every ambient sufficient-statistic
+For a constrained parameterization $\theta=\theta(\phi)$ with Jacobian
+$J=\partial\theta/\partial\phi$, the stationary equation is instead
+$J^\mathsf{T}(\widehat\eta-\eta)=0$. Matching every ambient sufficient-statistic
 moment is generally too strong. This distinction will matter when an
 [EM M-step](./information-geometry-latent-variables-em.md) fits a constrained
 joint model.

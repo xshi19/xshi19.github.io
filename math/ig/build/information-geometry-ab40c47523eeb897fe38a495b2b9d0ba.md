@@ -12,12 +12,14 @@ to Fisher information gives an exact KL version of Pythagoras.
 Use the full exponential family
 
 ```{math}
-p_\theta(x)=h(x)\exp\{\theta^\mathsf{T}T(x)-\psi(\theta)\}
+p_\theta(x)=h(x)\exp\{\theta^\mathsf{T}t(x)-\psi(\theta)\}
 ```
 
-on an open convex natural domain $\Theta$. Assume minimality and the
+with respect to a fixed measure $\nu$, with carrier $h$, sufficient statistic
+$t(x)$, and open convex natural domain $\Theta$. Assume minimality and the
 regularity from the [exponential-family note](./information-geometry-exponential-families.md).
-Write $\eta=\nabla\psi(\theta)$ and $G=\nabla^2\psi(\theta)>0$.
+Write $\eta(\theta)=\nabla\psi(\theta)$ for expectation coordinates and
+$I(\theta)=\nabla^2\psi(\theta)>0$ for the Fisher information matrix.
 Work on the image of this gradient map; every segment used below is assumed
 to remain in the relevant coordinate domain.
 
@@ -36,12 +38,13 @@ cancels the terms involving $d\theta$, giving
 ```{math}
 :label: ig-legendre-duality
 \nabla\psi^*(\eta)=\theta,\qquad
-\nabla^2\psi^*(\eta)=G^{-1}.
+\nabla^2\psi^*(\eta)=I(\theta)^{-1}.
 ```
 
-The Fisher metric is $G$ in natural coordinates and $G^{-1}$ in expectation
-coordinates, since $d\eta=G\,d\theta$. For Bernoulli distributions,
-$\eta=q$ and
+The Fisher metric $g$ has matrix $I(\theta)$ in natural coordinates and
+$I(\theta)^{-1}$ in expectation coordinates, since
+$d\eta=I(\theta)\,d\theta$. For Bernoulli distributions with success probability
+$q$, $\eta=q$ and
 $\psi^*(q)=q\log q+(1-q)\log(1-q)$ on $(0,1)$, the negative binary entropy.
 For a general carrier $h$, the conjugate need not equal negative entropy
 relative to $\nu$ without a carrier-dependent term.
@@ -62,30 +65,32 @@ density ratio inside our family gives
 :label: ig-kl-bregman
 \begin{aligned}
 D_{\mathrm{KL}}(p_\theta\|p_\phi)
-&=\psi(\phi)-\psi(\theta)-\eta_\theta^\mathsf{T}(\phi-\theta)\\
+&=\psi(\phi)-\psi(\theta)-\eta(\theta)^\mathsf{T}(\phi-\theta)\\
 &=B_\psi(\phi,\theta)
-=B_{\psi^*}(\eta_\theta,\eta_\phi),
+=B_{\psi^*}(\eta(\theta),\eta(\phi)).
 \end{aligned}
 ```
 
-where $\eta_\theta=\nabla\psi(\theta)$. The order of the natural parameters
-is reversed in $B_\psi$. Checking this order prevents sign and projection
-errors later.
+The order of the natural parameters is reversed in $B_\psi$.
+Checking this order prevents sign and projection errors later.
 
 ## Two notions of straightness
 
+Parameterize the following segments by $\lambda\in[0,1]$.
 An **exponential geodesic**, or e-geodesic, is affine in natural coordinates:
-$\theta(t)=(1-t)\theta_0+t\theta_1$. Its density is proportional to
-$p_{\theta_0}^{1-t}p_{\theta_1}^t$, with the normalizer restoring total mass one.
+$\theta=(1-\lambda)\theta_0+\lambda\theta_1$. Its density is
+proportional to $p_{\theta_0}^{1-\lambda}p_{\theta_1}^\lambda$, with the
+normalizer restoring total mass one.
 
 A **mixture geodesic**, or m-geodesic of the induced connection on this family,
 is affine in expectation coordinates:
-$\eta(t)=(1-t)\eta_0+t\eta_1$. It linearly interpolates the expected
-sufficient statistics. Inside a general exponential family it need not be the
-literal mixture $(1-t)p_{\theta_0}+tp_{\theta_1}$. For example, mixing two
-independent product distributions can introduce dependence and leave a family
-of independent variables, while interpolating its expectation parameters stays
-within that family.
+$\eta=(1-\lambda)\eta(\theta_0)+\lambda\eta(\theta_1)$.
+It linearly interpolates the expected sufficient statistics. Inside a general
+exponential family it need not be the
+literal mixture $(1-\lambda)p_{\theta_0}+\lambda p_{\theta_1}$. For example,
+mixing two independent product distributions can introduce dependence and
+leave a family of independent variables, while interpolating its expectation
+parameters stays within that family.
 
 These straightness rules define two flat torsion-free connections,
 $\nabla^{(e)}$ and $\nabla^{(m)}$. They are dual with respect to $g$: for
@@ -103,9 +108,9 @@ g\!\left(\frac{\partial}{\partial\theta_i},
          \frac{\partial}{\partial\eta_j}\right)=\delta_{ij}.
 ```
 
-Indeed, changing the second basis multiplies by $G^{-1}$, and $GG^{-1}$ is
-the identity. This is the algebraic source of the orthogonality calculation
-that follows.
+Indeed, changing the second basis multiplies by $I(\theta)^{-1}$, and
+$I(\theta)I(\theta)^{-1}$ is the identity. This is the algebraic source of
+the orthogonality calculation that follows.
 
 ## A three-point identity and Pythagoras
 
@@ -118,14 +123,14 @@ For three natural parameters $\theta,\phi,\chi$, substitution into
 D_{\mathrm{KL}}(p_\theta\|p_\chi)
 &=D_{\mathrm{KL}}(p_\theta\|p_\phi)
  +D_{\mathrm{KL}}(p_\phi\|p_\chi)\\
-&\quad +(\eta_\phi-\eta_\theta)^\mathsf{T}(\chi-\phi).
+&\quad +(\eta(\phi)-\eta(\theta))^\mathsf{T}(\chi-\phi).
 \end{aligned}
 ```
 
 At $\phi$, the m-geodesic toward $\theta$ has expectation-coordinate velocity
-$\eta_\theta-\eta_\phi$. The e-geodesic toward $\chi$ has natural-coordinate
+$\eta(\theta)-\eta(\phi)$. The e-geodesic toward $\chi$ has natural-coordinate
 velocity $\chi-\phi$. Their Fisher inner product is
-$(\eta_\theta-\eta_\phi)^\mathsf{T}(\chi-\phi)$ by the dual-basis identity.
+$(\eta(\theta)-\eta(\phi))^\mathsf{T}(\chi-\phi)$ by the dual-basis identity.
 If it vanishes, the cross term above vanishes and
 
 ```{math}
@@ -149,7 +154,7 @@ is open, $\phi$ is interior relative to $a+V$. The directional derivative
 along any $v\in V$ is
 
 ```{math}
-v^\mathsf{T}(\eta_\phi-\eta_\theta)=0.
+v^\mathsf{T}(\eta(\phi)-\eta(\theta))=0.
 ```
 
 For every $\chi\in S$, we have $\chi-\phi\in V$, so the Pythagorean equality
@@ -184,11 +189,13 @@ product is zero.
 
 ## Alpha-connections and the meaning of curvature
 
-For a general regular statistical model with finite score third moments, define
-the symmetric cubic tensor
+For a general regular statistical model, write
+$s_\theta(x)=\nabla_\theta\log p_\theta(x)$ for its score. Assuming finite
+score third moments, define the symmetric cubic tensor by its components
 
 ```{math}
-C_{ijk}=\mathbb E_\theta[s_i s_j s_k].
+C_{ijk}=\mathbb E_\theta[
+  s_{\theta,i}(X)s_{\theta,j}(X)s_{\theta,k}(X)].
 ```
 
 Assume enough smoothness for the metric and this tensor to define smooth

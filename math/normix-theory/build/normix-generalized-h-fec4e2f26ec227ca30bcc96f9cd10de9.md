@@ -25,8 +25,8 @@ X\mid Y=y&\sim\mathcal N_d(\mu+\gamma y,y\Sigma).
 This uses **standard** normal noise, as in
 [conditioning a mixture](./normix-conditioning-a-mixture.md): in one dimension
 $Y=W$, $\gamma=\beta$, $L=\sigma$, and $\Sigma=\sigma^2$.
-The upstream convention absorbs $L$ into the noise and writes
-$Z_{\mathrm{up}}=LZ\sim\mathcal N_d(0,\Sigma)$.
+The upstream convention absorbs $L$ into the noise, using
+$LZ\sim\mathcal N_d(0,\Sigma)$ in place of standard normal noise.
 
 The location $\mu$ need not be the marginal mean, and $\Sigma$ need not be
 the marginal covariance. The vector $\gamma$ couples the conditional mean
@@ -50,7 +50,8 @@ f(x,y)&=\frac{(a/b)^{p/2}y^{p-1-d/2}}
 \end{aligned}
 ```
 
-Define the squared Mahalanobis distance $q(x)$ and three auxiliary quantities:
+Write $q(x)$ for the squared Mahalanobis distance and $(r,A,B(x))$ for
+the posterior GIG parameters obtained below:
 
 ```{math}
 q(x)=(x-\mu)^\top\Sigma^{-1}(x-\mu),\quad
@@ -77,26 +78,39 @@ the statistical roles of the joint and marginal laws.
 
 Let $\delta=\sqrt{b/a}$ and $\omega=\sqrt{ab}$, using $\omega$ for the
 source's scalar $\eta$ to reserve $\eta$ for expectation coordinates.
-Then $Y=\delta V$ with $V\sim\operatorname{GIG}(p,\omega,\omega)$.
-Set $S=\delta\Sigma$ and $g=\delta\gamma$. The same model is
+Within this subsection only, rescale
 
 ```{math}
-X=\mu+gV+\sqrt V\,S^{1/2}Z.
+Y\leftarrow Y/\delta,\qquad
+\gamma\leftarrow\delta\gamma,\qquad
+\Sigma\leftarrow\delta\Sigma.
 ```
 
-In [](#gh-marginal), replace $(\gamma,\Sigma,a,b)$ by
-$(g,S,\omega,\omega)$. More explicitly, put
-$A_\delta=\omega+g^\top S^{-1}g$ and
-$B_\delta(x)=\omega+(x-\mu)^\top S^{-1}(x-\mu)$. Then
+Here $\delta$ and $\omega$ are computed from the original parameters;
+$Y$, $\gamma$, and $\Sigma$ now denote the rescaled quantities. The
+observable law is unchanged, and its representation becomes
 
 ```{math}
-f_X(x)=\frac{(B_\delta(x)/A_\delta)^{r/2}
-K_r(\sqrt{A_\delta B_\delta(x)})}
-{(2\pi)^{d/2}|S|^{1/2}K_p(\omega)}
-e^{(x-\mu)^\top S^{-1}g}.
+X\stackrel{d}{=}\mu+\gamma Y+\sqrt Y\,\Sigma^{1/2}Z,\qquad
+Y\sim\operatorname{GIG}(p,\omega,\omega).
+```
+
+In [](#gh-marginal), use these rescaled $\gamma,\Sigma$ and set
+$a=b=\omega$. Accordingly, within this subsection the posterior parameters
+are $A=\omega+\gamma^\top\Sigma^{-1}\gamma$ and
+$B(x)=\omega+(x-\mu)^\top\Sigma^{-1}(x-\mu)$, while $r=p-d/2$ is unchanged.
+The marginal density is
+
+```{math}
+f_X(x)=\frac{(B(x)/A)^{r/2}K_r(\sqrt{AB(x)})}
+{(2\pi)^{d/2}|\Sigma|^{1/2}K_p(\omega)}
+e^{(x-\mu)^\top\Sigma^{-1}\gamma}.
 ```
 
 ## Model identifiability
+
+From here on, all symbols again refer to the original parameterization
+in [](#gh-def).
 
 For any $c>0$, replace the latent variable by $Y'=cY$. Since
 $Y'\sim\operatorname{GIG}(p,a/c,bc)$, the transformation
@@ -145,10 +159,9 @@ When the required mixing moments are finite, conditioning gives
 \end{aligned}
 ```
 
-For a coordinate $i$, write $m_k=\mathbb E[Y^k]$ and
-$U_i=X_i-\mathbb E[X_i]$. Conditional on $Y$, its mean is
-$\gamma_i(Y-m_1)$ and its variance is $\Sigma_{ii}Y$. The third and fourth
-Gaussian moment formulas yield
+For a coordinate $i$, the centered variable $X_i-\mathbb E[X_i]$ has
+conditional mean $\gamma_i(Y-\mathbb E[Y])$ and conditional variance
+$\Sigma_{ii}Y$ given $Y$. The third and fourth Gaussian moment formulas yield
 
 ```{math}
 :label: gh-skew-kurt
@@ -156,13 +169,18 @@ Gaussian moment formulas yield
 \mu_3(X_i)&=\gamma_i^3\mu_3(Y)
  +3\gamma_i\Sigma_{ii}\operatorname{Var}(Y),\\
 \mu_4(X_i)&=\gamma_i^4\mu_4(Y)
- +6\gamma_i^2\Sigma_{ii}\mathbb E[(Y-m_1)^2Y]
+ +6\gamma_i^2\Sigma_{ii}\mathbb E[(Y-\mathbb E[Y])^2Y]
  +3\Sigma_{ii}^2\mathbb E[Y^2].
 \end{aligned}
 ```
 
-Here $\mu_k$ denotes a central moment, and
-$\mathbb E[(Y-m_1)^2Y]=m_3-2m_1m_2+m_1^3$.
+Here $\mu_k$ denotes a central moment, and the mixed term expands as
+
+```{math}
+\mathbb E[(Y-\mathbb E[Y])^2Y]
+=\mathbb E[Y^3]-2\mathbb E[Y]\mathbb E[Y^2]+\mathbb E[Y]^3.
+```
+
 Divide by $\operatorname{Var}(X_i)^{3/2}$ for skewness and by
 $\operatorname{Var}(X_i)^2$, then subtract three, for excess kurtosis.
 All these moments exist for interior GIG mixing.
@@ -218,7 +236,9 @@ integration; see the [core note](./normix-exponential-family-core.md).
 
 ## Expectation coordinates and their inverse
 
-Taking conditional Gaussian moments gives
+The expectation coordinates are
+$\eta=\mathbb E_\theta[t(X,Y)]=\nabla\psi(\theta)$, paired with the
+natural coordinates $\theta$ above. Taking conditional Gaussian moments gives
 
 ```{math}
 :label: gh-expectation

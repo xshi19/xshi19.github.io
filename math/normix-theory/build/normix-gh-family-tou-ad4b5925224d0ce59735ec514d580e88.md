@@ -105,7 +105,7 @@ When $\gamma=0$, the marginal is symmetric about $\mu$. With finite second
 mixing moment, every coordinate has excess kurtosis
 
 ```{math}
-\gamma_2=3\frac{\operatorname{Var}(Y)}{\mathbb E[Y]^2}.
+3\frac{\operatorname{Var}(Y)}{\mathbb E[Y]^2}.
 ```
 
 This follows from the conditional fourth normal moment and is strictly

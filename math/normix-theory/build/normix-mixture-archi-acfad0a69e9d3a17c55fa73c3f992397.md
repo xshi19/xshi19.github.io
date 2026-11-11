@@ -27,6 +27,8 @@ f_X(x)=\int_0^\infty f(x,y)\,dy,\qquad
 f(y\mid x)=\frac{f(x,y)}{f_X(x)}.
 ```
 
+The posterior formula applies where $0<f_X(x)<\infty$.
+
 | Law | Variables available | Statistical role |
 | --- | --- | --- |
 | Conditional normal | $X$ at fixed $Y=y$ | Specifies the sampling mechanism |
@@ -76,8 +78,10 @@ that reasoning. Special restricted marginal families can behave differently.
 
 ## Recovering a model from expected statistics
 
-Let $\eta_i=\mathbb E[t_i(X,Y)]$ in the order [](#normix-mixture-statistics).
-Conditional Gaussian moments imply
+For the joint exponential family, let $\theta$ denote its natural coordinates
+and $\eta=\mathbb E_\theta[t(X,Y)]=\nabla\psi(\theta)$ its expectation
+coordinates, with $\psi$ the log-partition. The six blocks $\eta_i$ follow
+the order [](#normix-mixture-statistics). Conditional Gaussian moments imply
 
 ```{math}
 \eta_4=\mu+\gamma\eta_3,\qquad

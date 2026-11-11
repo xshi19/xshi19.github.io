@@ -126,7 +126,7 @@ coefficient of $1/y$ in its exponent. See the
 
 ## Skewness and kurtosis
 
-Writing $v=m_2-m_1^2$, the central moments are
+In terms of the raw moments $m_r$, the third and fourth central moments are
 
 ```{math}
 \begin{aligned}
@@ -139,17 +139,22 @@ The standardized skewness and excess kurtosis are
 
 ```{math}
 :label: gig-kurtosis
-\gamma_1=\mu_3/v^{3/2},\qquad \gamma_2=\mu_4/v^2-3.
+\frac{\mu_3}{\operatorname{Var}(Y)^{3/2}},\qquad
+\frac{\mu_4}{\operatorname{Var}(Y)^2}-3,
 ```
 
-They are finite in the interior. At the inverse-gamma boundary with shape
+respectively, with $\operatorname{Var}(Y)=m_2-m_1^2>0$ in the interior.
+They are finite there. At the inverse-gamma boundary with shape
 $\alpha=-p$, the excess kurtosis is
 
 ```{math}
-\gamma_2=\frac{6(5\alpha-11)}{(\alpha-3)(\alpha-4)},\qquad \alpha>4.
+\frac{6(5\alpha-11)}{(\alpha-3)(\alpha-4)},\qquad \alpha>4.
 ```
 
-It diverges as $\alpha\downarrow4$ and is undefined for $\alpha\leq4$.
+It diverges as $\alpha\downarrow4$. For $2<\alpha\leq4$, the fourth
+central moment and extended excess kurtosis are infinite. For
+$0<\alpha\leq2$, finite variance fails and standardized excess kurtosis
+is undefined.
 It does **not** diverge for every inverse-gamma boundary: shapes above four
 retain a finite fourth moment.
 
@@ -192,14 +197,16 @@ Differentiation yields
 ```
 
 The [exponential-family core](./normix-exponential-family-core.md) relates
-$\eta=\nabla\psi$ and $\nabla^2\psi=\operatorname{Cov}(t(Y))$ to Fisher
-information. The [IG entry](https://xshi19.github.io/math/ig/information-geometry-exponential-families/)
+$\eta=\nabla\psi(\theta)$ to the Fisher information per observation,
+$I(\theta)=\nabla^2\psi(\theta)=\operatorname{Cov}_\theta(t(Y))$.
+The [IG entry](https://xshi19.github.io/math/ig/information-geometry-exponential-families/)
 states the regularity and minimality assumptions behind these identities.
 
 ## Maximum likelihood and numerical limits
 
-For independent positive observations $y_1,\ldots,y_n$, set
-$\widehat\eta=n^{-1}\sum_i(\log y_i,y_i^{-1},y_i)^\top$. Up to a term
+For independent positive observations $y_1,\ldots,y_n$, let
+$\widehat\eta=n^{-1}\sum_i t(y_i)$ be the empirical sufficient-statistic
+average in the order $(\log y,y^{-1},y)$. Up to a term
 independent of the candidate parameters, the average log likelihood is
 
 ```{math}

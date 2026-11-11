@@ -18,7 +18,7 @@ Monte Carlo examples stay in the
 ## Definitions
 
 Let $X$ have density $p(x)$ with respect to a reference measure
-$\mu(dx)$. The **information content** (surprisal) is
+$\nu(dx)$. The **information content** (surprisal) is
 $\mathcal{I}(X) = -\log p(X)$. Its mean is the **entropy**
 and its variance is the **varentropy**:
 
@@ -40,7 +40,7 @@ The **Rényi entropy** of order $\alpha > 0$, $\alpha \neq 1$
 ```{math}
 :label: ve-renyi
 
-H_\alpha = \frac{1}{1-\alpha} \log \int p(x)^\alpha \, \mu(dx),
+H_\alpha = \frac{1}{1-\alpha} \log \int p(x)^\alpha \, \nu(dx),
 ```
 
 For Lebesgue measure $H$ is differential entropy; for a general reference
@@ -57,7 +57,7 @@ All three quantities are governed by the **log density-power integral**
 ```{math}
 :label: ve-R
 
-R(\alpha) = \log \int p(x)^\alpha \, \mu(dx), \qquad R(1) = 0.
+R(\alpha) = \log \int p(x)^\alpha \, \nu(dx), \qquad R(1) = 0.
 ```
 
 Writing $\mathcal{I} = -\log p(X)$, the function $R(1-s)$ is the
@@ -124,7 +124,8 @@ V_H=\theta^\top I(\theta)\theta
 +\operatorname{Var}(\log h(X)).
 ```
 
-For example, the two-parameter inverse-Gaussian representation has
+For example, the two-parameter inverse-Gaussian representation, with mean
+$m>0$ and shape $\lambda>0$, has
 $\log h(y)=-\tfrac12\log(2\pi)-\tfrac32\log y$. One can instead use its
 exact embedding $\operatorname{GIG}(-1/2,\lambda/m^2,\lambda)$ with $h=1$
 and statistic $\log y$. Along the density-power path, the GIG order then
@@ -132,34 +133,36 @@ varies; holding it at $-1/2$ would omit part of the surprisal.
 
 ## Varentropy of the GIG Distribution
 
-Let $Y \sim \mathrm{GIG}(p, a, b)$ with density [](./normix-generalized-inverse-gaussian.md#gig-pdf) and natural
-parameters $\theta = [p-1,\,-b/2,\,-a/2]$. Raising the density to the
+Let $Y \sim \operatorname{GIG}(p,a,b)$ with $p\in\mathbb R$, $a,b>0$,
+density [](./normix-generalized-inverse-gaussian.md#gig-pdf), and natural
+parameters $\theta = (p-1,\,-b/2,\,-a/2)^\top$. Raising the density to the
 power $\alpha$ keeps it proportional to a GIG density with parameters
 $(1 + \alpha(p-1),\, \alpha a,\, \alpha b)$ — the escort-closure property.
 Using the Bessel integral
-$\int_0^\infty y^{q-1} e^{-(uy + v/y)/2}\,dy = 2\,(v/u)^{q/2} K_q(\sqrt{uv})$
+$\int_0^\infty y^{p-1} e^{-(ay + b/y)/2}\,dy = 2\,(b/a)^{p/2} K_p(\sqrt{ab})$
 ([NIST DLMF, 10.32.10](https://dlmf.nist.gov/10.32.E10), after a change of variable)
-gives, with $z = \sqrt{ab}$,
+at these parameters gives, with the GIG concentration $\omega=\sqrt{ab}$,
 
 ```{math}
 :label: ve-gig-R
 
 R(\alpha) = (1-\alpha)\log 2 + \frac{1-\alpha}{2}\log\!\frac{b}{a}
-+ \log K_{1 + \alpha(p-1)}(\alpha z) - \alpha \log K_p(z).
++ \log K_{1 + \alpha(p-1)}(\alpha\omega) - \alpha \log K_p(\omega).
 ```
 
-Define $F(p, z) = \log K_p(z)$ and the first-order differential operator
+Define $F(p,\omega)=\log K_p(\omega)$ and the first-order differential operator
 
 ```{math}
 :label: ve-L
 
-L = (p-1)\,\partial_p + z\,\partial_z.
+\mathcal L = (p-1)\,\partial_p + \omega\,\partial_\omega.
 ```
 
-Along the escort path $\alpha \mapsto (1 + \alpha(p-1),\, \alpha z)$ the derivatives at $\alpha=1$ are
-$\frac{d}{d\alpha}F=LF$ and
-$\frac{d^2}{d\alpha^2}F=(L^2-L)F$. The subtraction accounts for
-the variable coefficients of $L$. All remaining
+Along the escort path $\alpha \mapsto (1 + \alpha(p-1),\, \alpha\omega)$,
+the derivatives at $\alpha=1$ are
+$\frac{d}{d\alpha}F=\mathcal L F$ and
+$\frac{d^2}{d\alpha^2}F=(\mathcal L^2-\mathcal L)F$. The subtraction accounts for
+the variable coefficients of $\mathcal L$. All remaining
 terms of [](#ve-gig-R) are linear in $\alpha$, so from
 [](#ve-cumulants),
 
@@ -167,15 +170,16 @@ terms of [](#ve-gig-R) are linear in $\alpha$, so from
 :label: ve-gig
 
 \boxed{\;
-V_H\{\mathrm{GIG}(p,a,b)\} = (L^2 - L)\log K_p(z),
-\qquad z = \sqrt{ab}.
+V_H\{\operatorname{GIG}(p,a,b)\} = (\mathcal L^2 - \mathcal L)\log K_p(\omega),
+\qquad \omega = \sqrt{ab}.
 \;}
 ```
 
 Expanded, this is the pure second-order form
 
 ```{math}
-V_H = (p-1)^2 F_{pp} + 2(p-1)\,z\,F_{pz} + z^2 F_{zz},
+V_H = (p-1)^2 F_{pp} + 2(p-1)\,\omega\,F_{p\omega}
++ \omega^2 F_{\omega\omega},
 ```
 
 which coincides with the Fisher quadratic form
@@ -185,26 +189,27 @@ follows from $H = -R'(1)$:
 ```{math}
 :label: ve-gig-entropy
 
-H\{\mathrm{GIG}(p,a,b)\} = \log\{2 K_p(z)\} + \tfrac12\log\!\frac{b}{a}
-- L\log K_p(z).
+H\{\operatorname{GIG}(p,a,b)\} = \log\{2 K_p(\omega)\} + \tfrac12\log\!\frac{b}{a}
+- \mathcal L\log K_p(\omega).
 ```
 
 For $a,b>0$, the density decays exponentially in $y$ at infinity and
 in $1/y$ near zero, so the required logarithmic and power statistics have
 finite second moments. Thus $V_H$ is finite for every interior GIG law.
-The proper inverse-gamma boundary $a=0$, $p=-k<0$, $b>0$ also has finite
-varentropy for every $k>0$, even when its fourth moment fails ($k\leq4$).
+The proper inverse-gamma boundary $a=0$, $p<0$, $b>0$ also has finite
+varentropy for every shape $-p>0$, even when its fourth moment fails ($-p\leq4$).
 That boundary fact follows from the inverse-gamma density, not from
-substitution of $z=0$ in an interior Bessel expression. It is not a uniform
+substitution of $\omega=0$ in an interior Bessel expression. It is not a uniform
 bound as the shape approaches zero.
 
 ## Joint Varentropy of Normal Variance-Mean Mixtures
 
-Consider the joint law of [](./normix-generalized-hyperbolic.md#gh-joint) for a positive mixing variable,
+Consider the joint construction of [](./normix-generalized-hyperbolic.md#gh-joint)
+with a positive mixing variable of density $g$,
 
 ```{math}
 X \mid Y = y \sim \mathcal{N}_d(\mu + \gamma y,\ \Sigma y), \qquad
-Y \sim g_\vartheta.
+Y \sim g.
 ```
 
 Conditionally on $Y$, the quadratic form
@@ -216,9 +221,9 @@ $\chi^2_d$ and independent of $Y$, so
 C_\Sigma = \tfrac{d}{2}\log(2\pi) + \tfrac12\log|\Sigma|.
 ```
 
-Writing $\mathcal{I}_Y = -\log g_\vartheta(Y)$ for the mixing-law
+Writing $\mathcal{I}_Y = -\log g(Y)$ for the mixing-law
 surprisal, the joint information content is
-$\mathcal{I}_{X,Y} = C_\Sigma + \mathcal{I}_Y + \tfrac{d}{2}\log Y +
+$-\log p(X,Y) = C_\Sigma + \mathcal{I}_Y + \tfrac{d}{2}\log Y +
 \tfrac12 Q$. Since $\operatorname{Var}(\tfrac12 Q) = d/2$ and
 $Q \perp Y$,
 
@@ -230,6 +235,10 @@ V_H(X, Y) = \frac{d}{2}
 + \operatorname{Var}\!\left[\mathcal{I}_Y + \frac{d}{2}\log Y\right].
 \;}
 ```
+
+This variance identity assumes $\mathcal I_Y+\tfrac d2\log Y$ is integrable;
+both sides may be infinite. It is finite exactly when this quantity is
+square-integrable.
 
 The representation is $X=\mu+\gamma Y+\sqrt Y LZ$, with
 $LL^\top=\Sigma$, $Z\sim\mathcal N_d(0,I_d)$ independent of $Y$, and
@@ -254,7 +263,7 @@ More generally, Gaussian integration gives the joint density-power route
 \begin{aligned}
 R_{X,Y}(\alpha)
 &=(1-\alpha)C_\Sigma-\frac d2\log\alpha\\
-&\quad+\log\int_0^\infty g_\vartheta(y)^\alpha
+&\quad+\log\int_0^\infty g(y)^\alpha
 y^{(1-\alpha)d/2}\,dy.
 \end{aligned}
 ```
@@ -265,26 +274,27 @@ of the GH marginal $X$ by deleting the hidden variable; the marginal's
 surprisal is $-\log\int p(x,y)\,dy$.
 
 For GIG mixing, $\mathcal{I}_Y = \psi_{\mathrm{GIG}}(\theta) -
-\theta^\top t(Y)$ with $t(Y) = [\log Y,\, Y^{-1},\, Y]$, so adding
+\theta^\top t(Y)$ with $t(Y) = (\log Y,\, Y^{-1},\, Y)^\top$, so adding
 $\tfrac{d}{2}\log Y$ shifts only the coefficient of $\log Y$:
 
 ```{math}
 \mathcal{I}_Y + \tfrac{d}{2}\log Y
-= \psi_{\mathrm{GIG}}(\theta) - (\theta - \delta_d)^\top t(Y),
-\qquad \delta_d = (\tfrac{d}{2},\, 0,\, 0)^\top.
+= \psi_{\mathrm{GIG}}(\theta)
+- \bigl(\theta-(\tfrac{d}{2},\,0,\,0)^\top\bigr)^\top t(Y).
 ```
 
 Its variance is the shifted Fisher quadratic form, and translating to classical
-coordinates gives the operator $L_d$ of [](#ve-L) with the order
+coordinates gives the operator $\mathcal L_d$ of [](#ve-L) with the order
 shifted by $-d/2$:
 
 ```{math}
 :label: ve-joint-gig
 
 \boxed{\;
-V_H(X, Y) = \frac{d}{2} + (L_d^2 - L_d)\log K_p(z),
+V_H(X, Y) = \frac{d}{2} + (\mathcal L_d^2 - \mathcal L_d)\log K_p(\omega),
 \qquad
-L_d = \left(p - 1 - \tfrac{d}{2}\right)\partial_p + z\,\partial_z.
+\mathcal L_d = \left(p - 1 - \tfrac{d}{2}\right)\partial_p
++ \omega\,\partial_\omega.
 \;}
 ```
 

@@ -27,20 +27,20 @@ with $Y,Z,\varepsilon$ mutually independent. $Z$ denotes standard-normal
 factor noise; the scalar mixing variable $Y$ is $W$ in the
 [conditioning note](./normix-conditioning-a-mixture.md). In one dimension,
 $\gamma=\beta$ and $\Sigma=\sigma^2$. The classical parameters are
-$u=(\mu,\gamma,F,D,p,a,b)$; $\theta(u)$ below denotes their natural-coordinate
-embedding.
+$\vartheta=(\mu,\gamma,F,D,p,a,b)$; $\theta(\vartheta)$ below denotes their
+natural-coordinate embedding.
 
 ## Joint Distribution
 
 The conditional distribution of $X$ given $Y$ and $Z$
-is $N(\mu + \gamma Y + \sqrt{Y} F Z, \, D Y)$. The joint distribution
+is $\mathcal N_d(\mu + \gamma Y + \sqrt{Y} F Z, \, D Y)$. The joint distribution
 of $(X, Y, Z)$ is:
 
 ```{math}
 :label: fa-joint
 
 \begin{aligned}
-&f(x, y, z | \mu, \gamma, F, D, p, a, b) \\
+&f(x, y, z;\vartheta) \\
 &= \frac{1}{\sqrt{(2\pi)^{d+r} |D|}}
 \frac{(a/b)^{p/2}}{2 K_p(\sqrt{ab})}
 y^{p - 1 - d/2} \\
@@ -58,55 +58,57 @@ for $y > 0$.
 The density [](#fa-joint) belongs to a **curved exponential family**:
 
 ```{math}
-f(x, y, z) = h(x, y, z) \exp\!\left(\theta(u)^\top t(x, y, z)
-- \psi(\theta(u))\right),
+f(x, y, z;\vartheta) = h(x, y, z) \exp\!\left(\langle\theta(\vartheta),t(x, y, z)\rangle
+- \psi(\theta(\vartheta))\right),
 ```
 
 where $\theta(\cdot)$ is a nonlinear mapping from the parameter
-$u = (\mu, \gamma, F, D, p, a, b)$ to a higher-dimensional space.
+$\vartheta = (\mu, \gamma, F, D, p, a, b)$ to a higher-dimensional space.
 
-The sufficient statistics $t(x, y, z)$ consist of ten components:
+The sufficient statistic $t(x,y,z)$ consists of ten blocks, with arguments
+suppressed on each $t_i$ below:
 
 ```{math}
-s_1 = \log y, \quad s_2 = y^{-1}, \quad s_3 = y, \quad
-s_4 = x, \quad s_5 = x y^{-1}, \quad s_6 = x x^\top y^{-1},
+t_1 = \log y, \quad t_2 = y^{-1}, \quad t_3 = y, \quad
+t_4 = x, \quad t_5 = x y^{-1}, \quad t_6 = x x^\top y^{-1},
 ```
 
 ```{math}
-s_7 = x z^\top y^{-1/2}, \quad s_8 = z y^{-1/2}, \quad
-s_9 = z y^{1/2}, \quad s_{10} = z z^\top.
+t_7 = x z^\top y^{-1/2}, \quad t_8 = z y^{-1/2}, \quad
+t_9 = z y^{1/2}, \quad t_{10} = z z^\top.
 ```
 
 ## Log-Likelihood Function
 
-With $s$ fixed as a complete-data average or a posterior average, the
+Let $\widehat\eta$ be a complete-data average or a posterior average of
+$t(X,Y,Z)$ in the same block order. Holding it fixed, the
 parameter-dependent part of the per-observation log likelihood is:
 
 ```{math}
 \begin{aligned}
-L_{FA}(u | s) &= -\frac{1}{2} \log|D|
-- \frac{1}{2} \mu^\top D^{-1} \mu \, s_2
-- \frac{1}{2} \gamma^\top D^{-1} \gamma \, s_3
-+ \gamma^\top D^{-1} s_4
-+ \mu^\top D^{-1} s_5 \\
-&\quad - \frac{1}{2} \operatorname{tr}(D^{-1} s_6)
-+ \operatorname{tr}(F^\top D^{-1} s_7)
-- \mu^\top D^{-1} F s_8
-- \gamma^\top D^{-1} F s_9 \\
-&\quad - \frac{1}{2} \operatorname{tr}(F^\top D^{-1} F s_{10})
+L_{\mathrm{FA}}(\vartheta\mid\widehat\eta) &= -\frac{1}{2} \log|D|
+- \frac{1}{2} \mu^\top D^{-1} \mu \, \widehat\eta_2
+- \frac{1}{2} \gamma^\top D^{-1} \gamma \, \widehat\eta_3
++ \gamma^\top D^{-1} \widehat\eta_4
++ \mu^\top D^{-1} \widehat\eta_5 \\
+&\quad - \frac{1}{2} \operatorname{tr}(D^{-1} \widehat\eta_6)
++ \operatorname{tr}(F^\top D^{-1} \widehat\eta_7)
+- \mu^\top D^{-1} F \widehat\eta_8
+- \gamma^\top D^{-1} F \widehat\eta_9 \\
+&\quad - \frac{1}{2} \operatorname{tr}(F^\top D^{-1} F \widehat\eta_{10})
 - \mu^\top D^{-1} \gamma
-+ L_{GIG}(p, a, b | s_1, s_2, s_3),
++ L_{\mathrm{GIG}}(p, a, b \mid \widehat\eta_1, \widehat\eta_2, \widehat\eta_3),
 \end{aligned}
 ```
 
-where $L_{GIG}$ is the [GIG log likelihood](./normix-generalized-inverse-gaussian.md#gig-loglik),
+where $L_{\mathrm{GIG}}$ is the [GIG log likelihood](./normix-generalized-inverse-gaussian.md#gig-loglik),
 using the order $(\log Y,Y^{-1},Y)$ throughout. The fixed standard-normal
-term $-\tfrac12\operatorname{tr}(s_{10})$ and parameter-independent
-normalizing constants are omitted from $L_{FA}$.
+term $-\tfrac12\operatorname{tr}(\widehat\eta_{10})$ and parameter-independent
+normalizing constants are omitted from $L_{\mathrm{FA}}$.
 
 ## M-step for the normal block
 
-Assume $s_{10}$ is invertible and the two location/skew equations below
+Assume $\widehat\eta_{10}$ is invertible and the two location/skew equations below
 have a nonsingular coefficient matrix. Eliminating $F$ from the normal
 equations gives the following auxiliary quantities:
 
@@ -114,16 +116,16 @@ equations gives the following auxiliary quantities:
 :label: fa-aux
 
 \begin{aligned}
-q_1 &= s_8^\top s_{10}^{-1} s_8 - s_2, \\
-q_2 &= s_9^\top s_{10}^{-1} s_8 - 1, \\
-q_3 &= s_9^\top s_{10}^{-1} s_9 - s_3, \\
-q_4 &= s_7 s_{10}^{-1} s_8 - s_5, \\
-q_5 &= s_7 s_{10}^{-1} s_9 - s_4.
+q_1 &= \widehat\eta_8^\top \widehat\eta_{10}^{-1} \widehat\eta_8 - \widehat\eta_2, \\
+q_2 &= \widehat\eta_9^\top \widehat\eta_{10}^{-1} \widehat\eta_8 - 1, \\
+q_3 &= \widehat\eta_9^\top \widehat\eta_{10}^{-1} \widehat\eta_9 - \widehat\eta_3, \\
+q_4 &= \widehat\eta_7 \widehat\eta_{10}^{-1} \widehat\eta_8 - \widehat\eta_5, \\
+q_5 &= \widehat\eta_7 \widehat\eta_{10}^{-1} \widehat\eta_9 - \widehat\eta_4.
 \end{aligned}
 ```
 
-Here $s_7$ is $d\times r$, so $q_4,q_5$ are $d$-vectors.
-The source transpose on $s_7$ in these two expressions is corrected to
+Here $\widehat\eta_7$ is $d\times r$, so $q_4,q_5$ are $d$-vectors.
+The source transpose on $\widehat\eta_7$ in these two expressions is corrected to
 make the products dimensionally consistent. The parameter updates are:
 
 ```{math}
@@ -132,17 +134,17 @@ make the products dimensionally consistent. The parameter updates are:
 \begin{aligned}
 \mu &= \frac{q_2 \, q_5 - q_3 \, q_4}{q_2^2 - q_1 \, q_3}, \\
 \gamma &= \frac{q_2 \, q_4 - q_1 \, q_5}{q_2^2 - q_1 \, q_3}, \\
-F &= (s_7 - \mu \, s_8^\top - \gamma \, s_9^\top) \, s_{10}^{-1}, \\
+F &= (\widehat\eta_7 - \mu \, \widehat\eta_8^\top - \gamma \, \widehat\eta_9^\top) \, \widehat\eta_{10}^{-1}, \\
 D &= \operatorname{diag}\!\big(
-s_2 \mu \mu^\top + s_3 \gamma \gamma^\top
-- s_4 \gamma^\top - \gamma s_4^\top
-- s_5 \mu^\top - \mu s_5^\top + s_6 \\
-&\qquad - s_7 F^\top - F s_7^\top
-+ F s_8 \mu^\top + \mu (F s_8)^\top
-+ F s_9 \gamma^\top + \gamma (F s_9)^\top \\
-&\qquad + F s_{10} F^\top
+\widehat\eta_2 \mu \mu^\top + \widehat\eta_3 \gamma \gamma^\top
+- \widehat\eta_4 \gamma^\top - \gamma \widehat\eta_4^\top
+- \widehat\eta_5 \mu^\top - \mu \widehat\eta_5^\top + \widehat\eta_6 \\
+&\qquad - \widehat\eta_7 F^\top - F \widehat\eta_7^\top
++ F \widehat\eta_8 \mu^\top + \mu (F \widehat\eta_8)^\top
++ F \widehat\eta_9 \gamma^\top + \gamma (F \widehat\eta_9)^\top \\
+&\qquad + F \widehat\eta_{10} F^\top
 + \mu \gamma^\top + \gamma \mu^\top\big), \\
-(p, a, b) &= \arg\max_{p, a, b} L_{GIG}(p, a, b | s_1, s_2, s_3).
+(p, a, b) &= \arg\max_{p, a, b} L_{\mathrm{GIG}}(p, a, b \mid \widehat\eta_1, \widehat\eta_2, \widehat\eta_3).
 \end{aligned}
 ```
 
@@ -154,57 +156,59 @@ $\operatorname{Cov}(X\mid Y)=Y\Sigma$.
 Therefore the conditional distribution of $Y$ given $X$ is:
 
 ```{math}
-Y | X = x \sim \operatorname{GIG}\!\left(p - \frac{d}{2}, \,
-a + \gamma^\top (F F^\top + D)^{-1} \gamma, \,
-b + (x - \mu)^\top (F F^\top + D)^{-1} (x - \mu)\right),
+Y \mid X = x \sim \operatorname{GIG}\!\left(p - \frac{d}{2}, \,
+a + \gamma^\top\Sigma^{-1}\gamma, \,
+b + (x - \mu)^\top\Sigma^{-1}(x - \mu)\right),
 ```
 
-and the conditional moments $E[Y^\alpha | X, u]$ and
-$E[\log Y | X, u]$ are computed using [](./normix-em-algorithm.md#gig-moment-cond).
+and the conditional moments $\mathbb E_\vartheta[Y^\alpha\mid X]$ and
+$\mathbb E_\vartheta[\log Y\mid X]$ are computed using [](./normix-em-algorithm.md#gig-moment-cond).
 
 The conditional distribution of $(X, Z)$ given $Y$ is Gaussian:
 
 ```{math}
 \begin{aligned}
 \begin{pmatrix} (X - \mu - \gamma Y)/\sqrt{Y} \\ Z \end{pmatrix}
-\Bigg| Y, u
-\sim N\!\left(0, \begin{pmatrix}
-F F^\top + D & F \\ F^\top & I
+\Biggm| Y, \vartheta
+\sim\mathcal N_{d+r}\!\left(0, \begin{pmatrix}
+\Sigma & F \\ F^\top & I_r
 \end{pmatrix}\right).
 \end{aligned}
 ```
 
-Define $A = F^\top (F F^\top + D)^{-1}$. The conditional
+Define the local regression matrix $A=F^\top\Sigma^{-1}$. The conditional
 expectations of the latent factor $Z$ are:
 
 ```{math}
 \begin{aligned}
-E[Z Y^{-1/2} | X, u] &= A(X - \mu) E[Y^{-1} | X, u] - A \gamma, \\
-E[Z Y^{1/2} | X, u] &= A(X - \mu) - A \gamma \, E[Y | X, u], \\
-E[Z Z^\top | X, u] &= I - A F
-+ A(X - \mu)(X - \mu)^\top A^\top E[Y^{-1} | X, u] \\
+\mathbb E_\vartheta[Z Y^{-1/2}\mid X] &= A(X - \mu) \mathbb E_\vartheta[Y^{-1}\mid X] - A \gamma, \\
+\mathbb E_\vartheta[Z Y^{1/2}\mid X] &= A(X - \mu) - A \gamma \, \mathbb E_\vartheta[Y\mid X], \\
+\mathbb E_\vartheta[Z Z^\top\mid X] &= I_r - A F
++ A(X - \mu)(X - \mu)^\top A^\top \mathbb E_\vartheta[Y^{-1}\mid X] \\
 &\quad - A(X - \mu)\gamma^\top A^\top
 - A \gamma (X - \mu)^\top A^\top
-+ A \gamma \gamma^\top A^\top E[Y | X, u].
++ A \gamma \gamma^\top A^\top \mathbb E_\vartheta[Y\mid X].
 \end{aligned}
 ```
 
 ## E-Step
 
 Given i.i.d. samples $x_1, \ldots, x_n$ and current parameters
-$u_k = (\mu_k, \gamma_k, F_k, D_k, p_k, a_k, b_k)$, the E-step
-computes all ten sufficient statistics. The first six are the same as the
+$\vartheta_k = (\mu_k, \gamma_k, F_k, D_k, p_k, a_k, b_k)$, the E-step
+computes the posterior average $\widehat\eta_k$ of all ten statistic blocks.
+Write $\mathbb E_k$ for expectation under $\vartheta_k$ and
+$\widehat\eta_{k,i}$ for block $i$. The first six are the same as the
 standard EM algorithm (see [](./normix-em-algorithm.md#e-step)):
 
 ```{math}
 \begin{aligned}
-s_1^{(k)} &= \frac{1}{n} \sum_{j=1}^n E[\log Y | X = x_j, u_k], \\
-s_2^{(k)} &= \frac{1}{n} \sum_{j=1}^n E[Y^{-1} | X = x_j, u_k], \\
-s_3^{(k)} &= \frac{1}{n} \sum_{j=1}^n E[Y | X = x_j, u_k], \\
-s_4^{(k)} &= \frac{1}{n} \sum_{j=1}^n x_j, \\
-s_5^{(k)} &= \frac{1}{n} \sum_{j=1}^n x_j \, E[Y^{-1} | X = x_j, u_k], \\
-s_6^{(k)} &= \frac{1}{n} \sum_{j=1}^n
-x_j x_j^\top E[Y^{-1} | X = x_j, u_k].
+\widehat\eta_{k,1} &= \frac{1}{n} \sum_{j=1}^n \mathbb E_k[\log Y\mid X=x_j], \\
+\widehat\eta_{k,2} &= \frac{1}{n} \sum_{j=1}^n \mathbb E_k[Y^{-1}\mid X=x_j], \\
+\widehat\eta_{k,3} &= \frac{1}{n} \sum_{j=1}^n \mathbb E_k[Y\mid X=x_j], \\
+\widehat\eta_{k,4} &= \frac{1}{n} \sum_{j=1}^n x_j, \\
+\widehat\eta_{k,5} &= \frac{1}{n} \sum_{j=1}^n x_j \, \mathbb E_k[Y^{-1}\mid X=x_j], \\
+\widehat\eta_{k,6} &= \frac{1}{n} \sum_{j=1}^n
+x_j x_j^\top \mathbb E_k[Y^{-1}\mid X=x_j].
 \end{aligned}
 ```
 
@@ -213,21 +217,24 @@ $A_k = F_k^\top (F_k F_k^\top + D_k)^{-1}$:
 
 ```{math}
 \begin{aligned}
-s_7^{(k)} &= (s_6^{(k)} - s_5^{(k)} \mu_k^\top
-- s_4^{(k)} \gamma_k^\top) A_k^\top, \\
-s_8^{(k)} &= A_k (s_5^{(k)} - \mu_k \, s_2^{(k)} - \gamma_k), \\
-s_9^{(k)} &= A_k (s_4^{(k)} - \mu_k - \gamma_k \, s_3^{(k)}), \\
-s_{10}^{(k)} &= I - A_k F_k
-+ A_k \big(s_6^{(k)} - s_5^{(k)} \mu_k^\top
-- \mu_k (s_5^{(k)})^\top + \mu_k \mu_k^\top s_2^{(k)} \\
-&\quad - (s_4^{(k)} - \mu_k) \gamma_k^\top
-- \gamma_k (s_4^{(k)} - \mu_k)^\top
-+ \gamma_k \gamma_k^\top s_3^{(k)}\big) A_k^\top.
+\widehat\eta_{k,7} &= (\widehat\eta_{k,6} - \widehat\eta_{k,5} \mu_k^\top
+- \widehat\eta_{k,4} \gamma_k^\top) A_k^\top, \\
+\widehat\eta_{k,8} &= A_k (\widehat\eta_{k,5} - \mu_k \, \widehat\eta_{k,2} - \gamma_k), \\
+\widehat\eta_{k,9} &= A_k (\widehat\eta_{k,4} - \mu_k - \gamma_k \, \widehat\eta_{k,3}), \\
+\widehat\eta_{k,10} &= I_r - A_k F_k
++ A_k \big(\widehat\eta_{k,6} - \widehat\eta_{k,5} \mu_k^\top
+- \mu_k (\widehat\eta_{k,5})^\top + \mu_k \mu_k^\top \widehat\eta_{k,2} \\
+&\quad - (\widehat\eta_{k,4} - \mu_k) \gamma_k^\top
+- \gamma_k (\widehat\eta_{k,4} - \mu_k)^\top
++ \gamma_k \gamma_k^\top \widehat\eta_{k,3}\big) A_k^\top.
 \end{aligned}
 ```
 
 The M-step then applies [](#fa-mstep) and [](#fa-aux) with
-$s = (s_1^{(k)}, \ldots, s_{10}^{(k)})$.
+$\widehat\eta=\widehat\eta_k=(\widehat\eta_{k,1},\ldots,\widehat\eta_{k,10})$,
+suppressing the iteration index in those M-step formulas. These averages
+need not equal all ambient model expectations $\nabla\psi(\theta(\vartheta))$
+at a constrained optimum.
 
 ## Feasibility and interpretation
 

@@ -10,7 +10,9 @@ the upstream fitting choices; they do not rule out direct likelihood optimizatio
 
 ## Exponential-family likelihood after one reduction
 
-For independent observations from a regular exponential family, form
+For independent observations from a regular exponential family with
+sufficient statistic $t$, natural parameter $\theta$ in the open domain
+$\Theta$, and log-partition $\psi$, form
 
 ```{math}
 \widehat\eta=\frac1n\sum_i t(x_i),\qquad
@@ -41,8 +43,9 @@ states what that guarantee does and does not imply.
 
 ## Coordinates and feasible parameters
 
-Direct optimization often replaces positive parameters by unconstrained ones,
-for example
+Write $\vartheta=(\mu,\gamma,\Sigma,p,a,b)$ for the classical GH tuple.
+Direct optimization often expresses it as $\vartheta(\phi)$ in unconstrained
+coordinates $\phi$. For example,
 
 ```{math}
 a=\log(1+e^{\phi_a}),\qquad b=\log(1+e^{\phi_b}),\qquad

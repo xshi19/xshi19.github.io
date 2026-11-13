@@ -17,12 +17,12 @@ owns the software interfaces, fitting loops, and product options.
 ## From a batch to a model
 
 For a complete-data exponential family with statistic $t(X,Y)$, observation
-batch $\mathcal B_t$, and current classical parameter $u_{t-1}$, compute
+batch $\mathcal B_t$, and current classical parameter $\vartheta_{t-1}$, compute
 
 ```{math}
 :label: normix-framework-aggregation
 \widehat\eta_t=\frac1{|\mathcal B_t|}\sum_{x\in\mathcal B_t}
-\mathbb E_{u_{t-1}}[t(X,Y)\mid X=x].
+\mathbb E_{\vartheta_{t-1}}[t(X,Y)\mid X=x].
 ```
 
 The aggregate contains only the statistic blocks needed by the M-step.
@@ -33,18 +33,19 @@ $Y$ is the mixing variable $W$ in the
 standard-normal noise. [Factor analysis](./normix-factor-analysis.md)
 adds latent-factor cross moments to these six blocks.
 
-After an update rule produces a statistic vector $s$, recover parameters by
+After an update rule produces a statistic vector $\eta$, recover parameters by
 
 ```{math}
 :label: normix-framework-recovery
-\mathcal M(s)\in\operatorname*{arg\,max}_u
-\{\langle\theta(u),s\rangle-\psi(\theta(u))\}.
+\mathcal M(\eta)\in\operatorname*{arg\,max}_\vartheta
+\{\langle\theta(\vartheta),\eta\rangle-\psi(\theta(\vartheta))\}.
 ```
 
-Here $\theta(u)$ is the natural-coordinate embedding. In an unconstrained
+Here $\theta(\vartheta)$ is the natural-coordinate embedding. In an unconstrained
 minimal family with an attained interior solution,
-$\theta(\mathcal M(s))=\nabla\phi(s)$. In a curved family,
-$\mathcal M$ solves the constrained problem; $s$ is not generally the
+$\theta(\mathcal M(\eta))=\nabla\psi^*(\eta)$, where $\psi^*$ is the Legendre
+conjugate of $\psi$. In a curved family,
+$\mathcal M$ solves the constrained problem; $\eta$ is not generally the
 expectation vector of the recovered model. We use the name $\eta$ for the
 running statistic in the update rules, without asserting ambient moment
 matching in that case.
@@ -113,18 +114,22 @@ S_\tau(v)=\frac{v+\tau\eta_0}{1+\tau}.
 With a fresh full-data E-step and exact or improving penalized maximization,
 this is EM for the observed likelihood minus the fixed complete-data KL
 penalty. In [IG dual coordinates](https://xshi19.github.io/math/ig/information-geometry-duality/), the
-penalty is $D_\phi(\eta_0\Vert\eta)$; it is not generally a squared
-Euclidean distance in expectation coordinates.
+penalty is $D_{\psi^*}(\eta_0\Vert\eta)$ with
+$\eta=\nabla\psi(\theta)$ the candidate model's expectation vector.
+This identity uses model expectations even when the running statistics do
+not match them. The penalty is not generally a squared Euclidean distance
+in expectation coordinates.
 
 ## Composing shrinkage with a running rule
 
-Apply the base rule first, then shrink its statistic output:
+Apply the base rule first, then shrink its statistic output. After the second
+assignment below, $\eta_t$ denotes the shrunk statistic:
 
 ```{math}
 :label: normix-framework-composition
 \begin{aligned}
-(v_t,q_t)&=\mathcal U_t(\eta_{t-1},\widehat\eta_t,q_{t-1}),\\
-\eta_t&=S_\tau(v_t),\qquad u_t=\mathcal M(\eta_t).
+(\eta_t,q_t)&\leftarrow\mathcal U_t(\eta_{t-1},\widehat\eta_t,q_{t-1}),\\
+\eta_t&\leftarrow S_\tau(\eta_t),\qquad \vartheta_t=\mathcal M(\eta_t).
 \end{aligned}
 ```
 
@@ -168,10 +173,11 @@ These schemes therefore need separate choices of schedule and objective.
 
 ## Blockwise rules and algorithmic limits
 
-For nonnegative block weights $\tau_j$, one can write
+For nonnegative block weights $\tau_j$, apply the shrinkage assignment
+separately to each block $j$ of the base rule's output:
 
 ```{math}
-\eta_{t,j}=\frac{v_{t,j}+\tau_j\eta_{0,j}}{1+\tau_j}.
+\eta_{t,j}\leftarrow\frac{\eta_{t,j}+\tau_j\eta_{0,j}}{1+\tau_j}.
 ```
 
 This defines a blockwise statistic transformation. It is not generally

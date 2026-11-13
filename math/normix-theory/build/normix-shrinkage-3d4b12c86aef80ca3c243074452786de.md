@@ -25,13 +25,14 @@ f(x,y;\theta)=h(x,y)\exp\{\langle\theta,t(x,y)\rangle-\psi(\theta)\},
 \qquad \eta=\nabla\psi(\theta).
 ```
 
+Here $f$ is the joint density and $f_X$ its observed marginal.
 Choose a reference parameter $\theta_0$ with finite expectation vector
 $\eta_0$. Here the word *prior* means a target distribution in the model,
 not necessarily a Bayesian prior over parameters. The joint-law divergence is
 
 ```{math}
 :label: normix-shrinkage-kl
-D_{\mathrm{KL}}(f_{\theta_0}(X,Y)\Vert f_\theta(X,Y))
+D_{\mathrm{KL}}(f(X,Y;\theta_0)\Vert f(X,Y;\theta))
 =\psi(\theta)-\psi(\theta_0)-\langle\eta_0,\theta-\theta_0\rangle
 =D_\psi(\theta\Vert\theta_0).
 ```
@@ -68,10 +69,11 @@ The penalized EM identity is
 J(\theta_{k+1})-J(\theta_k)
 &=Q_\tau(\theta_{k+1}\mid\theta_k)-Q_\tau(\theta_k\mid\theta_k)\\
 &\quad+\frac1n\sum_jD_{\mathrm{KL}}\!\left(
-f_{\theta_k}(Y\mid x_j)\Vert f_{\theta_{k+1}}(Y\mid x_j)\right).
+f(Y\mid x_j;\theta_k)\Vert f(Y\mid x_j;\theta_{k+1})\right).
 \end{aligned}
 ```
 
+The densities in the KL term are the posteriors at the two indicated parameters.
 Consequently, an M-step that increases this surrogate increases $J$, whenever
 these quantities are finite. It need not increase the unpenalized likelihood
 or reach a global maximum.
@@ -91,13 +93,15 @@ It is therefore the ordinary expectation-to-parameter problem at
 
 ```{math}
 :label: normix-shrinkage-statistics
-\widetilde\eta_k=\frac{\widehat\eta_k+\tau\eta_0}{1+\tau}.
+\widehat\eta_k\leftarrow\frac{\widehat\eta_k+\tau\eta_0}{1+\tau}.
 ```
 
-For an attained interior maximum of a full minimal family,
-$\nabla\psi(\theta_{k+1})=\widetilde\eta_k$.
+From this assignment onward, $\widehat\eta_k$ denotes the shrunk posterior
+statistic average. For an attained interior maximum of a full minimal family,
+$\nabla\psi(\theta_{k+1})=\widehat\eta_k$.
 For a curved family, such as [factor analysis](./normix-factor-analysis.md),
-the same penalized-surrogate derivation holds with $\theta=\theta(u)$, but
+the same penalized-surrogate derivation holds with $\theta=\theta(\vartheta)$
+for classical parameters $\vartheta$, but
 the constrained maximizing map replaces full ambient moment matching.
 
 Because $J$ uses an average likelihood, the reference has the weight of
@@ -121,7 +125,7 @@ For $a_0,b_0>0$, put $M_0(s)=\mathbb E_0[Y^s]$. The
 ```{math}
 M_0(s)=\left(\frac{b_0}{a_0}\right)^{s/2}
 \frac{K_{p_0+s}(\sqrt{a_0b_0})}{K_{p_0}(\sqrt{a_0b_0})},
-\qquad l_0=M_0'(0),\quad u_0=M_0(-1),\quad v_0=M_0(1).
+\qquad M_0'(0)=\mathbb E_0[\log Y].
 ```
 
 In the same order as the [batch E-step](./normix-em-algorithm.md#e-step),
@@ -129,10 +133,11 @@ the reference vector has six blocks:
 
 ```{math}
 \begin{aligned}
-\eta_{0,1}&=l_0,&\eta_{0,2}&=u_0,&\eta_{0,3}&=v_0,\\
-\eta_{0,4}&=\mu_0+\gamma_0v_0,\\
-\eta_{0,5}&=\mu_0u_0+\gamma_0,\\
-\eta_{0,6}&=\Sigma_0+\mu_0\mu_0^\top u_0+\gamma_0\gamma_0^\top v_0
+\eta_{0,1}&=M_0'(0),&\eta_{0,2}&=M_0(-1),&\eta_{0,3}&=M_0(1),\\
+\eta_{0,4}&=\mu_0+\gamma_0\eta_{0,3},\\
+\eta_{0,5}&=\mu_0\eta_{0,2}+\gamma_0,\\
+\eta_{0,6}&=\Sigma_0+\mu_0\mu_0^\top\eta_{0,2}
++\gamma_0\gamma_0^\top\eta_{0,3}
 +\mu_0\gamma_0^\top+\gamma_0\mu_0^\top.
 \end{aligned}
 ```
@@ -148,18 +153,22 @@ moment needed by the chosen model is finite.
 The normal-block covariance is affine in the sixth block **when the first
 five blocks are fixed**. Under uniform shrinkage, those other blocks also
 change, moving the fitted location, skew vector, and mixing parameters.
-Thus uniform joint-KL shrinkage is not generally just
-$(\widehat\Sigma+\tau\Sigma_0)/(1+\tau)$.
+Thus, if $\Sigma$ denotes the unpenalized normal-block update, uniform
+joint-KL shrinkage is not generally just $(\Sigma+\tau\Sigma_0)/(1+\tau)$.
 
-To isolate the distinction, fix the first five statistics and let the sixth
-block be $s_6$. Suppose its normal-block update gives dispersion $\Sigma$.
-A compatible target sixth block is
+For this covariance-only comparison, start again from the unpenalized
+statistic average and suppress the iteration index. Fix the first five
+blocks and let the sixth block be $\widehat\eta_6$. Suppose its normal-block
+update gives dispersion $\Sigma$. Shrink the sixth block toward the compatible target
+$\widehat\eta_6-\Sigma+\Sigma_0$:
 
 ```{math}
-s_{6,0}=s_6-\Sigma+\Sigma_0.
+\widehat\eta_6\leftarrow
+\frac{\widehat\eta_6+\tau(\widehat\eta_6-\Sigma+\Sigma_0)}{1+\tau}.
 ```
 
-Shrinking only this block yields
+Here $\widehat\eta_6$ now denotes the transformed block; $\Sigma$ still
+denotes the original dispersion. The resulting dispersion is
 
 ```{math}
 \widetilde\Sigma=\frac{\Sigma+\tau\Sigma_0}{1+\tau}.

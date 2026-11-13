@@ -46,9 +46,11 @@ f(y\mid x;\vartheta)\propto y^{p-1-d/2}
 +\bigl(b+(x-\mu)^\top\Sigma^{-1}(x-\mu)\bigr)/y\right\}\right].
 ```
 
-Set $r=p-d/2$, $A=a+\gamma^\top\Sigma^{-1}\gamma$, and
-$B(x)=b+(x-\mu)^\top\Sigma^{-1}(x-\mu)$. All are evaluated at the current
-iterate when used in an E-step. Then
+Use the squared Mahalanobis distance
+$q(x)=(x-\mu)^\top\Sigma^{-1}(x-\mu)$ and the posterior parameters
+$r=p-d/2$, $A=a+\gamma^\top\Sigma^{-1}\gamma$, and $B(x)=b+q(x)$,
+as in the GH note. All are evaluated at the current iterate when used in an
+E-step. Then
 
 ```{math}
 :label: normix-em-posterior
@@ -81,31 +83,32 @@ would give a different algorithm.
 
 Use the joint sufficient-statistic blocks
 $t(x,y)=(\log y,y^{-1},y,x,x/y,xx^\top/y)$, as in the GIG and GH notes.
-At iterate $\vartheta_k$ let
+At iterate $\vartheta_k$, write $\mathbb E_k$ for expectation under the
+current model and retain the inverse-moment weight
 
 ```{math}
-u_j=\mathbb E_k[Y^{-1}\mid x_j],\qquad
-v_j=\mathbb E_k[Y\mid x_j],\qquad
-l_j=\mathbb E_k[\log Y\mid x_j].
+u_j=\mathbb E_k[Y^{-1}\mid X=x_j].
 ```
 
-The E-step averages all six blocks:
+The E-step average is
+$\widehat\eta_k=n^{-1}\sum_j\mathbb E_k[t(x_j,Y)\mid X=x_j]$.
+Its six blocks, with iteration index first and block index second, are
 
 ```{math}
 :label: e-step
 \begin{aligned}
-\widehat\eta_1^{(k)}&=n^{-1}\sum_j l_j,&
-\widehat\eta_2^{(k)}&=n^{-1}\sum_j u_j,&
-\widehat\eta_3^{(k)}&=n^{-1}\sum_j v_j,\\
-\widehat\eta_4^{(k)}&=n^{-1}\sum_j x_j,\\
-\widehat\eta_5^{(k)}&=n^{-1}\sum_j x_j u_j,\\
-\widehat\eta_6^{(k)}&=n^{-1}\sum_j x_jx_j^\top u_j.
+\widehat\eta_{k,1}&=n^{-1}\sum_j\mathbb E_k[\log Y\mid X=x_j],\\
+\widehat\eta_{k,2}&=n^{-1}\sum_j u_j,\\
+\widehat\eta_{k,3}&=n^{-1}\sum_j\mathbb E_k[Y\mid X=x_j],\\
+\widehat\eta_{k,4}&=n^{-1}\sum_j x_j,\\
+\widehat\eta_{k,5}&=n^{-1}\sum_j x_j u_j,\\
+\widehat\eta_{k,6}&=n^{-1}\sum_j x_jx_j^\top u_j.
 \end{aligned}
 ```
 
 The source EM note uses the first three slots in a different order. Here
-$\widehat\eta_1$ always means the log moment, $\widehat\eta_2$ the inverse
-moment, and $\widehat\eta_3$ the first moment. This order also governs the
+the first block always means the log moment, the second the inverse
+moment, and the third the first moment. This order also governs the
 [mixture architecture](./normix-mixture-architecture.md).
 
 ## M-step as an expectation-to-parameter map
@@ -118,10 +121,10 @@ Q(\vartheta\mid\vartheta_k)
 ```
 
 In natural coordinates this equals
-$\langle\theta,\widehat\eta^{(k)}\rangle-\psi(\theta)$ plus a constant.
+$\langle\theta,\widehat\eta_k\rangle-\psi(\theta)$ plus a constant.
 For an attained interior maximum of the full joint family, the new model
-matches the posterior sufficient-statistic averages. Suppressing $(k)$ on
-$\widehat\eta$, the normal-block update is
+matches the posterior sufficient-statistic averages. Suppressing the iteration
+index on $\widehat\eta$, the normal-block update is
 
 ```{math}
 :label: m-step
@@ -174,7 +177,9 @@ The [GH scale action](./normix-generalized-hyperbolic.md#normix-gh-scale) is
 T_c\vartheta=(\mu,\gamma/c,\Sigma/c,p,a/c,bc),\qquad c>0.
 ```
 
-It represents the same observed law by replacing $Y$ with $Y'=cY$.
+It represents the same observed law by rescaling $Y\leftarrow cY$; under
+$T_c\vartheta$, $Y$ denotes the rescaled mixing variable. Expectations under
+$\vartheta$ retain the original scale for comparison.
 The posterior parameters become $(r,A/c,cB(x))$. Consequently,
 
 ```{math}
@@ -241,9 +246,10 @@ convergence rates depend on the problem.
 
 ## Special mixing families
 
-Write $l=\mathbb E[\log Y]$, $u=\mathbb E[Y^{-1}]$, and $v=\mathbb E[Y]$
-for the posterior averages at the relevant E-step. Denote the digamma function
-by $\psi_0$ and its derivative by $\psi_1$, to distinguish them from the
+Use the same posterior averages $\widehat\eta_1$, $\widehat\eta_2$, and
+$\widehat\eta_3$ for the log, inverse, and first moments at the relevant
+E-step, with the iteration index suppressed. Denote the digamma function by
+$\psi_0$ and its derivative by $\psi_1$, to distinguish them from the
 log-partition $\psi$.
 
 ### Gamma mixing: variance gamma
@@ -253,14 +259,15 @@ $\mathbb E[\log Y]=\psi_0(\alpha)-\log\rho$ and
 $\mathbb E[Y]=\alpha/\rho$. The mixing-law update solves
 
 ```{math}
-\psi_0(\alpha)-\log\alpha=l-\log v,\qquad \rho=\alpha/v.
+\psi_0(\alpha)-\log\alpha=\widehat\eta_1-\log\widehat\eta_3,
+\qquad \rho=\alpha/\widehat\eta_3.
 ```
 
 A Newton proposal is
 
 ```{math}
 \alpha_{t+1}=\alpha_t-
-\frac{\psi_0(\alpha_t)-\log\alpha_t-l+\log v}
+\frac{\psi_0(\alpha_t)-\log\alpha_t-\widehat\eta_1+\log\widehat\eta_3}
 {\psi_1(\alpha_t)-1/\alpha_t}.
 ```
 
@@ -278,11 +285,13 @@ $\mathbb E[Y]=m$ and $\mathbb E[Y^{-1}]=1/m+1/\lambda$.
 The closed-form mixing update is
 
 ```{math}
-m=v,\qquad \lambda=\frac{1}{u-1/v}.
+m=\widehat\eta_3,\qquad
+\lambda=\frac{1}{\widehat\eta_2-1/\widehat\eta_3}.
 ```
 
-It requires $uv>1$; equality is a constant-mixing limit. Its GIG embedding
-has $p=-1/2$, $a=\lambda/m^2$, $b=\lambda$. The posterior is generally GIG
+It requires $\widehat\eta_2\widehat\eta_3>1$; equality is a constant-mixing
+limit. Its GIG embedding has $p=-1/2$, $a=\lambda/m^2$, $b=\lambda$.
+The posterior is generally GIG
 with order $-1/2-d/2$, rather than another inverse Gaussian.
 
 ### Inverse-gamma mixing
@@ -292,14 +301,15 @@ $\mathbb E[\log Y]=\log\rho-\psi_0(\alpha)$ and
 $\mathbb E[Y^{-1}]=\alpha/\rho$. Hence
 
 ```{math}
-\log\alpha-\psi_0(\alpha)=l+\log u,\qquad \rho=\alpha/u,
+\log\alpha-\psi_0(\alpha)=\widehat\eta_1+\log\widehat\eta_2,
+\qquad \rho=\alpha/\widehat\eta_2,
 ```
 
 with Newton proposal
 
 ```{math}
 \alpha_{t+1}=\alpha_t-
-\frac{\log\alpha_t-\psi_0(\alpha_t)-l-\log u}
+\frac{\log\alpha_t-\psi_0(\alpha_t)-\widehat\eta_1-\log\widehat\eta_2}
 {1/\alpha_t-\psi_1(\alpha_t)}.
 ```
 

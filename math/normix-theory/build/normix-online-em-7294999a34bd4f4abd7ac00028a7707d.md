@@ -25,8 +25,9 @@ f(x,y;\theta)=h(x,y)\exp\{\langle\theta,t(x,y)\rangle-\psi(\theta)\},
 \qquad \eta=\nabla\psi(\theta).
 ```
 
-Let $\phi(\eta)=\langle\theta,\eta\rangle-\psi(\theta)$ be the Legendre
-dual, so that $\theta=\nabla\phi(\eta)$. At observation $x_t$, compute
+Here $f$ is the joint density and $f_X$ its observed marginal.
+Let $\psi^*(\eta)=\langle\theta,\eta\rangle-\psi(\theta)$ be the Legendre
+dual, so that $\theta=\nabla\psi^*(\eta)$. At observation $x_t$, compute
 
 ```{math}
 \bar t_t=\mathbb E_{\theta_{t-1}}[t(X,Y)\mid X=x_t].
@@ -38,7 +39,7 @@ Starting from $\eta_0=\nabla\psi(\theta_0)$, update
 :label: online-em-update
 \begin{aligned}
 \eta_t&=(1-\rho_t)\eta_{t-1}+\rho_t\bar t_t,\\
-\theta_t&=\nabla\phi(\eta_t).
+\theta_t&=\nabla\psi^*(\eta_t).
 \end{aligned}
 ```
 
@@ -74,7 +75,7 @@ Define the complete-data divergence, with its orientation explicit,
 D_\psi(\theta\Vert\theta_0)
 =\psi(\theta)-\psi(\theta_0)
 -\langle\eta_0,\theta-\theta_0\rangle
-=D_{\mathrm{KL}}(f_{\theta_0}(X,Y)\Vert f_\theta(X,Y)).
+=D_{\mathrm{KL}}(f(X,Y;\theta_0)\Vert f(X,Y;\theta)).
 ```
 
 For a sequence $x_1,\ldots,x_T$, compare sequential prediction with a fixed
@@ -98,8 +99,8 @@ the upstream decomposition is
 \begin{aligned}
 r_T&=\sum_{t=1}^T\tau_tD_\psi(\theta_{t-1}\Vert\theta_t)\\
 &\quad+\sum_{t=1}^TD_{\mathrm{KL}}\!\left(
-f_{\theta_{t-1}}(Y\mid x_t)\Vert f_{\theta_*}(Y\mid x_t)\right)\\
-&\quad-\tau_TD_\phi(\eta_T\Vert\eta_*).
+f(Y\mid x_t;\theta_{t-1})\Vert f(Y\mid x_t;\theta_*)\right)\\
+&\quad-\tau_TD_{\psi^*}(\eta_T\Vert\eta_*).
 \end{aligned}
 ```
 
@@ -108,7 +109,11 @@ KL sum is nonnegative and need not be small. It disappears for fully
 observed data. The penalty belongs to the comparator in [](#regret-def);
 the sequential algorithm need not find its minimizer.
 
-To verify the identity, let $g_t(\theta)=\psi(\theta)-\langle\theta,\bar t_t\rangle$.
+Here $f(Y\mid x_t;\theta)$ is the posterior density, and $D_{\psi^*}$
+is the Bregman divergence of $\psi^*$ with the same argument order as $D_\psi$.
+To verify the identity, let
+$g_t(\theta)=\psi(\theta)-\langle\theta,\bar t_t\rangle$ be the
+parameter-dependent negative complete-data objective for observation $t$.
 Parameter-independent carrier terms cancel in likelihood differences.
 The update gives $\bar t_t=\tau_t\eta_t-\tau_{t-1}\eta_{t-1}$, and
 Legendre duality gives
@@ -116,17 +121,17 @@ Legendre duality gives
 ```{math}
 \begin{aligned}
 \sum_tg_t(\theta_{t-1})
-&=\sum_t\tau_tD_\phi(\eta_t\Vert\eta_{t-1})
-+\tau_0\phi(\eta_0)-\tau_T\phi(\eta_T),\\
+&=\sum_t\tau_tD_{\psi^*}(\eta_t\Vert\eta_{t-1})
++\tau_0\psi^*(\eta_0)-\tau_T\psi^*(\eta_T),\\
 \sum_tg_t(\theta_*)+\tau_0D_\psi(\theta_*\Vert\theta_0)
-&=\tau_0\phi(\eta_0)-\tau_T\phi(\eta_T)
-+\tau_TD_\phi(\eta_T\Vert\eta_*).
+&=\tau_0\psi^*(\eta_0)-\tau_T\psi^*(\eta_T)
++\tau_TD_{\psi^*}(\eta_T\Vert\eta_*).
 \end{aligned}
 ```
 
 Subtract these expressions. The observed-versus-complete likelihood identity
 adds the posterior KL sum, while
-$D_\phi(\eta_t\Vert\eta_{t-1})=D_\psi(\theta_{t-1}\Vert\theta_t)$
+$D_{\psi^*}(\eta_t\Vert\eta_{t-1})=D_\psi(\theta_{t-1}\Vert\theta_t)$
 supplies [](#regret-decomp). The calculation is algebraic and requires all
 displayed expectations and divergences to be finite.
 
@@ -146,31 +151,39 @@ denotes natural coordinates. In the scalar
 $\beta=\gamma$, and $\sigma^2=\Sigma$.
 For $a,b>0$ and positive-definite $\Sigma$, the posterior is GIG and its
 [power moments](./normix-em-algorithm.md#gig-moment-cond) are finite.
-Set $u_t=\mathbb E[Y^{-1}\mid x_t]$, $v_t=\mathbb E[Y\mid x_t]$, and
-$l_t=\mathbb E[\log Y\mid x_t]$, evaluated at $\vartheta_{t-1}$.
-In the Batch 1 statistic order,
+For this update, write $\mathbb E_{t-1}$ for expectation at
+$\vartheta_{t-1}$ and retain the inverse-moment weight
+$u_t=\mathbb E_{t-1}[Y^{-1}\mid X=x_t]$.
+In the shared GH statistic order,
 
 ```{math}
-\bar t_t=(l_t,u_t,v_t,x_t,x_tu_t,x_tx_t^\top u_t),\qquad
+\bar t_t=\bigl(\mathbb E_{t-1}[\log Y\mid X=x_t],u_t,
+\mathbb E_{t-1}[Y\mid X=x_t],x_t,x_tu_t,x_tx_t^\top u_t\bigr).
+```
+
+The running update remains
+
+```{math}
 \eta_t=(1-\rho_t)\eta_{t-1}+\rho_t\bar t_t.
 ```
 
 The first three slots are $(\log Y,Y^{-1},Y)$, a permutation of the source
-online note's $(Y^{-1},Y,\log Y)$. The normal parameters are recovered as
+online note's $(Y^{-1},Y,\log Y)$. Write $\eta_{t,i}$ for block $i$ of
+$\eta_t$. The normal parameters are recovered as
 
 ```{math}
 \begin{aligned}
-\mu_t&=\frac{\eta_{4,t}-\eta_{3,t}\eta_{5,t}}
-{1-\eta_{2,t}\eta_{3,t}},\\
-\gamma_t&=\frac{\eta_{5,t}-\eta_{2,t}\eta_{4,t}}
-{1-\eta_{2,t}\eta_{3,t}},\\
-\Sigma_t&=\eta_{6,t}-\eta_{5,t}\mu_t^\top-\mu_t\eta_{5,t}^\top
-+\eta_{2,t}\mu_t\mu_t^\top-\eta_{3,t}\gamma_t\gamma_t^\top.
+\mu_t&=\frac{\eta_{t,4}-\eta_{t,3}\eta_{t,5}}
+{1-\eta_{t,2}\eta_{t,3}},\\
+\gamma_t&=\frac{\eta_{t,5}-\eta_{t,2}\eta_{t,4}}
+{1-\eta_{t,2}\eta_{t,3}},\\
+\Sigma_t&=\eta_{t,6}-\eta_{t,5}\mu_t^\top-\mu_t\eta_{t,5}^\top
++\eta_{t,2}\mu_t\mu_t^\top-\eta_{t,3}\gamma_t\gamma_t^\top.
 \end{aligned}
 ```
 
 The mixing-law update maximizes
-$L_{\mathrm{GIG}}(p,a,b\mid\eta_{1,t},\eta_{2,t},\eta_{3,t})$.
+$L_{\mathrm{GIG}}(p,a,b\mid\eta_{t,1},\eta_{t,2},\eta_{t,3})$.
 These are the [batch M-step formulas](./normix-em-algorithm.md#m-step)
 applied to running statistics. Their feasibility, nonzero-denominator, and
 positive-definiteness requirements still apply; boundary mixing laws need
@@ -179,22 +192,23 @@ regularize the statistics, but changes the update and its objective.
 
 ## Curved families need a constrained M-step
 
-For $f(x,y;u)=h(x,y)\exp\{\langle\theta(u),t(x,y)\rangle-\psi(\theta(u))\}$,
+For classical parameters $\vartheta$ and a curved family
+$f(x,y;\vartheta)=h(x,y)\exp\{\langle\theta(\vartheta),t(x,y)\rangle-\psi(\theta(\vartheta))\}$,
 the ambient expectation vector need not equal the statistics being averaged.
 The appropriate map is
 
 ```{math}
-u_t\in\operatorname*{arg\,max}_u
-\{\langle\theta(u),\eta_t\rangle-\psi(\theta(u))\}.
+\vartheta_t\in\operatorname*{arg\,max}_\vartheta
+\{\langle\theta(\vartheta),\eta_t\rangle-\psi(\theta(\vartheta))\}.
 ```
 
 At an interior stationary point it satisfies
 
 ```{math}
-D\theta(u_t)^\top[\eta_t-\nabla\psi(\theta(u_t))]=0.
+D\theta(\vartheta_t)^\top[\eta_t-\nabla\psi(\theta(\vartheta_t))]=0.
 ```
 
-This is weaker than ambient moment matching. Applying $\nabla\phi$ without
+This is weaker than ambient moment matching. Applying $\nabla\psi^*$ without
 the constraint can leave the curved family. This limitation concerns that
 unconstrained inverse map: it does **not** exclude online EM for curved
 families. The Cappé–Moulines construction uses a model-specific maximizing

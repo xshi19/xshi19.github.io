@@ -25,12 +25,12 @@ domain. Under these conditions differentiation of the normalizer gives
 ```{math}
 :label: normix-ef-triad
 \eta=\nabla\psi(\theta)=\mathbb E_\theta[t(X)],\qquad
-I_\theta=\nabla^2\psi(\theta)=\operatorname{Cov}_\theta(t(X)).
+I(\theta)=\nabla^2\psi(\theta)=\operatorname{Cov}_\theta(t(X)).
 ```
 
 The score is $t(X)-\eta$. Thus density normalization, expectation coordinates,
 and Fisher information come from the same potential. Minimality makes
-$I_\theta$ positive definite; a redundant statistic vector instead gives a
+$I(\theta)$ positive definite; a redundant statistic vector instead gives a
 singular covariance. These identities do not claim that every distribution,
 or every marginal of an exponential family, is itself such a family.
 
@@ -72,18 +72,20 @@ Where the dual map exists, the Legendre conjugate obeys
 ```{math}
 \psi^*(\eta)=\langle\theta,\eta\rangle-\psi(\theta),\qquad
 \nabla\psi^*(\eta)=\theta,\qquad
-\nabla^2\psi^*(\eta)=I_\theta^{-1}.
+\nabla^2\psi^*(\eta)=I(\theta)^{-1}.
 ```
 
 The [duality entry](https://xshi19.github.io/math/ig/information-geometry-duality/) develops the geometric
 interpretation and its domain limits. For a constrained subfamily
-$\theta=\theta(\phi)$, stationarity is instead
-$J_\theta(\phi)^\top(\nabla\psi-\widehat\eta)=0$; matching all ambient
-moments is usually too strong.
+$\theta=\theta(\vartheta)$ with Jacobian
+$J(\vartheta)=D\theta(\vartheta)$, stationarity is instead
+$J(\vartheta)^\top[\nabla\psi(\theta(\vartheta))-\widehat\eta]=0$;
+matching all ambient moments is usually too strong.
 
 ## Multivariate normal example
 
-For $X\sim\mathcal N_d(\mu,\Sigma)$ with precision $\Lambda=\Sigma^{-1}$,
+For $X\sim\mathcal N_d(\mu,\Sigma)$ with $\Sigma\succ0$ and precision
+$\Lambda=\Sigma^{-1}$,
 use $t(x)=(x,xx^\top)$ and the vector/trace inner product. Then
 
 ```{math}
@@ -110,7 +112,8 @@ as independent natural coordinates when discussing minimality or Fisher rank.
 
 ## GIG example
 
-For the [GIG density](./normix-generalized-inverse-gaussian.md),
+For the [GIG density](./normix-generalized-inverse-gaussian.md) with
+$p\in\mathbb R$ and $a,b>0$,
 
 ```{math}
 t(y)=(\log y,y^{-1},y)^\top,\qquad
@@ -130,15 +133,20 @@ potential and its derivatives still involves Bessel functions. Strict
 convexity does not imply a well-conditioned Hessian near a degenerating law.
 
 Reparameterizing constrained coordinates can help maintain feasibility but
-can alter convexity. If $\theta=\theta(\phi)$ with Jacobian $J$, then
+can alter convexity. For $\theta=\theta(\vartheta)$ with Jacobian
+$J(\vartheta)=D\theta(\vartheta)$ as above,
 
 ```{math}
-\nabla_\phi^2F
-=J^\top(\nabla_\theta^2F)J
-+\sum_j(\partial_{\theta_j}F)\nabla_\phi^2\theta_j.
+\begin{aligned}
+\nabla_\vartheta^2(F\circ\theta)(\vartheta)
+&=J(\vartheta)^\top\nabla_\theta^2F(\theta(\vartheta))J(\vartheta)\\
+&\quad+\sum_j\partial_{\theta_j}F(\theta(\vartheta))
+\nabla_\vartheta^2\theta_j(\vartheta).
+\end{aligned}
 ```
 
-The extra term vanishes at a stationary point, but matters during optimization.
+The extra term vanishes where $\nabla_\theta F=0$, but matters during
+optimization; constrained stationarity alone need not make it vanish.
 This is one reason the [gradient-descent comparison](./normix-why-not-gradient-descent.md)
 must distinguish the objective from the coordinates and numerical method.
 

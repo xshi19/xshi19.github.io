@@ -20,17 +20,56 @@ f(x)=\frac{\sigma}{\pi((x-\mu)^2+\sigma^2)},\\
 \end{gathered}
 $$
 
-The characteristic function is a cited identity
-(@durrett2019probability, §3.3.1, Example 3.3.16, p. 131). The positive and negative
-parts both have infinite expectation: integrating $|x|f(x)$ on either
-tail gives logarithmic divergence. Thus $\mu$ is a location and median,
-not an expectation. See the [stable-law convention](incerto-generalized-central-limit-theorem.md#stable-exact-sums)
+The characteristic function is a cited identity, not proved here
+(@durrett2019probability, §3.3.1, Example 3.3.16, p. 131).
+Tail integration establishes the moment boundary.
+
+:::{prf:proposition} Cauchy absolute moments and undefined mean
+:label: prop-cauchy-running-moments
+
+Let $X$ have the Cauchy density
+$f(x)=\sigma/[\pi((x-\mu)^2+\sigma^2)]$, where
+$\mu\in\mathbb R$ and $\sigma>0$.
+For every $p>0$, $\mathbb E|X|^p<\infty$ if and only if $p<1$.
+Writing $X^+=\max(X,0)$ and $X^-=\max(-X,0)$, we have
+$\mathbb EX^+=\mathbb EX^-=\infty$, so the ordinary mean is undefined.
+:::
+
+:::{prf:proof}
+On either tail, $f(x)\sim\sigma/(\pi x^2)$, so the moment integral
+has the same convergence boundary as $\int_1^\infty x^{p-2}\,dx$.
+On bounded intervals, $|x|^pf(x)$ is integrable. At $p=1$, each tail
+integral diverges logarithmically, proving both assertions about the parts.
+:::
+
+Thus $\mu$ is a location and median, not an expectation.
+See the [stable-law convention](incerto-generalized-central-limit-theorem.md#stable-exact-sums)
 for the shared scale parameterization.
 
 (cauchy-average-law)=
 ## The average has exactly the same law
 
 We prove this finite-sample identity from the stated characteristic function.
+
+:::{prf:proposition} Cauchy averages retain their law and spread
+:label: prop-cauchy-running-average-law
+
+Let $X_1,X_2,\ldots$ be iid Cauchy variables with location
+$\mu\in\mathbb R$ and scale $\sigma>0$. For every integer $n\ge1$,
+$\bar X_n=n^{-1}\sum_{i=1}^nX_i$ has the same law as $X_1$, and
+for every $\varepsilon>0$,
+
+$$
+P(|\bar X_n-\mu|>\varepsilon)
+=1-\frac2\pi\arctan(\varepsilon/\sigma)>0.
+$$
+
+The sequence $\bar X_n$ cannot converge in probability to any finite
+constant. Its $p$-quantile is $\mu+\sigma\tan(\pi(p-1/2))$ for
+$0<p<1$, so its interquartile range is $2\sigma$ for every $n$.
+:::
+
+:::{prf:proof}
 Independence gives, for every integer $n\ge1$,
 
 $$
@@ -51,22 +90,43 @@ P(|\bar X_n-\mu|>\varepsilon)\\
 \end{gathered}
 $$
 
-The average does not converge in probability to $\mu$, or to any finite
-constant. This argument alone does not classify every possible pathwise
-limit. It also does not say that successive running averages are independent:
-they share observations.
+Integrating the density gives
+$F(x)=1/2+\pi^{-1}\arctan((x-\mu)/\sigma)$, which yields the displayed
+deviation probability. For any finite constant $c$ and $\varepsilon>0$,
+$P(|\bar X_n-c|>\varepsilon)=P(|X_1-c|>\varepsilon)>0$ is independent
+of $n$, ruling out convergence in probability to $c$.
+Inverting $F$ gives the stated quantiles; subtracting the quartiles gives
+$2\sigma$.
+:::
 
-The population $p$-quantile is
-$\mu+\sigma\tan(\pi(p-1/2))$, $0<p<1$.
-Consequently the interquartile range of every $\bar X_n$ is $2\sigma$.
-By contrast, sample medians consistently estimate $\mu$. For fixed
+**Remarks.** This argument alone does not classify every possible pathwise
+limit. Successive running averages share observations and are not asserted
+to be independent.
+
+By contrast, the indicator strong law establishes consistency of medians.
+
+:::{prf:proposition} Strong consistency of Cauchy sample medians
+:label: prop-cauchy-running-median-consistency
+
+Let $X_1,X_2,\ldots$ be iid Cauchy variables with location
+$\mu\in\mathbb R$ and scale $\sigma>0$. For each $n$, let $m_n$ be
+any sample median: at least half of $X_1,\ldots,X_n$ are at or below
+$m_n$ and at least half are at or above it. Then $m_n\to\mu$ almost surely.
+:::
+
+:::{prf:proof}
+For fixed
 $\varepsilon>0$, the strong law applied to the indicators
 $\mathbf1_{\{X_i\le\mu-\varepsilon\}}$ and
 $\mathbf1_{\{X_i\le\mu+\varepsilon\}}$ eventually puts fewer than half the observations at or below the lower
 endpoint and more than half at or below the upper endpoint. Every sample
-median is then inside that interval. Intersect over rational positive $\varepsilon$ to
-obtain almost-sure convergence. This is a proof about the median, not a
-restoration of the missing mean.
+median is then inside that interval, since
+$F(\mu-\varepsilon)<1/2<F(\mu+\varepsilon)$.
+Intersect over rational positive $\varepsilon$ to obtain almost-sure
+convergence.
+:::
+
+**Remark.** Median consistency does not restore the missing mean.
 
 (cauchy-running-figures)=
 ## Paths and repeated samples
@@ -115,10 +175,28 @@ The runner raises on nonfinite output rather than dropping observations.
 
 ## Higher moments and ergodicity
 
-For $p>0$, direct tail integration gives $\mathbb E|X|^p<\infty$ exactly
-when $p<1$. At $p\ge1$, the nonnegative
-[infinite-mean theorem](incerto-lln-failure.md) applies to $|X_i|^p$:
-their sample average tends to $+\infty$ almost surely. It does not apply
+The moment boundary gives a direct application of the nonnegative
+[infinite-mean theorem](incerto-lln-failure.md), which is proved in that note.
+
+:::{prf:corollary} Divergence of averages of Cauchy absolute powers
+:label: cor-cauchy-running-absolute-power-averages
+
+If $X_1,X_2,\ldots$ are iid Cauchy variables with location
+$\mu\in\mathbb R$ and scale $\sigma>0$, then for each fixed $p\ge1$,
+
+$$
+\frac1n\sum_{i=1}^n|X_i|^p\longrightarrow+\infty
+\qquad\text{almost surely}.
+$$
+:::
+
+:::{prf:proof}
+By [](#prop-cauchy-running-moments), $\mathbb E|X_i|^p=\infty$.
+The variables $|X_i|^p$ are iid and nonnegative, so the cited
+infinite-mean theorem applies.
+:::
+
+**Remark.** That theorem does not apply
 to the signed Cauchy observations themselves. A principal-value cancellation
 is not a Lebesgue expectation.
 

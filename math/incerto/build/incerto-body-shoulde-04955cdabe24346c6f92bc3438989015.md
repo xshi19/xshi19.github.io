@@ -77,13 +77,13 @@ by [Tail Threshold Selection](./incerto-tail-threshold-selection.md).
 
 ## Derivation of the variance-curvature boundaries
 
-We derive the standard-normal variance-curvature boundaries by differentiating
-the density with respect to variance and solving the resulting quadratic in
-$x^2$.  The Taylor expansion explains the local mixture interpretation.  The
-comparison with scale perturbation below uses a different derivative; none
-of these boundaries is a rule for selecting a Pareto threshold.
+We derive the normal variance-curvature boundaries and the pointwise local
+mixture interpretation.
 
-For the normal density with variance parameter $v$, write
+:::{prf:proposition} Normal variance curvature and bounded perturbations
+:label: prop-body-shoulder-tail-variance-curvature
+
+For $v>0$ and $x\in\mathbb R$, let
 
 $$
 g_v(x)=
@@ -91,6 +91,33 @@ g_v(x)=
 \exp\left(-\frac{x^2}{2v}\right).
 $$
 
+Then
+
+$$
+\frac{\partial^2 g_v(x)}{\partial v^2}
+=\frac{g_v(x)}{4v^2}\left(\frac{x^4}{v^2}-\frac{6x^2}{v}+3\right).
+$$
+
+The four sign-change boundaries are $x=\pm\sqrt{v(3-\sqrt6)}$ and
+$x=\pm\sqrt{v(3+\sqrt6)}$. Curvature is positive inside the inner pair
+and beyond the outer pair, and negative between them.
+
+Fix $v_0>0$ and a bounded random variable $H$ with $\mathbb EH=0$ and
+$\mathbb EH^2=1$. Put $Y_\tau=v_0+\tau H$, taking $\tau>0$ small
+enough that $Y_\tau>0$ almost surely. For each fixed $x$, as $\tau\downarrow0$,
+
+$$
+\mathbb E[g_{Y_\tau}(x)]-g_{v_0}(x)
+=\frac{\tau^2}{2}
+\frac{\partial^2g_v(x)}{\partial v^2}\bigg|_{v=v_0}
++O(\tau^3).
+$$
+
+Away from the curvature zeros, this difference has the curvature's sign for
+all sufficiently small $\tau>0$.
+:::
+
+:::{prf:proof}
 Differentiating at fixed $x$ gives
 
 $$
@@ -119,15 +146,11 @@ $$
 x^2=3\pm\sqrt6.
 $$
 
-This is a local Taylor diagnostic. A sufficient small-perturbation model is
-
-$$
-Y_\tau=v_0+\tau H,\qquad v_0>0,\quad
-\mathbb E[H]=0,\quad \mathbb E[H^2]=1,
-$$
-
-with bounded local perturbation $H$ and $\tau$ small enough that $Y_\tau>0$. For each fixed $x$,
-Taylor's theorem, with bounded third derivative near $v_0$, gives
+For general $v$, replace $x^2$ by $x^2/v$. The quadratic has positive
+leading coefficient, giving the stated signs. Boundedness of $H$ keeps
+$Y_\tau$ in a compact interval around $v_0$ for small $\tau$. At each fixed
+$x$, the third variance derivative is bounded there. Taylor's theorem and
+$\mathbb EH=0$, $\mathbb EH^2=1$ therefore give
 
 $$
 \mathbb E[g_{Y_\tau}(x)]-g_{v_0}(x)
@@ -137,9 +160,14 @@ $$
 $$
 
 Thus the curvature sign determines the leading local density change away
-from its zeros. Small variance of a perturbation alone would not justify
+from its zeros.
+:::
+
+**Remarks.** Small variance of a perturbation alone would not justify
 this remainder without control of the perturbation family. The expansion
 is pointwise in $x$, not uniform arbitrarily far into the tails.
+The scale calculation below uses a different derivative; none of these
+boundaries is a rule for selecting a Pareto threshold.
 
 ## Static region and mixture calculations
 
@@ -176,20 +204,26 @@ regularly varying, despite having more far-tail mass than the unit normal.
 
 ### Density, survival, and scale are different diagnostics
 
+We differentiate survival and density separately to compare their boundaries.
+
+:::{prf:proposition} Normal survival and scale curvature
+:label: prop-body-shoulder-tail-survival-scale-curvature
+
 For $x>0$, the two-sided normal survival at variance $v$ is
 $T_v(x)=2\bar\Phi(x/\sqrt v)$, where $\bar\Phi$ is standard normal survival
-and $\phi$ is its density. Differentiation gives
+and $\phi$ is its density. For $v>0$,
 
 $$
 \frac{\partial^2 T_v(x)}{\partial v^2}
 =\frac{x\phi(x/\sqrt v)}{2v^{5/2}}\left(\frac{x^2}{v}-3\right).
 $$
 
-Its positive-threshold curvature boundary is $x=\sqrt{3v}$, about $1.732$
-when $v=1$. It differs from both density boundaries.
+Its curvature is negative for $0<x<\sqrt{3v}$ and positive for
+$x>\sqrt{3v}$.
 
-For scale perturbation, parameterize the same density as
-$g_{\sigma^2}(x)$, with $\sigma>0$. Differentiating at fixed $x$ gives
+For $x\in\mathbb R$ and $\sigma>0$, let
+$g_{\sigma^2}(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-x^2/(2\sigma^2)}$.
+Then
 
 $$
 \frac{\partial^2}{\partial\sigma^2}g_{\sigma^2}(x)
@@ -197,7 +231,26 @@ $$
 \left(\frac{x^4}{\sigma^4}-\frac{5x^2}{\sigma^2}+2\right).
 $$
 
-At $\sigma=1$, its positive zeros are
+Its positive scale-curvature zeros are
+$\sigma\sqrt{(5-\sqrt{17})/2}$ and
+$\sigma\sqrt{(5+\sqrt{17})/2}$. Curvature is positive inside the inner
+pair of symmetric zeros and beyond the outer pair, and negative between them.
+:::
+
+:::{prf:proof}
+Differentiating survival once gives
+$\partial_vT_v(x)=xv^{-3/2}\phi(x/\sqrt v)$. Differentiating again gives
+the displayed formula, whose sign is that of $x^2/v-3$.
+For the density,
+$\partial_\sigma g_{\sigma^2}(x)=g_{\sigma^2}(x)(x^2/\sigma^2-1)/\sigma$.
+A second differentiation gives the displayed scale derivative. Its sign is
+that of the quadratic $t^2-5t+2$, with $t=x^2/\sigma^2$; solving that
+quadratic gives the zeros and signs.
+:::
+
+**Remarks.** The survival boundary is about $1.732$ when $v=1$, differing
+from both variance-curvature density boundaries. At $\sigma=1$, the
+positive scale-curvature zeros are
 $\sqrt{(5-\sqrt{17})/2}\approx0.662$ and
 $\sqrt{(5+\sqrt{17})/2}\approx2.136$. Mean-preserving scale mixing is a
 different operation from mean-preserving variance mixing. Student scale-curvature comparisons depend on degrees of freedom, as derived below.
@@ -205,10 +258,37 @@ different operation from mean-preserving variance mixing. Student scale-curvatur
 (body-shoulder-student)=
 ## Student scale curvature
 
-The scale calculation also has a closed form for a Student density. Write
+The scale calculation also has a closed form for a Student density.
+
+:::{prf:proposition} Student scale-curvature boundaries
+:label: prop-body-shoulder-tail-student-curvature
+
+Let
 $h_s(x)=C_\nu s^{-1}(1+x^2/(\nu s^2))^{-(\nu+1)/2}$, where $s>0$ is
-scale, $\nu>1$ is degrees of freedom, and $C_\nu$ normalizes the density.
-Set $t=x^2/(\nu s^2)$. Logarithmic differentiation gives
+scale, $\nu>1$ is degrees of freedom, $x\in\mathbb R$, and the positive
+constant $C_\nu$ normalizes the density.
+Writing $t=x^2/(\nu s^2)$, the curvature is
+
+$$
+\frac{s^2\partial_s^2h_s}{h_s}
+=\frac{\nu(\nu-1)t^2-(5\nu+1)t+2}{(1+t)^2}.
+$$
+
+Its four sign-change boundaries are
+
+$$
+x=\pm s\sqrt{
+\frac{5\nu+1\pm\sqrt{(\nu+1)(17\nu+1)}}{2(\nu-1)}}.
+$$
+
+Curvature is positive inside the inner pair and beyond the outer pair, and
+negative between them. At fixed $s$, the positive boundaries tend to
+$s\sqrt{(5-\sqrt{17})/2}$ and $s\sqrt{(5+\sqrt{17})/2}$ as
+$\nu\to\infty$.
+:::
+
+:::{prf:proof}
+Logarithmic differentiation gives
 
 $$
 s\,\partial_s\log h_s=\frac{\nu t-1}{1+t},\qquad
@@ -228,8 +308,11 @@ x=\pm s\sqrt{
 $$
 
 The leading coefficient and the value at zero are positive, so curvature
-is positive inside the inner pair and beyond the outer pair, and negative
-between them. At $\nu=3,s=1$, the positive boundaries are
+has the stated signs. Dividing numerator and denominator inside the root
+formula by $\nu$ gives the two Gaussian scale-curvature limits.
+:::
+
+**Remarks.** At $\nu=3,s=1$, the positive boundaries are
 $\sqrt{4-\sqrt{13}}\approx0.628$ and
 $\sqrt{4+\sqrt{13}}\approx2.758$. The standard deviation is $\sqrt3$;
 these numbers are in **scale units**. For $\nu\le2$, the variance is not
@@ -237,9 +320,7 @@ finite, although the four-boundary formula still applies when $1<\nu\le2$.
 At $\nu=1$ the quadratic loses its leading term, so that formula's domain
 must not be extended through the zero denominator.
 
-Dividing numerator and denominator of the root formula by $\nu$ shows
-that its two positive roots tend to the Gaussian scale-curvature roots
-as $\nu\to\infty$. This is an algebraic limit, not a fitted threshold rule.
+The Gaussian limit is algebraic, not a fitted threshold rule.
 The [gamma-precision construction](incerto-mixture-uncertainty.md#mixture-variance-precision)
 explains the Student tail exponent and moment conditions separately.
 
@@ -285,12 +366,30 @@ Figure regeneration: `uv run python demos/incerto/finite_moments.py`. These are 
 calculations on 801 fixed points, with no random sampling. The script
 reports the finite-mixture crossings separately from the local boundaries.
 
-Fix $x>0$ and let $Y$ be a positive mixing variance with $\mathbb EY<\infty$. Jensen's
-inequality for survival needs convexity throughout the mixing interval. If $0<Y\le v_{\max}<\infty$
-and $x^2\ge3v_{\max}$, the displayed $\partial_v^2T_v(x)$ is nonnegative on that
-interval, and $\mathbb E T_Y(x)\ge T_{\mathbb EY}(x)$. If instead
-$Y\ge v_{\min}>0$ and $x^2\le3v_{\min}$, its curvature is nonpositive
-and the inequality reverses. These sufficient conditions show why a
+Jensen's inequality gives a survival comparison when curvature has one sign
+throughout the mixing interval.
+
+:::{prf:corollary} Survival comparisons under restricted variance mixing
+:label: cor-body-shoulder-tail-survival-jensen
+
+Fix $x>0$ and let $Y>0$ almost surely with $\mathbb EY<\infty$.
+Put $T_v(x)=2\bar\Phi(x/\sqrt v)$ for $v>0$, where $\bar\Phi$ is
+standard normal survival.
+If $Y\le v_{\max}<\infty$ almost surely and $x^2\ge3v_{\max}$, then
+$\mathbb ET_Y(x)\ge T_{\mathbb EY}(x)$.
+If instead $Y\ge v_{\min}>0$ almost surely and $x^2\le3v_{\min}$, then
+$\mathbb ET_Y(x)\le T_{\mathbb EY}(x)$.
+:::
+
+:::{prf:proof}
+By [](#prop-body-shoulder-tail-survival-scale-curvature), $v\mapsto T_v(x)$
+is convex on $(0,v_{\max}]$ in the first case and concave on
+$[v_{\min},\infty)$ in the second. Its supporting-line inequality at
+$\mathbb EY$ gives the respective Jensen inequality after taking
+expectations. Survival is bounded, and the mixing mean is finite.
+:::
+
+**Remark.** These sufficient conditions show why a
 local tail-curvature statement cannot justify global Jensen claims at
 every threshold under unrestricted mixing.
 

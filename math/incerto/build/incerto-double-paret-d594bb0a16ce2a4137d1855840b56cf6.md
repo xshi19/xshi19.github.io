@@ -17,6 +17,11 @@ options:
 We use the symmetric shifted convention defined below; the
 name "double Pareto" is overloaded in the literature and can also refer to
 positive-valued size distributions with different left and right exponents.
+The signed-magnitude construction gives the following formulas.
+
+:::{prf:proposition} Symmetric shifted double-Pareto law and moments
+:label: prop-double-pareto-signed-magnitude
+
 Let $Y$ have a [Pareto Type I distribution](./incerto-pareto.md) with lower cutoff $1$ and
 tail exponent $\alpha>0$.  Let $B$ be independent of $Y$ with
 $\mathbb P(B=1)=\mathbb P(B=-1)=1/2$.  The shifted symmetric double Pareto
@@ -64,10 +69,10 @@ f_{\mu+sX}(x)=\frac{\alpha}{2s}
 \left(1+\frac{|x-\mu|}{s}\right)^{-(\alpha+1)}.
 $$
 
-The ordinary mean exists and equals $0$ exactly when $\alpha>1$.  For
-$\alpha\le1$, the positive and negative parts are both infinite, so symmetry
-gives a center but not an ordinary expectation.  The variance is finite exactly
-when $\alpha>2$, in which case
+The ordinary mean exists and equals $0$ exactly when $\alpha>1$. For
+$\alpha\le1$, the expectations of the positive and negative parts are both
+infinite, so symmetry gives a center but not an ordinary expectation. The
+variance is finite exactly when $\alpha>2$, in which case
 
 $$
 \operatorname{Var}(X)=\frac{2}{(\alpha-1)(\alpha-2)}.
@@ -84,6 +89,83 @@ $$
 Here $F$ and $f$ denote the CDF and density; $B$ is an independent sign.
 $\Gamma$ denotes the gamma function. Absolute moments diverge for
 $p\ge\alpha$; the displayed gamma expression only applies for $0<p<\alpha$.
+For $1<\alpha\le2$, the variance is infinite. For $0<\alpha\le1$,
+variance about the undefined mean is undefined; the second raw moment is
+infinite for every $0<\alpha\le2$.
+:::
+
+### Derivation from signed Pareto magnitude
+
+We prove [](#prop-double-pareto-signed-magnitude) from $X=B(Y-1)$.
+The moment thresholds use the same Pareto moment logic as
+[Pareto Moment Existence](./incerto-pareto-moment-existence.md).
+
+:::{prf:proof}
+For $x\ge0$,
+
+$$
+\mathbb P(X>x)
+=\mathbb P(B=1, Y-1>x)
+=\frac12\mathbb P(Y>1+x)
+=\frac12(1+x)^{-\alpha}.
+$$
+
+The negative tail is identical by symmetry; adding the two tails gives
+the absolute survival. Complementing the appropriate tail gives the CDF,
+with $F(0)=1/2$ because there is no atom at zero. Differentiating on either
+side gives the density, with the continuous density value at zero as stated.
+The change of variable $x\mapsto(x-\mu)/s$ gives the location-scale density.
+The expectation is zero only when the first absolute
+moment exists.  When $\alpha\le1$,
+$\mathbb E[X^+]=\mathbb E[X^-]=\infty$, so the ordinary mean is undefined even
+though the distribution is symmetric.  Since $X^2=(Y-1)^2$,
+
+$$
+\mathbb E[X^2]
+=\mathbb E[Y^2]-2\mathbb E[Y]+1
+=\frac{\alpha}{\alpha-2}-2\frac{\alpha}{\alpha-1}+1
+=\frac{2}{(\alpha-1)(\alpha-2)}
+$$
+
+for $\alpha>2$. For $1<\alpha\le2$, the mean exists but the variance
+is infinite. For $\alpha\le1$, the ordinary mean, and hence variance
+about that mean, is undefined; the second raw moment is still infinite.
+
+More generally, integration of the absolute-value density gives the beta
+integral
+
+$$
+\mathbb E|X|^p=\alpha\int_0^\infty t^p(1+t)^{-\alpha-1}\,dt
+=\frac{\Gamma(p+1)\Gamma(\alpha-p)}{\Gamma(\alpha)},
+\qquad 0<p<\alpha.
+$$
+The integrand is integrable near zero for $p>0$ and behaves as
+$t^{p-\alpha-1}$ at infinity, so it diverges for $p\ge\alpha$.
+By symmetry, each first-moment half is infinite when $\alpha\le1$.
+:::
+
+Use [`double_pareto`](incerto-api-reference.md#api-double-pareto).
+
+```python
+from xmath.incerto.distributions import double_pareto
+
+for alpha in (0.5, 1, 1.5, 2, 3):
+    mean, variance = double_pareto(alpha).stats(moments="mv")
+    print(f"alpha={alpha:.4g}: mean={mean:.4g}, variance={variance:.4g}")
+```
+
+**Output**
+
+```text
+alpha=0.5: mean=nan, variance=inf
+alpha=1: mean=nan, variance=inf
+alpha=1.5: mean=0, variance=inf
+alpha=2: mean=0, variance=inf
+alpha=3: mean=0, variance=1
+```
+
+For $0<\alpha\le1$, `inf` reflects the infinite raw second moment,
+not variance about an undefined mean.
 
 ## Shape and two-sided tail intuition
 
@@ -116,87 +198,42 @@ curvature at small thresholds. No means or variances are matched.
 ```
 
 Regenerate the card with `uv run python demos/incerto/distribution_cards.py`;
-the [`double_pareto`](incerto-api-reference.md#api-double-pareto) example below
+the [`double_pareto`](incerto-api-reference.md#api-double-pareto) example above
 uses the same distribution convention.
-
-## Derivation from signed Pareto magnitude
-
-We derive the symmetric shifted construction used here from the signed
-Pareto magnitude $X=B(Y-1)$.  The tail, density, and CDF formulas follow
-directly from symmetry.  The moment thresholds use the same Pareto moment
-logic as [Pareto Moment Existence](./incerto-pareto-moment-existence.md).
-
-For $x\ge0$,
-
-$$
-\mathbb P(X>x)
-=\mathbb P(B=1, Y-1>x)
-=\frac12\mathbb P(Y>1+x)
-=\frac12(1+x)^{-\alpha}.
-$$
-
-The negative tail is identical by symmetry.  Differentiating the CDF on either
-side gives the density.  The expectation is zero only when the first absolute
-moment exists.  When $\alpha\le1$,
-$\mathbb E[X^+]=\mathbb E[X^-]=\infty$, so the ordinary mean is undefined even
-though the distribution is symmetric.  Since $X^2=(Y-1)^2$,
-
-$$
-\mathbb E[X^2]
-=\mathbb E[Y^2]-2\mathbb E[Y]+1
-=\frac{\alpha}{\alpha-2}-2\frac{\alpha}{\alpha-1}+1
-=\frac{2}{(\alpha-1)(\alpha-2)}
-$$
-
-for $\alpha>2$. For $1<\alpha\le2$, the mean exists but the variance
-is infinite. For $\alpha\le1$, the ordinary mean, and hence variance
-about that mean, is undefined; the second raw moment is still infinite.
-
-Use [`double_pareto`](incerto-api-reference.md#api-double-pareto).
-
-```python
-from xmath.incerto.distributions import double_pareto
-
-for alpha in (0.5, 1, 1.5, 2, 3):
-    mean, variance = double_pareto(alpha).stats(moments="mv")
-    print(f"alpha={alpha:.4g}: mean={mean:.4g}, variance={variance:.4g}")
-```
-
-**Output**
-
-```text
-alpha=0.5: mean=nan, variance=inf
-alpha=1: mean=nan, variance=inf
-alpha=1.5: mean=0, variance=inf
-alpha=2: mean=0, variance=inf
-alpha=3: mean=0, variance=1
-```
-
-For $0<\alpha\le1$, `inf` reflects the infinite raw second moment,
-not variance about an undefined mean.
-
-More generally, integration of the absolute-value density gives the beta
-integral
-
-$$
-\mathbb E|X|^p=\alpha\int_0^\infty t^p(1+t)^{-\alpha-1}\,dt
-=\frac{\Gamma(p+1)\Gamma(\alpha-p)}{\Gamma(\alpha)},
-\qquad 0<p<\alpha.
-$$
 
 ## Two-sided tail calculations
 
 (double-pareto-tail-simulation)=
 The exact two-sided survival $(1+x)^{-\alpha}$ is regularly varying with
-index $-\alpha$. At $\alpha=1.5$, its values at $x=0,3,8$ are respectively
-$1$, $1/8$, and $1/27$. Each one-sided tail has half of that probability.
+index $-\alpha$, as the ratio calculation shows.
 
-For a fixed multiplier $t>0$,
+:::{prf:corollary} Regular variation of the shifted magnitude
+:label: cor-double-pareto-regular-variation
+
+Let $X$ have density $f(x)=\frac\alpha2(1+|x|)^{-\alpha-1}$ with
+$\alpha>0$. For every fixed $t>0$,
+
+$$
+\lim_{x\to\infty}\frac{P(|X|>tx)}{P(|X|>x)}=t^{-\alpha}.
+$$
+
+Thus its absolute survival, and each one-sided tail, are regularly varying
+with index $-\alpha$.
+:::
+
+:::{prf:proof}
+By [](#prop-double-pareto-signed-magnitude), for $x\ge0$,
 
 $$
 \frac{\mathbb P(|X|>tx)}{\mathbb P(|X|>x)}
 =\left(\frac{1+tx}{1+x}\right)^{-\alpha}\to t^{-\alpha}.
 $$
+Each one-sided tail is half the absolute survival, so the factor cancels
+in its ratio.
+:::
+
+At $\alpha=1.5$, the absolute survival at $x=0,3,8$ is respectively
+$1$, $1/8$, and $1/27$. Each one-sided tail has half of that probability.
 
 The shift means this is a limiting power ratio, rather than the exact
 threshold scaling of an unshifted Pareto law.
@@ -223,10 +260,13 @@ power law with a Student law. We keep the normalized density $\alpha/2$
 above on each side and derive both matching scales. Equal exponents do
 not imply equal moments or equal leading tail constants.
 
-Let $T_\alpha$ initially have the unit-scale Student law with $\alpha>0$
+:::{prf:proposition} Student survival constant and absolute-moment boundary
+:label: prop-double-pareto-student-tail
+
+Let $T_\alpha$ initially have the centered unit-scale Student law with $\alpha>0$
 degrees of freedom. Rescale $T_\alpha\leftarrow sT_\alpha$, where $s>0$;
 throughout this comparison, $T_\alpha$ denotes the rescaled Student variable.
-Its right tail satisfies
+As $x\to\infty$, its right tail satisfies
 
 $$
 P(T_\alpha>x)\sim C_\alpha s^\alpha x^{-\alpha},\qquad
@@ -234,7 +274,11 @@ C_\alpha=\frac{\Gamma((\alpha+1)/2)\alpha^{\alpha/2-1}}
                   {\sqrt\pi\,\Gamma(\alpha/2)}.
 $$
 
-We prove the constant from the density. Factoring $x^2/(\alpha s^2)$
+For every $p>0$, $\mathbb E|T_\alpha|^p<\infty$ if and only if $p<\alpha$.
+:::
+
+:::{prf:proof}
+Factoring $x^2/(\alpha s^2)$
 out of $1+x^2/(\alpha s^2)$ in the Student density gives
 $f_{T_\alpha}(x)\sim\alpha C_\alpha s^\alpha x^{-\alpha-1}$.
 For each $\varepsilon>0$, this density lies between $1\pm\varepsilon$
@@ -243,22 +287,40 @@ from $x$ to infinity and letting $\varepsilon\downarrow0$ gives the
 displayed survival asymptotic. For positive orders $p$, the same comparison
 proves $\mathbb E|T_\alpha|^p<\infty$ exactly when $p<\alpha$; the density is
 bounded near zero.
+:::
 
-The double-Pareto right-tail constant is $1/2$ at scale one. Matching it
-requires
+These formulas determine the two matching scales separately.
+
+:::{prf:corollary} Tail and variance matching scales
+:label: cor-double-pareto-student-matching
+
+Let $X$ have density $f(x)=\frac\alpha2(1+|x|)^{-\alpha-1}$ with
+$\alpha>0$, and let $T_\alpha$ have the centered Student law with
+$\alpha$ degrees of freedom and scale $s>0$. With $C_\alpha$ defined in
+[](#prop-double-pareto-student-tail), their leading right-tail constants
+match exactly when
 
 $$
-s_{\rm tail}=(2C_\alpha)^{-1/\alpha}.
+s=s_{\rm tail}=(2C_\alpha)^{-1/\alpha}.
 $$
 
-For $\alpha>2$, the Student variance is
-$s^2\alpha/(\alpha-2)$ (the beta-integral moment calculation is also
-given in the [mixture note](incerto-mixture-uncertainty.md#mixture-variance-precision)).
-Equating that to $2/[(\alpha-1)(\alpha-2)]$ instead gives
+For $\alpha>2$, their finite variances match exactly when
 
 $$
-s_{\rm var}=\sqrt{\frac{2}{\alpha(\alpha-1)}}.
+s=s_{\rm var}=\sqrt{\frac{2}{\alpha(\alpha-1)}}.
 $$
+:::
+
+:::{prf:proof}
+The right-tail constant in [](#prop-double-pareto-signed-magnitude) is
+$1/2$. Equating it to $C_\alpha s^\alpha$ from
+[](#prop-double-pareto-student-tail) gives $s_{\rm tail}$.
+For $\alpha>2$, the Student variance is $s^2\alpha/(\alpha-2)$,
+using the gamma-precision moment calculation in the
+[mixture note](incerto-mixture-uncertainty.md#mixture-variance-precision).
+Equating this to $2/[(\alpha-1)(\alpha-2)]$ from
+[](#prop-double-pareto-signed-magnitude) gives $s_{\rm var}$.
+:::
 
 At $\alpha=3$, $C_3=2\sqrt3/\pi$. Variance matching uses
 $s_{\rm var}=1/\sqrt3$ and gives Student right-tail constant

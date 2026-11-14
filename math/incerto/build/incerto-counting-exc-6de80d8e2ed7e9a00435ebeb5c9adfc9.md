@@ -25,10 +25,22 @@ answer a different question.
 
 ## What the count establishes
 
+The indicator definition gives two finite-sample properties.
+
+:::{prf:proposition} Bounds and monotonicity of empirical survival
+:label: prop-counting-exceedances-bounds-monotonicity
+
+For finite real observations $x_1,\ldots,x_n$, $n\ge1$, define
+$\widehat S_n(u)=n^{-1}\sum_{i=1}^n\mathbf1_{\{x_i>u\}}$.
+For every $u\in\mathbb R$, $0\le\widehat S_n(u)\le1$; for every
+$s<u$, $\widehat S_n(u)\le\widehat S_n(s)$.
+:::
+
+:::{prf:proof}
 Each indicator is either zero or one, so $0\leq\widehat S_n(u)\leq1$. If
 $s<u$, every observation exceeding $u$ also exceeds $s$. Therefore
-$\widehat S_n(u)\leq\widehat S_n(s)$. These statements follow directly from
-counting; they are exact finite-sample arguments.
+$\widehat S_n(u)\leq\widehat S_n(s)$.
+:::
 
 Use [`exceedance_fraction`](incerto-api-reference.md#api-exceedance-fraction), [`empirical_survival_function`](incerto-api-reference.md#api-empirical-survival-function).
 
@@ -70,18 +82,35 @@ The calculation uses a fixed synthetic sample; it needs no external data.
 
 Use the right-continuous convention $F(u)=P(X\le u)$. Its complement is
 $\bar F(u)=P(X>u)$, even when $X$ has atoms. For the empirical law that
-assigns mass $1/n$ to each observation,
+assigns mass $1/n$ to each observation, the same partition gives the
+following identities.
+
+:::{prf:proposition} Empirical CDF complement and mass at a tie
+:label: prop-counting-exceedances-cdf-ties
+
+For finite real observations $x_1,\ldots,x_n$, $n\ge1$, and a finite
+threshold $u$, let
+$\widehat F_n(u)=n^{-1}\sum_{i=1}^n\mathbf1_{\{x_i\le u\}}$ and
+$\widehat S_n(u)=n^{-1}\sum_{i=1}^n\mathbf1_{\{x_i>u\}}$.
+Then
 
 $$
 \begin{gathered}
-\widehat F_n(u)=\frac1n\sum_{i=1}^n\mathbf1_{\{x_i\le u\}},\\
-\widehat S_n(u)=1-\widehat F_n(u).
+\widehat S_n(u)=1-\widehat F_n(u),\\
+\frac1n\sum_{i=1}^n\mathbf1_{\{x_i\ge u\}}
+=\widehat S_n(u)+\frac1n\sum_{i=1}^n\mathbf1_{\{x_i=u\}}.
 \end{gathered}
 $$
+:::
 
-We prove this identity by partitioning the observations into $x_i\le u$
-and $x_i>u$. The alternative count with $x_i\ge u$ adds the empirical
-mass at $u$; it is not the complement of this CDF.
+:::{prf:proof}
+Partition the observations into $x_i\le u$ and $x_i>u$ to obtain the
+first identity. The event $x_i\ge u$ is the disjoint union of $x_i>u$
+and $x_i=u$; summing its indicators gives the second.
+:::
+
+**Remark.** The inclusive count adds the empirical mass at $u$, so at a tie
+it is not the complement of this CDF.
 
 | Threshold $u$ for $(1,2,2,4)$ | $\widehat F_4(u)$ | $\widehat S_4(u)$ | Fraction $x_i\ge u$ |
 | --- | --- | --- | --- |
@@ -97,10 +126,15 @@ last ordinate are a different plotting convention.
 
 ## What iid sampling adds
 
-Now assume $X_1,\ldots,X_n$ are iid from $F$, and fix a nonrandom threshold
-$u$. Each indicator $\mathbf1_{\{X_i>u\}}$ has mean $\bar F(u)$ and
-variance $\bar F(u)(1-\bar F(u))$, since its square equals itself.
-Independence makes the cross-covariances zero. Consequently,
+Summing iid indicators also gives a pointwise consistency result.
+
+:::{prf:proposition} Mean, variance, and consistency at a fixed threshold
+:label: prop-counting-exceedances-iid-consistency
+
+Let $X_1,X_2,\ldots$ be iid real random variables with CDF $F$.
+Fix a nonrandom $u\in\mathbb R$ and set $\bar F(u)=P(X_1>u)$ and
+$\widehat S_n(u)=n^{-1}\sum_{i=1}^n\mathbf1_{\{X_i>u\}}$.
+For every $n\ge1$,
 
 $$
 \begin{gathered}
@@ -109,15 +143,26 @@ $$
 \end{gathered}
 $$
 
-These are exact finite-sample identities, proved by summing the indicators.
-For any fixed $\varepsilon>0$, Chebyshev's inequality gives
+For every $\varepsilon>0$,
 
 $$
 P(|\widehat S_n(u)-\bar F(u)|>\varepsilon)
 \le\frac{\bar F(u)(1-\bar F(u))}{n\varepsilon^2},
 $$
 
-which tends to zero. No moment assumption on $X$ is needed: the indicators
+so $\widehat S_n(u)\to\bar F(u)$ in probability as $n\to\infty$.
+No moment assumption on $X_1$ is required.
+:::
+
+:::{prf:proof}
+Each indicator has mean $\bar F(u)$ and variance
+$\bar F(u)(1-\bar F(u))$, since its square equals itself.
+Independence makes the cross-covariances zero. Summing gives the displayed
+mean and variance. Chebyshev's inequality gives the probability bound,
+whose right-hand side tends to zero.
+:::
+
+**Remark.** No moment assumption on $X$ is needed: the indicators
 are bounded. This argument is pointwise in a fixed $u$; it proves neither a
 uniform-in-threshold theorem nor consistency of an unbounded payoff average.
 

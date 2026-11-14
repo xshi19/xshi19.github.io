@@ -52,7 +52,8 @@ $(M_n-b_n)/a_n$ converges in distribution to a random variable with CDF
 $H_\xi$.  The
 [Pickands-Balkema-de Haan theorem](./incerto-pickands-balkema-de-haan.md)
 then says that the same $\xi$ appears as the generalized Pareto shape
-parameter in threshold-excess limits.
+parameter in threshold-excess limits. We cite that theorem rather than
+prove it here; its sources are listed in the references below.
 
 Estimating $\xi$ means choosing a tail region and reporting an estimate of
 $\xi$ together with the sensitivity of that estimate to the threshold choice.
@@ -75,7 +76,10 @@ $$
 \xi=\frac1\alpha>0.
 $$
 
-This Pareto-type formula is a special case, not the definition.  More
+The regular-variation characterization is cited from
+@embrechts1997modelling and @resnick2007heavy; only the exact Pareto
+calibration is proved below. This Pareto-type formula is a special case,
+not the definition. More
 generally, $\xi>0$ corresponds to a heavy right tail with
 Frechet-type limits, $\xi=0$ to the
 Gumbel domain, and $\xi<0$ to a finite right endpoint. The Gumbel domain
@@ -91,8 +95,40 @@ are defined with the estimators below.
 (evi-pareto-calibration)=
 ## Proving the exact Pareto calibration
 
-We prove $\xi=1/\alpha$ for iid exact Pareto variables with $\alpha>0$ and
-$x_m>0$. Set $c_n=x_m n^{1/\alpha}$. For $y\ge n^{-1/\alpha}$,
+We prove the exact Pareto calibration directly from the maximum's CDF.
+
+:::{prf:proposition} Exact Pareto maxima and their extreme-value index
+:label: prop-extreme-value-index-pareto-calibration
+
+Let $X_1,X_2,\ldots$ be iid Pareto Type I variables with cutoff $x_m>0$
+and exponent $\alpha>0$, and put $M_n=\max_{1\le i\le n}X_i$ and
+$c_n=x_mn^{1/\alpha}$. For every $n\ge1$,
+
+$$
+P(M_n/c_n\le y)=
+\begin{cases}
+0,&y<n^{-1/\alpha},\\
+(1-y^{-\alpha}/n)^n,&y\ge n^{-1/\alpha}.
+\end{cases}
+$$
+
+As $n\to\infty$, this CDF converges to $\exp(-y^{-\alpha})$ for
+$y>0$ and to zero for $y\le0$. Equivalently, with $b_n=c_n$ and
+$a_n=c_n/\alpha$,
+
+$$
+P((M_n-b_n)/a_n\le z)\longrightarrow H_{1/\alpha}(z)
+=\begin{cases}
+\exp[-(1+z/\alpha)^{-\alpha}],&z>-\alpha,\\
+0,&z\le-\alpha.
+\end{cases}
+$$
+
+Thus the extreme-value index is $\xi=1/\alpha$.
+:::
+
+:::{prf:proof}
+For $y\ge n^{-1/\alpha}$,
 independence gives the exact finite-$n$ CDF
 
 $$
@@ -104,16 +140,33 @@ displayed expression tends to $\exp(-y^{-\alpha})$ by
 $n\log(1-y^{-\alpha}/n)\to-y^{-\alpha}$. The limit is zero for $y\le0$.
 To match the GEV convention above, choose $b_n=c_n$ and $a_n=c_n/\alpha$.
 Then $y=1+z/\alpha=1+\xi z$, and the limiting CDF is $H_{1/\alpha}(z)$.
-This proves the claimed EVI for exact Pareto. The general regular-variation
+This proves the claimed EVI for exact Pareto.
+:::
+
+**Remark.** The general regular-variation
 characterization and the threshold-limit theorem are cited results, not
 proved by this special case.
 
 SCoFT v4 §2.2.22, p. 17, motivates the domain-of-attraction terminology
 [@taleb2025scoftv4]. Approaching a support endpoint alone does not define a
-maximum domain of attraction. If $x_F=\sup\{x:F(x)<1\}$, then iid sampling
-gives $P(M_n\le r)=F(r)^n\to0$ for every $r<x_F$, even without a
-nondegenerate normalized limit. The EVI definition needs that additional
-limit and its normalizing constants.
+maximum domain of attraction, as the following elementary calculation shows.
+
+:::{prf:proposition} Maxima exceed every fixed point below the upper endpoint
+:label: prop-extreme-value-index-endpoint
+
+Let $X_1,X_2,\ldots$ be iid real variables with CDF $F$, let
+$M_n=\max_{1\le i\le n}X_i$, and let
+$x_F=\sup\{x\in\mathbb R:F(x)<1\}\in\mathbb R\cup\{+\infty\}$.
+For every real $r<x_F$, $P(M_n\le r)=F(r)^n\to0$ as $n\to\infty$.
+:::
+
+:::{prf:proof}
+Independence gives $P(M_n\le r)=\prod_{i=1}^nP(X_i\le r)=F(r)^n$.
+Since $r<x_F$, $F(r)<1$, and this power tends to zero.
+:::
+
+**Remark.** This calculation needs no nondegenerate normalized limit.
+The EVI definition needs that additional limit and its normalizing constants.
 
 Use [`pareto_normalized_maximum_cdf`](incerto-api-reference.md#api-pareto-normalized-maximum-cdf).
 
@@ -239,8 +292,27 @@ finite-sample estimates would be a diagnostic, not proof of the tail model.
 Chapter 9's [Gaussian normalization](incerto-generalized-extreme-value.md#gev-gaussian-maxima)
 and [normal excess limit](incerto-pickands-balkema-de-haan.md#pbdh-chapter-nine)
 both give $\xi=0$. Exact Pareto gives $\xi=1/\alpha$ in both views.
-For a uniform parent on $[0,b]$ with $b>0$, $n(b-M_n)/b$ tends to an exponential
-law with rate one: for $t\ge0$, eventually
+For a uniform parent, the distance of the maximum from the endpoint gives
+the corresponding limit directly.
+
+:::{prf:proposition} Uniform maxima have extreme-value index minus one
+:label: prop-extreme-value-index-uniform-calibration
+
+Let $X_1,X_2,\ldots$ be iid uniform on $[0,b]$, where $b>0$, and
+$M_n=\max_{1\le i\le n}X_i$. Then $n(b-M_n)/b$ converges in
+distribution to an exponential variable of rate one. With $a_n=b/n$
+and $b_n=b-b/n$, the CDF of $(M_n-b_n)/a_n$ converges at every real $z$ to
+
+$$
+H_{-1}(z)=\begin{cases}e^{z-1},&z\le1,\\1,&z>1.\end{cases}
+$$
+
+Thus the extreme-value index is $\xi=-1$.
+:::
+
+:::{prf:proof}
+For fixed $t\ge0$ and eventually $n\ge t$, independence and the uniform
+CDF give
 
 $$
 \begin{aligned}
@@ -249,9 +321,15 @@ $$
 \end{aligned}
 $$
 
-Equivalently, setting $a_n=b/n$ and $b_n=b-b/n$ gives the GEV limit
-$H_{-1}(z)=e^{z-1}$ for $z\le1$, extended by one above. Its threshold
-excesses are exactly GPD with $\xi=-1$. The three calculations agree
+The scaled distance is nonnegative, so this identifies its exponential
+limit. Since $(M_n-b_n)/a_n=1-n(b-M_n)/b$, for $z<1$ the limiting CDF
+is $e^{-(1-z)}$; for $z\ge1$ it is one.
+:::
+
+**Remark.** The uniform parent's threshold excesses are exactly GPD with
+$\xi=-1$, as described in the
+[threshold-excess note](incerto-pickands-balkema-de-haan.md#pbdh-chapter-nine).
+The three calculations agree
 without treating every fitted positive Hill value as evidence for $\xi>0$.
 
 The [inverse-gamma sampling law](incerto-hill-estimator.md#hill-sampling-law)

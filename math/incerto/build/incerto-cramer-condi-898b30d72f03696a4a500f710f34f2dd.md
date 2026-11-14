@@ -66,9 +66,24 @@ infinite variance: it can also occur when both the mean and variance are finite.
 
 We prove the displayed Chernoff bound from Markov's inequality.  The right-tail
 and two-sided Cramér conditions are definitions or standard large-deviation
-hypotheses; the larger Cramér theorem is cited rather than proved here.  The
-normal, exponential, and Pareto cases below are direct checks of the condition.
+hypotheses; the larger Cramér theorem is cited rather than proved here
+(see Feller, Vol. II, in the references). The normal, exponential, and Pareto
+cases below are direct checks of the condition.
 
+:::{prf:corollary} Chernoff bound from a positive exponential moment
+:label: cor-cramer-condition-chernoff
+
+Let $X$ be a real random variable. If $\theta>0$ and
+$\mathbb E e^{\theta X}<\infty$, then for every $x\in\mathbb R$,
+
+$$
+P(X>x)\le e^{-\theta x}\mathbb E e^{\theta X}.
+$$
+
+In particular, $\bar F(x)=P(X>x)=O(e^{-\theta x})$ as $x\to\infty$.
+:::
+
+:::{prf:proof}
 The Chernoff bound follows from Markov's inequality applied to the nonnegative
 random variable $e^{\theta X}$:
 
@@ -79,14 +94,31 @@ $$
 \end{aligned}
 $$
 
-A standard normal random variable satisfies the two-sided version because
-$\mathbb E[e^{\theta X}]=e^{\theta^2/2}$ for all real $\theta$.  An exponential
-random variable with rate $\lambda>0$ has mgf
-$\lambda/(\lambda-\theta)$ for $\theta<\lambda$, so it also satisfies
-the two-sided neighborhood condition. Its positive exponential moments exist
-exactly for $0<\theta<\lambda$.
+The finite exponential moment is a constant independent of $x$, giving
+the asymptotic upper bound.
+:::
 
-For a [Pareto Type I](./incerto-pareto.md) random variable,
+The model checks follow by integration of their densities.
+
+:::{prf:proposition} Exponential moments of normal, exponential, and Pareto laws
+:label: prop-cramer-condition-model-moments
+
+A standard normal variable has $\mathbb E e^{\theta X}=e^{\theta^2/2}$
+for every $\theta\in\mathbb R$. An exponential variable of rate
+$\lambda>0$ has $\mathbb E e^{\theta X}=\lambda/(\lambda-\theta)$
+for $\theta<\lambda$, and an infinite exponential moment for
+$\theta\ge\lambda$. Thus both laws have finite mgfs in a neighborhood
+of zero. A Pareto Type I variable with cutoff $x_m>0$ and exponent
+$\alpha>0$ has $\mathbb E e^{\theta X}=\infty$ for every $\theta>0$.
+:::
+
+:::{prf:proof}
+For the standard normal, completing the square gives
+$\theta x-x^2/2=\theta^2/2-(x-\theta)^2/2$, so density integration
+gives $e^{\theta^2/2}$. For the exponential law, the integral is
+$\lambda\int_0^\infty e^{-(\lambda-\theta)x}\,dx$; it equals
+$\lambda/(\lambda-\theta)$ when $\theta<\lambda$ and diverges otherwise.
+For a [Pareto Type I](./incerto-pareto.md) variable,
 
 $$
 \begin{aligned}
@@ -98,11 +130,18 @@ $$
 For every $\theta>0$, the exponential factor dominates the polynomial decay,
 so the integral diverges.  Thus Pareto tails fail the right-tail Cramér
 condition for every positive $\theta$.
+:::
 
 ## Truncated exponential moment check
 
 (cramer-condition-truncated-moment-check)=
-For an exponential variable of rate $\lambda$ and $c\ge0$,
+Truncation makes the contrast visible at finite cutoffs.
+
+:::{prf:proposition} Truncated exponential moments
+:label: prop-cramer-condition-truncated-moments
+
+For an exponential variable $X$ of rate $\lambda>0$, $c\ge0$, and
+$0<\theta<\lambda$,
 
 $$
 \begin{gathered}
@@ -113,11 +152,20 @@ $$
 \end{gathered}
 $$
 
-For example, $\lambda=1$ and $\theta=0.12$ give a finite limit
-$1/0.88\approx1.13636$ as $c\to\infty$.
+For a Pareto Type I variable $X$ with $x_m>0$ and $\alpha>0$, every
+$\theta>0$ and $c\ge2x_m$ satisfy
 
-For Pareto Type I with $\alpha>0$, every $\theta>0$ instead gives a
-lower bound that diverges. For $c\ge2x_m$, retain only the interval $(c/2,c]$:
+$$
+\mathbb E[e^{\theta X}\mathbf1_{\{X\le c\}}]
+\ge(2^\alpha-1)\left(\frac{x_m}{c}\right)^\alpha e^{\theta c/2},
+$$
+
+whose right-hand side tends to infinity as $c\to\infty$.
+:::
+
+:::{prf:proof}
+Integrating $\lambda e^{-(\lambda-\theta)x}$ over $[0,c]$ gives the
+exponential formula. For the Pareto law, retain only $(c/2,c]$:
 
 $$
 \begin{aligned}
@@ -127,6 +175,11 @@ $$
 &\quad\longrightarrow\infty.
 \end{aligned}
 $$
+The last limit follows because exponential growth dominates $c^{-\alpha}$.
+:::
+
+For example, $\lambda=1$ and $\theta=0.12$ give a finite limit
+$1/0.88\approx1.13636$ as $c\to\infty$ in the exponential case.
 
 These are population calculations, independent of simulation. Even a Pareto
 law with $\alpha=2.5$, finite mean, and finite variance has no positive
@@ -135,9 +188,14 @@ exponential moment.
 (cramer-bernoulli)=
 ## An optimized bound for Bernoulli averages
 
-For iid $X_i\sim\mathrm{Bernoulli}(p)$, $0<p<1$, let $S_n=\sum_{i=1}^nX_i$.
-Independence gives $\mathbb Ee^{\theta S_n}=(1-p+pe^\theta)^n$.
-Markov therefore proves, for $p<q<1$,
+We optimize Markov's exponential bound directly for Bernoulli sums.
+
+:::{prf:proposition} Optimized Bernoulli upper-tail bound
+:label: prop-cramer-condition-bernoulli-bound
+
+Let $X_1,\ldots,X_n$ be iid $\mathrm{Bernoulli}(p)$, where
+$0<p<1$ and $n\ge1$, and put $S_n=\sum_{i=1}^nX_i$.
+For $p<q<1$,
 
 $$
 \begin{aligned}
@@ -157,12 +215,22 @@ D(q\Vert p)&=q\log(q/p)\\
 \end{aligned}
 $$
 
-To verify the optimum, differentiate the bracket: its derivative vanishes
+At $q=1$, the limiting bound is $p^n=P(S_n=n)$. For $q\le p$, the
+trivial upper bound is one. When $nq$ is not an integer, the event is
+$S_n\ge\lceil nq\rceil$ and the displayed bound at the unrounded $q$
+remains valid.
+:::
+
+:::{prf:proof}
+Independence gives $\mathbb Ee^{\theta S_n}=(1-p+pe^\theta)^n$.
+Markov's inequality applied to $e^{\theta S_n}$ gives the bound for each
+$\theta>0$. To optimize it, differentiate the bracket: its derivative vanishes
 at $e^\theta=q(1-p)/(p(1-q))>1$, and its second derivative is negative.
 Substitution yields the displayed expression. At $q=1$ the bound is
 $p^n$, exactly the all-success probability. At $q\le p$ we use the trivial
 upper bound one. If $nq$ is not an integer, the event is
 $S_n\ge\lceil nq\rceil$; the bound at the unrounded $q$ is still valid.
+:::
 
 For $p=1/2$, $q=3/4$, $D(q\Vert p)\approx0.130812$.
 This is an upper bound, not a finite-$n$ equality or a tail-probability

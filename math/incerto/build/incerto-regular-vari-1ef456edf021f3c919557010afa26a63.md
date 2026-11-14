@@ -36,10 +36,15 @@ $L$ is slowly varying when $L(tx)/L(x)\to1$ for every fixed $t>0$.  Equivalently
 regularly varying functions can be written as
 
 $$
+\label{eq-regular-variation-characterization}
 f(x)=x^\rho L(x)
 $$
 
-with $L$ slowly varying.  A survival function
+with $L$ slowly varying. The equivalence in
+[](#eq-regular-variation-characterization) is proved in
+[](#prop-regular-variation-characterization).
+
+A survival function
 $\bar F$ has a regularly varying right tail with exponent $\alpha>0$, written
 $\bar F\in RV_{-\alpha}$, when
 
@@ -86,7 +91,21 @@ varying function is a power times a slowly varying function.  The proof is only
 an unwinding of the ratio definition. The [Karamata note](./incerto-karamata.md)
 develops the related integral asymptotics and their moment consequences.
 
-If $f(x)=x^\rho L(x)$ with $L$ slowly varying, then for fixed $t>0$,
+:::{prf:proposition} Power times a slowly varying function
+:label: prop-regular-variation-characterization
+
+Let $\rho\in\mathbb R$, and let $f$ be a positive, finite-valued measurable
+function defined for all sufficiently large $x>0$. Then $f\in RV_\rho$ if and
+only if the factorization [](#eq-regular-variation-characterization) holds for
+all sufficiently large $x$, for some positive, finite-valued measurable
+function $L$ slowly varying at infinity.
+:::
+
+:::{prf:proof}
+
+Suppose $f(x)=x^\rho L(x)$ eventually, with $L$ slowly varying. For every
+fixed $t>0$, both $x$ and $tx$ lie in the range where the factorization holds
+once $x$ is sufficiently large. Hence
 
 $$
 \frac{f(tx)}{f(x)}
@@ -95,7 +114,9 @@ t^\rho\frac{L(tx)}{L(x)}
 \to t^\rho.
 $$
 
-Conversely, if $f\in RV_\rho$, define $L(x)=x^{-\rho}f(x)$.  Then
+Conversely, if $f\in RV_\rho$, define $L(x)=x^{-\rho}f(x)$ for all
+sufficiently large $x>0$. This function is positive, finite-valued, and
+measurable. For every fixed $t>0$,
 
 $$
 \frac{L(tx)}{L(x)}
@@ -104,14 +125,17 @@ t^{-\rho}\frac{f(tx)}{f(x)}
 \to 1,
 $$
 
-so $L$ is slowly varying and $f(x)=x^\rho L(x)$.
+so $L$ is slowly varying and $f(x)=x^\rho L(x)$ eventually.
+:::
 
-For survival tails, set $\rho=-\alpha$ in the same equivalence:
-$\bar F(x)=x^{-\alpha}L(x)$, with $L(x)=x^\alpha\bar F(x)$ slowly varying.
+**Remark (survival tails).** For a survival function $\bar F$ and $\alpha>0$,
+set $\rho=-\alpha$ in the same equivalence: $\bar F\in RV_{-\alpha}$ if and
+only if $\bar F(x)=x^{-\alpha}L(x)$ eventually, with
+$L(x)=x^\alpha\bar F(x)$ slowly varying.
 No separate survival-tail argument is needed.
 
-For the [Pareto distribution](./incerto-pareto.md) with lower cutoff
-$x_m>0$ and exponent $\alpha>0$, at thresholds $x\ge x_m$,
+**Example (exact Pareto).** For the [Pareto distribution](./incerto-pareto.md)
+with lower cutoff $x_m>0$ and exponent $\alpha>0$, at thresholds $x\ge x_m$,
 
 $$
 \bar F(x)=x_m^\alpha x^{-\alpha},
@@ -149,18 +173,41 @@ convergence of a derivative of a log-log plot needs extra smoothness.
 (regular-variation-powers)=
 ## Positive powers of a tail variable
 
-We prove the transformation rule used in SCoFT v4 §5.2.3, p. 100
-[@taleb2025scoftv4], without differentiating a density. Let $X\ge0$ have
-$\bar F(x)=x^{-\alpha}L(x)$ eventually and let $r>0$. For a threshold $u>0$,
-with the last equality valid for sufficiently large $u$,
+The following proposition states the positive-power rule in SCoFT v4 §5.2.3,
+p. 100 [@taleb2025scoftv4]. The proof uses survival probabilities directly,
+without differentiating a density.
+
+:::{prf:proposition} Positive powers of a regularly varying tail
+:label: prop-regular-variation-positive-powers
+
+Let $X\ge0$ be a random variable, finite almost surely, whose survival
+function $\bar F(x)=P(X>x)$ satisfies $\bar F(x)=x^{-\alpha}L(x)$ for all
+sufficiently large $x>0$, where $\alpha>0$ and $L$ is positive, finite-valued,
+measurable, and slowly varying at infinity. For every $r>0$, $X^r$ has a
+regularly varying right tail with exponent $\alpha/r$: for all sufficiently
+large $u$, $P(X^r>u)=u^{-\alpha/r}\widetilde L(u)$, where
+$\widetilde L(u)=L(u^{1/r})$ is slowly varying at infinity.
+:::
+
+:::{prf:proof}
+
+Since $r>0$ and $X\ge0$, the events $X^r>u$ and $X>u^{1/r}$ are equal for
+every $u>0$. Thus, with the last equality valid for sufficiently large $u$,
 
 $$
 P(X^r>u)=\bar F(u^{1/r})=u^{-\alpha/r}L(u^{1/r}).
 $$
 
-For fixed $t>0$, the ratio of the last slowly varying factors has arguments
-$t^{1/r}u^{1/r}$ and $u^{1/r}$, so it tends to one as $u\to\infty$.
-Thus $X^r$ has survival exponent $\alpha/r$. Units may be fixed first by
+The function $\widetilde L$ is positive, finite-valued, and measurable for
+sufficiently large $u$. For every fixed $t>0$,
+$\widetilde L(tu)/\widetilde L(u)=L(t^{1/r}u^{1/r})/L(u^{1/r})\to1$ as
+$u\to\infty$, because $u^{1/r}\to\infty$ and $t^{1/r}>0$ is fixed.
+Thus $\widetilde L$ is slowly varying, and
+[](#prop-regular-variation-characterization) gives the survival exponent
+$\alpha/r$ for $X^r$.
+:::
+
+**Remarks.** Units may be fixed first by
 applying this argument to $X/x_m$ for a positive reference scale $x_m$.
 Negative powers concern the behavior near zero and are outside this
 right-tail rule. The exact Pareto payoff case is already

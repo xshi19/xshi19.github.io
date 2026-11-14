@@ -7,6 +7,7 @@
 ## 项目
 
 - [normix](https://xshi19.github.io/normix/)
+- [xshi-skills](https://github.com/xshi19/xshi-skills): 给 Cursor、Codex、Claude Code 用的 agent skills：数学记号、决策记录、科学计算。
 
 ## 文章
 

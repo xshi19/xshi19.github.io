@@ -26,6 +26,7 @@ https://cursor.com/@xshi
 ## Projects
 
 - normix: JAX package for normal variance mixture distributions (generalized hyperbolic and relatives), with fitting and risk measures. https://xshi19.github.io/normix/
+- xshi-skills: Agent skills for Cursor, Codex, and Claude Code: math notation, decision records, and scientific computing. https://github.com/xshi19/xshi-skills
 - Mathematical notes: Notes on fat tails, information geometry, and distribution theory. https://xshi19.github.io/math/
 
 ## Articles

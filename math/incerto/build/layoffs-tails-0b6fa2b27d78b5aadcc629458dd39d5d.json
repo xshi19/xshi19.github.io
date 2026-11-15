@@ -1,0 +1,77 @@
+{
+  "source": "layoffs.fyi via Kaggle mirror swaptr/layoffs-2022",
+  "retrieved": "2026-10-26",
+  "input_sha256": "b4bbf5a04e8341f9b1e48928817ebcead0587cacf42ed660bf48d024836406b6",
+  "input_rows": 4644,
+  "events": 4621,
+  "first_date": "2020-03-11",
+  "last_date": "2026-10-22",
+  "missing_counts": 1607,
+  "zero_counts": 0,
+  "missing_fractions": 1730,
+  "full_workforce_cuts": 377,
+  "zero_fractions": 1,
+  "replicates": 1000,
+  "confidence": 0.95,
+  "min_tail": 50,
+  "samples": {
+    "counts": {
+      "n": 3014,
+      "seed": 20261029,
+      "csn": {
+        "xmin": 230.0,
+        "alpha": 1.0367695672437622,
+        "n_tail": 681,
+        "ks": 0.052828152149693025,
+        "standard_error": 0.03972909614025484,
+        "gof_p": 0.0,
+        "gof_hits": 0
+      },
+      "hill_reported": [
+        {
+          "k": 301,
+          "alpha": 1.0364638682633165,
+          "lower": 0.940862258529021,
+          "upper": 1.2109090416476103,
+          "finite_replicates": 1000
+        },
+        {
+          "k": 603,
+          "alpha": 1.0066390222798904,
+          "lower": 0.9556085908799222,
+          "upper": 1.1344145317969898,
+          "finite_replicates": 1000
+        }
+      ]
+    },
+    "pct_logloss_reported": {
+      "n": 2513,
+      "seed": 20261030,
+      "csn": {
+        "xmin": 0.37106368139083196,
+        "alpha": 1.8876518144903924,
+        "n_tail": 387,
+        "ks": 0.11376680949286588,
+        "standard_error": 0.09595473433184398,
+        "gof_p": 0.0,
+        "gof_hits": 0
+      },
+      "hill_reported": [
+        {
+          "k": 251,
+          "alpha": 1.9817445404538676,
+          "lower": 1.7312190713390412,
+          "upper": 2.452675669612039,
+          "finite_replicates": 1000
+        },
+        {
+          "k": 503,
+          "alpha": 2.2830218347434887,
+          "lower": 1.9215785848475577,
+          "upper": 2.501779539636503,
+          "finite_replicates": 1000
+        }
+      ]
+    }
+  }
+}

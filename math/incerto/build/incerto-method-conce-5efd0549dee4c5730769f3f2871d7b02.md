@@ -1,0 +1,36 @@
+---
+title: Methods
+---
+
+Method pages describe diagnostics, estimators, and modeling moves that recur
+across fat-tail arguments.
+
+- [Tail probabilities, payoffs, and error propagation](incerto-probability-conflation.md)
+- [VaR, expected shortfall, and tail uncertainty](incerto-risk-measures.md)
+- [Probability calibration versus payoff accuracy](incerto-calibration-payoff.md)
+- [Probability forecasts as martingales](incerto-forecast-martingale.md):
+  coherent updating, binary valuation, and revision diagnostics
+- [Point forecasts under heavy-tailed losses](incerto-point-forecast.md):
+  mean-error scaling, paired scores, predictive quantiles and bounded tail risk
+- [Tail assumptions in statistical pipelines](incerto-ml-econometrics.md)
+- [Moment estimation and its limits](./incerto-moment-estimation.md)
+- [Kappa and finite-sample concentration](./incerto-kappa.md)
+- [Hill Estimator](./incerto-hill-estimator.md)
+- [Plug-In Tail Estimation](./incerto-plug-in-tail-estimation.md)
+- [Tail Threshold Selection](./incerto-tail-threshold-selection.md)
+- [Fitting a power-law tail](./incerto-power-law-fitting.md)
+- [Power-law goodness of fit and alternatives](./incerto-power-law-goodness-of-fit.md)
+- [Survival Tail Ratio](./incerto-survival-tail-ratio.md)
+- [Maximum entropy and power tails](./incerto-maximum-entropy.md)
+- [Iso-Density Tail Geometry](./incerto-iso-density-tail-geometry.md)
+- [Max-to-Sum Ratio](./incerto-max-to-sum-ratio.md)
+- [Body, Shoulders, and Tails](./incerto-body-shoulder-tail.md)
+- [Extreme Value Index](./incerto-extreme-value-index.md)
+- [Asymmetric payoffs and exposure](./incerto-asymmetric-payoffs.md)
+- [Size and decentralized exposure](./incerto-decentralization.md)
+
+- [Exact Pareto exponent sampling law](./incerto-hill-estimator.md#hill-sampling-law)
+
+Return to the [Incerto reading paths](./incerto/index.md), or browse the
+[theorem](./incerto-theorem-concepts.md), [method](./incerto-method-concepts.md),
+and [distribution](./incerto-distribution-concepts.md) indexes.

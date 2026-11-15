@@ -152,7 +152,6 @@ Let $X_i$ be iid with a nondegenerate stable law of index
 $1<\alpha\le2$ and mean $\mu$. For $M(n)=\mathbb E|S_n-n\mu|$,
 
 $$
-
 M(n)=n^{1/\alpha}M(1),\qquad
 \kappa_{n_0,n}=2-\alpha,\qquad
 \frac{M(n)}{nM(1)}=n^{1/\alpha-1}
@@ -219,7 +218,6 @@ location zero and scale one, and put $M(n)=\mathbb E|\sum_{i=1}^nX_i|$.
 Then
 
 $$
-
 M(1)=\sqrt{\frac\nu\pi}\,
 \frac{\Gamma((\nu-1)/2)}{\Gamma(\nu/2)},\qquad
 \frac{M(2)}{M(1)}=\sqrt\pi\,2^{2-\nu}
@@ -398,7 +396,6 @@ Let $X_i$ be iid gamma variables with shape $r>0$ and scale
 $\theta>0$. For $S_n=\sum_{i=1}^nX_i$ and integer $n\ge1$,
 
 $$
-
 M(n)=\mathbb E|S_n-nr\theta|
 =\frac{2\theta\,(nr)^{nr}e^{-nr}}{\Gamma(nr)}.
 $$
@@ -487,7 +484,6 @@ $\mu_\ell\in\mathbb R$ and $\sigma_\ell>0$. Then
 $\mu=\mathbb EX=e^{\mu_\ell+\sigma_\ell^2/2}$, and
 
 $$
-
 M(1)=\mathbb E|X-\mu|
 =2\mu[2\Phi(\sigma_\ell/2)-1],
 $$
@@ -719,7 +715,6 @@ $f(x)=(2-|x|)/4$ on $[-2,2]$, zero elsewhere. This density has a
 single mode at zero, and for $M(n)=\mathbb E|\sum_{i=1}^nX_i|$,
 
 $$
-
 M(1)=2/3,\qquad M(2)=14/15,\qquad
 \kappa_{1,2}=2-\frac{\log2}{\log(7/5)}<0.
 $$
@@ -765,7 +760,6 @@ $\sigma>0$, equiprobable $R\in\{-1,1\}$ and independent
 $Z\sim N(0,1)$. For $b\in\mathbb R$, $s>0$, define
 
 $$
-
 H(b,s)=s\sqrt{2/\pi}e^{-b^2/(2s^2)}
        +|b|[2\Phi(|b|/s)-1].
 $$
@@ -773,7 +767,6 @@ $$
 Then $H(b,s)=\mathbb E|b+sZ|$ and, for integer $n\ge1$,
 
 $$
-
 M(n)=\mathbb E\left|\sum_{i=1}^nX_i\right|
 =\sum_{k=0}^n\binom nk2^{-n}H(a(2k-n),\sigma\sqrt n).
 $$

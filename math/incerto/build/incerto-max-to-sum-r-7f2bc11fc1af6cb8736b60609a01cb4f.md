@@ -31,7 +31,6 @@ variables with finite positive mean $\mu=\mathbb E[X]$,
 [](#thm-max-to-sum-ratio-finite-mean) gives
 
 $$
-
 R_n\to0\qquad\text{almost surely}.
 $$
 

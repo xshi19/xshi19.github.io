@@ -429,7 +429,6 @@ compares this sum deviation at two sizes. Here the target is the
 relative mean absolute error of the sample mean:
 
 $$
-
 R(n)=\frac{M(n)}{nM(1)}.
 $$
 
@@ -438,7 +437,6 @@ a comparison in common units. For a Gaussian sample of size $n_g$, this
 relative error is $n_g^{-1/2}$. Define the minimum matching integer by
 
 $$
-
 n_*=\min\{n\in\mathbb N:n\ge1,\ R(n)\le n_g^{-1/2}\}.
 $$
 
@@ -548,7 +546,6 @@ suppose $M(n)/M(1)=n^{1/(2-\kappa)}$ at every integer $n\ge1$,
 for a fixed $\kappa<1$. Then for every integer $n_g\ge1$,
 
 $$
-
 n_*=\left\lceil n_g^{\,(2-\kappa)/[2(1-\kappa)]}\right\rceil.
 $$
 

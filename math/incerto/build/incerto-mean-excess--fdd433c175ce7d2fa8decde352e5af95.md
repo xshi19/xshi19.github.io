@@ -18,7 +18,6 @@ For a real random variable $X$ with CDF $F$ and a finite threshold $u$ with
 $\bar F(u)=\mathbb P(X>u)>0$, the mean excess function is
 
 $$
-
 e(u)=\mathbb E[X-u\mid X>u]
 =\frac{\mathbb E[(X-u)_+]}{\bar F(u)}.
 $$
@@ -31,7 +30,6 @@ been crossed.  For a [Pareto Type I](./incerto-pareto.md) tail with
 exponent $\alpha>1$ and $u\ge x_m$,
 
 $$
-
 e(u)=\frac{u}{\alpha-1}.
 $$
 
@@ -41,7 +39,6 @@ threshold $u$ in its support with $\beta+\xi u>0$, the mean excess function is
 linear when $\xi<1$:
 
 $$
-
 e(u)=\frac{\beta+\xi u}{1-\xi}.
 $$
 

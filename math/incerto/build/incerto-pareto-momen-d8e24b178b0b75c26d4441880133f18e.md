@@ -88,7 +88,6 @@ $\alpha>2$.
 For $x\ge x_m$, the Pareto density is
 
 $$
-
 f(x)=\alpha x_m^\alpha x^{-(\alpha+1)}.
 $$
 
@@ -136,14 +135,12 @@ Let $X$ be Pareto Type I with $x_m,\alpha>0$, and let $p>0$.
 For a finite upper cutoff $b\ge x_m$, define
 
 $$
-
 M_p(b)=\mathbb E[X^p\mathbf 1_{\{X\le b\}}].
 $$
 
 Then
 
 $$
-
 M_p(b)=
 \begin{cases}
 \dfrac{\alpha x_m^\alpha}{\alpha-p}

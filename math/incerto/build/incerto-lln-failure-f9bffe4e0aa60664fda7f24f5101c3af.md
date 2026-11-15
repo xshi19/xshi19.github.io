@@ -112,7 +112,6 @@ Let $X_1,X_2,\dots$ be independent copies of a nonnegative random variable
 $X$, and let
 
 $$
-
 S_n=\sum_{i=1}^n X_i.
 $$
 

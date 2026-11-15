@@ -99,7 +99,6 @@ characteristic function $\varphi_X(t)=\mathbb E e^{itX}$ satisfy,
 for $t\in\mathbb R$,
 
 $$
-
 M_X(t)=\tfrac12e^{(1-a)t^2/2}+\tfrac12e^{(1+a)t^2/2},\qquad
 \varphi_X(t)=\tfrac12e^{-(1-a)t^2/2}+\tfrac12e^{-(1+a)t^2/2}.
 $$
@@ -360,7 +359,6 @@ $|x|^{\lambda-1}e^{-(A+\gamma)|x|}$.
 For $\lambda>1/2$, its continuous value at zero is
 
 $$
-
 f(0)=\frac{(A^2-\gamma^2)^\lambda\Gamma(\lambda-1/2)}
 {2\sqrt\pi\,\Gamma(\lambda)A^{2\lambda-1}}.
 $$
@@ -420,7 +418,6 @@ where $\lambda_j>0$. For fixed $T,x_m>0$, put $X=x_m e^{TR}$.
 Then for $x\ge x_m$,
 
 $$
-
 P(X>x)=\sum_jw_j(x_m/x)^{\lambda_j/T}.
 $$
 

@@ -26,7 +26,6 @@ For a density $f$ on a fixed support $D$, its differential entropy is
 $h(f)=-\int_D f(x)\log f(x)\,dx$, when defined. Consider a candidate
 
 $$
-
 g(x)=\exp\{\theta\mathbin{\cdot}t(x)-\psi(\theta)\},\qquad x\in D,
 $$
 
@@ -51,7 +50,6 @@ For every density $f$ on $D$ with the same finite expectations,
 each $t_j$ integrable under $f$, and $\int_D f|\log g|<\infty$,
 
 $$
-
 h(g)-h(f)=\mathrm{KL}(f\Vert g)\ge0.
 $$
 
@@ -73,7 +71,6 @@ Because $\log g$ is affine in the constrained statistics,
 $\int f\log g=\int g\log g$. Consequently
 
 $$
-
 h(g)-h(f)=\mathrm{KL}(f\Vert g)\ge0.
 $$
 
@@ -184,7 +181,6 @@ which is why maximizing in either coordinate gives the same candidate here.
 For a local parameter $q>0$, $q\ne1$, define
 
 $$
-
 S_q(f)=\frac{1-\int f(x)^q\,dx}{q-1},\qquad
 f_{[q]}(x)=\frac{f(x)^q}{\int f(y)^q\,dy},
 $$
@@ -203,7 +199,6 @@ For $S_q(f)=(1-\int f^q)/(q-1)$ and joint density
 $(f\otimes g)(x,y)=f(x)g(y)$,
 
 $$
-
 S_q(f\otimes g)=S_q(f)+S_q(g)+(1-q)S_q(f)S_q(g).
 $$
 :::
@@ -268,7 +263,6 @@ We prove normalization and distinguish the ordinary and escort means.
 Let $\beta>0$ and $0<q<2$. For $q\ne1$, define
 
 $$
-
 f_{q,\beta}(x)=\beta(2-q)
  [1+(q-1)\beta x]^{-1/(q-1)}.
 $$

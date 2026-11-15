@@ -22,50 +22,70 @@ is a positive Pareto exponent. All draws below are iid under the chosen law.
 (inference-contamination)=
 ## A finite-sample indistinguishability bound
 
-Let $P$ be any probability law and let
-$Q=(1-\varepsilon)P+\varepsilon R$, where $R$ is another law and
-$0<\varepsilon<1$. Define total variation by
+We prove the sample-law bound and its consequence for bounded tests.
+
+:::{prf:theorem} Finite-sample indistinguishability under contamination
+:label: thm-inference-asymmetry-contamination
+
+Let $P$ and $R$ be probability laws on the same measurable space and let
+$Q=(1-\varepsilon)P+\varepsilon R$, with $0<\varepsilon<1$.
+Define total variation by
 
 $$
 d_{\mathrm{TV}}(P,Q)=\sup_A|P(A)-Q(A)|,
 $$
 
-where the supremum is over measurable events. For every integer $n\ge1$,
+where the supremum is over measurable events. For every integer $n\ge1$, set
+$d=1-(1-\varepsilon)^n$. Then
 
 $$
 d_{\mathrm{TV}}(P^{\otimes n},Q^{\otimes n})
 \le 1-(1-\varepsilon)^n\le n\varepsilon.
 $$
 
-We prove this bound and its consequence for tests. To generate a $Q$ sample,
-independently choose the $R$ component with probability $\varepsilon$ at each
-draw. With probability $(1-\varepsilon)^n$, no such choice occurs and the
-conditional sample law is exactly $P^{\otimes n}$. Thus
-$Q^{\otimes n}=(1-d)P^{\otimes n}+dH$ for some probability law $H$, where
-$d=1-(1-\varepsilon)^n$. For any event $A$, the probability difference is
-$d|H(A)-P^{\otimes n}(A)|\le d$. The union bound on the $n$ component
-choices gives $d\le n\varepsilon$.
-
-More generally, a measurable test $\varphi$ taking values in $[0,1]$ obeys
+Every measurable test $\varphi$ on the $n$-fold sample space with values in $[0,1]$
+satisfies
 
 $$
 \left|\mathbb E_{Q^{\otimes n}}\varphi-
 \mathbb E_{P^{\otimes n}}\varphi\right|\le d.
 $$
 
-The same mixture identity proves this, because both expectations under $H$
+In particular, for $\delta\in[0,1]$, rejection probability at most $\delta$
+under $P^{\otimes n}$ implies power at most $\delta+d$ under $Q^{\otimes n}$.
+:::
+
+:::{prf:proof}
+To generate a $Q$ sample,
+independently choose the $R$ component with probability $\varepsilon$ at each
+draw. With probability $(1-\varepsilon)^n$, no such choice occurs and the
+conditional sample law is exactly $P^{\otimes n}$. Thus
+$Q^{\otimes n}=(1-d)P^{\otimes n}+dH$ for some probability law $H$, where
+$d=1-(1-\varepsilon)^n$. For any event $A$, the probability difference is
+$d|H(A)-P^{\otimes n}(A)|\le d$. The union bound on the $n$ component
+choices gives $d\le n\varepsilon$. The same mixture identity proves the
+test bound, because both expectations under $H$
 and $P^{\otimes n}$ lie in $[0,1]$. A test with rejection probability at
-most $\delta$ under $P$ therefore has power at most $\delta+d$ against this
-$Q$. Here $\delta$ is a test level, not the tail exponent.
+most $\delta$ under $P^{\otimes n}$ therefore has power at most $\delta+d$
+under $Q^{\otimes n}$.
+:::
+
+Here $\delta$ is a test level, not the tail exponent.
 
 (inference-separated-tails)=
 ## A bounded law and a Pareto contamination
 
-Take $P$ uniform on $[0,1]$ and $R$ an exact
+The bound is sharp for disjoint supports and permits arbitrarily large mean
+gaps in the following family.
+
+:::{prf:corollary} Close sample laws with separated tail means
+:label: cor-inference-asymmetry-separated-tails
+
+Let $P$ be uniform on $[0,1]$ and $R$ an exact
 [Pareto law](incerto-pareto.md) with minimum $x_m>1$ and exponent
-$\alpha>1$. Their supports are disjoint. The event
-$\max_i X_i>1$ has probability zero under $P^{\otimes n}$ and $d$ under
-$Q^{\otimes n}$, so the total-variation bound is an equality.
+$\alpha>1$. For $0<\varepsilon<1$, set
+$Q=(1-\varepsilon)P+\varepsilon R$. For every integer $n\ge1$,
+$d_{\mathrm{TV}}(P^{\otimes n},Q^{\otimes n})=1-(1-\varepsilon)^n$.
 
 For $x\ge x_m$ the contaminated survival and mean are
 
@@ -76,13 +96,24 @@ $$
   +\varepsilon\frac{\alpha x_m}{\alpha-1}.
 $$
 
-These follow by mixing the two survivals and the two finite means. For
-$1<\alpha\le2$, $Q$ has infinite second moment by the
-[Pareto moment calculation](incerto-pareto-moment-existence.md), although
-$P$ is bounded. For any fixed $n$, any $0<\eta<1$, and any desired positive
-mean gap, choose $0<\varepsilon\le\eta/n$, then increase $x_m$ until the
-gap is exceeded. Sample total variation stays at most $\eta$. This proves
-that a small sample-law discrepancy need not control an unbounded mean
+For $1<\alpha\le2$, $Q$ has infinite second moment. For each fixed
+$n\ge1$, $0<\eta<1$, desired gap $D>0$, and $\alpha>1$, there are
+$\varepsilon\in(0,1)$ and $x_m>1$ such that the sample total variation is
+at most $\eta$ while $\mathbb E_QX-\mathbb E_PX>D$.
+:::
+
+:::{prf:proof}
+The supports are disjoint. The event $\max_i X_i>1$ has probability zero
+under $P^{\otimes n}$ and $d=1-(1-\varepsilon)^n$ under $Q^{\otimes n}$,
+attaining the bound in [](#thm-inference-asymmetry-contamination).
+Mixing the two survivals and the two finite means gives the displayed
+formulas. The infinite second moment for $1<\alpha\le2$ follows from the
+[Pareto moment calculation](incerto-pareto-moment-existence.md).
+Choose $0<\varepsilon\le\eta/n$, then increase $x_m$ until the mean gap
+exceeds $D$. The theorem keeps sample total variation at most $\eta$.
+:::
+
+Thus a small sample-law discrepancy need not control an unbounded mean
 functional over this unrestricted family.
 
 The order of the quantifiers matters. For each fixed $\varepsilon>0$, the
@@ -100,15 +131,29 @@ Rare large values supply its expectation.
 (inference-bounded-payoffs)=
 ## What remains identifiable under additional bounds
 
-If a measurable payoff satisfies $0\le g(x)\le B$ with finite $B$, the
-one-draw mixture identity gives
+The one-draw mixture also bounds the effect on a bounded payoff.
+
+:::{prf:corollary} Bounded-payoff sensitivity to contamination
+:label: cor-inference-asymmetry-bounded-payoffs
+
+Let $P,R$ be probability laws on the same measurable space,
+$Q=(1-\varepsilon)P+\varepsilon R$, and $0<\varepsilon<1$.
+If a measurable payoff satisfies $0\le g\le B$ with $0\le B<\infty$, then
 
 $$
 |\mathbb E_Q g(X)-\mathbb E_P g(X)|\le\varepsilon B.
 $$
 
-For $|g|\le B$, replace the right side by $2\varepsilon B$. A common
-payoff bound therefore changes the problem; see
+If instead $|g|\le B$, the bound is $2\varepsilon B$.
+:::
+
+:::{prf:proof}
+The mixture identity used in [](#thm-inference-asymmetry-contamination)
+gives $\mathbb E_Qg-\mathbb E_Pg=\varepsilon(\mathbb E_Rg-\mathbb E_Pg)$.
+The expectations lie in $[0,B]$ in the first case and $[-B,B]$ in the second.
+:::
+
+A common payoff bound therefore changes the problem; see
 [asymmetric payoffs](incerto-asymmetric-payoffs.md). A known uniform
 integrability condition or a restricted parametric family can also rule out
 the alternatives used here. Such information is an assumption to justify.

@@ -50,6 +50,9 @@ $$
 \frac{\beta^2}{(1-\xi)^2(1-2\xi)}.
 $$
 
+The moment formulas and their boundaries are proved in
+[](#prop-generalized-pareto-moments).
+
 ## Shape and endpoint intuition
 
 The generalized Pareto distribution is the peaks-over-threshold counterpart of
@@ -110,9 +113,21 @@ Regenerate the card with `uv run python demos/incerto/distribution_cards.py`.
 
 ## Threshold-excess stability and Pareto special case
 
-A GPD is stable under raising the threshold. If $Y$ has parameters
-$\xi,\beta$ and $u\ge0$ satisfies $\beta+\xi u>0$, then, for admissible
-$y\ge0$ and $\xi\ne0$,
+A survival ratio establishes threshold stability and the exact Pareto case.
+
+:::{prf:proposition} Threshold stability and exact Pareto excesses
+:label: prop-generalized-pareto-threshold-stability
+
+If $Y$ has a GPD with location zero, shape $\xi\in\mathbb R$, and scale
+$\beta>0$, and $u\ge0$ satisfies $\beta+\xi u>0$, then
+$Y-u\mid Y>u$ is GPD with shape $\xi$ and scale $\beta+\xi u$.
+If $X$ is Pareto Type I with cutoff $x_m>0$ and exponent $\alpha>0$,
+then for every $u\ge x_m$, $X-u\mid X>u$ is GPD with
+$\xi=1/\alpha$ and $\beta(u)=u/\alpha$.
+:::
+
+:::{prf:proof}
+For admissible $y\ge0$ and $\xi\ne0$, the conditional survival is
 
 $$
 \begin{gathered}
@@ -122,8 +137,7 @@ $$
 $$
 
 For $\xi=0$, the ratio is $e^{-y/\beta}$. Thus excesses have the same
-shape and updated scale $\beta+\xi u$. Combining this with the GPD mean
-gives the [mean-excess formula](./incerto-mean-excess-function.md).
+shape and updated scale $\beta+\xi u$.
 
 The Pareto Type I distribution is an exact generalized Pareto excess model.
 If $X$ has Pareto tail exponent $\alpha>0$ and threshold $u\ge x_m>0$, then
@@ -143,10 +157,14 @@ $$
 \qquad
 \beta(u)=\frac{u}{\alpha}.
 $$
+:::
 
-The [Pickands-Balkema-de Haan theorem](./incerto-pickands-balkema-de-haan.md)
-explains why the same family appears asymptotically for a much larger class of
-threshold exceedances.
+Combining threshold stability with the GPD mean gives the
+[mean-excess formula](./incerto-mean-excess-function.md).
+
+The [Pickands-Balkema-de Haan theorem](./incerto-pickands-balkema-de-haan.md),
+cited rather than proved here, explains why the same family appears
+asymptotically for a much larger class of threshold exceedances.
 
 ## Formula check
 
@@ -170,8 +188,37 @@ These are formula evaluations, with no numerical fitting or simulation.
 (gpd-moment-integrals)=
 ## Deriving the moment boundaries
 
-We prove the moment formulas used above by integrating survival. Let $b$
-be the upper support endpoint, possibly infinite. For nonnegative $Y$,
+We prove the moment formulas used above by integrating survival.
+
+:::{prf:proposition} GPD moments and their finiteness boundaries
+:label: prop-generalized-pareto-moments
+
+Let $Y$ have a GPD with location zero, shape $\xi\in\mathbb R$, and
+scale $\beta>0$. Its first two raw moments are
+
+$$
+\begin{gathered}
+\mathbb E[Y]=
+\begin{cases}
+\beta/(1-\xi),&\xi<1,\\
++\infty,&\xi\ge1,
+\end{cases}\\
+\mathbb E[Y^2]=
+\begin{cases}
+2\beta^2/[(1-\xi)(1-2\xi)],&\xi<1/2,\\
++\infty,&\xi\ge1/2.
+\end{cases}
+\end{gathered}
+$$
+
+For $\xi<1/2$, $\operatorname{Var}(Y)=\beta^2/[(1-\xi)^2(1-2\xi)]$.
+For $1/2\le\xi<1$, the variance is infinite; for $\xi\ge1$, the
+variance about a finite mean is undefined. These formulas include the
+exponential case $\xi=0$ and the bounded-support cases $\xi<0$.
+:::
+
+:::{prf:proof}
+Let $b$ be the upper support endpoint, possibly infinite. For nonnegative $Y$,
 Tonelli's theorem gives
 
 $$
@@ -201,9 +248,13 @@ $$
 
 Subtracting the squared mean gives the variance stated above. For
 $\xi=0$, exponential integration gives the same formulas directly.
+For $\xi>0$, the second-moment integrand in the original excess coordinate
+is asymptotic to a positive constant times $y^{1-1/\xi}$, so that integral
+diverges precisely when $\xi\ge1/2$.
 Positive shape $1/2\le\xi<1$ has infinite variance; at $\xi\ge1$
 the ordinary variance about a finite mean is undefined. Negative shape
 has bounded support, so all these integrals are finite.
+:::
 
 The [chapter 9 guide](incerto-scoft-ch9.md) connects these exact-model
 boundaries to the [PBDH theorem](incerto-pickands-balkema-de-haan.md#pbdh-chapter-nine).

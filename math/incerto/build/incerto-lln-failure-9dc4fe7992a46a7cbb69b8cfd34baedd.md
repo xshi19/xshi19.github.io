@@ -18,15 +18,43 @@ options:
 Write $\bar X_n=n^{-1}\sum_{i=1}^nX_i$. Convergence in probability to
 $\mu$ means $P(|\bar X_n-\mu|>\varepsilon)\to0$ for every
 $\varepsilon>0$. Almost-sure convergence means
-$P(\lim_n\bar X_n=\mu)=1$. The second implies the first, by bounded
-convergence applied to the deviation indicators. Convergence in law to a
-constant also implies convergence in probability to that constant.
+$P(\lim_n\bar X_n=\mu)=1$.
+
+:::{prf:proposition} Almost-sure convergence implies convergence in probability
+:label: prop-lln-failure-convergence-modes
+
+Let $Y_n$ be real random variables and $\mu\in\mathbb R$. If
+$Y_n\to\mu$ almost surely, then $Y_n\to\mu$ in probability.
+:::
+
+:::{prf:proof}
+For every $\varepsilon>0$, the indicators
+$\mathbf1_{\{|Y_n-\mu|>\varepsilon\}}$ tend to zero almost surely
+and are bounded by one. Bounded convergence makes their expectations
+$P(|Y_n-\mu|>\varepsilon)$ tend to zero.
+:::
+
+Convergence in law to a constant also implies convergence in probability
+to that constant; this standard implication is cited, not proved here
+(@durrett2019probability, chapter 3).
 
 For iid $X_i$ with $\mathbb E|X_i|<\infty$, the strong law gives
 $\bar X_n\to\mathbb EX_1$ almost surely. We cite the strong law from
 @durrett2019probability, Theorem 2.4.1, p. 76. Variance need not exist.
 We prove the weak law under the same iid integrability assumption here.
 
+:::{prf:proposition} Weak law for integrable iid observations
+:label: prop-lln-failure-integrable-weak-law
+
+Let $X_1,X_2,\ldots$ be iid real random variables with
+$\mathbb E|X_1|<\infty$ and $\mu=\mathbb EX_1$. Then
+$\bar X_n=n^{-1}\sum_{i=1}^nX_i$ converges in probability to $\mu$:
+for every $\varepsilon>0$,
+$P(|\bar X_n-\mu|>\varepsilon)\to0$ as $n\to\infty$.
+No finite variance is required.
+:::
+
+:::{prf:proof}
 For a cutoff $c>0$, let $X_i^{(c)}=\max(-c,\min(X_i,c))$.
 For fixed $c$, independence and Chebyshev give
 
@@ -45,14 +73,38 @@ remainders exceeds $\varepsilon$ by
 $\mathbb E|X-X^{(c)}|/\varepsilon$, uniformly in $n$. The triangle
 inequality, first choosing $c$ large and then $n$ large, proves the weak
 law. No variance of $X$ was used.
+:::
 
-For a concrete distinction between convergence modes, independent events
-$B_n$ with $P(B_n)=1/n$ give $\mathbf1_{B_n}\to0$ in probability but
-not almost surely: the second Borel–Cantelli lemma gives infinitely many
-occurrences (@durrett2019probability, Theorem 2.3.7, p. 70). This example concerns a sequence of indicators, not iid sample
-means. For dependent centered observations, a sufficient weak-law condition
-is $\operatorname{Var}(S_n)=o(n^2)$, directly by Chebyshev; finite marginal
-variances alone do not ensure it.
+:::{prf:proposition} Convergence in probability without almost-sure convergence
+:label: prop-lln-failure-indicators
+
+Let $B_n$ be independent events with $P(B_n)=1/n$. Then
+$\mathbf1_{B_n}\to0$ in probability, but not almost surely.
+:::
+
+:::{prf:proof}
+For $0<\varepsilon<1$, $P(\mathbf1_{B_n}>\varepsilon)=1/n\to0$.
+The second Borel–Cantelli lemma gives infinitely many occurrences almost
+surely (@durrett2019probability, Theorem 2.3.7, p. 70). An almost-sure
+limit would have to equal the probability limit zero, which is impossible.
+:::
+
+This example concerns a sequence of indicators, not iid sample means.
+
+:::{prf:proposition} A variance condition for dependent averages
+:label: prop-lln-failure-dependent-weak-law
+
+Let $X_i$ be centered real random variables with finite second moments,
+and put $S_n=\sum_{i=1}^nX_i$. If $\operatorname{Var}(S_n)=o(n^2)$,
+then $S_n/n\to0$ in probability.
+:::
+
+:::{prf:proof}
+For $\varepsilon>0$, Chebyshev gives
+$P(|S_n/n|>\varepsilon)\le\operatorname{Var}(S_n)/(n^2\varepsilon^2)\to0$.
+:::
+
+Finite marginal variances alone do not ensure this condition.
 
 ## Infinite-mean statement
 
@@ -60,10 +112,12 @@ Let $X_1,X_2,\dots$ be independent copies of a nonnegative random variable
 $X$, and let
 
 $$
+
 S_n=\sum_{i=1}^n X_i.
 $$
 
-If $\mathbb E[X]=\infty$, then
+As stated precisely in [](#thm-lln-failure-nonnegative-divergence),
+if $\mathbb E[X]=\infty$, then
 
 $$
 \frac{S_n}{n}\xrightarrow{\text{a.s.}}\infty.
@@ -93,11 +147,21 @@ stable finite level waiting in the limit.
 
 ## Proof of nonnegative divergence
 
-We prove the statement by truncating the variables, applying the strong law to each
+We prove [](#thm-lln-failure-nonnegative-divergence) by truncating the
+variables, applying the strong law to each
 bounded truncation, and then letting the cutoff rise.  The Pareto threshold
 condition is not reproved here; it is supplied by
 [Pareto Moment Existence](./incerto-pareto-moment-existence.md).
 
+:::{prf:theorem} Divergence of nonnegative infinite-mean averages
+:label: thm-lln-failure-nonnegative-divergence
+
+Let $X_1,X_2,\ldots$ be iid copies of a nonnegative, almost surely finite
+random variable $X$ with $\mathbb EX=\infty$. Then, for
+$S_n=\sum_{i=1}^nX_i$, $S_n/n\to+\infty$ almost surely.
+:::
+
+:::{prf:proof}
 For a cutoff $c>0$, each truncated variable $\min(X_i,c)$ is bounded,
 so the strong law of large numbers gives
 
@@ -124,6 +188,7 @@ $$
 
 Therefore the liminf of $S_n/n$ is larger than every finite number, almost
 surely, which proves $S_n/n\to\infty$ almost surely.
+:::
 
 For a Pareto Type I variable,
 [Pareto Moment Existence](./incerto-pareto-moment-existence.md) proves that
@@ -145,12 +210,22 @@ trimmed or discarded. The finite experiment illustrates, rather than proves,
 the different LLN regimes.
 ```
 
-The running average obeys the exact update identity
+:::{prf:proposition} Update of a running average
+:label: prop-lln-failure-running-average
+
+For real observations $X_1,\ldots,X_{n+1}$ and
+$S_j=\sum_{i=1}^jX_i$, $n\ge1$, the running average obeys
 
 $$
 \frac{S_{n+1}}{n+1}-\frac{S_n}{n}
 =\frac{X_{n+1}-S_n/n}{n+1}.
 $$
+
+:::
+
+:::{prf:proof}
+Substitute $S_{n+1}=S_n+X_{n+1}$ and combine the two fractions.
+:::
 
 It falls whenever the next observation is below the current average and
 rises whenever it is above. Divergence to infinity does not imply a monotone
@@ -162,8 +237,13 @@ In particular, infinite mean alone does not imply that this share tends to one.
 (lln-failure-truncated-mean-check)=
 ## Capped means for exact Pareto tails
 
-The truncation proof can be inspected directly. For Pareto Type I with $x_m=1$
-and $c\ge1$,
+The truncation proof can be inspected directly through capped means.
+
+:::{prf:proposition} Capped means of an exact Pareto law
+:label: prop-lln-failure-capped-pareto-mean
+
+Let $X$ be Pareto Type I with $x_m=1$ and exponent $\alpha>0$.
+For every finite cap $c\ge1$,
 
 $$
 \begin{gathered}
@@ -175,6 +255,15 @@ $$
 \end{cases}
 \end{gathered}
 $$
+
+:::
+
+:::{prf:proof}
+The tail integral for a nonnegative variable gives
+$\mathbb E\min(X,c)=\int_0^cP(X>x)\,dx$.
+The survival is one below 1 and $x^{-\alpha}$ above 1. Integrating
+this power gives the two cases, with a logarithm at $\alpha=1$.
+:::
 
 The following values are evaluations of this identity, rounded to three decimals.
 They are capped population means, not sample averages or
@@ -223,12 +312,22 @@ See [Karamata's theorem](./incerto-karamata.md) for the tail-integral criterion.
 (lln-higher-moments)=
 ## The LLN for higher absolute moments
 
-For iid $X_i$ and a fixed $p>0$, apply the same theorems to
-$|X_i|^p$. If $\mathbb E|X|^p<\infty$, the empirical absolute
-moment converges almost surely to that expectation. If it is infinite,
-the nonnegative divergence proof above gives
-$n^{-1}\sum_i|X_i|^p\to\infty$ almost surely. This proves both claims
-without requiring a finite variance of $|X_i|^p$.
+:::{prf:corollary} Strong laws for empirical absolute moments
+:label: cor-lln-failure-absolute-moments
+
+Let $X_i$ be iid real random variables and $p>0$. If
+$\mathbb E|X_1|^p<\infty$, then
+$n^{-1}\sum_{i=1}^n|X_i|^p\to\mathbb E|X_1|^p$ almost surely.
+If $\mathbb E|X_1|^p=\infty$, the same average tends to $+\infty$
+almost surely.
+:::
+
+:::{prf:proof}
+Apply the cited strong law (@durrett2019probability, Theorem 2.4.1,
+p. 76) to $|X_i|^p$ in the finite case, and
+[](#thm-lln-failure-nonnegative-divergence) in the infinite case.
+Neither application needs a finite variance of $|X_1|^p$.
+:::
 
 For exact Pareto, the [moment gate](incerto-pareto-moment-existence.md)
 is $p<\alpha$. A finite variance of its empirical $p$th moment instead

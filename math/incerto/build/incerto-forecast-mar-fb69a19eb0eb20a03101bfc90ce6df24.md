@@ -26,22 +26,31 @@ Every numerical example is synthetic.
 (forecast-tower)=
 ## One event, one probability law
 
-Fix a probability space with law $P$, an increasing filtration
-$(\mathcal F_t)_{0\le t\le T}$, and an event $A\in\mathcal F_T$.
-A filtration records all information retained by the forecaster at each
-time. Define the report
+The tower property establishes the conditional identity used below.
+
+:::{prf:proposition} Conditional event probabilities are martingales
+:label: prop-forecast-martingale-tower
+
+Fix a probability space with law $P$, a finite horizon $T\ge0$, an
+increasing filtration $(\mathcal F_t)_{0\le t\le T}$, and an event
+$A\in\mathcal F_T$.
+Define the report
 
 $$
 p_t=\mathbb E[\mathbf1_A\mid\mathcal F_t].
 $$
 
-The [shared notation](https://xshi19.github.io/math/notation/) uses $P$
-for the law and $\mathbb E$ for its expectation. Our local $p_t$ is an
-event probability, not a density. Conditional expectations are understood
-up to almost-sure equality. Since $0\le\mathbf1_A\le1$, each $p_t$ is
-integrable, lies in $[0,1]$, and $p_T=\mathbf1_A$.
+Then $p$ is an $[0,1]$-valued martingale under $P$ with
+$p_T=\mathbf1_A$. It is also a martingale in the report filtration
+$\mathcal G_t=\sigma(p_r:r\le t)$. Conversely, every
+$(\mathcal F_t)$-martingale with terminal value $\mathbf1_A$ equals
+$\mathbb E[\mathbf1_A\mid\mathcal F_t]$ at each time, almost surely.
+:::
 
-**Martingale identity.** For $s\le t$, the tower property gives
+:::{prf:proof}
+Since $0\le\mathbf1_A\le1$, each $p_t$ is integrable, adapted, and lies
+in $[0,1]$; $A\in\mathcal F_T$ gives $p_T=\mathbf1_A$. For $s\le t$,
+the tower property gives
 
 $$
 \begin{aligned}
@@ -58,6 +67,13 @@ the reports: apply the tower property again, using $p_s$'s
 $\mathcal G_s$-measurability. Conversely, an adapted martingale with
 terminal value $\mathbf1_A$ has
 $p_t=\mathbb E[\mathbf1_A\mid\mathcal F_t]$ by its defining identity.
+:::
+
+A filtration records all information retained by the forecaster at each
+time. The [shared notation](https://xshi19.github.io/math/notation/) uses
+$P$ for the law and $\mathbb E$ for its expectation. Our local $p_t$ is an
+event probability, not a density. Conditional expectations are understood
+up to almost-sure equality.
 Boundedness or a constant unconditional mean alone
 does not imply this conditional identity.
 
@@ -70,8 +86,15 @@ Ordinary conditional expectation is the only prerequisite; see the
 (forecast-assessor)=
 ## Fair bets, scores, and market prices
 
-We prove two finite-horizon consequences of the identity. On a deterministic
-grid $t_0<\cdots<t_m=T$, let $h_i$ be a bounded
+We prove two finite-horizon consequences of [](#prop-forecast-martingale-tower).
+
+:::{prf:corollary} Fair predictable bets and optimal conditional Brier reports
+:label: cor-forecast-martingale-fair-bets-scores
+
+Let $P$ be a probability law, $(\mathcal F_t)_{0\le t\le T}$ an
+increasing filtration with $T>0$, $A\in\mathcal F_T$, and
+$p_t=\mathbb E_P[\mathbf1_A\mid\mathcal F_t]$. On a deterministic
+grid $0\le t_0<\cdots<t_m=T$, let $h_i$ be a bounded
 $\mathcal F_{t_i}$-measurable position. A purchase of $h_i$ units at
 $p_{t_i}$, unwound at the next quote, has gain
 
@@ -84,23 +107,13 @@ G=\sum_{i=0}^{m-1}h_i\Delta p_i,\\
 \end{gathered}
 $$
 
-Condition first on $\mathcal F_{t_i}$ to prove the third equality,
-then sum. Such a gain cannot be nonnegative almost surely and positive
-with positive probability. This is a precise no-free-lunch statement for
-bounded predictable positions under $P$. It assumes two-way execution at
-the quotes, no transaction costs, zero financing rate, and self-financing
-trades. It says nothing about unbounded doubling strategies.
-
-De Finetti's probability-assessor connection is that the quoted probability
-is a price at which either side of a unit event bet is acceptable.
-For finitely many fair bets, a common expectation precludes a strictly
-positive gain in every outcome. This proves the needed implication from
-probability coherence to fair betting; it is not a proof of the full
-representation theorem for coherent assessments. Chapter 14, §14.3,
-pp. 269–271 supplies the historical connection [@taleb2025scoftv4].
+Thus $G$ cannot be nonnegative almost surely and positive with positive
+probability. Interpreting $G$ as trading profit assumes two-way execution
+at the quotes, no transaction costs, zero financing rate, and self-financing
+trades.
 
 For an $\mathcal F_t$-measurable report $q_t\in[0,1]$, the conditional
-version of the existing Brier calculation is
+Brier loss satisfies
 
 $$
 \begin{aligned}
@@ -110,12 +123,32 @@ $$
 \end{aligned}
 $$
 
-Expand the square and substitute
+Its unique minimizing report is $q_t=p_t$, up to almost-sure equality.
+:::
+
+:::{prf:proof}
+By [](#prop-forecast-martingale-tower),
+$\mathbb E[\Delta p_i\mid\mathcal F_{t_i}]=0$. Multiply by the bounded
+$\mathcal F_{t_i}$-measurable $h_i$, take expectations, and sum to get
+$\mathbb E G=0$. An integrable nonnegative gain that is positive with
+positive probability would have positive expectation.
+For the Brier identity, expand the square and substitute
 $\mathbb E[\mathbf1_A\mid\mathcal F_t]=p_t$ to prove it.
-The unique minimizing report is $p_t$. Thus optimal
-conditional quadratic scoring and dynamic fair betting select the same
-conditional probability under the specified law. Linear trading profit
-is not itself a strictly proper score.
+The nonnegative remainder $(q_t-p_t)^2$ vanishes exactly at $q_t=p_t$.
+:::
+
+Thus optimal conditional quadratic scoring and dynamic fair betting select
+the same conditional probability under the specified law. Linear trading profit
+is not itself a strictly proper score. The no-free-lunch consequence is
+for bounded predictable positions; it says nothing about unbounded doubling strategies.
+
+De Finetti's probability-assessor connection is that the quoted probability
+is a price at which either side of a unit event bet is acceptable.
+For finitely many fair bets, a common expectation precludes a strictly
+positive gain in every outcome. This is the implication from probability
+coherence to fair betting, not a proof of the full representation theorem
+for coherent assessments. Chapter 14, §14.3, pp. 269–271 supplies the
+historical connection [@taleb2025scoftv4].
 
 A traded claim can instead be valued under a pricing law $Q$. If its
 discounted price is a conditional expectation under $Q$, the martingale
@@ -130,25 +163,25 @@ $0.1$ under $P$, but loses $0.5$ when the event fails.
 (forecast-gaussian)=
 ## Gaussian terminal uncertainty
 
-For a local approximation to a vote-share estimate, take
-$X_t=x_0+\sigma W_t$ with constant $\sigma>0$ and standard Brownian
-motion $W$ under $P$. Use its usual filtration, a fixed threshold $u$,
-and $A=\{X_T>u\}$. This model allows values outside $[0,1]$; it is
-an approximation to a proportion, not an exactly bounded share process.
-At $t<T$, put $\tau=T-t$, $s=\sigma\sqrt\tau$ and $d=(x-u)/s$.
-The independent normal increment gives
+The normal transition law gives both the event probability and its sensitivities.
+
+:::{prf:proposition} Gaussian binary probabilities and sensitivities
+:label: prop-forecast-martingale-gaussian-probability
+
+Let $X_t=x_0+\sigma W_t$ with $x_0\in\mathbb R$, constant $\sigma>0$,
+and standard Brownian motion $W$ under $P$ with its usual filtration.
+Fix $T>0$, $u\in\mathbb R$, and $A=\{X_T>u\}$. For $0\le t<T$,
+write $\tau=T-t$, $s=\sigma\sqrt\tau$, and $d=(x-u)/s$.
+With $\Phi$ the standard normal CDF and $\phi=\Phi'$ its density,
 
 $$
 \begin{gathered}
 X_T\mid X_t=x\ \sim N(x,s^2),\\
-p(t,x)=\Phi(d),\qquad d=\frac{x-u}{s}.
+p(t,x)=P(A\mid X_t=x)=\Phi(d).
 \end{gathered}
 $$
 
-This is the undiscounted value of a binary Bachelier claim. It follows
-by standardizing the terminal inequality and using normal symmetry.
-Here $\Phi$ is the standard normal CDF and $\phi=\Phi'$ its density.
-Differentiation at fixed $x,u$ yields
+The sensitivities, holding the other independent arguments fixed, are
 
 $$
 \begin{gathered}
@@ -161,23 +194,47 @@ $$
 \end{gathered}
 $$
 
-Increasing the remaining normal standard deviation moves the report
-toward $1/2$, on either side of the threshold. The limit as $s\to\infty$
-is $1/2$. The level sensitivity $\phi(d)/s$ tends to zero, but increases
-when $s<|x-u|$ and decreases when $s>|x-u|$. Decreasing
-$\tau$ at fixed $x\ne u$ sharpens the report toward zero or one.
-At $x=u$ and positive $s$ the probability is $1/2$. At zero variance
+At fixed $x,u$, increasing $s$ moves $p$ toward $1/2$, with limit
+$1/2$ as $s\to\infty$. The level sensitivity $\phi(d)/s$ tends to
+zero as $s\to\infty$, increases for $s<|x-u|$, and decreases for
+$s>|x-u|$. At fixed $x\ne u$ and $\sigma$, $p$ tends to
+$\mathbf1_{\{x>u\}}$ as $\tau\downarrow0$; at $x=u$ and positive
+$s$, it equals $1/2$.
+For $t<T$, the forecast process has zero drift and satisfies
+
+$$
+dp(t,X_t)=\frac{\phi((X_t-u)/(\sigma\sqrt{T-t}))}{\sqrt{T-t}}\,dW_t.
+$$
+
+At fixed $x,u\in\mathbb R$ and $\tau>0$, this diffusion coefficient is independent of
+$\sigma$ at $x=u$; away from the threshold, it increases with $\sigma$
+toward $\phi(0)/\sqrt\tau$.
+:::
+
+:::{prf:proof}
+Independent Brownian increments give the conditional normal law.
+Standardizing $X_T>u$ and using normal symmetry gives $p=\Phi(d)$.
+Differentiation gives the three partial derivatives. Also,
+$\partial_s[\phi(d)/s]=(d^2-1)\phi(d)/s^2$, which proves the stated
+monotonicity of the level sensitivity. The limits follow from
+$d=(x-u)/s$ and continuity of $\Phi$ and $\phi$.
+Itô's formula gives diffusion coefficient
+$\sigma\partial_xp=\phi(d)/\sqrt\tau$. Its drift is zero:
+$\partial_t p=d\phi(d)/(2\tau)$ and
+$\partial_{xx}p=-d\phi(d)/s^2$ cancel in
+$\partial_t p+\sigma^2\partial_{xx}p/2$.
+At fixed $x,u,\tau$, increasing $\sigma$ decreases $|d|$ toward zero;
+the normal density then increases to $\phi(0)$, unless $d=0$ throughout.
+:::
+
+This is the undiscounted value of a binary Bachelier claim. As a local
+approximation to a vote-share estimate, the model allows values outside
+$[0,1]$; it is not an exactly bounded share process. At zero variance
 we use the strict-event value $\mathbf1_{\{x>u\}}$, including zero at
 the tie; that degenerate case differs from the positive-variance limit.
 
 Sensitivity to the underlying level is not the same as the forecast's
-instantaneous volatility. Applying Itô's formula gives diffusion
-coefficient $\sigma\partial_xp=\phi(d)/\sqrt\tau$. Its drift is zero:
-$\partial_t p=d\phi(d)/(2\tau)$ and
-$\partial_{xx}p=-d\phi(d)/s^2$ cancel in
-$\partial_t p+\sigma^2\partial_{xx}p/2$ for $t<T$. At the threshold
-it is independent of $\sigma$; away from it, it increases toward that
-same value as $\sigma$ increases. There is therefore no universal rule
+instantaneous volatility. There is therefore no universal rule
 that a higher underlying volatility lowers forecast-path volatility.
 
 Use [`gaussian_binary_probability`](incerto-api-reference.md#api-gaussian-binary-probability)
@@ -207,9 +264,14 @@ deterministic tie: 0.0
 
 We now construct a different model. Write $Y_t\in(0,1)$ for the share;
 $Y$ is local to this page, not the positive mixing variable of the Normix
-notation. Its unbounded coordinate is $Z_t=\Phi^{-1}(Y_t)$. Fix
-$\sigma>0$, deterministic $Z_0=z_0\in\mathbb R$, and Brownian motion
-$W$ under $P$, with its usual filtration. Define
+notation. Its unbounded coordinate is $Z_t=\Phi^{-1}(Y_t)$.
+
+:::{prf:proposition} A bounded probit martingale
+:label: prop-forecast-martingale-bounded-probit
+
+Fix $\sigma>0$, deterministic $z_0\in\mathbb R$, and standard Brownian
+motion $W$ under $P$ with its usual filtration $(\mathcal F_t)$.
+Let $\Phi,\phi$ be the standard normal CDF and density, and define
 
 $$
 \begin{gathered}
@@ -219,19 +281,27 @@ Y_t=\Phi(Z_t).
 \end{gathered}
 $$
 
-Equivalently, $dZ_t=\tfrac12\sigma^2Z_t\,dt+\sigma\,dW_t$.
-The drift is directed away from zero. The explicit solution is finite at every finite time,
-so the transformed share stays strictly between its endpoints. For
-$h>0$, conditional on $Z_t=z$, independent Brownian increments give
+Then $Z$ solves $dZ_t=\tfrac12\sigma^2Z_t\,dt+\sigma\,dW_t$ and is
+finite at every finite time. For $t\ge0$ and $h>0$, conditional on
+$\mathcal F_t$ with $Z_t=z$,
 
 $$
 Z_{t+h}\sim N(e^{\sigma^2h/2}z,\ e^{\sigma^2h}-1).
 $$
 
-Here and below the second normal parameter is the variance. This follows
-by integrating $\sigma^2e^{\sigma^2(h-r)}$ over $0\le r\le h$.
+The second normal parameter is the variance. The process $Y$ stays in
+$(0,1)$ and is a true martingale with $dY_t=\sigma\phi(Z_t)\,dW_t$.
+The coordinate $Z$ is not a martingale: for $h>0$,
+$\mathbb E[Z_{t+h}\mid\mathcal F_t]=e^{\sigma^2h/2}Z_t$, which
+differs from $Z_t$ almost surely at every $t>0$.
+:::
 
-**Bounded martingale proof.** For independent standard normals $H,N$,
+:::{prf:proof}
+The integrating-factor formula gives the SDE and finiteness of $Z$.
+Independent Brownian increments give the conditional normal mean;
+integrating $\sigma^2e^{\sigma^2(h-r)}$ over $0\le r\le h$ gives its
+variance. Since $\Phi$ maps finite reals to $(0,1)$, $Y$ stays bounded.
+For independent standard normals $H,N$,
 any real $b$ and $c\ge0$,
 
 $$
@@ -257,31 +327,56 @@ dY_t=\sigma\phi(Z_t)\,dW_t.
 \end{gathered}
 $$
 
-Only $Y$ is a martingale here. In general
-$\mathbb E[Z_{t+h}\mid\mathcal F_t]=e^{\sigma^2h/2}Z_t\ne Z_t$.
-Even starting at $z_0=0$ makes just the unconditional mean constant;
-at positive times the conditional equality fails.
+Only $Y$ is a martingale here. The transition mean gives
+$\mathbb E[Z_{t+h}\mid\mathcal F_t]=e^{\sigma^2h/2}Z_t$.
+At $t>0$, $Z_t$ is a nondegenerate normal, so $Z_t\ne0$ almost surely
+and the conditional martingale equality fails.
+:::
 
-More generally, let $S:\mathbb R\to(0,1)$ be increasing, twice
+The drift of $Z$ is directed away from zero. Even starting at $z_0=0$
+makes just its unconditional mean constant.
+
+The drift cancellation extends to other smooth increasing transforms.
+
+:::{prf:proposition} Drift adjustment for a bounded transform
+:label: prop-forecast-martingale-bounded-transform
+
+Let $S:\mathbb R\to(0,1)$ be increasing, twice
 continuously differentiable, and have $S'>0$. For a nonexplosive
-diffusion $dZ_t=b(Z_t)dt+\sigma dW_t$, Itô's drift vanishes when
+adapted solution of $dZ_t=b(Z_t)dt+\sigma dW_t$ on a fixed finite horizon,
+where $W$ is standard Brownian motion and $\sigma>0$ is constant, suppose
 
 $$
 b(z)=-\frac{\sigma^2S''(z)}{2S'(z)}.
 $$
 
+Then $S(Z_t)$ is a true bounded martingale and
+$dS(Z_t)=\sigma S'(Z_t)\,dW_t$.
+:::
+
+:::{prf:proof}
+Itô's drift is $b(Z_t)S'(Z_t)+\sigma^2S''(Z_t)/2=0$.
 Localizing the resulting stochastic integral makes $S(Z)$ a local
 martingale; its bound by one allows dominated convergence in the stopped
-conditional identities, making it a true martingale. This assertion
-assumes the solution exists without explosion on the horizon.
+conditional identities, making it a true martingale.
+:::
+
+This assertion assumes the solution exists without explosion on the horizon.
 For the logistic $S(z)=(1+e^{-z})^{-1}$ the required drift is
 $b(z)=\sigma^2(2S(z)-1)/2$, which is bounded and globally Lipschitz.
 A sigmoid applied to driftless Brownian motion generally has nonzero
 Itô drift. Symmetry at its starting point does not remove that drift
 along subsequent paths.
 
-For a direct counterexample, take $Z_t=\sigma W_t$ and $Y_t=\Phi(Z_t)$,
-starting at $Z_0=0$. The same normal identity gives, for $h>0$,
+For a direct counterexample, the probit transform of driftless Brownian
+motion has a constant mean but fails the conditional identity.
+
+:::{prf:proposition} Constant mean without the martingale property
+:label: prop-forecast-martingale-constant-mean-counterexample
+
+Let $W$ be standard Brownian motion with its usual filtration
+$(\mathcal F_t)$, $\sigma>0$, $Z_t=\sigma W_t$, and $Y_t=\Phi(Z_t)$, where $\Phi$
+is the standard normal CDF. For $t\ge0$ and $h>0$,
 
 $$
 \begin{gathered}
@@ -291,33 +386,43 @@ $$
 \end{gathered}
 $$
 
-At any $t>0$, $Z_t\ne0$ almost surely, so the latter quantity differs
-from $Y_t$. This proves that the midpoint exception is a statement about
-the unconditional mean, not the martingale property.
+Thus $Y$ is not a martingale despite its constant unconditional mean.
+:::
+
+:::{prf:proof}
+Symmetry gives $\mathbb E\Phi(Z_t)=1/2$. Conditional on $\mathcal F_t$,
+$Z_{t+h}=Z_t+\sigma\sqrt h\,N$ with $N$ an independent standard normal.
+The normal integration identity in the proof of
+[](#prop-forecast-martingale-bounded-probit) gives the conditional mean.
+At any $t>0$, $Z_t\ne0$ almost surely, so strict monotonicity of $\Phi$
+makes that mean differ from $Y_t$.
+:::
+
+The midpoint exception concerns the unconditional mean, not the martingale property.
 
 (forecast-dual-value)=
 ### The event probability is a second martingale
 
-Fix a share threshold $0<u<1$, let $k=\Phi^{-1}(u)$, and consider
-$A=\{Y_T>u\}$. Monotonicity makes this exactly $\{Z_T>k\}$.
-For $\tau>0$, the transition law above gives
+The transition law gives the event probability for the bounded share process.
+
+:::{prf:corollary} Event forecasts in the bounded probit model
+:label: cor-forecast-martingale-probit-event
+
+Let $Z,Y$ be the processes in [](#prop-forecast-martingale-bounded-probit),
+fix $T>0$ and $0<u<1$, and set $k=\Phi^{-1}(u)$ and
+$A=\{Y_T>u\}$. For $0\le t<T$, $\tau=T-t$, and $0<y<1$,
 
 $$
 \begin{gathered}
 z=\Phi^{-1}(y),\\
-p(t,y)=\Phi\!\left(
+p(t,y)=P(A\mid Y_t=y)=\Phi\!\left(
         \frac{z-e^{-\sigma^2\tau/2}k}
              {\sqrt{1-e^{-\sigma^2\tau}}}\right).
 \end{gathered}
 $$
 
-We obtained this by dividing the terminal normal mean, threshold, and
-standard deviation by $e^{\sigma^2\tau/2}$. The forecast $p(t,Y_t)$ is a
-martingale by the tower proof, and its terminal value is the indicator.
-The share $Y_t$ has terminal value $Y_T$, so these are different
-martingales. Neither statement makes the coordinate $Z_t$ a martingale.
-Computing the event in either coordinate must give the same probability;
-the threshold must be transformed as well.
+The process $p(t,Y_t)$, extended at $T$ by $\mathbf1_A$, is the
+conditional probability of $A$ given $\mathcal F_t$ and is a martingale.
 
 For a majority threshold $u=1/2$, $k=0$. At fixed interior share $y$,
 increasing the integrated latent variance $\sigma^2\tau$ moves $p(t,y)$
@@ -327,12 +432,30 @@ $$
 \lim_{\sigma^2\tau\to\infty}p(t,y)=y.
 $$
 
-Indeed the denominator increases to one, so the argument of $\Phi$
+For $y>1/2$ the forecast lies between $y$ and one; for $y<1/2$ it lies
+between zero and $y$; for $y=1/2$ it equals $1/2$. The same limit holds
+for every fixed $0<u<1$, without a general monotonicity assertion.
+:::
+
+:::{prf:proof}
+Monotonicity makes $A$ exactly $\{Z_T>k\}$. Standardize the conditional
+normal law in [](#prop-forecast-martingale-bounded-probit), dividing its
+mean, threshold, and standard deviation by $e^{\sigma^2\tau/2}$.
+This gives the displayed formula, including conditioning on the full
+$\mathcal F_t$. The martingale claim follows from
+[](#prop-forecast-martingale-tower).
+For $k=0$, the denominator increases to one, so the argument of $\Phi$
 approaches $z$. For $y>1/2$ the forecast stays between $y$ and one;
 for $y<1/2$ it stays between
 zero and $y$. For any fixed interior threshold the same limit holds
 because $e^{-\sigma^2\tau/2}k\to0$, although monotonicity in
 $\sigma^2\tau$ need not.
+:::
+
+The share $Y_t$ has terminal value $Y_T$, so the share and event forecast
+are different martingales. Neither statement makes $Z_t$ a martingale.
+Computing the event in either coordinate must give the same probability;
+the threshold must be transformed as well.
 This bounded model therefore does not have a universal $1/2$ limit.
 Its increasing terminal dispersion preserves the mean share, unlike
 an unbounded normal approximation with arbitrarily large variance.
@@ -373,27 +496,53 @@ have different units. Dashed references show the limits derived above.
 ## How much revision is coherent?
 
 Return to any conditional binary forecast, without a diffusion assumption.
-Fix a deterministic grid ending at resolution, write $p_i=p_{t_i}$,
-and define $V=\sum_{i=0}^{m-1}(\Delta p_i)^2$. We prove the
-conditional revision budget and its Brier interpretation:
+We prove the conditional revision budget and its Brier interpretation.
+
+:::{prf:proposition} Squared-revision budget and Brier improvement
+:label: prop-forecast-martingale-revision-budget
+
+Let $A\in\mathcal F_T$, where $(\mathcal F_t)_{0\le t\le T}$ is an
+increasing filtration under $P$. On a deterministic grid
+$0\le t_0<\cdots<t_m\le T$, set
+$p_i=\mathbb E[\mathbf1_A\mid\mathcal F_{t_i}]$,
+$\Delta p_i=p_{i+1}-p_i$, and
+$V=\sum_{i=0}^{m-1}(\Delta p_i)^2$. Then
+
+$$
+\mathbb E[V\mid\mathcal F_{t_0}]
+=p_0(1-p_0)-\mathbb E[p_m(1-p_m)\mid\mathcal F_{t_0}]
+\le p_0(1-p_0).
+$$
+
+If $t_m=T$, the budget is exactly
+
+$$
+\mathbb E[V\mid\mathcal F_{t_0}]=p_0(1-p_0).
+$$
+
+For every $0\le i<m$,
 
 $$
 \begin{gathered}
-\mathbb E[V\mid\mathcal F_{t_0}]
-=p_0(1-p_0),\\
 \mathbb E[(\mathbf1_A-p_i)^2]
 -\mathbb E[(\mathbf1_A-p_{i+1})^2]\\
 =\mathbb E[(\Delta p_i)^2].
 \end{gathered}
 $$
+:::
 
+:::{prf:proof}
 Expand $p_{i+1}^2-p_i^2=2p_i\Delta p_i+(\Delta p_i)^2$.
-The cross term has conditional mean zero. Sum and condition at $t_0$;
-$p_m^2=\mathbf1_A$ and
-$\mathbb E[\mathbf1_A\mid\mathcal F_{t_0}]=p_0$ give the
-first identity. For the second, expand
+By [](#prop-forecast-martingale-tower), the cross term has conditional
+mean zero. Sum and condition at $t_0$ to get
+$\mathbb E[V\mid\mathcal F_{t_0}]
+=\mathbb E[p_m^2\mid\mathcal F_{t_0}]-p_0^2$.
+Since $\mathbb E[p_m\mid\mathcal F_{t_0}]=p_0$, this is the general
+budget. At resolution $p_m=\mathbf1_A$, so $p_m(1-p_m)=0$.
+For the Brier identity, expand
 $\mathbf1_A-p_i=(\mathbf1_A-p_{i+1})+\Delta p_i$ and condition the cross term on
-$\mathcal F_{t_{i+1}}$; its mean is zero. This proves both formulas.
+$\mathcal F_{t_{i+1}}$; its mean is zero.
+:::
 
 If the grid stops before resolution, its expected squared revisions,
 conditional on $\mathcal F_{t_0}$, are at most $p_0(1-p_0)$. The missing
@@ -407,7 +556,7 @@ can fluctuate more than this number, and large news can cause a large
 single jump. For a continuous martingale, refining the grid yields
 quadratic-variation increment $[p]_T-[p]_{t_0}$ and the same conditional
 expectation identity. That continuous-time formulation uses the usual
-quadratic-variation theorem [@karatzas1991brownian];
+quadratic-variation theorem [@karatzas1991brownian] and is cited, not proved here;
 the finite-grid proof above is complete and is what our diagnostics use.
 An unstopped Brownian motion with a nonzero constant diffusion cannot
 remain bounded in $[0,1]$ almost surely even on a fixed positive horizon.
@@ -415,29 +564,48 @@ remain bounded in $[0,1]$ almost surely even on a fixed positive horizon.
 (forecast-trading)=
 ### A pathwise trading calculation
 
-For any quoted path in $[0,1]$, the predictable position
-$h_i=2(p_0-p_i)$ has exact discrete gain
+The next identity holds for each path, independently of a martingale model.
+
+:::{prf:proposition} Pathwise trading gain from squared revisions
+:label: prop-forecast-martingale-pathwise-trading
+
+Let $p_0,\ldots,p_m\in[0,1]$ be quotes on a finite grid. Put
+$\Delta p_i=p_{i+1}-p_i$, $V=\sum_{i=0}^{m-1}(\Delta p_i)^2$,
+and hold $h_i=2(p_0-p_i)$ units over interval $i$. Then
 
 $$
 \begin{gathered}
-G=\sum_i2(p_0-p_i)\Delta p_i,\\
+G=\sum_{i=0}^{m-1}2(p_0-p_i)\Delta p_i,\\
 G=V-(p_m-p_0)^2.
 \end{gathered}
 $$
 
-To prove it, expand successive squared distances from $p_0$ and
-telescope. Thus, for deterministic $p_0$, a model promising
+At each intermediate grid time, accumulated gain is at least
+$-\max\{p_0^2,(1-p_0)^2\}$, and $|h_i|\le2$. If the quotes are adapted
+random variables with deterministic $p_0$ and
 
 $$
 V>\max\{p_0^2,(1-p_0)^2\}
 \quad\hbox{almost surely}
 $$
 
-would permit a strictly positive terminal gain in every possible path
-up to null events, under the execution assumptions above. At every
-intermediate grid time the gain is at least minus the same maximum,
-because accumulated squared increments are nonnegative. The strategy
-therefore has bounded downside as well as bounded holdings.
+then this predictable strategy has strictly positive terminal gain almost
+surely. Interpreting this as arbitrage assumes two-way execution at the
+quotes, no transaction costs, zero financing rate, and self-financing trades.
+:::
+
+:::{prf:proof}
+Expand successive squared distances:
+$(p_{i+1}-p_0)^2-(p_i-p_0)^2
+=2(p_i-p_0)\Delta p_i+(\Delta p_i)^2$.
+Telescoping gives the gain identity at the terminal time and at every
+intermediate time. Accumulated squared increments are nonnegative, while
+$(p_j-p_0)^2\le\max\{p_0^2,(1-p_0)^2\}$ for each $p_j\in[0,1]$.
+This proves the downside bound, and $|p_0-p_i|\le1$ bounds the holdings.
+The strict assumption on $V$ makes $G>0$ almost surely. Adapted quotes
+make $h_i$ measurable at the start of each interval.
+:::
+
 This is a sufficient arbitrage condition, much stronger than an unusually
 large realized $V$ on one observed path. In particular the expectation
 budget $p_0(1-p_0)$ is not this pathwise bound.

@@ -84,12 +84,23 @@ establish regular variation or independence.
 (hill-pareto-calibration)=
 ## Exact Pareto calibration
 
-For a Pareto Type I variable,
+We first establish the log-excess law used in the exact calibration.
+
+:::{prf:lemma} Exponential log-excesses of a Pareto variable
+:label: lem-hill-estimator-log-excesses
+
+Let $X$ be Pareto Type I with $x_m>0$, $\alpha>0$, and survival
 
 $$
 \mathbb P(X>x)=\left(\frac{x_m}{x}\right)^\alpha,\qquad x\ge x_m.
 $$
 
+Then $\log(X/x_m)$ is exponential with rate $\alpha$. For every
+$u\ge x_m$, $\log(X/u)\mid X>u$ has the same exponential law and
+mean $1/\alpha$.
+:::
+
+:::{prf:proof}
 For $y\ge0$,
 
 $$
@@ -106,7 +117,11 @@ $$
 =\frac1\alpha
 $$
 
-for any Pareto threshold $u\ge x_m$.  The Hill estimator replaces this
+for any Pareto threshold $u\ge x_m$: the conditional survival is
+$P(X>ue^y)/P(X>u)=e^{-\alpha y}$.
+:::
+
+The Hill estimator replaces this
 conditional expectation by the empirical average of log-excesses above the
 random threshold $X_{n-k:n}$, or by $x_{n-k:n}$ after the sample is realized.
 
@@ -200,7 +215,50 @@ Appendix E.1, p. 191, of SCoFT v4 motivates finite-sample calibration
 [@taleb2025scoftv4]. We prove the exact law under a continuous iid Pareto
 model. Regular variation alone does not give this law at a finite threshold.
 
-First suppose the lower cutoff $x_m$ is known. The log-excesses
+:::{prf:proposition} Exact Gamma and inverse-gamma sampling laws
+:label: prop-hill-estimator-sampling-law
+
+Assume an iid continuous Pareto Type I model with cutoff $x_m>0$ and
+exponent $\alpha>0$. Consider either of the following settings:
+
+- A known cutoff and a fixed sample size $m\ge1$, with
+  $T=\sum_{i=1}^m\log(X_i/x_m)$.
+- A fixed sample size $n\ge2$ and a deterministic integer $1\le k<n$,
+  with $m=k$ and
+  $T=\sum_{j=1}^k\log(X_{n-j+1:n}/X_{n-k:n})$, where $X_{i:n}$
+  are the ascending order statistics.
+
+In either setting, $T\sim\operatorname{Gamma}(m,\text{rate }\alpha)$.
+For $\widehat\xi=T/m$ and $\widehat\alpha=m/T$,
+$\mathbb E\widehat\xi=1/\alpha$ and
+$\operatorname{Var}(\widehat\xi)=1/(m\alpha^2)$, while
+
+$$
+f_{\widehat\alpha}(a)=\frac{(m\alpha)^m}{\Gamma(m)}
+a^{-m-1}e^{-m\alpha/a},\qquad a>0.
+$$
+
+For every real $q<m$,
+$\mathbb E[\widehat\alpha^q]=(m\alpha)^q\Gamma(m-q)/\Gamma(m)$;
+for $q\ge m$, this moment is infinite. In particular,
+
+$$
+\begin{gathered}
+\mathbb E\widehat\alpha=\frac{m\alpha}{m-1}\quad(m>1),\\
+\operatorname{Var}(\widehat\alpha)
+=\frac{m^2\alpha^2}{(m-1)^2(m-2)}\quad(m>2).
+\end{gathered}
+$$
+
+The mean is infinite at $m=1$; the variance is infinite at $m=2$ and
+undefined about a finite mean at $m=1$. For $m>1$, the corrected estimate
+$(m-1)\widehat\alpha/m$ is unbiased and inverse-gamma with shape $m$
+and scale $(m-1)\alpha$.
+:::
+
+:::{prf:proof}
+First suppose the lower cutoff $x_m$ is known. By
+[](#lem-hill-estimator-log-excesses), the log-excesses
 $\log(X_i/x_m)$ are independent exponentials with rate $\alpha$.
 With $m$ observations, let $T=\sum_{i=1}^m\log(X_i/x_m)$. Multiplication of their
 Laplace transforms, $(\alpha/(\alpha+s))^m$ for $s\ge0$, identifies the law
@@ -221,7 +279,7 @@ subtracting the log threshold, with a law independent of that threshold.
 Their sum therefore has the same Gamma law. This conditional-order-statistic
 argument follows by factoring the iid joint density on either side of
 the threshold; sorting adds the constant $k!$ and leaves a symmetric sum
-unchanged. A data-selected $k$ need not retain this calibration.
+unchanged.
 
 Changing variables $T=m/a$ proves the inverse-gamma density
 
@@ -257,12 +315,35 @@ $$
 
 The corrected estimate $(m-1)\widehat\alpha/m$ is unbiased for $m>1$.
 Its inverse-gamma shape stays $m$; its scale becomes $(m-1)\alpha$.
-Debiasing does not increase the shape to $m+1$. The uncorrected estimate
-has infinite mean when $m=1$, and no finite variance when $m\le2$.
+The uncorrected estimate has infinite mean when $m=1$, and no finite
+variance when $m\le2$.
 In contrast, $\widehat\xi$ is unbiased with variance $1/(m\alpha^2)$.
-The usual exponential CLT and delta method give
-$\sqrt m(\widehat\alpha-\alpha)\Rightarrow\mathcal N(0,\alpha^2)$
-for fixed $\alpha>0$; the exact small-$m$ law remains asymmetric.
+These follow from the Gamma mean $m/\alpha$ and variance $m/\alpha^2$.
+:::
+
+Debiasing does not increase the shape to $m+1$. A data-selected $k$ or
+threshold need not retain this calibration.
+
+The exact sampling law also gives the usual large-sample normal limit.
+
+:::{prf:corollary} Asymptotic normality in the exact Pareto model
+:label: cor-hill-estimator-normal-limit
+
+In either setting of [](#prop-hill-estimator-sampling-law), let the
+deterministic count $m$ tend to infinity while $\alpha>0$ stays fixed
+(with $k=m<n$ in the Hill setting). Then
+$\sqrt m(\widehat\alpha-\alpha)\Rightarrow\mathcal N(0,\alpha^2)$.
+:::
+
+:::{prf:proof}
+By [](#prop-hill-estimator-sampling-law), $T$ has the law of a sum of
+$m$ iid exponentials of rate $\alpha$. Their CLT gives
+$\sqrt m(T/m-1/\alpha)\Rightarrow\mathcal N(0,1/\alpha^2)$.
+The delta method for $x\mapsto1/x$, whose derivative at $1/\alpha$ is
+$-\alpha^2$, gives the stated variance.
+:::
+
+The exact small-$m$ law remains asymmetric.
 
 Use [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling).
 
@@ -284,6 +365,9 @@ m=2: mean=3, variance=inf
 m=10: mean=1.667, variance=0.3472
 corrected m=10: mean=1.5, variance=0.2812
 ```
+
+The helper's `inf` variance output at $m=1$ indicates that no finite variance
+exists; the mean is already infinite in that case.
 
 (hill-sampling-figure)=
 ```{figure} ../assets/figures/incerto/hill-sampling-law.svg
@@ -309,7 +393,14 @@ separates debiasing, conditional selection and clipping.
 (hill-ties-arithmetic)=
 ## Ties and nonnegative log spacings
 
-Using the same ascending order statistics, telescoping gives
+The spacing identity is deterministic and allows ties.
+
+:::{prf:proposition} Hill estimates as nonnegative log spacings
+:label: prop-hill-estimator-log-spacings
+
+Let $0<x_{1:n}\le\cdots\le x_{n:n}$ and $1\le k<n$. Then the Hill
+estimate $\widehat\xi_{k,n}=k^{-1}\sum_{j=1}^k
+\log(x_{n-j+1:n}/x_{n-k:n})$ satisfies
 
 $$
 \begin{gathered}
@@ -318,7 +409,17 @@ $$
 \end{gathered}
 $$
 
-Each summand is nonnegative. This identity gives a stable computation of
+Each summand is nonnegative.
+:::
+
+:::{prf:proof}
+Expand each log ratio in the definition into adjacent log spacings.
+The spacing $\log(x_{n-j+1:n}/x_{n-j:n})$ occurs in exactly $j$ of
+the $k$ terms. Summing gives the identity; ordering makes every ratio at
+least one.
+:::
+
+This identity gives a stable computation of
 the curve without subtracting two large sums of absolute logarithms.
 It does not repair rounded or discrete data into a continuous Pareto sample.
 

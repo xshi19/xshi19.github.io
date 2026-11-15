@@ -18,6 +18,7 @@ For a real random variable $X$ with CDF $F$ and a finite threshold $u$ with
 $\bar F(u)=\mathbb P(X>u)>0$, the mean excess function is
 
 $$
+
 e(u)=\mathbb E[X-u\mid X>u]
 =\frac{\mathbb E[(X-u)_+]}{\bar F(u)}.
 $$
@@ -30,6 +31,7 @@ been crossed.  For a [Pareto Type I](./incerto-pareto.md) tail with
 exponent $\alpha>1$ and $u\ge x_m$,
 
 $$
+
 e(u)=\frac{u}{\alpha-1}.
 $$
 
@@ -39,6 +41,7 @@ threshold $u$ in its support with $\beta+\xi u>0$, the mean excess function is
 linear when $\xi<1$:
 
 $$
+
 e(u)=\frac{\beta+\xi u}{1-\xi}.
 $$
 
@@ -65,9 +68,18 @@ does not identify a model failure or a body-to-tail transition.
 We derive the Pareto mean-excess formula from the conditional survival
 function.  The generalized Pareto linear formula follows from standard GPD
 [threshold stability](./incerto-generalized-pareto.md#threshold-excess-stability-and-pareto-special-case)
-and the GPD mean formula. The GPD page derives the stability identity; its
-moment formulas are cited rather than reproved here.
+and the [GPD mean formula](./incerto-generalized-pareto.md#gpd-moment-integrals).
+The GPD page proves both inputs; neither is reproved here.
 
+:::{prf:proposition} Exact Pareto mean excess
+:label: prop-mean-excess-function-pareto
+
+Let $X$ have a Pareto Type I law with lower cutoff $x_m>0$ and
+exponent $\alpha>1$. For every finite $u\ge x_m$,
+$e(u)=\mathbb E[X-u\mid X>u]=u/(\alpha-1)$.
+:::
+
+:::{prf:proof}
 For Pareto Type I,
 
 $$
@@ -104,10 +116,26 @@ e(u)&=\int_0^\infty\left(1+\frac yu\right)^{-\alpha}\,dy\\
 \end{aligned}
 $$
 
-For a generalized Pareto distribution, the threshold-stability property gives
+:::
+
+:::{prf:corollary} Generalized Pareto mean excess
+:label: cor-mean-excess-function-gpd
+
+Let $X$ have a generalized Pareto law with location zero, scale
+$\beta>0$ and shape $\xi<1$. For every $u\ge0$ with
+$\beta+\xi u>0$,
+$e(u)=\mathbb E[X-u\mid X>u]=(\beta+\xi u)/(1-\xi)$.
+At $\xi=0$, this is the constant $\beta$.
+:::
+
+:::{prf:proof}
+The [threshold-stability identity](./incerto-generalized-pareto.md#threshold-excess-stability-and-pareto-special-case)
+and [GPD mean formula](./incerto-generalized-pareto.md#gpd-moment-integrals)
+give the consequence. For a generalized Pareto distribution, threshold stability gives
 another generalized Pareto distribution above threshold $u$ with updated scale
 $\beta+\xi u$, provided $u$ is in the support and $\beta+\xi u>0$.  Its mean
 exists only for $\xi<1$, and equals $(\beta+\xi u)/(1-\xi)$.
+:::
 
 ## Mean-excess diagnostic
 
@@ -141,9 +169,12 @@ inequality convention.
 
 Pareto mean excess rises with the threshold, exponential mean excess is flat,
 and the displayed uniform mean excess decreases toward its endpoint.
-For any distribution with finite right endpoint
-$x_F=\sup\{x:F(x)<1\}$ and $u<x_F$, conditioning on $X>u$ gives
-$0<X-u\le x_F-u$ almost surely. Taking conditional expectations proves
+
+:::{prf:proposition} Mean excess at a finite right endpoint
+:label: prop-mean-excess-function-finite-endpoint
+
+Let $X$ be real with CDF $F$ and finite right endpoint
+$x_F=\sup\{x:F(x)<1\}$. For every finite $u<x_F$,
 
 $$
 \begin{gathered}
@@ -151,6 +182,14 @@ $$
 e(u)\longrightarrow0\quad\text{as }u\uparrow x_F.
 \end{gathered}
 $$
+
+:::
+
+:::{prf:proof}
+The endpoint definition gives $P(X>u)>0$ and, conditionally on $X>u$,
+$0<X-u\le x_F-u$ almost surely. Taking conditional expectations gives
+the bounds; squeezing gives the limit.
+:::
 
 This bound does not imply monotonicity. For example, if
 $\mathbb P(X=1)=\mathbb P(X=3)=1/2$, both atoms exceed $0.9$, so
@@ -205,12 +244,28 @@ adds the shared mixture sample, whose body changes the population curve below $3
 (mean-excess-hidden-tail)=
 ## From overshoot to an unconditional tail contribution
 
-For an integrable upper tail with $\bar F(u)>0$, conditioning proves
+Conditioning relates mean excess to an unconditional expectation.
+
+:::{prf:proposition} Upper-tail contribution from mean excess
+:label: prop-mean-excess-function-tail-contribution
+
+Let $X$ be real and $u$ finite, with $\bar F(u)=P(X>u)>0$ and
+$\mathbb E[X_+\mathbf1_{\{X>u\}}]<\infty$. Then
+$e(u)=\mathbb E[X-u\mid X>u]$ is finite and
 
 $$
 \mathbb E[X\mathbf1_{\{X>u\}}]
 =\bar F(u)\{u+e(u)\}.
 $$
+
+:::
+
+:::{prf:proof}
+On $\{X>u\}$, write $X=u+(X-u)$. The negative part there is bounded
+by $|u|$, so the stated assumption makes the tail contribution integrable.
+Taking expectations and using the definition of conditional expectation
+gives the identity.
+:::
 
 The factor $\bar F(u)$ and the threshold term $u$ are both needed.
 For an exact Pareto parent with $\alpha>1$, the formula agrees with the

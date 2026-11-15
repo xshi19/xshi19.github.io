@@ -82,8 +82,13 @@ on the Frechet scale.  The full regular-variation domain-of-attraction theorem
 is cited in the references; the exact Pareto calculation below shows the core
 mechanism.
 
-For [Pareto Type I](./incerto-pareto.md) with lower cutoff $x_m$ and exponent $\alpha$,
-take $a_n=x_m n^{1/\alpha}$.  Then for fixed $y>0$ and all large enough $n$,
+:::{prf:proposition} Exact Pareto maximum scaling
+:label: prop-frechet-pareto-maxima
+
+Let $X_1,X_2,\ldots$ be iid [Pareto Type I](./incerto-pareto.md) with
+lower cutoff $x_m>0$ and exponent $\alpha>0$. Set
+$M_n=\max_{1\le i\le n}X_i$ and $a_n=x_m n^{1/\alpha}$.
+For every fixed $y>0$ and all $n$ such that $a_ny\ge x_m$,
 
 $$
 \begin{aligned}
@@ -92,6 +97,13 @@ $$
 &\quad\longrightarrow\exp(-y^{-\alpha})=\Phi_\alpha(y).
 \end{aligned}
 $$
+:::
+
+:::{prf:proof}
+Independence gives $P(M_n\le a_ny)=F(a_ny)^n$.
+Substituting the Pareto survival yields the displayed finite-$n$ formula;
+$n\log(1-y^{-\alpha}/n)\to-y^{-\alpha}$ gives its limit.
+:::
 
 The Pareto-type survival exponent $\alpha$ and the extreme-value index
 $\xi$ therefore satisfy:
@@ -103,7 +115,13 @@ $$
 ## Tail behavior
 
 Although the Frechet law is a limit law for maxima, it is itself heavy-tailed.
-Its survival function satisfies
+The survival asymptotic follows from the elementary exponential limit.
+
+:::{prf:proposition} Tail exponent of the Frechet law
+:label: prop-frechet-survival-tail
+
+For $\alpha>0$, the standard Frechet CDF
+$\Phi_\alpha(y)=\exp(-y^{-\alpha})$ on $y>0$ satisfies
 
 $$
 \bar\Phi_\alpha(y)
@@ -113,7 +131,14 @@ $$
 y^{-\alpha}
 $$
 
-as $y\to\infty$.
+as $y\to\infty$, and its survival is regularly varying with index $-\alpha$.
+:::
+
+:::{prf:proof}
+Set $v=y^{-\alpha}\to0$. Then $(1-e^{-v})/v\to1$, proving the
+equivalence. Taking the ratio at $ty$ and $y$ gives $t^{-\alpha}$ for
+every fixed $t>0$.
+:::
 
 Thus the Frechet survival tail is regularly varying with index $-\alpha$.
 This is why the $\xi>0$ GEV regime is also the Pareto-type regime: the
@@ -133,12 +158,26 @@ already includes $n^{1/\alpha}$.
 | $100$ | $0.366032$ | $0.367879$ |
 | $600$ | $0.367573$ | $0.367879$ |
 
-For fixed $y>0$, expanding the logarithm gives
+The finite-block correction can also be stated at each fixed threshold.
+
+:::{prf:corollary} Fixed-threshold Pareto maximum correction
+:label: cor-frechet-finite-block-correction
+
+Under [](#prop-frechet-pareto-maxima), for every fixed $y>0$, as $n\to\infty$,
 
 $$
 n\log(1-y^{-\alpha}/n)
 =-y^{-\alpha}-\frac{y^{-2\alpha}}{2n}+O(n^{-2}).
 $$
+
+The left side is $\log P(M_n/a_n\le y)$ for all sufficiently large $n$;
+the remainder constant may depend on $y$ and $\alpha$.
+:::
+
+:::{prf:proof}
+Apply $\log(1-v)=-v-v^2/2+O(v^3)$ at $v=y^{-\alpha}/n$ to the
+exact CDF in [](#prop-frechet-pareto-maxima), then multiply by $n$.
+:::
 
 This explains the finite-block correction for an exact Pareto parent at a
 fixed $y$. It is not a uniform error bound over all thresholds or a rate for
@@ -183,11 +222,20 @@ Regenerate both figures with `uv run python demos/incerto/distribution_cards.py`
 
 SCoFT v4 §9.1.1, pp. 173–174, motivates the power-tail/Fréchet link
 [@taleb2025scoftv4]. We prove its sufficient direction without replacing
-a slowly varying factor by a constant. Assume iid draws with
+a slowly varying factor by a constant.
+
+:::{prf:proposition} Regular variation implies a Frechet maximum limit
+:label: prop-frechet-regular-variation-limit
+
+Let $X_1,X_2,\ldots$ be iid with CDF $F$, survival
 $\bar F(x)=x^{-\alpha}L(x)$ eventually, where $\alpha>0$ and $L$ is
-positive and slowly varying. Choose $a_n\to\infty$ such that
-$n\bar F(a_n)\to1$. For an eventually continuous, strictly decreasing
-survival, the tail quantile solving $\bar F(a_n)=1/n$ is one such choice.
+positive, measurable, and slowly varying. Let $a_n>0$ tend to infinity
+with $n\bar F(a_n)\to1$, and set $M_n=\max_{1\le i\le n}X_i$.
+Then, for every fixed $y>0$,
+$P(M_n/a_n\le y)\to\exp(-y^{-\alpha})$.
+:::
+
+:::{prf:proof}
 For fixed $y>0$, regular variation gives
 
 $$
@@ -198,13 +246,24 @@ $$
 \end{aligned}
 $$
 
-Taking $n\log(1-\bar F(a_ny))$ proves the Fréchet maximum limit.
-This proves the stated direction with an admissible normalization;
-the general converse remains a cited domain-of-attraction result.
+Independence gives $P(M_n/a_n\le y)=(1-\bar F(a_ny))^n$.
+Taking logarithms and using $\log(1-v)\sim-v$ proves the limit.
+:::
+
+For an eventually continuous, strictly decreasing survival, the tail
+quantile solving $\bar F(a_n)=1/n$ is an admissible choice.
+The general converse remains a cited domain-of-attraction result
+[@embrechts1997modelling; @resnick2007heavy].
 The exact Pareto scale $x_mn^{1/\alpha}$ does not apply to every $L$.
 
-A separate fixed-block fact is worth distinguishing. For fixed integer
-$n$, as $x\to\infty$,
+A separate fixed-block fact has a different limit.
+
+:::{prf:proposition} A fixed-block maximum preserves the tail exponent
+:label: prop-frechet-fixed-block-tail
+
+Let $X_1,\ldots,X_n$ be iid with survival $\bar F\in RV_{-\alpha}$,
+where $\alpha>0$ and the integer $n\ge1$ is fixed. For
+$M_n=\max_{1\le i\le n}X_i$, as $x\to\infty$,
 
 $$
 \begin{aligned}
@@ -213,9 +272,16 @@ P(M_n>x)&=1-(1-\bar F(x))^n\\
 \end{aligned}
 $$
 
-The binomial expansion proves this equivalence, so a fixed-block maximum
-preserves the regularly varying tail exponent. This limit sends the
-threshold to infinity with $n$ fixed; the Fréchet limit sends $n$ to
+In particular, the survival of $M_n$ is regularly varying with index $-\alpha$.
+:::
+
+:::{prf:proof}
+Independence gives the equality. Since $\bar F(x)\to0$, the binomial
+expansion gives $1-(1-\bar F(x))^n=n\bar F(x)+O(\bar F(x)^2)$.
+The equivalence preserves the fixed-multiplier survival ratios.
+:::
+
+This limit sends the threshold to infinity with $n$ fixed; the Fréchet limit sends $n$ to
 infinity after rescaling. Neither implies an exact finite-block Fréchet law.
 The [hidden-tail calculation](incerto-hidden-tail.md#hidden-tail-pareto)
 uses the exact Pareto maximum and therefore keeps finite-sample corrections.

@@ -27,9 +27,11 @@ The realized max-to-sum ratio $r_n$ is the share of the total produced by the
 largest observed value.  Its random-sample counterpart is
 $R_n=M_n/S_n$, where $S_n=\sum_{i=1}^n X_i$ and
 $M_n=\max_{1\le i\le n}X_i$. When $X_1,X_2,\dots$ are iid nonnegative
-variables with finite positive mean $\mu=\mathbb E[X]$, then
+variables with finite positive mean $\mu=\mathbb E[X]$,
+[](#thm-max-to-sum-ratio-finite-mean) gives
 
 $$
+
 R_n\to0\qquad\text{almost surely}.
 $$
 
@@ -69,7 +71,18 @@ The proof uses the strong law and Borel--Cantelli
 regimes are cited or described heuristically, because their exact limits need
 heavier regular-variation machinery.
 
-Assume $X_i\ge0$ are iid and $0<\mu=\mathbb E[X]<\infty$.  The strong law
+:::{prf:theorem} A finite mean makes the maximum negligible
+:label: thm-max-to-sum-ratio-finite-mean
+
+Let $X_i$ be iid nonnegative random variables with
+$0<\mu=\mathbb EX_1<\infty$. Define $S_n=\sum_{i=1}^nX_i$ and
+$M_n=\max_{1\le i\le n}X_i$. Almost surely $S_n>0$ eventually, and
+$R_n=M_n/S_n\to0$ almost surely. Any convention for $R_n$ on earlier
+zero totals gives the same limit.
+:::
+
+:::{prf:proof}
+The strong law
 gives $S_n/n\to\mu$ almost surely.  It remains to show that $M_n/n\to0$
 almost surely.
 
@@ -90,6 +103,7 @@ $$
 $$
 
 almost surely.
+:::
 
 For a Pareto Type I tail,
 [Pareto Moment Existence](./incerto-pareto-moment-existence.md) shows that
@@ -229,11 +243,25 @@ negligible effect at the subsample scale. We cite this result from
 gives a proof and an explicit plug-in condition. These are asymptotic
 conditions; report the chosen $m$ and sensitivity to it.
 
+:::{prf:proposition} An atom at the observed bootstrap maximum
+:label: prop-max-to-sum-ratio-bootstrap-maximum
+
+Fix a sample of size $n\ge1$ with a unique maximum. In a bootstrap
+sample of $n$ independent draws from its empirical distribution, the
+maximum cannot exceed the observed maximum and equals it with conditional
+probability $1-(1-1/n)^n$. This probability tends to $1-e^{-1}$ as
+$n\to\infty$.
+:::
+
+:::{prf:proof}
+Each draw misses the unique maximum with probability $1-1/n$.
+Independence makes the probability of missing it in all $n$ draws
+$(1-1/n)^n\to e^{-1}$. The empirical support excludes larger values.
+:::
+
 Ordinary $n$-out-of-$n$ empirical bootstrap validity is not assumed here.
-Its maximum cannot exceed the observed maximum, and with a unique sample
-maximum it equals that maximum with conditional probability
-$1-(1-1/n)^n\to1-e^{-1}$. This can obstruct a continuous extreme-value
-limit. Heavy-tailed sums can also have non-Gaussian stable limits for which
+This atom can obstruct a continuous extreme-value limit. Heavy-tailed sums
+can also have non-Gaussian stable limits for which
 ordinary bootstrap approximations fail; see
 [Bickel, Götze, and van Zwet (1997), §2.3, Example 4, p. 5](https://www3.stat.sinica.edu.tw/statistica/oldpdf/a7n11.pdf#page=5).
 The finite-mean theorem for $R_n$ proves no resampling validity statement.

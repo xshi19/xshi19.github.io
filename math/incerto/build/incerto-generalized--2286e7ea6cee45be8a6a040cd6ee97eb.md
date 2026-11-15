@@ -52,6 +52,8 @@ is to threshold exceedances. For iid observations, if there are constants
 $a_n>0$ and $b_n$ such that $(M_n-b_n)/a_n$ converges to a nondegenerate
 law, that law is a GEV distribution up to location and scale. Existence
 of such a limit is an assumption; it does not hold for every parent law.
+This classification theorem is cited, not proved here
+[@coles2001introduction; @embrechts1997modelling].
 
 For fat-tail work, $\xi>0$ is the main case.  A [Pareto tail](./incerto-pareto.md) with exponent
 $\alpha$ has $\xi=1/\alpha$, so the fitted block-maximum shape should point to
@@ -108,8 +110,14 @@ Regenerate the card with `uv run python demos/incerto/distribution_cards.py`.
 
 ## Pareto block maxima example
 
-If $X_1,\dots,X_n$ are iid [Pareto Type I](./incerto-pareto.md) with lower cutoff $x_m$ and exponent
-$\alpha$, then for $x\ge x_m$,
+We derive the exact Pareto maximum law and its limit.
+
+:::{prf:proposition} Pareto block maxima converge to Frechet
+:label: prop-generalized-extreme-value-pareto-maxima
+
+Let $X_1,X_2,\ldots$ be iid [Pareto Type I](./incerto-pareto.md) with
+lower cutoff $x_m>0$ and exponent $\alpha>0$, and let
+$M_n=\max_{1\le i\le n}X_i$. For $x\ge x_m$,
 
 $$
 \begin{aligned}
@@ -130,6 +138,13 @@ $$
 y>0.
 \end{gathered}
 $$
+:::
+
+:::{prf:proof}
+Independence gives $P(M_n\le x)=F(x)^n$, yielding the exact CDF.
+Substituting $x=a_ny$ gives the normalized formula; its logarithm tends to
+$-y^{-\alpha}$ by $\log(1-v)\sim-v$ as $v\downarrow0$.
+:::
 
 This is the [Frechet member](./incerto-frechet.md) of the GEV family with
 $\xi=1/\alpha$ after a standard location-scale reparameterization.
@@ -159,9 +174,17 @@ parameters $(\xi,\mu,\sigma)=(5/9,1,5/9)$ on the normalized scale.
 ## Gaussian maxima and normalization
 
 SCoFT v4 §9.1.2, pp. 174–176, compares exact normal maxima with their
-Gumbel limit [@taleb2025scoftv4]. The limiting maxima CDF is
-$H_{0,0,1}(z)=\exp(-e^{-z})$. For iid standard normals,
-independence and differentiation give the exact identities
+Gumbel limit [@taleb2025scoftv4]. We prove convergence for the
+quantile/Mills-ratio constants given by Gasull, Jolis and Utzet,
+§2, pp. 3–4, Eqs. (7)–(9) [@gasull2015normalmaxima], and for the
+explicit asymptotically equivalent constants.
+
+:::{prf:proposition} Gaussian maximum laws and Gumbel normalizations
+:label: prop-generalized-extreme-value-gaussian-maxima
+
+Let $X_1,X_2,\ldots$ be iid standard normals,
+$M_n=\max_{1\le i\le n}X_i$, and let $\Phi,\phi$ be the standard
+normal CDF and density. The maximum has CDF and density
 
 $$
 \begin{aligned}
@@ -170,7 +193,7 @@ f_{M_n}(x)&=n\phi(x)\Phi(x)^{n-1}.
 \end{aligned}
 $$
 
-Here $\Phi$ and $\phi$ are the standard normal CDF and density. For $n\ge2$, choose
+For $n\ge2$, define
 
 $$
 \begin{gathered}
@@ -179,9 +202,32 @@ a_n=\frac{1-\Phi(b_n)}{\phi(b_n)}.
 \end{gathered}
 $$
 
-These quantile/Mills-ratio constants are given by Gasull, Jolis and Utzet,
-§2, pp. 3–4, Eqs. (7)–(9) [@gasull2015normalmaxima]. We prove convergence
-for this choice. Integration by parts bounds the normal survival, for $t>0$,
+Also define
+
+$$
+\begin{gathered}
+s_n=\sqrt{2\log n},\qquad \widetilde a_n=1/s_n,\\
+\widetilde b_n=s_n-\frac{\log\log n+\log(4\pi)}{2s_n}.
+\end{gathered}
+$$
+
+For each fixed $z\in\mathbb R$,
+
+$$
+\begin{gathered}
+P((M_n-b_n)/a_n\le z)\to\exp(-e^{-z}),\\
+P((M_n-\widetilde b_n)/\widetilde a_n\le z)\to\exp(-e^{-z}).
+\end{gathered}
+$$
+
+The constants satisfy $\widetilde a_n/a_n\to1$ and
+$(\widetilde b_n-b_n)/a_n\to0$.
+:::
+
+:::{prf:proof}
+Independence gives $P(M_n\le x)=\Phi(x)^n$, and differentiation gives
+the density. Integration by parts bounds the normal survival
+$\bar\Phi=1-\Phi$, for $t>0$,
 by $t\phi(t)/(1+t^2)$ below and $\phi(t)/t$ above: the upper bound follows
 from $x/t\ge1$, and for the lower bound use
 $\bar\Phi(t)=\phi(t)/t-\int_t^\infty\phi(x)/x^2\,dx$
@@ -199,17 +245,7 @@ $$
 $$
 
 Since $n\bar\Phi(b_n)=1$, taking logarithms of the exact maximum CDF
-proves $P((M_n-b_n)/a_n\le z)\to H_{0,0,1}(z)$. This proves a fixed-$z$
-limit; it does not bound a relative density error far into the tail.
-
-A commonly used explicit alternative is
-
-$$
-\begin{gathered}
-s_n=\sqrt{2\log n},\qquad \widetilde a_n=1/s_n,\\
-\widetilde b_n=s_n-\frac{\log\log n+\log(4\pi)}{2s_n}.
-\end{gathered}
-$$
+proves $P((M_n-b_n)/a_n\le z)\to\exp(-e^{-z})$.
 
 The normal-tail bounds imply
 $b_n=s_n+O(\log\log n/s_n)$. Substitution into
@@ -217,8 +253,12 @@ $b_n^2=2\log n-2\log b_n-\log(2\pi)+O(b_n^{-2})$
 then gives $b_n-\widetilde b_n=O((\log\log n)^2/s_n^3)$.
 Consequently $\widetilde a_n/a_n\to1$ and
 $(\widetilde b_n-b_n)/a_n\to0$, proving the same limit.
-Their finite-$n$ errors can differ. A CDF limit supplies neither a universal
-finite-block accuracy threshold nor a relative tail-error guarantee.
+:::
+
+The limit is the Gumbel CDF $H_{0,0,1}(z)=\exp(-e^{-z})$ at each fixed
+$z$. The two normalizations' finite-$n$ errors can differ. A CDF limit
+supplies neither a universal finite-block accuracy threshold nor a relative
+density or tail-error guarantee far into the tail.
 
 Use [`gaussian_maximum_norming`](incerto-api-reference.md#api-gaussian-maximum-norming)
 and [`gaussian_maximum_cdf`](incerto-api-reference.md#api-gaussian-maximum-cdf).

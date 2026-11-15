@@ -95,14 +95,35 @@ parameterization of stable laws.
 The classification and tail condition are cited from @durrett2019probability,
 Theorems 3.8.8 (p. 191) and 3.8.2 (p. 186), with characteristic functions
 in §3.8, p. 189. That theorem uses truncated centering; the conventions
-above can change the limit's location. For exact Pareto with $1<\alpha<2$
-and $a_n=x_m n^{1/\alpha}$, the difference between full and truncated centering divided by $a_n$ is
-the constant $\alpha/(\alpha-1)$, since
-$n\mathbb E[X\mathbf1_{\{X>a_n\}}]/a_n=\alpha/(\alpha-1)$.
-For a scale satisfying only $nP(X>a_n)\to1$, this ratio converges to
-the same constant. Thus full-mean centering preserves convergence, with
-the limit shifted downward by $\alpha/(\alpha-1)$.
-These theorems are not proved by the maximum calculation below.
+above can change the limit's location. These theorems are cited, not proved
+by the maximum calculation below. We calculate the centering difference in
+the exact Pareto case.
+
+:::{prf:proposition} Full and truncated Pareto centering
+:label: prop-generalized-central-limit-theorem-pareto-centering
+
+Let $X$ be Pareto Type I with cutoff $x_m>0$ and $1<\alpha<2$.
+For $a_n=x_m n^{1/\alpha}$,
+
+$$
+\frac{n\mathbb E[X]-n\mathbb E[X\mathbf1_{\{X\le a_n\}}]}{a_n}
+=\frac{\alpha}{\alpha-1}.
+$$
+
+If instead $a_n>0$ satisfies $nP(X>a_n)\to1$, the ratio converges to
+$\alpha/(\alpha-1)$. Consequently, if the iid sum centered by the truncated
+mean and divided by $a_n$ converges in distribution to $Z$, full-mean
+centering gives the limit $Z-\alpha/(\alpha-1)$.
+:::
+
+:::{prf:proof}
+For $a\ge x_m$, integrating the Pareto density gives
+$\mathbb E[X\mathbf1_{\{X>a\}}]
+=\alpha x_m^\alpha a^{1-\alpha}/(\alpha-1)$.
+Thus the ratio is $\alpha nP(X>a_n)/(\alpha-1)$ for all sufficiently
+large $n$, proving both claims about centering. Subtracting this
+deterministic ratio from the truncated-centered sum gives the stated shift.
+:::
 
 ## Why $\sqrt{n}$ fails
 
@@ -124,8 +145,14 @@ result, so we cite it rather than reproduce the proof.  What we prove
 directly is the exact Pareto maximum scaling calculation, which shows why the
 usual $\sqrt n$ scale is too small when $\alpha<2$.
 
-For a [Pareto Type I](./incerto-pareto.md) variable with survival
-$\bar F(x)=(x_m/x)^\alpha$, choose $a_n=x_m n^{1/\alpha}$.  Then for $y>0$ and sufficiently large $n$ such that $a_n y\ge x_m$,
+:::{prf:proposition} Pareto maximum scaling
+:label: prop-generalized-central-limit-theorem-pareto-maximum
+
+Let $X_1,X_2,\ldots$ be iid [Pareto Type I](./incerto-pareto.md) with
+cutoff $x_m>0$, exponent $\alpha>0$, and survival
+$\bar F(x)=(x_m/x)^\alpha$ for $x\ge x_m$. Set
+$M_n=\max_{1\le i\le n}X_i$ and $a_n=x_m n^{1/\alpha}$.
+For each fixed $y>0$ and all sufficiently large $n$ such that $a_ny\ge x_m$,
 
 $$
 \begin{aligned}
@@ -134,6 +161,13 @@ $$
 &\quad\to e^{-y^{-\alpha}}.
 \end{aligned}
 $$
+:::
+
+:::{prf:proof}
+Independence gives $P(M_n\le a_ny)=F(a_ny)^n$; substituting the
+Pareto survival gives the equality. Since
+$n\log(1-y^{-\alpha}/n)\to-y^{-\alpha}$, the CDF has the claimed limit.
+:::
 
 The maximum remains of order $a_n$.  Since $a_n$ grows faster than
 $\sqrt{n}$ when $\alpha<2$, the Gaussian finite-variance scaling is not the
@@ -227,7 +261,15 @@ power-tail exponent. At $\alpha=2$ this is $N(\mu,2\sigma^2)$,
 so $\sigma$ is not its standard deviation. The existence of these stable
 laws is a cited input from @durrett2019probability, Example 3.3.23,
 pp. 138–139 (with the Gaussian endpoint immediate).
-Multiplying characteristic functions proves, for iid copies,
+The exact scaling identity follows by multiplying characteristic functions.
+
+:::{prf:lemma} Exact scaling of symmetric stable sums
+:label: lem-generalized-central-limit-theorem-stable-scaling
+
+Let $X_1,\ldots,X_n$ be iid with characteristic function
+$\mathbb E e^{itX_1}=\exp(i\mu t-|\sigma t|^\alpha)$,
+where $\mu\in\mathbb R$, $\sigma>0$, $0<\alpha\le2$, and $n\ge1$.
+For $S_n=\sum_{i=1}^n X_i$ and $\bar X_n=S_n/n$,
 
 $$
 \begin{gathered}
@@ -235,6 +277,14 @@ S_n-n\mu\overset d=n^{1/\alpha}(X_1-\mu),\\
 \bar X_n-\mu\overset d=n^{1/\alpha-1}(X_1-\mu).
 \end{gathered}
 $$
+:::
+
+:::{prf:proof}
+The characteristic function of $S_n-n\mu$ is $\exp(-n|\sigma t|^\alpha)$,
+which is that of $n^{1/\alpha}(X_1-\mu)$. Equality of characteristic
+functions proves equality in distribution. Division by $n$ gives the
+average's identity.
+:::
 
 For $1<\alpha\le2$ the scale shrinks. The finite absolute moment proved
 below also makes the strong law applicable, so $\bar X_n\to\mu$ almost
@@ -246,7 +296,16 @@ have a stable limit.
 (stable-mean-deviation)=
 ## Mean absolute deviation of a symmetric stable law
 
-For the preceding parameterization and $1<\alpha\le2$, we prove
+We integrate the characteristic function to find the absolute-moment boundary.
+
+:::{prf:proposition} Absolute deviation of a symmetric stable law and its average
+:label: prop-generalized-central-limit-theorem-stable-absolute-deviation
+
+Let $X_1,\ldots,X_n$ be iid with the law of $X$, where
+$\mathbb E e^{itX}=\exp(i\mu t-|\sigma t|^\alpha)$ for
+$\mu\in\mathbb R$, $\sigma>0$, and $0<\alpha\le2$.
+Set $\bar X_n=n^{-1}\sum_{i=1}^n X_i$, $n\ge1$.
+For $1<\alpha\le2$, $\mathbb EX=\mu$ and
 
 $$
 \begin{gathered}
@@ -258,6 +317,11 @@ $$
 \end{gathered}
 $$
 
+For $0<\alpha\le1$, both $\mathbb E|X-\mu|$ and
+$\mathbb E|\bar X_n-\mu|$ are infinite; $\mu$ is a location parameter.
+:::
+
+:::{prf:proof}
 Start with $|x|=(2/\pi)\int_0^\infty(1-\cos(tx))/t^2\,dt$.
 For completeness, the integral at $x=1$ equals $\pi/2$: write
 $u^{-2}=\int_0^\infty s e^{-su}\,ds$ and use Tonelli to get
@@ -279,7 +343,9 @@ $\alpha\Gamma(1-1/\alpha)$; both boundary terms vanish when $\alpha>1$.
 For $\alpha\le1$, the integrand near zero is asymptotic to
 $t^{-1/\alpha}$, so the absolute moment is infinite. Symmetry and
 integrability give $\mathbb EX=\mu$ in the finite case. The average's
-formula now follows from the exact scale identity.
+formula, including its infinite cases, now follows from
+[](#lem-generalized-central-limit-theorem-stable-scaling).
+:::
 
 Use [`symmetric_stable_mean_abs`](incerto-api-reference.md#api-symmetric-stable-mean-abs).
 
@@ -302,17 +368,39 @@ alpha=2: 1.128, 0.1128
 (clt-cumulants)=
 ## Cumulants measure particular aspects of convergence
 
-Let the iid summands have mean $\mu$, variance $0<\sigma^2<\infty$,
-and finite absolute moment of integer order $r\ge3$. With characteristic
+Here we prove the cumulant identity; the CDF error theorem below is cited.
+
+:::{prf:proposition} Cumulant scaling of standardized iid sums
+:label: prop-generalized-central-limit-theorem-cumulant-scaling
+
+Let $X_1,\ldots,X_n$ be iid copies of $X$ with mean $\mu$, variance
+$0<\sigma^2<\infty$, and finite absolute moment of integer order $r\ge3$.
+With characteristic
 function $\varphi_X(t)=\mathbb E e^{itX}$, define the local $r$th cumulant by
 $\kappa_r(X)=i^{-r}(\log\varphi_X)^{(r)}(0)$, using the continuous logarithm
-near $\varphi_X(0)=1$. Standardize $S_n\leftarrow(S_n-n\mu)/(\sigma\sqrt n)$;
-throughout this section, $S_n$ denotes the standardized sum. Multiplication
-of characteristic functions and the chain rule prove
+near $\varphi_X(0)=1$. Set $S_n=\sum_{i=1}^nX_i$, then standardize
+$S_n\leftarrow(S_n-n\mu)/(\sigma\sqrt n)$;
+throughout this section, $S_n$ denotes the standardized sum. Then, for
+each integer $n\ge1$,
 
 $$
 \kappa_r(S_n)=n^{1-r/2}\frac{\kappa_r(X)}{\sigma^r}.
 $$
+
+In particular, standardized skewness is multiplied by $n^{-1/2}$ when
+the third absolute moment is finite, and excess kurtosis by $n^{-1}$ when
+the fourth moment is finite.
+:::
+
+:::{prf:proof}
+Near zero the continuous logarithm of the characteristic function of the
+standardized sum is
+$n\log\varphi_X(t/(\sigma\sqrt n))-itn\mu/(\sigma\sqrt n)$.
+Take $r\ge3$ derivatives at zero and multiply by $i^{-r}$.
+The linear centering term vanishes, and the chain rule gives the stated
+factor. For a variance-one variable, the third cumulant is skewness and
+the fourth is excess kurtosis.
+:::
 
 Thus standardized skewness decays as $n^{-1/2}$ when the third absolute
 moment is finite, and excess kurtosis as $n^{-1}$ when the fourth moment

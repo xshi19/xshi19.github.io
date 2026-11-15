@@ -61,15 +61,37 @@ observation. An adjacent-size comparison $\kappa_{n,n+1}$ is different.
 Here “metric” names a concentration index, not a distance satisfying the
 axioms of a metric space.
 
-We prove three elementary properties. Adding a constant to every summand
-cancels under centering; multiplying by $b\ne0$ multiplies both deviations
-by $|b|$. Thus kappa is invariant under location and nonzero scale changes.
-Conditional Jensen, applied to an independent centered increment, gives
-$M(n+1)\ge M(n)$. The triangle inequality gives $M(n)\le nM(1)$.
-Consequently $\kappa_{1,n}\le1$ wherever the displayed definition applies.
-There is no universal lower bound of zero.
+:::{prf:proposition} Affine invariance and centered-sum growth
+:label: prop-kappa-invariance-growth
 
-For a chain $n_0<n_1<\cdots<n_r$, logarithmic growth adds:
+Let $X_i$ be iid real random variables with $\mathbb E|X_1|<\infty$,
+mean $\mu$, and $M(n)=\mathbb E|\sum_{i=1}^nX_i-n\mu|$.
+For $a\in\mathbb R$ and $b\ne0$, the deviations for $a+bX_i$
+equal $|b|M(n)$; hence every defined $\kappa_{n_0,n}$ is unchanged.
+For all integers $n\ge1$,
+$M(n+1)\ge M(n)$ and $M(n)\le nM(1)$.
+If $n>1$ and $M(n)>M(1)>0$, then $\kappa_{1,n}\le1$.
+:::
+
+:::{prf:proof}
+Adding $a$ cancels under centering, and multiplying by $b$ multiplies
+absolute deviations by $|b|$, which cancels in their ratio.
+Conditional Jensen, applied to the independent centered increment
+$X_{n+1}-\mu$, gives $M(n+1)\ge M(n)$. The triangle inequality gives
+$M(n)\le nM(1)$. Under the strict growth assumption,
+$0<\log(M(n)/M(1))\le\log n$, so the definition gives
+$\kappa_{1,n}\le1$.
+:::
+
+There is no universal lower bound of zero; the examples below show this.
+
+:::{prf:proposition} Telescoping growth across sample sizes
+:label: prop-kappa-telescoping-growth
+
+Let $X_i$ be iid integrable observations with centered-sum deviations
+$M(n)$. For integers $1\le n_0<n_1<\cdots<n_r$, assume
+$M(n_j)>M(n_{j-1})>0$ for every $j=1,\ldots,r$, so each
+$\kappa_{n_{j-1},n_j}$ is defined. Then
 
 $$
 \begin{aligned}
@@ -79,8 +101,15 @@ $$
 \end{aligned}
 $$
 
-This is a telescoping identity, with each intermediate kappa defined.
-It does not justify averaging the kappas themselves.
+:::
+
+:::{prf:proof}
+The definition gives
+$\log(M(n_j)/M(n_{j-1}))=\log(n_j/n_{j-1})/(2-\kappa_{n_{j-1},n_j})$.
+Summing telescopes the logarithms.
+:::
+
+This identity does not justify averaging the kappas themselves.
 
 Use [`kappa_from_mads`](incerto-api-reference.md#api-kappa-from-mads)
 and [`stable_kappa`](incerto-api-reference.md#api-stable-kappa) to expose
@@ -116,36 +145,62 @@ benchmark as the stable index decreases to one, not an admissible endpoint.
 (kappa-stable)=
 ## Stable benchmark and attraction
 
-For a nondegenerate stable law of index $1<\alpha\le2$, the centered sum
-has the same distribution as $n^{1/\alpha}(X_1-\mu)$. Taking absolute
-expectations proves
+:::{prf:corollary} Kappa of an integrable stable law
+:label: cor-kappa-stable
+
+Let $X_i$ be iid with a nondegenerate stable law of index
+$1<\alpha\le2$ and mean $\mu$. For $M(n)=\mathbb E|S_n-n\mu|$,
 
 $$
-\begin{aligned}
-M(n)&=n^{1/\alpha}M(1),\\
-\kappa_{n_0,n}&=2-\alpha,\\
-\frac{M(n)}{nM(1)}&=n^{1/\alpha-1}.
-\end{aligned}
+
+M(n)=n^{1/\alpha}M(1),\qquad
+\kappa_{n_0,n}=2-\alpha,\qquad
+\frac{M(n)}{nM(1)}=n^{1/\alpha-1}
 $$
 
-The stable sum identity is the cited structural property; the algebraic
-consequence for kappa is proved here. Skewness does not change the exponent,
+for every integer $n\ge1$ and, for kappa, $1\le n_0<n$.
+:::
+
+:::{prf:proof}
+Use the stable sum identity, including skew stable laws
+(@durrett2019probability, §3.8, Eq. (3.8.11), p. 189;
+@taleb2018kappa, §III.A, Eq. (6), p. 3). Centering by the mean gives
+$S_n-n\mu\overset d=n^{1/\alpha}(X_1-\mu)$.
+The law has $0<M(1)<\infty$, so taking absolute expectations gives
+the first formula and strict growth. Substitution in the definition of
+kappa and division by $nM(1)$ give the other two.
+:::
+
+Skewness does not change the exponent,
 so it cancels from kappa even though it can change $M(1)$. At $\alpha=2$
 the law is Gaussian and kappa is zero. The growth exponent is $1/\alpha$;
 it must not be substituted for $\alpha$ in $2-\alpha$.
 The [stable-law note](incerto-generalized-central-limit-theorem.md#stable-exact-sums)
 fixes the characteristic-function scale and proves the symmetric MAD formula.
 
-A domain-of-attraction statement is weaker than the exact stable identity.
-For example, suppose a centered sum divided by $a_n$ converges in law to
-an integrable stable variable $Z$, the normalized absolute sums are uniformly
-integrable, and $\log a_n/\log n\to1/\alpha$. Then
+:::{prf:proposition} Kappa under uniformly integrable stable attraction
+:label: prop-kappa-attraction
 
-$$
-M(n)/a_n\longrightarrow\mathbb E|Z|
-$$
+Let $X_i$ be iid integrable observations, with mean $\mu$,
+$S_n=\sum_{i=1}^nX_i$, $M(n)=\mathbb E|S_n-n\mu|$, and
+$M(1)>0$. Suppose $a_n>0$, $(S_n-n\mu)/a_n$ converges in law to
+a nondegenerate integrable stable variable $Z$ of index $1<\alpha\le2$,
+the absolute normalized sums are uniformly integrable, and
+$\log a_n/\log n\to1/\alpha$. Then
+$M(n)/a_n\to\mathbb E|Z|$ and $\kappa_{1,n}\to2-\alpha$;
+this kappa is defined for all sufficiently large $n$.
+:::
 
-and substitution gives $\kappa_{1,n}\to2-\alpha$. Uniform integrability
+:::{prf:proof}
+Convergence in law and uniform integrability give
+$M(n)/a_n\to\mathbb E|Z|\in(0,\infty)$. Since
+$\log a_n/\log n\to1/\alpha>0$, $a_n\to\infty$ and eventually
+$M(n)>M(1)$. Also
+$\log(M(n)/M(1))/\log n\to1/\alpha$.
+Substitute in the definition of $\kappa_{1,n}$.
+:::
+
+Uniform integrability
 is what permits convergence of expectations; weak convergence alone does
 not supply it. This conditional argument does not assert a finite-sample
 rate for every regularly varying law. A one-sided Pareto and a symmetric
@@ -156,21 +211,31 @@ comparison below concerns exponent three only.
 (kappa-student)=
 ## Student sums and a logarithmic limit
 
-Use the ordinary Student law with degrees of freedom $\nu>1$, location
-zero and scale one. Locally $\nu$ is also its power-tail exponent. A direct
-beta integral gives
+:::{prf:proposition} One- and two-summand Student deviations
+:label: prop-kappa-student-mads
+
+Let $X_i$ be iid Student variables with degrees of freedom $\nu>1$,
+location zero and scale one, and put $M(n)=\mathbb E|\sum_{i=1}^nX_i|$.
+Then
 
 $$
+
 M(1)=\sqrt{\frac\nu\pi}\,
-\frac{\Gamma((\nu-1)/2)}{\Gamma(\nu/2)}.
+\frac{\Gamma((\nu-1)/2)}{\Gamma(\nu/2)},\qquad
+\frac{M(2)}{M(1)}=\sqrt\pi\,2^{2-\nu}
+\frac{\Gamma(\nu-1/2)}{\Gamma(\nu/2)^2}.
 $$
+:::
 
+:::{prf:proof}
 For completeness, substitute $v=1+x^2/\nu$ in
 $2\int_0^\infty x f_\nu(x)\,dx$; the remaining integral is
 $\int_1^\infty v^{-(\nu+1)/2}\,dv=2/(\nu-1)$.
 The gamma recurrence yields the displayed expression.
 
-There is also a two-summand closed form. Represent the summands as
+For two summands, use the Student normal-mixture representation, derived
+in [gamma precision](incerto-mixture-uncertainty.md#mixture-variance-precision),
+and represent them as
 $X_i=\sqrt{\nu/(2G_i)}Z_i$, where the $G_i$ are independent
 Gamma$(\nu/2,1)$ and the $Z_i$ are independent standard normals, independent
 of the $G_i$. Set $T=G_1+G_2$, $B=G_1/T$. The change of variables has
@@ -191,9 +256,32 @@ $$
 
 The second line follows by the gamma and beta integrals, followed by the
 gamma duplication identity. These are finite precisely when $\nu>1$.
+:::
+
+Locally $\nu$ is also the Student power-tail exponent.
 
 ### Cubic Student: every integer size
 
+:::{prf:proposition} Cubic Student sums at every integer size
+:label: prop-kappa-cubic-student
+
+Let $X_i$ be iid Student variables with degrees of freedom 3,
+location zero and scale one. Their characteristic function is
+$\phi(t)=(1+\sqrt3|t|)e^{-\sqrt3|t|}$. For every integer $n\ge1$,
+with $M(n)=\mathbb E|\sum_{i=1}^nX_i|$,
+
+$$
+\frac{M(n)}{M(1)}=e^n n^{1-n}\Gamma(n,n)
+=\frac{n!}{n^n}\sum_{j=0}^{n-1}\frac{n^j}{j!},\qquad
+\Gamma(n,n)=\int_n^\infty t^{n-1}e^{-t}\,dt.
+$$
+
+As $n\to\infty$,
+$M(n)/M(1)\sim\sqrt{\pi n/2}$ and
+$\log n\,\kappa_{1,n}\to2\log(\pi/2)$.
+:::
+
+:::{prf:proof}
 At $\nu=3$, the characteristic function is
 $\phi(t)=(1+\sqrt3|t|)e^{-\sqrt3|t|}$.
 One way to verify it is to differentiate the Cauchy Fourier integral
@@ -238,6 +326,7 @@ $$
 \log n\;\kappa_{1,n}&\longrightarrow2\log(\pi/2).
 \end{aligned}
 $$
+:::
 
 This constant differs from the one printed in §8.6.1, p. 165.
 The calculation concerns the kappa anchored at one observation. It is
@@ -248,7 +337,24 @@ approximated by a Gaussian at every threshold.
 (kappa-finite-variance)=
 ### What the logarithmic rate measures
 
-More generally, take any iid law with variance $0<\sigma^2<\infty$.
+:::{prf:proposition} Anchored kappa for finite-variance laws
+:label: prop-kappa-finite-variance
+
+Let $X_i$ be iid with mean $\mu$ and variance
+$0<\sigma^2<\infty$, and set
+$S_n=\sum_{i=1}^nX_i$, $M(n)=\mathbb E|S_n-n\mu|$.
+Then $M(1)>0$, kappa is defined for all sufficiently large $n$, and
+
+$$
+\frac{M(n)}{\sqrt n}\to\sigma\sqrt{2/\pi},\qquad
+\log n\,\kappa_{1,n}\to
+4\log\frac{\sigma\sqrt{2/\pi}}{M(1)}.
+$$
+
+In particular, $\kappa_{1,n}\to0$.
+:::
+
+:::{prf:proof}
 The classical CLT is cited in the
 [limit-law note](incerto-generalized-central-limit-theorem.md).
 The normalized centered sums $Y_n=(S_n-n\mu)/\sqrt n$ have second
@@ -274,7 +380,10 @@ $$
 \end{aligned}
 $$
 
-in the definition. The logarithmic behavior can reflect
+in the definition.
+:::
+
+The logarithmic behavior can reflect
 the mismatch between the one-observation MAD and its Gaussian calibration.
 If $\sigma\sqrt{2/\pi}=M(1)$, the constant vanishes and this argument gives
 no nonzero leading rate. Kappa approaching zero does not identify the far tail.
@@ -282,15 +391,25 @@ no nonzero leading rate. Kappa approaching zero does not identify the far tail.
 (kappa-gamma)=
 ## Exponential and gamma sums
 
-Let each summand have Gamma shape $r>0$ and scale $\theta>0$.
-Here $\theta$ is a local scale, not a natural parameter. The sum has
-shape $nr$, mean $nr\theta$, and
+:::{prf:proposition} Gamma-sum deviations and the exponential limit
+:label: prop-kappa-gamma-sums
+
+Let $X_i$ be iid gamma variables with shape $r>0$ and scale
+$\theta>0$. For $S_n=\sum_{i=1}^nX_i$ and integer $n\ge1$,
 
 $$
-M(n)=\frac{2\theta\,(nr)^{nr}e^{-nr}}{\Gamma(nr)}.
+
+M(n)=\mathbb E|S_n-nr\theta|
+=\frac{2\theta\,(nr)^{nr}e^{-nr}}{\Gamma(nr)}.
 $$
 
-We derive this using
+In the exponential case $r=1$,
+$\log n\,\kappa_{1,n}\to4-2\log(2\pi)$.
+:::
+
+:::{prf:proof}
+The [gamma convolution identity](incerto-tail-class-catalog.md#exact-light-tail-checks), proved in the tail catalog,
+gives $S_n$ shape $nr$ and scale $\theta$. Use
 $\mathbb E|S_n-nr\theta|=2\mathbb E(S_n-nr\theta)_+$.
 After scaling by $\theta$, the integral is
 
@@ -309,6 +428,9 @@ $$
 \log n\;\kappa_{1,n}
 \longrightarrow4-2\log(2\pi).
 $$
+:::
+
+Here $\theta$ is a local scale, not a natural parameter.
 
 Thus even the exponential law has a positive finite kappa and this
 logarithmic anchored rate. It still satisfies the
@@ -357,19 +479,35 @@ centered exposures. It makes no claim about empirical returns or optimal weights
 (kappa-lognormal)=
 ## Lognormal sums
 
-Let $X=e^{\mu_\ell+\sigma_\ell Z}$ with standard-normal $Z$ and
-$\sigma_\ell>0$. These are log-location and log-scale, not the mean and
-standard deviation of $X$. Its mean is
-$\mu=\mathbb EX=e^{\mu_\ell+\sigma_\ell^2/2}>0$.
-Completing the square in the truncated normal integral gives
+:::{prf:proposition} A lognormal deviation about its mean
+:label: prop-kappa-lognormal-single
+
+Let $X=e^{\mu_\ell+\sigma_\ell Z}$ with $Z\sim N(0,1)$,
+$\mu_\ell\in\mathbb R$ and $\sigma_\ell>0$. Then
+$\mu=\mathbb EX=e^{\mu_\ell+\sigma_\ell^2/2}$, and
 
 $$
-M(1)=2\mu\left[2\Phi(\sigma_\ell/2)-1\right].
+
+M(1)=\mathbb E|X-\mu|
+=2\mu[2\Phi(\sigma_\ell/2)-1],
 $$
 
-For example, use $M(1)=2\mathbb E(X-\mu)_+$ and the threshold
-$Z=\sigma_\ell/2$. Exponential tilting shifts the normal mean by
-$\sigma_\ell$, giving the formula. Sums of independent lognormals are
+where $\Phi$ is the standard-normal CDF.
+:::
+
+:::{prf:proof}
+Completing the square gives the mean. Since
+$M(1)=2\mathbb E(X-\mu)_+$ and $X>\mu$ exactly when
+$Z>\sigma_\ell/2$, exponential tilting shifts the normal mean by
+$\sigma_\ell$. Thus
+$\mathbb E[X\mathbf1_{X>\mu}]=\mu\Phi(\sigma_\ell/2)$ and
+$P(X>\mu)=1-\Phi(\sigma_\ell/2)$, giving the formula.
+:::
+
+The parameters are log-location and log-scale, not the mean and standard
+deviation of $X$.
+
+Sums of independent lognormals are
 not generally lognormal. Matching a sum's first two moments to another
 lognormal gives an approximation, not an identity or a proved bound on kappa.
 
@@ -380,6 +518,23 @@ $S_n$ is their sum. We retain $\mu$ as the original mean, so
 $M(n)=\mu\mathbb E|S_n-n|$ restores the original units. This positive
 rescaling preserves skewness and kappa.
 
+:::{prf:proposition} A lognormal fit cannot be the exact sum law
+:label: prop-kappa-lognormal-skewness
+
+Let $X_i=e^{\sigma_\ell Z_i-\sigma_\ell^2/2}$ for iid standard
+normals $Z_i$, with $\sigma_\ell>0$, and set
+$v=e^{\sigma_\ell^2}-1$. For any integer $n>1$, the average
+$\bar X_n$ and the lognormal law with its same mean and variance have
+respective skewnesses
+
+$$
+(v+3)\sqrt{v/n}\quad\text{and}\quad(v/n+3)\sqrt{v/n}.
+$$
+
+They differ, so neither the average nor the sum is lognormal.
+:::
+
+:::{prf:proof}
 Write $v=\operatorname{Var}(X)=e^{\sigma_\ell^2}-1>0$. The moments
 $\mathbb EX^j=e^{j(j-1)\sigma_\ell^2/2}$ give third
 centered moment $v^2(v+3)$. Independence makes the variance of the average
@@ -393,14 +548,44 @@ $$
 \end{aligned}
 $$
 
-They differ for every $n>1$. This proves that the fitted lognormal cannot
-be the exact sum law; it does not quantify its approximation error.
+Their difference is $v(1-1/n)\sqrt{v/n}>0$.
+If the average were lognormal, its first two moments would determine
+exactly the fitted lognormal. Positive scaling transfers the obstruction
+to the sum.
+:::
+
+This does not quantify the lognormal approximation error.
 
 We prove the three limits at the scope used in §8.6.2, pp. 166–168.
-For fixed $\sigma_\ell$, finite variance and the previous argument give
-$\kappa_{1,n}\to0$ as $n\to\infty$.
-For fixed integer $n>1$, use the same mean-one $X$ to examine the
-Gaussian approximation error. As $\sigma_\ell\downarrow0$,
+
+:::{prf:corollary} Fixed log-scale and increasing sample size
+:label: cor-kappa-lognormal-large-sample
+
+For iid lognormal $X_i=e^{\mu_\ell+\sigma_\ell Z_i}$ with fixed
+$\mu_\ell\in\mathbb R$, $\sigma_\ell>0$ and iid standard normals
+$Z_i$, the centered-sum index satisfies $\kappa_{1,n}\to0$ as
+$n\to\infty$.
+:::
+
+:::{prf:proof}
+The lognormal law has positive finite variance. Apply
+[](#prop-kappa-finite-variance).
+:::
+
+:::{prf:proposition} Fixed sample size and vanishing log-scale
+:label: prop-kappa-lognormal-small-scale
+
+Fix an integer $n>1$ and $\mu_\ell\in\mathbb R$. For iid
+$X_i=e^{\mu_\ell+\sigma_\ell Z_i}$ with standard-normal $Z_i$ and
+$\sigma_\ell>0$, $M(n)/M(1)\to\sqrt n$ and
+$\kappa_{1,n}\to0$ as $\sigma_\ell\downarrow0$.
+:::
+
+:::{prf:proof}
+By [](#prop-kappa-invariance-growth), dividing each summand by its mean
+preserves the MAD ratio and kappa. In this proof, write
+$X=e^{\sigma_\ell Z-\sigma_\ell^2/2}$ for a normalized summand.
+As $\sigma_\ell\downarrow0$,
 
 $$
 \begin{aligned}
@@ -414,7 +599,20 @@ This identity follows from $\mathbb EX^2=e^{\sigma_\ell^2}$ and
 $\mathbb E[ZX]=\sigma_\ell$. A finite sum preserves $L^2$ convergence,
 which implies convergence of absolute expectations. Thus the MAD ratio
 tends to $\sqrt n$, and kappa tends to zero.
+:::
 
+:::{prf:proposition} Fixed sample size and increasing log-scale
+:label: prop-kappa-lognormal-large-scale
+
+Fix an integer $n>1$ and $\mu_\ell\in\mathbb R$. For iid
+$X_i=e^{\mu_\ell+\sigma_\ell Z_i}$ with standard-normal $Z_i$,
+$M(n)/M(1)\to n$ and $\kappa_{1,n}\to1$ as
+$\sigma_\ell\to\infty$.
+:::
+
+:::{prf:proof}
+Again use [](#prop-kappa-invariance-growth) to divide each summand by its
+mean, and write $X_i$ for the normalized summands within this proof.
 As $\sigma_\ell\to\infty$, couple a fixed finite set of normal variables.
 Each $X_i=e^{\sigma_\ell Z_i-\sigma_\ell^2/2}\to0$ almost surely,
 although its mean remains one. For their sum $S_n$,
@@ -428,22 +626,24 @@ $$
 $$
 
 The last line is bounded convergence. Therefore $M(n)/M(1)\to n$
-and $\kappa_{1,n}\to1$. The order of limits matters. Every fixed lognormal
-law still has all power moments and belongs to the Gaussian domain of attraction.
+and $\kappa_{1,n}\to1$.
+:::
+
+The order of limits matters. Every fixed lognormal law still has all
+power moments and belongs to the Gaussian domain of attraction.
 
 ### A bounded numerical calculation
 
-For any nonnegative integrable sum, its mean absolute deviation is twice
-its expected shortfall below its mean. With the normalized lognormal sums
-and the original mean $\mu$ retained above, this identity gives
+:::{prf:proposition} A bounded conditional payoff for lognormal MAD
+:label: prop-kappa-lognormal-conditional-payoff
 
-$$
-M(n)=2\mu\mathbb E(n-S_n)_+.
-$$
-
-For the mean-one lognormal, condition on the first $n-1$ summands and put
-$a=n-\sum_{i<n}X_i$. If $a\le0$, the conditional payoff is zero.
-For $a>0$, completing the square gives
+Let $X_i=e^{\sigma_\ell Z_i-\sigma_\ell^2/2}$ for iid standard
+normals $Z_i$, $\sigma_\ell>0$, and integer $n\ge1$. Set
+$S_n=\sum_{i=1}^nX_i$ and $a=n-\sum_{i<n}X_i$.
+For any original mean $\mu>0$, the centered-sum MAD of the summands
+$\mu X_i$ is $M(n)=2\mu\mathbb E(n-S_n)_+$.
+The conditional expectation of $(n-S_n)_+$ given $X_1,\ldots,X_{n-1}$
+is zero when $a\le0$ and, when $a>0$, equals
 
 $$
 \begin{aligned}
@@ -452,6 +652,19 @@ $$
 &\quad-\Phi\!\left(\frac{\log a}{\sigma_\ell}-\frac{\sigma_\ell}{2}\right).
 \end{aligned}
 $$
+
+This conditional payoff lies in $[0,n]$.
+:::
+
+:::{prf:proof}
+An integrable centered variable has equal positive- and negative-part
+expectations. Since $\mathbb ES_n=n$, this gives
+$\mathbb E|S_n-n|=2\mathbb E(n-S_n)_+$.
+Conditional independence reduces the payoff to $\mathbb E(a-X_n)_+$.
+For $a>0$, split it as $aP(X_n<a)-\mathbb E[X_n\mathbf1_{X_n<a}]$.
+Completing the square gives the two normal CDF terms. Nonnegativity and
+$a\le n$ give the bound; for $a\le0$ the payoff is zero.
+:::
 
 Here the expectation integrates over $X_n$ with the first $n-1$ summands
 fixed. The simulated payoff lies between zero and $n$. Multiplying its sample
@@ -498,6 +711,21 @@ not guaranteed coverage intervals. No sample is truncated or discarded.
 (kappa-negative)=
 ## Negative kappa needs no bimodality
 
+:::{prf:proposition} A unimodal law with negative kappa
+:label: prop-kappa-triangular
+
+Let $X_i$ be iid with symmetric triangular density
+$f(x)=(2-|x|)/4$ on $[-2,2]$, zero elsewhere. This density has a
+single mode at zero, and for $M(n)=\mathbb E|\sum_{i=1}^nX_i|$,
+
+$$
+
+M(1)=2/3,\qquad M(2)=14/15,\qquad
+\kappa_{1,2}=2-\frac{\log2}{\log(7/5)}<0.
+$$
+:::
+
+:::{prf:proof}
 Consider the symmetric triangular density $f(x)=(2-|x|)/4$ on $[-2,2]$.
 It has a single mode at zero and can be written as the sum of two
 independent Uniform$[-1,1]$ variables. Direct integration gives $M(1)=2/3$.
@@ -521,14 +749,41 @@ $u_1+\cdots+u_4<t$ in the unit cube. Thus
 $$
 \kappa_{1,2}=2-\frac{\log2}{\log(7/5)}<0.
 $$
+:::
 
 This counterexample corrects the bimodality suggestion in §8.4.4, p. 162.
 Negative kappa says only that this MAD grows more slowly than the Gaussian
 benchmark across the chosen sizes.
 
-The source's separated Gaussian mixture is another example. For
-$a\in\mathbb R$ and $\sigma>0$, let $X=aR+\sigma Z$, where
-$R\in\{-1,1\}$ is equiprobable and $Z$ is independent standard normal.
+The source's separated Gaussian mixture supplies another example.
+
+:::{prf:proposition} Gaussian location mixtures have no finite kappa lower bound
+:label: prop-kappa-normal-location-mixture
+
+Let $X_i$ be iid copies of $aR+\sigma Z$, with $a\in\mathbb R$,
+$\sigma>0$, equiprobable $R\in\{-1,1\}$ and independent
+$Z\sim N(0,1)$. For $b\in\mathbb R$, $s>0$, define
+
+$$
+
+H(b,s)=s\sqrt{2/\pi}e^{-b^2/(2s^2)}
+       +|b|[2\Phi(|b|/s)-1].
+$$
+
+Then $H(b,s)=\mathbb E|b+sZ|$ and, for integer $n\ge1$,
+
+$$
+
+M(n)=\mathbb E\left|\sum_{i=1}^nX_i\right|
+=\sum_{k=0}^n\binom nk2^{-n}H(a(2k-n),\sigma\sqrt n).
+$$
+
+In particular, $M(1)=H(a,\sigma)$ and
+$M(2)=\{H(2a,\sqrt2\sigma)+H(0,\sqrt2\sigma)\}/2$.
+For fixed $\sigma>0$, $\kappa_{1,2}\to-\infty$ as $a\to\infty$.
+:::
+
+:::{prf:proof}
 Condition on the number $K$ of positive signs:
 
 $$
@@ -550,11 +805,15 @@ M(n)&=\sum_{k=0}^n\binom nk2^{-n}\\
 \end{aligned}
 $$
 
-This finite mixture calculation underlies the figure. In particular,
-$M(1)=H(a,\sigma)$ and
-$M(2)=\{H(2a,\sqrt2\sigma)+H(0,\sqrt2\sigma)\}/2$.
-For fixed $\sigma>0$ and $a\to\infty$, their ratio tends to one from
-above, so $\kappa_{1,2}\to-\infty$.
+For fixed $s>0$, $H(b,s)/b\to1$ as $b\to+\infty$.
+Thus $M(2)/M(1)\to1$. The ratio is strictly greater than one:
+conditional on any first summand, adding the independent Gaussian-mixture
+increment gives both signs positive probability, so Jensen's absolute-value
+inequality is strict. Consequently the positive denominator
+$\log(M(2)/M(1))$ tends to zero and kappa tends to $-\infty$.
+:::
+
+This finite mixture calculation underlies the figure.
 
 Use [`normal_location_mixture_sum_mad`](incerto-api-reference.md#api-normal-location-mixture-sum-mad).
 

@@ -51,8 +51,16 @@ m_q&=\infty,\\
 \end{aligned}
 $$
 
-Assume $q<\alpha$. Then the sample moment is unbiased for every $n\ge1$,
-but it has finite variance **only if $2q<\alpha$**. In that regime,
+We distinguish existence of the target from variance of its estimator.
+
+:::{prf:proposition} Pareto sample-moment expectation and variance
+:label: prop-moment-estimation-pareto-variance
+
+Let $X_1,\ldots,X_n$ be iid Pareto Type I observations with
+$x_m,\alpha>0$, let $0<q<\alpha$, and let $n\ge1$ be an integer.
+Then $\widehat m_{q,n}=n^{-1}\sum_{i=1}^nX_i^q$ is unbiased for
+$m_q=\alpha x_m^q/(\alpha-q)$. Its variance is finite exactly when
+$2q<\alpha$, in which case
 
 $$
 \begin{aligned}
@@ -62,13 +70,19 @@ n\operatorname{Var}(\widehat m_{q,n})
 \end{aligned}
 $$
 
-We prove both assertions. Linearity gives the expectation whenever $m_q$
+For $q<\alpha\le2q$, its variance is infinite; the equality
+$2q=\alpha$ is the logarithmically divergent boundary.
+:::
+
+:::{prf:proof}
+Linearity gives the expectation whenever $m_q$
 is finite. For $2q<\alpha$, independence makes the cross-covariances zero.
 For $q<\alpha\le2q$, nonnegativity gives
 $\widehat m_{q,n}^2\ge X_1^{2q}/n^2$, whose expectation is infinite.
 Since the estimator has finite mean, its variance is infinite too. Equality
 at $2q=\alpha$ is excluded by the logarithmic divergence of the Pareto
 moment integral.
+:::
 
 For example, $\alpha=3,x_m=1$ gives $m_2=3$, but
 $\widehat m_{2,n}$ has infinite variance at every finite $n$.
@@ -78,8 +92,24 @@ certify the population variance of the estimator.
 
 ### Consistency does not require estimator variance
 
-We prove convergence in probability when $m_q<\infty$, without a finite
-$2q$th moment. For a fixed truncation level $B>0$, Chebyshev's inequality
+The integrable weak law applies to the powered observations. Its clipping
+argument also gives a direct proof of this consequence.
+
+:::{prf:corollary} Consistency of an integrable empirical moment
+:label: cor-moment-estimation-consistency
+
+Let $X_i\ge0$ be iid and let $q>0$ with $m_q=\mathbb EX_1^q<\infty$.
+Then $\widehat m_{q,n}=n^{-1}\sum_{i=1}^nX_i^q\to m_q$ in probability,
+even if $\mathbb EX_1^{2q}=\infty$. For iid real $X_i$, the same
+conclusion holds for empirical absolute moments when
+$\mathbb E|X_1|^q<\infty$.
+:::
+
+:::{prf:proof}
+The integrable weak law [](#prop-lln-failure-integrable-weak-law)
+applies to $X_i^q$, or $|X_i|^q$ in the signed case.
+To spell out its argument here, for a fixed truncation level $B>0$,
+Chebyshev's inequality
 gives convergence of the average of $\min(X_i^q,B)$ to its expectation,
 because these variables are bounded and iid.
 The omitted nonnegative part has expected average
@@ -87,6 +117,8 @@ $\mathbb E(X_1^q-B)_+\to0$ as $B\to\infty$. Markov's inequality controls
 that average uniformly in $n$. For any error tolerance, first choose $B$
 to make this expectation small, then $n$ to control the bounded average.
 The triangle inequality proves $\widehat m_{q,n}\to m_q$ in probability.
+:::
+
 This argument supplies no uniform rate over all integrable laws.
 
 When $m_q=\infty$, the stronger almost-sure divergence follows from the
@@ -98,7 +130,13 @@ which population regime applies.
 (moment-estimation-root)=
 ## A square root changes the moment question
 
-Let $R_n=\sqrt{\widehat m_{2,n}}$. If $m_2<\infty$, then
+:::{prf:proposition} Finite variance after taking a square root
+:label: prop-moment-estimation-square-root
+
+Let $X_1,\ldots,X_n$ be iid real observations, $n\ge1$, with
+$m_2=\mathbb EX_1^2<\infty$, and put
+$\widehat m_{2,n}=n^{-1}\sum X_i^2$ and
+$R_n=\sqrt{\widehat m_{2,n}}$. Then
 
 $$
 \begin{gathered}
@@ -108,14 +146,22 @@ $$
 \end{gathered}
 $$
 
-The identity is immediate from the definition. Cauchy–Schwarz gives the
-inequality and integrability of $R_n$; hence its variance is finite.
+Also, for $s_n=\sqrt{n^{-1}\sum(X_i-\bar X_n)^2}$,
+$\mathbb Es_n^2\le m_2$ and $\operatorname{Var}(s_n)<\infty$.
+For $n>1$, multiplying $s_n^2$ by $n/(n-1)$ preserves these
+finiteness conclusions.
+:::
+
+:::{prf:proof}
+Linearity gives $\mathbb ER_n^2=m_2$. Cauchy–Schwarz gives
+$\mathbb ER_n\le\sqrt{m_2}$ and finite variance.
+The identity $s_n^2=\widehat m_{2,n}-\bar X_n^2\le\widehat m_{2,n}$
+gives the same finite-second-moment conclusion for $s_n$.
+A fixed finite correction factor preserves it.
+:::
+
 Thus infinite variance of the empirical **second moment** does not imply
-infinite variance of the empirical **root mean square**. For the sample
-standard deviation $s_n^2=n^{-1}\sum(X_i-\bar X_n)^2$, the identity
-$s_n^2=\widehat m_{2,n}-\bar X_n^2\le\widehat m_{2,n}$ gives the same
-finite-second-moment conclusion for $s_n$. A fixed $n/(n-1)$ correction
-for $n>1$ does not change this conclusion.
+infinite variance of the empirical **root mean square**.
 
 The square root can introduce downward bias through concavity. The sample
 raw moment remains unbiased. Bias, estimator variance, and the frequency
@@ -124,12 +170,28 @@ of an underestimate are different properties.
 (moment-estimation-normal-comparison)=
 ## A comparison under an exact Gaussian model
 
-Here we know the center is zero and assume iid $X_i\sim N(0,\sigma^2)$,
-with $\sigma>0$. Compare the root mean square $R_n$ with the
-Gaussian-calibrated mean absolute deviation
-$A_n=\sqrt{\pi/2}\,n^{-1}\sum|X_i|$. Both target $\sigma$ under these
-assumptions. We can compute their mean squared errors without simulation.
+:::{prf:proposition} Exact Gaussian risks for RMS and calibrated absolute deviation
+:label: prop-moment-estimation-gaussian-risk
 
+Let $X_i$ be iid $N(0,\sigma^2)$ with $\sigma>0$, and let $n\ge1$.
+With the center known to be zero, define
+$R_n=(n^{-1}\sum X_i^2)^{1/2}$ and
+$A_n=\sqrt{\pi/2}\,n^{-1}\sum|X_i|$. Then
+
+$$
+\mathbb EA_n=\sigma,\qquad
+\frac{\mathbb E(A_n-\sigma)^2}{\sigma^2}=\frac{\pi/2-1}{n},
+$$
+
+$$
+\frac{\mathbb ER_n}{\sigma}
+=\sqrt{\frac2n}\frac{\Gamma((n+1)/2)}{\Gamma(n/2)},\qquad
+\frac{\mathbb E(R_n-\sigma)^2}{\sigma^2}
+=2\left(1-\frac{\mathbb ER_n}{\sigma}\right).
+$$
+:::
+
+:::{prf:proof}
 The normal absolute-moment integrals give
 $\mathbb EA_n=\sigma$ and
 $\operatorname{Var}(A_n)=\sigma^2(\pi/2-1)/n$.
@@ -150,34 +212,61 @@ $$
 
 The last identity uses $\mathbb ER_n^2=\sigma^2$. The corresponding MSE
 for $A_n$, divided by $\sigma^2$, is $(\pi/2-1)/n$.
+:::
+
 These are exact finite-$n$ risks under squared-error loss, including
 $R_n$'s bias. The demo prints them for $n=10,100,1000$.
 
-This comparison does not carry over unchanged to the rare-state mixture:
-$\mathbb E|X|=\sqrt{2/\pi}\,\mathbb E\sqrt Y$, so the same $A_n$ now
-targets $\mathbb E\sqrt Y$, whereas the population standard deviation is
-$\sqrt{\mathbb EY}$. Jensen's inequality makes these unequal for
-nonconstant $Y$ with finite mean. Changing the model can change both the
-sampling error and the target of a calibrated statistic.
+:::{prf:corollary} The calibrated absolute deviation has a different mixture target
+:label: cor-moment-estimation-mixture-target
+
+Let $X_i$ be iid copies of $X=\sqrt YZ$, where $Y>0$ is
+independent of $Z\sim N(0,1)$ and $\mathbb EY<\infty$.
+For $A_n=\sqrt{\pi/2}\,n^{-1}\sum|X_i|$,
+$\mathbb EA_n=\mathbb E\sqrt Y\le\sqrt{\mathbb EY}
+=\sqrt{\operatorname{Var}(X)}$.
+The inequality is strict if $Y$ is not almost surely constant.
+:::
+
+:::{prf:proof}
+The mixture moment identity [](#prop-mixture-uncertainty-moment-transfer)
+gives $\mathbb E|X|=\sqrt{2/\pi}\,\mathbb E\sqrt Y$ and
+$\operatorname{Var}(X)=\mathbb EY$. Linearity gives the target of
+$A_n$; strict concavity of the square root gives Jensen's inequality
+and its equality condition.
+:::
+
+Changing the model can change both sampling error and the target of a
+calibrated statistic.
 
 (moment-estimation-rare-state)=
 ## Finite moments that most samples miss
 
-Use the [two-state variance mixture](incerto-mixture-uncertainty.md#mixture-finite-states)
-with $P(Y=0.5)=0.99$, $P(Y=50.5)=0.01$, and
-$X=\sqrt YZ$, with independent standard-normal $Z$.
-Draw the pairs $(Y_i,Z_i)$ independently. The population second moment is 1
-and fourth moment is 77.25, so
+:::{prf:proposition} A finite second moment missed by many samples
+:label: prop-moment-estimation-rare-state
 
-$$
-\operatorname{Var}\left(\frac1n\sum X_i^2\right)=\frac{76.25}{n}.
-$$
+Let the pairs $(Y_i,Z_i)$ be iid, with $Z_i\sim N(0,1)$ independent
+of $Y_i$, $P(Y_i=0.5)=0.99$ and $P(Y_i=50.5)=0.01$.
+Put $X_i=\sqrt{Y_i}Z_i$. Then $\mathbb EX_i^2=1$,
+$\mathbb EX_i^4=77.25$, and
+$\operatorname{Var}(n^{-1}\sum X_i^2)=76.25/n$.
+The event that no wide component is selected has probability $0.99^n$;
+conditional on it, the empirical second moment has expectation $0.5$.
+:::
 
-The probability that no wide component is selected is $0.99^n$.
-Conditional on that event, all observations are independent $N(0,0.5)$
-and the empirical second moment has expectation 0.5. At $n=50$, this event
-has probability about 0.605. Rare samples compensate in the unconditional
-mean; the raw second moment estimator is still unbiased.
+:::{prf:proof}
+The [two-state mixture calculation](incerto-mixture-uncertainty.md#mixture-finite-states)
+gives $\mathbb EY=1$ and $\mathbb EY^2=25.75$.
+Conditioning gives $\mathbb EX^2=\mathbb EY=1$ and
+$\mathbb EX^4=3\mathbb EY^2=77.25$. Independence yields the
+estimator variance $(77.25-1)/n$. The event probability is the product
+$0.99^n$. Conditional on it, the observations are independent $N(0,0.5)$,
+giving conditional second-moment expectation $0.5$.
+:::
+
+At $n=50$, this event has probability about 0.605. Rare samples
+compensate in the unconditional mean; the raw second moment estimator
+is still unbiased.
 
 ```{figure} ../assets/figures/incerto/finite-moment-estimation.svg
 :alt: Two vertically stacked plots show 10th, median and 90th percentiles of the empirical second moment for Gaussian, rare-state mixture, Pareto three and Pareto six samples, relative to their true moments.
@@ -214,22 +303,28 @@ for sample in ([1, 1], [1, 2], [4, 4]):
 [4, 4] inf
 ```
 
-Under an exact iid Pareto model with $\alpha>1$, the log-excess average has
-a gamma density that is positive and continuous at 1. Consequently even
-conditional on a finite fit,
+:::{prf:proposition} Infinite moments even conditional on a finite Pareto fit
+:label: prop-moment-estimation-plugin-singularity
 
-$$
-\begin{gathered}
-\mathbb E\left[\frac{x_m}{1-\widehat\xi_n}
-\;\middle|\;\widehat\xi_n<1\right]\\
-=\infty.
-\end{gathered}
-$$
+Let $X_1,\ldots,X_n$ be iid Pareto Type I with known cutoff
+$x_m>0$, exponent $\alpha>1$, and integer $n\ge1$. Put
+$\widehat\xi_n=n^{-1}\sum_{i=1}^n\log(X_i/x_m)$.
+Conditional on $\widehat\xi_n<1$, the finite mean plug-in
+$x_m/(1-\widehat\xi_n)$ has infinite expectation and infinite
+second moment.
+:::
 
-The linked note derives that density. Its positive lower bound on a small
-left neighborhood of 1 makes the expectation at least a positive multiple
-of $\int_{1-\delta}^1(1-t)^{-1}\,dt=\infty$. The squared estimator diverges
-there as well. A concentrated central part of a sampling distribution can
+:::{prf:proof}
+The [plug-in note](incerto-plug-in-tail-estimation.md#plugin-caveats)
+derives the gamma density of $\widehat\xi_n$, which is positive
+and continuous at 1. Its positive lower bound on a small left
+neighborhood of 1 bounds the conditional first moment below by a
+positive multiple of $\int_{1-\delta}^1(1-t)^{-1}\,dt=\infty$.
+The event being conditioned on has positive probability. Replacing the
+integrand by $(1-t)^{-2}$ proves divergence of the second moment.
+:::
+
+A concentrated central part of a sampling distribution can
 coexist with divergent moments. Simulations must count non-finite fits;
 removing them does not remove the singularity of the remaining distribution.
 No universal ranking of the sample mean and this plug-in follows.
@@ -237,34 +332,50 @@ No universal ranking of the sample mean and this plug-in follows.
 (moment-estimation-power-means)=
 ## Rising power means and different targets
 
-For fixed observations and positive weights $w_i$ summing to 1, define
-$A_p=(\sum_iw_i|x_i|^p)^{1/p}$. For $0<p<q$,
+:::{prf:proposition} Weighted power means increase with their order
+:label: prop-moment-estimation-weighted-power-means
 
-$$
-A_p\le A_q.
-$$
+Let $x_1,\ldots,x_n\in\mathbb R$, $n\ge1$, and let $w_i>0$
+with $\sum_iw_i=1$. Define $A_p=(\sum_iw_i|x_i|^p)^{1/p}$
+for $p>0$. For $0<p<q$, $A_p\le A_q$, with equality exactly when
+all $|x_i|$ are equal. Also $A_p\to\max_i|x_i|$ as $p\to\infty$.
+:::
 
-We prove this with Jensen's inequality for the strictly convex function
-$t\mapsto t^{q/p}$ on $[0,\infty)$, then take a $q$th root. Equality holds
-exactly when all $|x_i|$ are equal. The inequality also holds below 1;
-those expressions are not norms. At fixed positive weights,
-$A_p\to\max_i|x_i|$ as $p\to\infty$: at a maximizing coordinate $j$,
-bound the weighted sum above by $|x_j|^p$ and below by $w_j|x_j|^p$.
+:::{prf:proof}
+Apply Jensen to the strictly convex function $t\mapsto t^{q/p}$
+on $[0,\infty)$ and take a $q$th root. Positive weights give the
+stated equality condition. At a maximizing coordinate $j$,
+$w_j|x_j|^p\le\sum_iw_i|x_i|^p\le|x_j|^p$.
+Taking $p$th roots and then letting $p\to\infty$ proves the limit,
+including the zero-vector case.
+:::
+
+The inequality also holds below 1; those expressions are not norms.
 
 For equal weights and observations $(0,0,0,4)$,
 $A_1=1$, $A_2=2$, $A_4=2\sqrt2$, and $A_\infty=4$.
 The order changes which quantity is summarized; a larger value alone
 neither proves a power law nor diagnoses estimation failure.
 
-For geometric unit balls, use the **unnormalized** expression
-$\|x\|_p=(\sum|x_i|^p)^{1/p}$ for $p>0$, a norm when $p\ge1$.
-Its value decreases with $p$ at fixed $x$. To prove this for $0<p<q$,
-the case $x=0$ is immediate.
+:::{prf:proposition} Unnormalized power sums decrease with their order
+:label: prop-moment-estimation-unnormalized-powers
+
+For $x\in\mathbb R^n$ and $p>0$, put
+$\|x\|_p=(\sum_{i=1}^n|x_i|^p)^{1/p}$.
+For $0<p<q$, $\|x\|_q\le\|x\|_p$; consequently
+$\{x:\|x\|_p\le1\}\subseteq\{x:\|x\|_q\le1\}$.
+The notation denotes a norm only when $p\ge1$.
+:::
+
+:::{prf:proof}
+The case $x=0$ is immediate.
 For $x\ne0$, without loss of generality, assume $\|x\|_p=1$: both expressions
 scale by the same positive factor when $x$ is divided by $\|x\|_p$.
 Within this argument, $x$ now denotes that normalized vector. Its coordinate
 magnitudes are at most 1, so their $q$th powers sum to at most their $p$th
 powers, namely 1. The $p$-unit balls therefore expand.
+:::
+
 In two dimensions, $p=1,2,\infty$ give a diamond, circle, and square,
 with areas 2, $\pi$, and 4. The factor $n^{-1/p}$ in $A_p$ explains
 why its monotonicity goes in the other direction.
@@ -279,11 +390,24 @@ is needed for this comparison.
 
 ## Mean absolute deviation is a different estimand
 
-If $\mu=\mathbb EX$ and $\mathbb E|X|<\infty$, then
+:::{prf:proposition} Mean absolute deviation and standard deviation
+:label: prop-moment-estimation-mad-bound
+
+Let $X$ be real with $\mathbb E|X|<\infty$ and
+$\mu=\mathbb EX$. Then
 $\mathbb E|X-\mu|\le\mathbb E|X|+|\mu|<\infty$.
-If the variance is finite, Cauchy–Schwarz gives
-$\mathbb E|X-\mu|\le\sqrt{\operatorname{Var}(X)}$.
-Equality requires $|X-\mu|$ to be constant almost surely.
+If $\operatorname{Var}(X)<\infty$, then
+$\mathbb E|X-\mu|\le\sqrt{\operatorname{Var}(X)}$,
+with equality exactly when $|X-\mu|$ is constant almost surely.
+:::
+
+:::{prf:proof}
+The first bound is the triangle inequality in expectation.
+For the second, apply Cauchy–Schwarz to $|X-\mu|$ and the constant 1.
+Its equality condition is precisely that $|X-\mu|$ be constant
+almost surely, including the degenerate case.
+:::
+
 These are unscaled deviations; Gaussian calibration multiplies the mean
 absolute deviation by $\sqrt{\pi/2}$, so that universal inequality does
 not apply to the calibrated value.
@@ -305,6 +429,7 @@ compares this sum deviation at two sizes. Here the target is the
 relative mean absolute error of the sample mean:
 
 $$
+
 R(n)=\frac{M(n)}{nM(1)}.
 $$
 
@@ -313,20 +438,27 @@ a comparison in common units. For a Gaussian sample of size $n_g$, this
 relative error is $n_g^{-1/2}$. Define the minimum matching integer by
 
 $$
+
 n_*=\min\{n\in\mathbb N:n\ge1,\ R(n)\le n_g^{-1/2}\}.
 $$
 
 This criterion matches one expectation of an estimation error. It does
-not equate variances, quantiles, or confidence coverage. For example,
-Markov's inequality gives only
+not equate variances, quantiles, or confidence coverage. For example, the
+corresponding probability bound is only Markov's inequality.
 
-$$
-\begin{gathered}
-P(|\bar X_n-\mu|>\varepsilon)
-\le\frac{M(n)}{n\varepsilon},\\
-\varepsilon>0.
-\end{gathered}
-$$
+:::{prf:proposition} A probability bound from expected absolute error
+:label: prop-moment-estimation-mad-probability-bound
+
+For iid integrable $X_i$ with mean $\mu$, let
+$S_n=\sum_{i=1}^nX_i$ and $M(n)=\mathbb E|S_n-n\mu|$.
+For every $n\ge1$ and $\varepsilon>0$,
+$P(|\bar X_n-\mu|>\varepsilon)\le M(n)/(n\varepsilon)$.
+:::
+
+:::{prf:proof}
+Apply Markov's inequality to $|\bar X_n-\mu|$, whose expectation
+is $M(n)/n$.
+:::
 
 The bound may be loose. There is no universal kappa cutoff that certifies
 a normal confidence interval. Under variance matching, every iid law
@@ -335,7 +467,22 @@ at the same size; that is a different comparison.
 
 ### Why the search is valid
 
-We prove that $R(n)$ is nonincreasing. Center $n+1$ observations and
+We justify the population search using monotonicity and convergence.
+
+:::{prf:lemma} Existence of a Gaussian absolute-error match
+:label: lem-moment-estimation-matching-search
+
+Let $X_i$ be iid integrable observations with mean $\mu$ and
+$M(1)=\mathbb E|X_1-\mu|>0$. Define
+$M(n)=\mathbb E|S_n-n\mu|$ and $R(n)=M(n)/(nM(1))$.
+Then $\mathbb E|\bar X_n-\mu|=M(n)/n$ is nonincreasing and tends to
+zero, and so does $R(n)$. For every finite integer
+$n_g\ge1$, the set $\{n\ge1:R(n)\le n_g^{-1/2}\}$ is nonempty
+and has a finite smallest integer $n_*$.
+:::
+
+:::{prf:proof}
+Center $n+1$ observations and
 form the $n+1$ averages that each omit one observation. Their average is
 the full $(n+1)$-observation average. Convexity of absolute value and
 identical distributions therefore give
@@ -352,6 +499,8 @@ $\sqrt n$. The remaining centered part has expected absolute value at
 most twice the expected clipping error, uniformly in $n$, and this tends
 to zero as $B\to\infty$. First take $n\to\infty$, then $B\to\infty$.
 Thus $n_*$ exists for every finite integer $n_g$ under these assumptions.
+:::
+
 A finite computational search can still stop before reaching it.
 
 Use [`gaussian_equivalent_n`](incerto-api-reference.md#api-gaussian-equivalent-n)
@@ -391,16 +540,32 @@ sampling noise can destroy monotonicity and shift the first crossing.
 
 ### When a constant kappa is enough
 
-If a model has the **exact** power relation
-$M(n)/M(1)=n^{1/(2-\kappa)}$ at every size, with constant $\kappa<1$,
-solving the matching inequality gives
+:::{prf:corollary} Exact sample-size matching under a constant kappa
+:label: cor-moment-estimation-constant-kappa
+
+Under the assumptions of [](#lem-moment-estimation-matching-search),
+suppose $M(n)/M(1)=n^{1/(2-\kappa)}$ at every integer $n\ge1$,
+for a fixed $\kappa<1$. Then for every integer $n_g\ge1$,
 
 $$
+
 n_*=\left\lceil n_g^{\,(2-\kappa)/[2(1-\kappa)]}\right\rceil.
 $$
 
-For an integrable stable law, $\kappa=2-\alpha$ and the exponent is
-$\alpha/[2(\alpha-1)]$. At $\alpha=1.5$ this exponent is $1.5$.
+For an integrable nondegenerate stable law of index $1<\alpha\le2$,
+$\kappa=2-\alpha$, giving exponent $\alpha/[2(\alpha-1)]$.
+:::
+
+:::{prf:proof}
+Substitution gives $R(n)=n^{-(1-\kappa)/(2-\kappa)}$.
+Its exponent is negative, so $R(n)\le n_g^{-1/2}$ is equivalent to
+$n\ge n_g^{(2-\kappa)/[2(1-\kappa)]}$. Taking the smallest integer
+gives the ceiling. The stable kappa formula [](#cor-kappa-stable)
+gives the last assertion.
+:::
+
+At $\alpha=1.5$, this exponent is $1.5$.
+
 For a general law, substituting a small-size kappa into this formula is a
 heuristic. Its kappa changes with size, so the exact equation is implicit.
 The cubic Student and exponential examples use their full MAD curves.
@@ -426,13 +591,25 @@ also quantifies this narrowly specified diversification calculation.
 A smooth sample path or a visually concentrated center can still conceal
 substantial expected absolute error.
 
-Dependence changes the result. If every exposure equals the same integrable
-random variable $Y$, then the portfolio average is $Y$ at every size and
-its MAD never decreases. More generally, writing $X_i=C+\epsilon_i$ with
-an integrable common component $C$ independent of iid centered integrable
-$\epsilon_i$ gives an average converging to $C$ in $L^1$. Its MAD about
-$\mathbb EC$ consequently tends to $\mathbb E|C-\mathbb EC|$: apply
-the reverse triangle inequality and the $L^1$ averaging argument above.
+:::{prf:corollary} A common component survives averaging
+:label: cor-moment-estimation-common-component
+
+Let $C$ be integrable, independent of iid centered integrable
+$\epsilon_i$, and set $X_i=C+\epsilon_i$. Then
+$\bar X_n\to C$ in $L^1$ and
+$\mathbb E|\bar X_n-\mathbb EC|\to\mathbb E|C-\mathbb EC|$.
+If $\epsilon_i=0$ almost surely, the average is exactly $C$ at every size.
+:::
+
+:::{prf:proof}
+The clipping argument in [](#lem-moment-estimation-matching-search)
+gives $\mathbb E|n^{-1}\sum_i\epsilon_i|\to0$. If the deviations
+are identically zero this is immediate; otherwise the lemma applies with
+positive normalization. Since $\bar X_n-C=n^{-1}\sum_i\epsilon_i$,
+this is $L^1$ convergence. The reverse triangle inequality bounds the
+difference of the two MADs by $\mathbb E|\bar X_n-C|$.
+:::
+
 Increasing the number of components cannot remove the common fluctuation.
 
 These model identities are the scope used for @taleb2025scoftv4,

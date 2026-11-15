@@ -41,6 +41,8 @@ $p>\alpha$, it diverges as a power of the upper cutoff.  In particular, the
 Pareto mean exists only for $\alpha>1$, and the variance exists only for
 $\alpha>2$.
 
+The labelled result is [](#thm-pareto-moment-existence-boundary).
+
 Here $\bar F$ denotes survival probability and $\mathbb E$ denotes
 expectation; $p$ is a positive moment order.
 
@@ -51,9 +53,42 @@ integration.  The same calculation also explains the logarithmic boundary and
 power-divergent regimes in the truncated-moment section.  The broader
 regularly varying moment test is handled by [Karamata's Theorem](./incerto-karamata.md).
 
+:::{prf:theorem} Positive moments of a Pareto Type I law
+:label: thm-pareto-moment-existence-boundary
+
+Let $X$ have a [Pareto Type I distribution](./incerto-pareto.md) with
+lower cutoff $x_m>0$ and tail exponent $\alpha>0$:
+
+$$
+\bar F(x)=\mathbb P(X>x)=\left(\frac{x_m}{x}\right)^\alpha,
+\qquad x\ge x_m.
+$$
+
+For any moment order $p>0$,
+
+$$
+\mathbb E[X^p] < \infty
+\quad\Longleftrightarrow\quad
+p<\alpha.
+$$
+
+When $p<\alpha$,
+
+$$
+\mathbb E[X^p]=\frac{\alpha x_m^p}{\alpha-p}.
+$$
+
+At $p=\alpha$, the truncated moment diverges logarithmically.  For
+$p>\alpha$, it diverges as a power of the upper cutoff.  In particular, the
+Pareto mean exists only for $\alpha>1$, and the variance exists only for
+$\alpha>2$.
+:::
+
+:::{prf:proof}
 For $x\ge x_m$, the Pareto density is
 
 $$
+
 f(x)=\alpha x_m^\alpha x^{-(\alpha+1)}.
 $$
 
@@ -82,20 +117,33 @@ $$
 Adding $\alpha+1$ to both sides proves the algebraic equivalence
 $p-\alpha-1<-1 \Longleftrightarrow p<\alpha$.
 
+At $p=\alpha$, the integrand is $x^{-1}$, so truncation at $b$
+gives logarithmic growth; for $p>\alpha$, its antiderivative grows as
+$b^{p-\alpha}$. Taking $p=1,2$ gives the mean and variance boundaries.
+:::
+
 This exact Pareto calculation is the simplest instance of the
 [Karamata](./incerto-karamata.md) moment test for regularly varying tails.
 
 ## Truncated-moment behavior
 
+The same finite integral gives the exact cutoff dependence.
+
+:::{prf:corollary} Indicator-truncated Pareto moments
+:label: cor-pareto-moment-existence-truncated
+
+Let $X$ be Pareto Type I with $x_m,\alpha>0$, and let $p>0$.
 For a finite upper cutoff $b\ge x_m$, define
 
 $$
+
 M_p(b)=\mathbb E[X^p\mathbf 1_{\{X\le b\}}].
 $$
 
-Direct integration gives
+Then
 
 $$
+
 M_p(b)=
 \begin{cases}
 \dfrac{\alpha x_m^\alpha}{\alpha-p}
@@ -105,6 +153,14 @@ M_p(b)=
 \left(b^{p-\alpha}-x_m^{p-\alpha}\right), & p>\alpha.
 \end{cases}
 $$
+
+:::
+
+:::{prf:proof}
+Use the density integral in [](#thm-pareto-moment-existence-boundary)
+with upper limit $b$. The antiderivative is $x^{p-\alpha}/(p-\alpha)$
+when $p\ne\alpha$ and $\log x$ when $p=\alpha$.
+:::
 
 Thus the same theorem has three operational regimes: convergence to a finite
 moment, logarithmic boundary growth, and power growth.

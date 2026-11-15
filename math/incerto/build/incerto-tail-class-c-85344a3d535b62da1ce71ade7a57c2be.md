@@ -74,7 +74,12 @@ to a nearly constant tail factor [@taleb2025scoftv4]. Such a transition is an
 extra modeling assumption. The definition of slow variation does not imply
 a finite constant limit, or an exact Pareto tail beyond a finite threshold.
 
-Here is a complete counterexample, in dimensionless units:
+Here is a complete counterexample.
+
+:::{prf:proposition} A regularly varying survival with a diverging multiplier
+:label: prop-tail-class-catalog-slow-variation
+
+For dimensionless $x$, the function
 
 $$
 \bar F(x)=
@@ -84,7 +89,12 @@ x^{-2}(1+\log x),&x\ge1.
 \end{cases}
 $$
 
-We prove that this is a survival function with a regularly varying tail.
+is the survival function of a law on $[1,\infty)$. It is regularly varying
+with index $-2$, while its slowly varying factor $L(x)=1+\log x$ for
+$x\ge1$ tends to infinity.
+:::
+
+:::{prf:proof}
 It is continuous at $1$, tends to zero at infinity, and its derivative on
 $x>1$ is $-x^{-3}(1+2\log x)<0$. Thus it defines a probability law on
 $[1,\infty)$. Its factor $L(x)=1+\log x$ tends to infinity, while for every
@@ -95,6 +105,8 @@ $$
 \qquad
 \frac{\bar F(tx)}{\bar F(x)}\longrightarrow t^{-2}.
 $$
+
+:::
 
 The [chapter 2 worked cases](incerto-scoft-ch2.md#scoft-ch2-demo) evaluate
 this ratio alongside the exact Pareto ratio $1/4$ at multiplier $2$.
@@ -118,15 +130,38 @@ ask about $\mathbb E X^q$, with $q>0$. For the following nonnegative models:
 The [Pareto moment proof](incerto-pareto-moment-existence.md) gives the last
 row's power-moment boundary, including divergence at $q=\alpha$; the
 [Cramér note](incerto-cramer-condition.md) proves its exponential-moment
-failure. For the exponential row, direct integration gives
+failure.
+
+:::{prf:proposition} Moment gates for a unit exponential
+:label: prop-tail-class-catalog-exponential-moments
+
+For $X\sim\operatorname{Exp}(1)$, $\mathbb EX^q=\Gamma(q+1)<\infty$
+for every $q>0$. For $\theta>0$, $\mathbb E e^{\theta X}$ equals
+$1/(1-\theta)$ when $\theta<1$ and is infinite when $\theta\ge1$.
+Here $\Gamma$ is the gamma function.
+:::
+
+:::{prf:proof}
+Direct integration gives
 $\int_0^\infty x^q e^{-x}\,dx=\Gamma(q+1)<\infty$ and
 $\int_0^\infty e^{-(1-\theta)x}\,dx=1/(1-\theta)$ when $\theta<1$;
 the latter integral diverges when $\theta\ge1$. Here $\Gamma$ denotes
 the gamma integral.
+:::
 
 ### Proof of the lognormal moment contrast
 
-We prove both entries in the lognormal row. Let $\log X\sim N(0,1)$.
+We prove both entries in the lognormal row.
+
+:::{prf:proposition} Power and exponential moments of a standard lognormal
+:label: prop-tail-class-catalog-lognormal-moments
+
+Let $X=e^Z$ with $Z\sim N(0,1)$. Then for every $q\in\mathbb R$,
+$\mathbb EX^q=e^{q^2/2}<\infty$, while for every $\theta>0$,
+$\mathbb E e^{\theta X}=\infty$.
+:::
+
+:::{prf:proof}
 In the log-size coordinate $z=\log x$, completing the square gives,
 for every real $q$,
 
@@ -148,7 +183,10 @@ $$
 
 Indeed, $e^z/z^2\to\infty$ as $z\to\infty$, so the integrand is at
 least $1$ for all sufficiently large $z$. The integral over that half-line
-diverges. This establishes failure of the Cramér condition despite all
+diverges.
+:::
+
+This establishes failure of the Cramér condition despite all
 positive power moments being finite. Subexponentiality is a separate,
 cited result; it does not follow just from this failure.
 
@@ -182,8 +220,26 @@ an asymptotic class from data.
 | Exponential, rate $1$ | $e^{-(t-1)x}\to0$ | $\infty$ |
 | Gamma, shape $2$, rate $1$ | $e^{-(t-1)x}(1+tx)/(1+x)\to0$ | $\infty$ |
 
-Here $\bar\Phi$ is the standard normal survival function. For the lognormal
-row, the normal-tail asymptotic $\bar\Phi(z)\sim\phi(z)/z$, with $\phi$ the
+Here $\bar\Phi$ is the standard normal survival function. The lognormal
+tail comparisons follow from the normal-tail asymptotic.
+
+:::{prf:proposition} Lognormal multiplier and tail comparisons
+:label: prop-tail-class-catalog-lognormal-tail
+
+Let $\log X\sim N(\mu,\sigma^2)$ with $\mu\in\mathbb R$, $\sigma>0$,
+and let $\bar F(x)=P(X>x)$. For every fixed $t>1$,
+$\bar F(tx)/\bar F(x)\to0$ as $x\to\infty$. Moreover,
+$e^{cx}\bar F(x)\to\infty$ for every $c>0$ and
+$x^p\bar F(x)\to0$ for every $p>0$. In the standard case
+$\mu=0$, $\sigma=1$,
+
+$$
+\log\bar F(x)=-\tfrac12(\log x)^2-\log\log x-\tfrac12\log(2\pi)+o(1).
+$$
+:::
+
+:::{prf:proof}
+For the standard lognormal, the normal-tail asymptotic $\bar\Phi(z)\sim\phi(z)/z$, with $\phi$ the
 standard normal density, yields
 
 $$
@@ -202,6 +258,8 @@ proves the two exponential-versus-power comparisons stated above. For
 $\log X\sim N(\mu,\sigma^2)$ with $\sigma>0$, replace $\log x$ in
 the normal-tail calculation by $(\log x-\mu)/\sigma$; the same comparisons
 and zero multiplier-ratio limit follow.
+:::
+
 Thus the multiplier diagnostic separates power tails from all four other
 examples, but cannot distinguish subexponential lognormal and stretched-Weibull
 tails from the two light-tailed examples. The classifications of lognormal and
@@ -210,8 +268,24 @@ subexponentiality.
 
 ## Exact light-tail checks
 
-We prove the two negative classifications in the table. Write
-$\operatorname{Gamma}(k,\lambda)$ in shape–rate notation, with $k,\lambda>0$.
+We prove the two negative classifications using convolution and a survival
+asymptotic. Gamma parameters below use the shape–rate convention.
+
+:::{prf:lemma} Gamma convolution and survival asymptotics
+:label: lem-tail-class-catalog-gamma-tail
+
+For independent $X\sim\operatorname{Gamma}(k,\lambda)$ and
+$Y\sim\operatorname{Gamma}(\ell,\lambda)$ with $k,\ell,\lambda>0$,
+$X+Y\sim\operatorname{Gamma}(k+\ell,\lambda)$. For
+$X\sim\operatorname{Gamma}(k,\lambda)$,
+
+$$
+P(X>x)\sim\frac{(\lambda x)^{k-1}e^{-\lambda x}}{\Gamma(k)}
+\quad(x\to\infty).
+$$
+:::
+
+:::{prf:proof}
 At rate one, convolution of the densities with shapes $k$ and $\ell>0$
 gives
 
@@ -234,8 +308,30 @@ $$
 
 For completeness, at rate one the derivatives of
 $\int_x^\infty y^{k-1}e^{-y}\,dy$ and $x^{k-1}e^{-x}$ have ratio
-$[1-(k-1)/x]^{-1}\to1$; both functions tend to zero. Consequently,
-for fixed $t>1$,
+$[1-(k-1)/x]^{-1}\to1$; both functions tend to zero. Scaling gives the result at rate $\lambda$.
+:::
+
+:::{prf:proposition} Gamma laws are neither power-tailed nor subexponential
+:label: prop-tail-class-catalog-gamma-classification
+
+Let $X_1,X_2$ be iid $\operatorname{Gamma}(k,\lambda)$, where
+$k,\lambda>0$, and put $\bar F(x)=P(X_1>x)$. For every fixed $t>1$,
+
+$$
+\frac{\bar F(tx)}{\bar F(x)}\sim t^{k-1}e^{-\lambda(t-1)x}\to0,
+\qquad
+\frac{P(X_1+X_2>x)}{2\bar F(x)}
+\sim\frac{\Gamma(k)}{2\Gamma(2k)}(\lambda x)^k\to\infty.
+$$
+
+Thus no such law, including the exponential case $k=1$, has a regularly
+varying tail with finite positive exponent or is subexponential.
+:::
+
+:::{prf:proof}
+Apply [](#lem-tail-class-catalog-gamma-tail) to the single variable and to
+the sum, which has shape $2k$ at the same rate. Dividing the respective
+survival asymptotics gives
 
 $$
 A_t(x)\sim t^{k-1}e^{-\lambda(t-1)x}\to0,\qquad
@@ -245,9 +341,14 @@ $$
 This proves that every positive-shape gamma law, including the exponential
 case $k=1$, is neither regularly varying with a finite positive exponent
 nor subexponential.
+:::
 
-For integer $k\ge1$ and rate one, repeated integration by parts gives the
-exact survival $e^{-x}\sum_{j=0}^{k-1}x^j/j!$ for $x\ge0$. Hence
+:::{prf:proposition} Exact integer-shape gamma checks
+:label: prop-tail-class-catalog-integer-gamma
+
+For integer $k\ge1$, a $\operatorname{Gamma}(k,1)$ variable has survival
+$e^{-x}\sum_{j=0}^{k-1}x^j/j!$ for $x\ge0$. Consequently, the iid
+two-sum ratio $R(x)=P(X_1+X_2>x)/(2P(X_1>x))$ satisfies
 
 $$
 R_{\operatorname{Exp}(1)}(x)=\frac{1+x}{2},
@@ -255,6 +356,17 @@ R_{\operatorname{Exp}(1)}(x)=\frac{1+x}{2},
 R_{\operatorname{Gamma}(2,1)}(x)
 =\frac{1+x+x^2/2+x^3/6}{2(1+x)}.
 $$
+
+:::
+
+:::{prf:proof}
+Integration by parts in the gamma survival integral gives
+$\bar F_k(x)=e^{-x}x^{k-1}/(k-1)!+\bar F_{k-1}(x)$ for $k\ge2$,
+with $\bar F_1(x)=e^{-x}$. Iteration gives the finite sum.
+By [](#lem-tail-class-catalog-gamma-tail), the iid sum has shape $2k$;
+dividing the finite sums at shapes $2k$ and $k$, for $k=1,2$, gives
+the two displayed ratios.
+:::
 
 | Threshold $x$ | Exponential sum ratio | Gamma shape 2 sum ratio |
 | --- | --- | --- |
@@ -330,7 +442,20 @@ varying functions. To examine the index-zero boundary, let
 $V$ be Pareto with minimum $v_m>0$, exponent $a>0$, and dimensionless
 values, and put $X=e^V$. Here $a,v_m$ are local parameters; the survival
 exponent of $X$ will be zero. This construction is motivated by SCoFT v4
-§5.5, pp. 102–103 [@taleb2025scoftv4]. Inverting the increasing transform
+§5.5, pp. 102–103 [@taleb2025scoftv4].
+
+:::{prf:proposition} A slowly varying survival with no positive power moments
+:label: prop-tail-class-catalog-log-pareto
+
+Let $V$ be dimensionless Pareto Type I with minimum $v_m>0$ and exponent
+$a>0$, and let $X=e^V$. The survival of $X$ is one below $e^{v_m}$ and
+$(v_m/\log x)^a$ for $x\ge e^{v_m}$. Its density on $x>e^{v_m}$ is
+$a v_m^a/[x(\log x)^{a+1}]$ and is zero below that support.
+Its survival belongs to $RV_0$, and $\mathbb EX^p=\infty$ for every $p>0$.
+:::
+
+:::{prf:proof}
+Inverting the increasing transform
 gives its survival $\bar F$; differentiating gives its Lebesgue density $f$:
 
 $$
@@ -344,7 +469,20 @@ positive-power rows. Every positive power moment diverges:
 $\mathbb EX^p=\mathbb E e^{pV}$, and the exponential factor eventually
 exceeds every polynomial in the Pareto density integral.
 
-We also prove subexponentiality directly for this example. For iid
+:::
+
+We also prove subexponentiality directly for this example.
+
+:::{prf:corollary} Subexponentiality at index zero
+:label: cor-tail-class-catalog-log-pareto-sum
+
+For iid copies $X_1,X_2$ of $X$ in [](#prop-tail-class-catalog-log-pareto),
+$P(X_1+X_2>x)\sim2P(X>x)$ as $x\to\infty$. Thus this index-zero law
+is subexponential.
+:::
+
+:::{prf:proof}
+For iid
 copies $X_1,X_2$ of this nonnegative $X$, with $M_2=\max(X_1,X_2)$,
 
 $$
@@ -353,7 +491,10 @@ $$
 
 Both bounds divided by $2\bar F(x)$ tend to one: the maximum-tail
 formula is $2\bar F(x)-\bar F(x)^2$ and
-$\bar F(x/2)/\bar F(x)\to1$. The squeeze proves the claim.
+$\bar F(x/2)/\bar F(x)\to1$. The squeeze proves the claim, using slow variation from
+[](#prop-tail-class-catalog-log-pareto).
+:::
+
 Thus a regularly varying survival can be subexponential even when its
 index is zero. There is no finite positive $1/\alpha$
 calibration at this index-zero boundary.
@@ -372,10 +513,14 @@ Neither construction establishes a tail law for observed data.
 
 Appendix A of SCoFT v4, §A.1, pp. 122–124 [@taleb2025scoftv4],
 considers distributions with separated regimes. We can check the effect on
-kurtosis without assuming a power tail. Let $B$ take $-1$ and $1$ with
+kurtosis without assuming a power tail.
+
+:::{prf:proposition} Kurtosis and a central valley in a normal location mixture
+:label: prop-tail-class-catalog-location-mixture
+
+Let $B$ take $-1$ and $1$ with
 equal probabilities, let $Z\sim N(0,1)$ be independent, and set
-$X=mB+\sigma Z$, with $m\ge0$ and $\sigma>0$. Symmetry gives mean zero.
-Expanding and discarding the odd terms proves
+$X=mB+\sigma Z$, with $m\ge0$ and $\sigma>0$. Then $\mathbb EX=0$ and
 
 $$
 \mathbb EX^2=m^2+\sigma^2,\qquad
@@ -385,11 +530,23 @@ K=3-\frac{2m^4}{(m^2+\sigma^2)^2}.
 $$
 
 Here $K$ is Pearson kurtosis. For $m>0$ it lies below three and tends
-to one as $m/\sigma\to\infty$. Yet
+to one as $m/\sigma\to\infty$. Also
 $\mathbb E e^{tX}=\cosh(mt)e^{\sigma^2t^2/2}<\infty$ for every real
-$t$. This location mixture is light-tailed. Its density $f$ has a local
-minimum at zero when $m>\sigma$: differentiating the two normal densities
-gives $f''(0)=f(0)(m^2-\sigma^2)/\sigma^4>0$.
+$t$. Its density $f$ has a strict local minimum at zero when $m>\sigma$.
+:::
+
+:::{prf:proof}
+Symmetry gives mean zero. Expand $(mB+\sigma Z)^2$ and
+$(mB+\sigma Z)^4$; independence eliminates odd cross terms, and
+$\mathbb EB^2=\mathbb EB^4=1$, $\mathbb EZ^2=1$, $\mathbb EZ^4=3$
+give the stated moments. Dividing the fourth moment by the squared variance
+gives $K$, its strict bound for $m>0$, and its limit.
+Independence also gives the product of exponential moments
+$\cosh(mt)e^{\sigma^2t^2/2}$. Differentiating the two normal densities gives
+$f'(0)=0$ and $f''(0)=f(0)(m^2-\sigma^2)/\sigma^4>0$ when $m>\sigma$.
+:::
+
+This location mixture is light-tailed.
 Thus low kurtosis can accompany a valley around the expectation.
 It is not evidence of a small probability of a large regime change.
 
@@ -403,9 +560,14 @@ interval and every individual point still has probability zero.
 ## An absorbing state needs repeated chances to be reached
 
 For the §A.2 context, pp. 124–125, take a homogeneous two-state Markov
-chain with states intact and failed. The failed state is absorbing and
-an intact system fails with probability $p\in[0,1]$ at each step,
-conditional on still being intact. Its row-stochastic transition matrix is
+chain with states intact and failed.
+
+:::{prf:proposition} Powers of a two-state absorbing transition matrix
+:label: prop-tail-class-catalog-absorbing-chain
+
+Let the failed state be absorbing, and let an intact system fail with
+probability $p\in[0,1]$ at each step, conditional on still being intact.
+The row-stochastic transition matrix and its powers are
 
 $$
 T=\begin{pmatrix}1-p&p\\0&1\end{pmatrix},\qquad
@@ -413,13 +575,36 @@ T^n=\begin{pmatrix}(1-p)^n&1-(1-p)^n\\0&1\end{pmatrix}
 \quad(n\ge1).
 $$
 
-Induction proves the power: multiplying by $T$ multiplies the remaining
-intact probability by $1-p$. Starting intact, eventual failure has
-probability one if $p>0$ and zero if $p=0$. Irreversibility alone is not
-sufficient; reachability and persistent conditional risk matter. With varying
-conditional hazards $p_j$, intact survival is $\prod_{j=1}^n(1-p_j)$.
-For example, $p_j=2^{-j-1}$ has sum $1/2$, and
-$\prod_{j=1}^n(1-p_j)\ge1-\sum_{j=1}^n p_j\ge1/2$ by induction.
+Starting intact, eventual failure has probability one if $p>0$ and zero
+if $p=0$.
+:::
+
+:::{prf:proof}
+The formula holds for $n=1$. Multiplying the stated $T^n$ by $T$
+multiplies the intact probability by $1-p$ and leaves each row sum one,
+which gives the formula for $n+1$. The limit of $(1-p)^n$ is zero for
+$p>0$ and one for $p=0$, proving the eventual-failure claim.
+:::
+
+Irreversibility alone is not
+sufficient; reachability and persistent conditional risk matter.
+
+:::{prf:corollary} Positive risk with survival at least one half
+:label: cor-tail-class-catalog-decreasing-hazards
+
+If an initially intact system has conditional failure hazards
+$p_j=2^{-j-1}$ for $j\ge1$, then survival through every $n\ge1$ is
+$\prod_{j=1}^n(1-p_j)\ge1/2$, and infinite-horizon survival is at least $1/2$.
+:::
+
+:::{prf:proof}
+The [conditional-hazard product](incerto-ruin.md#thm-ruin-conditional-hazards)
+gives finite-horizon survival. Induction using
+$(1-a)(1-b)\ge1-a-b$ for $a,b\ge0$ gives
+$\prod_{j=1}^n(1-p_j)\ge1-\sum_{j=1}^n p_j\ge1/2$ because
+$\sum_{j=1}^\infty p_j=1/2$. Take the decreasing limit of survival events.
+:::
+
 Every step has positive risk but eventual failure is not certain.
 The [existing survival calculation](incerto-ruin.md) treats this product;
 we do not replace it with an independence assumption on unconditional events.
@@ -481,6 +666,9 @@ The convolution identity also applies to two-sided laws; the subexponential
 definition above uses nonnegative summands. Discrete and dependent variants
 require separate treatment.
 
+:::{prf:proposition} Two-summand convolution and the symmetric split
+:label: prop-tail-class-catalog-convolution
+
 For independent random variables $X_1$ and $X_2$ with Lebesgue densities,
 write $f_1$ for the density of $X_1$ and $\bar F_2$ for the survival
 function of $X_2$. Then
@@ -491,7 +679,21 @@ $$
 \int_{-\infty}^{\infty} f_1(y)\bar F_2(x-y)\,dy.
 $$
 
-To see the iid reduction, take a common density $f$, survival function
+If they are iid with density $f$, survival $\bar F$, and finite lower
+support endpoint $a$, then for $x>2a$,
+
+$$
+P(X_1+X_2>x)=2\int_a^{x/2}f(y)\bar F(x-y)\,dy+\bar F(x/2)^2.
+$$
+
+When $\bar F(x)>0$, the normalized ratio
+$R(x)=P(X_1+X_2>x)/(2\bar F(x))$ is consequently
+$\int_a^{x/2}f(y)\bar F(x-y)/\bar F(x)\,dy+\bar F(x/2)^2/(2\bar F(x))$.
+:::
+
+:::{prf:proof}
+Conditioning on $X_1=y$ and using independence gives the first integral.
+For the iid reduction, take a common density $f$, survival function
 $\bar F$, and lower support endpoint $a$, with $x>2a$.  Split the event
 $\{X_1+X_2>x\}$ into three cases, ignoring probability-zero boundary points:
 first $X_2\le x/2$, second $X_1\le x/2$, and third both variables exceed
@@ -500,17 +702,6 @@ leaves the requirement $X_1>x-y$, so this part contributes
 $\int_a^{x/2} f(y)\bar F(x-y)\,dy$.  The second case contributes the same
 quantity by iid symmetry.  The remaining upper-right square has probability
 $\bar F(x/2)^2$ by independence.
-
-(tail-class-catalog-convolution-split)=
-For $a=0$, the partition can be recorded as disjoint regions rather than a
-contour plot. Boundaries have zero probability under the continuous-law
-assumption.
-
-| Region within $\{X_1+X_2>x\}$ | Probability contribution |
-| --- | --- |
-| $0\le X_2\le x/2$, $X_1>x-X_2$ | $\int_0^{x/2}f(y)\bar F(x-y)\,dy$ |
-| $0\le X_1\le x/2$, $X_2>x-X_1$ | The same integral by iid symmetry |
-| $X_1>x/2$, $X_2>x/2$ | $\bar F(x/2)^2$ |
 
 For iid variables with lower support endpoint $a$, symmetry gives the more
 useful half-line formula
@@ -534,8 +725,22 @@ R(x)
 \end{aligned}
 $$
 
-The logarithmic form applies where the factors are positive, with zero terms
-understood by limits. It avoids forming tiny unnormalized probabilities before
+The logarithmic form follows by writing each positive product as the
+exponential of its log, with zero terms understood by limits.
+:::
+
+(tail-class-catalog-convolution-split)=
+For $a=0$, the partition can be recorded as disjoint regions rather than a
+contour plot. Boundaries have zero probability under the continuous-law
+assumption.
+
+| Region within $\{X_1+X_2>x\}$ | Probability contribution |
+| --- | --- |
+| $0\le X_2\le x/2$, $X_1>x-X_2$ | $\int_0^{x/2}f(y)\bar F(x-y)\,dy$ |
+| $0\le X_1\le x/2$, $X_2>x-X_1$ | The same integral by iid symmetry |
+| $X_1>x/2$, $X_2>x/2$ | $\bar F(x/2)^2$ |
+
+The logarithmic form avoids forming tiny unnormalized probabilities before
 taking their ratio. The decomposition is an ordinary conditioning argument;
 no numerical integration or executable package helper is needed for it.
 

@@ -84,16 +84,24 @@ There is no finite-sample bias correction. Pearson kurtosis is this number
 plus three. An undefined population fourth moment does not prevent the
 sample statistic from returning a finite number.
 
-**Aggregation identity.** Suppose $X_i$ are iid, have variance
+The following identity concerns the population law.
+
+:::{prf:proposition} Excess kurtosis of an iid block sum
+:label: prop-sp500-aggregation
+
+Suppose $X_i$ are iid, have variance
 $0<\sigma^2<\infty$, and have a finite fourth central moment $\mu_4$.
-For $S_h=\sum_{i=1}^hX_i$, the population excess kurtosis satisfies
+For an integer $h\ge1$ and $S_h=\sum_{i=1}^hX_i$, the population excess
+kurtosis $\gamma_2(Y)=\mathbb E[(Y-\mathbb EY)^4]/\operatorname{Var}(Y)^2-3$ satisfies
 
 $$
 \gamma_2(S_h)=\frac{\gamma_2(X_1)}h.
 $$
 
-We prove this identity, not a convergence claim about a particular market
-sample. Center $X_i\leftarrow X_i-\mathbb E[X_i]$ for this proof; $X_i$
+:::
+
+:::{prf:proof}
+Center $X_i\leftarrow X_i-\mathbb E[X_i]$ for this proof; $X_i$
 and $S_h$ now denote the centered variables and their sum. Centering preserves
 variance and kurtosis. In the expansion of the fourth
 power of the sum, independence and zero means eliminate terms with a
@@ -108,6 +116,8 @@ $$
 $$
 
 Dividing by $h^2\sigma^4$ and subtracting three proves the formula.
+:::
+
 Dependence can introduce additional terms. Finite samples also lose blocks
 as $h$ increases. A slowly falling or rising sample curve therefore does
 not, by itself, distinguish infinite fourth moments from dependence,
@@ -190,15 +200,34 @@ $$
 D_n=\max_{0\le j\le n}\left(1-\frac{P_j}{\max_{0\le i\le j}P_i}\right).
 $$
 
-This equals the largest fractional decline across ordered peak/trough pairs:
-for fixed $j$, the largest previous $P_i$ maximizes the decline. Including
-$i=j$ makes the statistic nonnegative. This positive fractional convention
+:::{prf:proposition} Drawdown as an ordered-pair maximum
+:label: prop-sp500-drawdown
+
+For strictly positive prices $P_0,\ldots,P_n$, the maximum drawdown
+$D_n=\max_{0\le j\le n}(1-P_j/\max_{0\le i\le j}P_i)$ satisfies
+
+$$
+D_n=\max_{0\le i\le j\le n}(1-P_j/P_i)\ge0.
+$$
+:::
+
+:::{prf:proof}
+For fixed $j$, the largest previous $P_i$ maximizes the decline. Including
+$i=j$ makes the statistic nonnegative.
+:::
+
+This positive fractional convention
 differs from a negative log-drawdown convention. A distribution of drawdowns
 also depends on the window and overlap rules; a whole-series value is one
 path statistic, not a sample of iid losses.
 
-For a positive threshold $u$ with $\bar F(u)=P(X>u)>0$, finite conditional mean,
-and [mean excess](incerto-mean-excess-function.md) $e(u)$, define
+:::{prf:proposition} Conditional tail mean and mean excess
+:label: prop-sp500-conditional-tail-ratio
+
+Let $X$ be a real random variable. For a positive threshold $u$ with
+$\bar F(u)=P(X>u)>0$, finite conditional mean,
+and [mean excess](incerto-mean-excess-function.md)
+$e(u)=\mathbb E[X-u\mid X>u]$, the conditional tail ratio satisfies
 
 $$
 \begin{gathered}
@@ -207,11 +236,20 @@ $$
 \end{gathered}
 $$
 
-The second line follows by subtracting $u$ inside the conditional
-expectation. Thus $\phi(u)>1$; it cannot tend to zero. For an exact
-[Pareto law](incerto-pareto.md), $u\ge x_m$ and $\alpha>1$ give
-$\phi(u)=\alpha/(\alpha-1)$. A unit exponential instead gives
-$\phi(u)=1+1/u\to1$. These are model identities, not a characterization
+Moreover, $\phi(u)>1$. For an exact [Pareto law](incerto-pareto.md)
+with $x_m>0$, $\alpha>1$, and $u\ge x_m$, $\phi(u)=\alpha/(\alpha-1)$.
+For a unit-rate exponential and $u>0$, $\phi(u)=1+1/u\to1$ as $u\to\infty$.
+:::
+
+:::{prf:proof}
+Subtracting $u$ inside the conditional expectation gives the identity.
+On the conditioning event $X-u>0$ almost surely, so $e(u)>0$.
+The [mean-excess formulas](incerto-mean-excess-function.md) give
+$e(u)=u/(\alpha-1)$ for Pareto and $e(u)=1$ for the unit exponential;
+substitution gives both ratios and the exponential limit.
+:::
+
+The ratio cannot tend to zero. These are model identities, not a characterization
 of every possible tail class. For the left tail, apply the same definition
 to $\ell_t=-r_t$ and condition on $\ell_t>u$.
 
@@ -261,10 +299,21 @@ R_n^{(p)}=\frac{\max_{i\le n}|X_i|^p}
 {\sum_{i=1}^n|X_i|^p}.
 $$
 
-The [finite-mean max-to-sum argument](incerto-max-to-sum-ratio.md) proves
-$R_n^{(p)}\to0$ almost surely under iid sampling and
-$0<\mathbb E|X|^p<\infty$. Apply that argument to $|X|^p$; its
-nonnegativity and finite positive mean are exactly the needed assumptions.
+:::{prf:corollary} Vanishing power share under a finite moment
+:label: cor-sp500-power-share
+
+Let $p>0$ and let $X_i$ be iid with $0<\mathbb E|X_1|^p<\infty$.
+Then $R_n^{(p)}$ is defined for all sufficiently large $n$ almost surely
+and $R_n^{(p)}\to0$ almost surely.
+:::
+
+:::{prf:proof}
+Apply the [finite-mean max-to-sum result](incerto-max-to-sum-ratio.md) to
+$|X_i|^p$. These variables are iid and nonnegative with finite positive mean.
+Their sample average tends to that positive mean, so the denominator is
+eventually positive almost surely, and the cited ratio limit applies.
+:::
+
 An all-zero finite prefix has no defined ratio.
 
 A high $R_n^{(4)}$ says one observation dominates the raw fourth-power
@@ -283,7 +332,12 @@ not tests that a fourth moment is infinite.
 
 Finite-path instability cannot identify an infinite moment. It also cannot
 establish regular variation. Even at the population level, an infinite
-moment need not imply regular variation: the survival
+moment need not imply regular variation.
+
+:::{prf:proposition} An infinite-mean tail without regular variation
+:label: prop-sp500-oscillating-tail
+
+The function defined by $\bar F(x)=1$ for $x<1$ and
 
 $$
 \begin{gathered}
@@ -292,11 +346,21 @@ x\ge1
 \end{gathered}
 $$
 
-is decreasing, since its derivative has the sign of
+is a survival function on $[1,\infty)$ with infinite mean and is not
+regularly varying.
+:::
+
+:::{prf:proof}
+It is continuous at one, tends to zero at infinity, and is decreasing, since its derivative has the sign of
 $-1+(\cos(\log x)-\sin(\log x))/4<0$. It starts at one and is bounded
 below by $3/(4x)$, so its mean is infinite by survival integration.
 But $\bar F(e^\pi x)/\bar F(x)$ oscillates without a limit, ruling out
-regular variation. This is an explicit counterexample to treating missing
+regular variation. For example, along $\log x=2\pi n+\pi/2$ and
+$\log x=2\pi n+3\pi/2$, that ratio equals $3e^{-\pi}/5$ and
+$5e^{-\pi}/3$, respectively.
+:::
+
+This is an explicit counterexample to treating missing
 moments and power tails as equivalent classes.
 
 Use [`moment_share_path`](incerto-api-reference.md#api-moment-share-path).
@@ -322,8 +386,16 @@ p=4: nan, 1.000, 0.941, 0.996
 
 A strict upper record occurs when $X_j$ exceeds every earlier observation.
 The first observation counts as a record. Let $N_n^+$ denote the cumulative
-count; define $N_n^-$ using strict new minima. For iid observations from a
-continuous distribution, each side separately satisfies
+count; define $N_n^-$ using strict new minima. The continuous-iid benchmark
+follows from the insertion ranks.
+
+:::{prf:proposition} Mean and variance of iid record counts
+:label: prop-sp500-record-counts
+
+For $n\ge1$ iid observations from a continuous distribution, let $N_n^+$
+and $N_n^-$ count strict upper and lower records, with the first observation
+counted on both sides. Each side has the following mean and variance
+(the displayed formulas use $N_n^+$):
 
 $$
 \begin{gathered}
@@ -334,13 +406,19 @@ H_n=\sum_{j=1}^n\frac1j,\\
 \end{gathered}
 $$
 
-Here is a proof of the expectation and variance. All $n!$ rank orders are
+:::
+
+:::{prf:proof}
+All $n!$ rank orders are
 equally likely. The sequence of insertion ranks has $j$ choices at step
 $j$ and gives a bijection to those orders. Its components are therefore
 independent and uniform on $\{1,\ldots,j\}$. An upper record occurs at
 rank $j$, with probability $1/j$. Adding independent Bernoulli means and
 variances proves both formulas. Lower records use rank one and the same
-argument; upper and lower counts are **not** mutually independent.
+argument.
+:::
+
+Upper and lower counts are **not** mutually independent for $n\ge2$.
 
 Rounded data can contain ties, which do not create strict records. The
 continuous-iid benchmark then need not apply. Volatility clustering and

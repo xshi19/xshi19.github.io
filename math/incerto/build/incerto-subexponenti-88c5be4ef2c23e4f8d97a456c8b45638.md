@@ -121,6 +121,17 @@ case gives the right calibration.
 
 ### Universal maximum tail
 
+:::{prf:lemma} Tail of a fixed-size iid maximum
+:label: lem-subexponentiality-maximum-tail
+
+Let $X_1,\ldots,X_n$ be iid finite real random variables with common CDF $F$
+and unbounded right support, and fix an integer $n\ge1$. Write
+$\bar F(x)=P(X_1>x)$ and $M_n=\max_{1\le i\le n}X_i$. Then
+$P(M_n>x)=1-(1-\bar F(x))^n$ for every real $x$, and
+$P(M_n>x)\sim n\bar F(x)$ as $x\to\infty$.
+:::
+
+:::{prf:proof}
 For any distribution with unbounded right tail, $\bar F(x)\to0$ as
 $x\to\infty$.  For fixed $n$, iid independence gives
 
@@ -165,6 +176,7 @@ $$
 \mathbb P(M_n>x)
 \sim n\bar F(x).
 $$
+:::
 
 This maximum formula only uses iid independence, fixed $n$, and
 $\bar F(x)\to0$.  For nonnegative variables, $M_n>x$ implies
@@ -181,6 +193,26 @@ at the scale of one tail probability.
 
 ### Pareto upper-bound check
 
+:::{prf:proposition} Two-summand Pareto tail and residual bound
+:label: prop-subexponentiality-pareto-sum
+
+Let $X_1,X_2$ be iid Pareto Type I with $x_m>0$, $\alpha>0$, and
+$\bar F(x)=(x_m/x)^\alpha$ for $x\ge x_m$. Put
+$M_2=\max(X_1,X_2)$ and $A_x=\{X_1+X_2>x,\ M_2\le x\}$.
+For $1/2<\gamma<1$ and $h=x_m(x/x_m)^\gamma$, whenever
+$h\ge x_m$ and $x-h\ge x_m$,
+
+$$
+0\le\frac{P(A_x)}{\bar F(x)}
+\le2\left[\left(\frac{x}{x-h}\right)^\alpha-1\right]
+ +(x/x_m)^{\alpha(1-2\gamma)}.
+$$
+
+Consequently $P(A_x)=o(\bar F(x))$ and
+$P(X_1+X_2>x)\sim2\bar F(x)$ as $x\to\infty$; the law is subexponential.
+:::
+
+:::{prf:proof}
 For the Pareto tail $\bar F(x)=(x_m/x)^\alpha$ with $x\ge x_m$, the missing
 upper-bound step can be checked directly for $n=2$.  Let
 
@@ -188,8 +220,7 @@ $$
 A_x=\{X_1+X_2>x,\;M_2\le x\}.
 $$
 
-Choose $h=x_m(x/x_m)^\gamma$ with $1/2<\gamma<1$. This keeps the units
-consistent and gives $h/x\to0$ and $h\to\infty$.
+For the stated choice of $h$, $h/x\to0$ and $h\to\infty$.
 
 (subexponentiality-cover-diagram)=
 The residual event $A_x$ is the region in $[0,x]^2$ above $X_1+X_2=x$.
@@ -237,12 +268,18 @@ $$
 \end{aligned}
 $$
 
-because $\gamma>1/2$.  Thus $\mathbb P(A_x)=o(\bar F(x))$.  Since
-$\{S_2>x\}$ is the disjoint union of $\{M_2>x\}$ and $A_x$,
+because $\gamma>1/2$. These two bounds give the stated finite-threshold
+inequality. Thus $\mathbb P(A_x)=o(\bar F(x))$. By
+[](#lem-subexponentiality-maximum-tail) and the fact that
+$S_2=X_1+X_2$ and $\{S_2>x\}$ is the disjoint union of $\{M_2>x\}$ and $A_x$,
 
 $$
 \mathbb P(X_1+X_2>x)\sim 2\bar F(x).
 $$
+:::
+
+**Remark.** The scale $x_m$ in $h=x_m(x/x_m)^\gamma$ keeps its units
+consistent with $x$.
 
 The regularly varying theorem cited above generalizes this Pareto calculation:
 the maximum formula is universal, while the negligible residual event is the
@@ -260,6 +297,18 @@ A useful comparison table is:
 The [Tail Class Catalog](./incerto-tail-class-catalog.md) gives a broader comparison. The lognormal and stretched
 Weibull entries are cited examples, not consequences of the Pareto proof.
 
+:::{prf:proposition} Exponential sums fail the subexponential ratio
+:label: prop-subexponentiality-exponential-sum
+
+For iid $X_1,X_2\sim\operatorname{Exp}(\lambda)$ with $\lambda>0$ and
+$x\ge0$,
+$P(X_1+X_2>x)=e^{-\lambda x}(1+\lambda x)$ and
+$P(M_2>x)=2e^{-\lambda x}-e^{-2\lambda x}$, where $M_2=\max(X_1,X_2)$.
+Thus $P(M_2>x)\sim2e^{-\lambda x}$ but
+$P(X_1+X_2>x)/(2P(X_1>x))=(1+\lambda x)/2\to\infty$.
+:::
+
+:::{prf:proof}
 The exponential is an exact nonexample.  If
 $X_i\sim\operatorname{Exp}(\lambda)$, then the universal maximum formula still
 holds:
@@ -271,7 +320,8 @@ $$
 \end{aligned}
 $$
 
-But the sum tail is much larger:
+Conditioning on $X_1$ gives the sum tail as
+$e^{-\lambda x}+\int_0^x\lambda e^{-\lambda y}e^{-\lambda(x-y)}\,dy$, hence:
 
 $$
 \mathbb P(X_1+X_2>x)=e^{-\lambda x}(1+\lambda x),
@@ -285,6 +335,7 @@ $$
 $$
 
 not $1$.
+:::
 
 The fixed-$n$ assumption is load-bearing.  If $n$ grows with $x$, additional
 large-deviation regimes can appear.
@@ -292,8 +343,14 @@ large-deviation regimes can appear.
 ## A static bound on the residual tail
 
 (subexponentiality-one-big-jump-check)=
-The proof supplies a finite-threshold bound. Put $t=x/x_m$ and take
-$\alpha=1.5$, $\gamma=0.75$. For sufficiently large $t$ with $x-h\ge x_m$,
+The Pareto bound has the following numerical specialization.
+
+:::{prf:corollary} A bound at exponent three halves
+:label: cor-subexponentiality-static-bound
+
+For the iid Pareto pair in [](#prop-subexponentiality-pareto-sum) with
+$\alpha=3/2$, write $t=x/x_m$ and $h=x_mt^{3/4}$. If $t\ge1$ and
+$t-t^{3/4}\ge1$, then
 
 $$
 \begin{aligned}
@@ -302,6 +359,14 @@ $$
 &\qquad+t^{-3/4}.
 \end{aligned}
 $$
+
+:::
+
+:::{prf:proof}
+Set $\alpha=3/2$ and $\gamma=3/4$ in
+[](#prop-subexponentiality-pareto-sum). Then $h/x=t^{-1/4}$ and
+$\alpha(1-2\gamma)=-3/4$, giving the displayed bound.
+:::
 
 | $t=x/x_m$ | Upper bound (rounded upward) |
 | --- | --- |

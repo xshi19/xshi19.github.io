@@ -86,6 +86,25 @@ for variance.
 | Natural | $\theta=(\mu/\sigma^2,-1/(2\sigma^2))^{\mathsf T}$ | $\theta^2<0$ |
 | Expectation | $\eta=(\mu,\mu^2+\sigma^2)^{\mathsf T}$ | $\eta^2>(\eta^1)^2$ |
 
+:::{prf:proposition} Compatible charts and the normal exponential form
+:label: prop-euclidean-to-manifold-normal-charts
+
+Give the normal family $M=\{N(\mu,\sigma^2):\mu\in\mathbb R,\sigma>0\}$
+the smooth structure of $\mathbb R\times(0,\infty)$. The four maps in the
+table are global smooth charts with the stated open domains and invertible
+transition Jacobians. With $t(x)=(x,x^2)^{\mathsf T}$, its Lebesgue density
+in natural coordinates is
+
+$$
+p_\theta(x)=\exp\{\theta^{\mathsf T}t(x)-\psi(\theta)\},\qquad
+\psi(\theta)=-\frac{(\theta^1)^2}{4\theta^2}
+ +\frac12\log\frac{\pi}{-\theta^2},\quad\theta^2<0,
+$$
+
+and $\nabla\psi(\theta)=\mathbb E_\theta t(X)=(\mu,\mu^2+\sigma^2)^{\mathsf T}$.
+:::
+
+:::{prf:proof}
 With $t(x)=(x,x^2)^{\mathsf T}$, completing the square gives
 
 ```{math}
@@ -98,10 +117,6 @@ p_\theta(x)&=\exp\{\theta^{\mathsf T}t(x)-\psi(\theta)\},\\
  =(\mu,\mu^2+\sigma^2)^{\mathsf T}.
 \end{aligned}
 ```
-
-Thus the second expectation coordinate is the **second raw moment**, not the
-variance. The [exponential-family note](./information-geometry-exponential-families.md#two-examples)
-derives these coordinates in the broader setting of sufficient statistics.
 
 The inverse coordinate maps include
 
@@ -131,6 +146,11 @@ Their determinants are nonzero for $\sigma>0$. For an invertible coordinate
 change $f$, the inverse Jacobian is
 $Df^{-1}(f(\xi))=Df(\xi)^{-1}$; specifying its evaluation point prevents
 confusing the two directions of a coordinate change.
+:::
+
+Thus the second expectation coordinate is the **second raw moment**, not the
+variance. The [exponential-family note](./information-geometry-exponential-families.md#two-examples)
+derives these coordinates in the broader setting of sufficient statistics.
 
 ### What makes this a manifold
 
@@ -163,12 +183,26 @@ through $q$ at $\lambda=0$ are equivalent when
 \quad\text{for every }i.
 ```
 
-The chain rule makes this equivalence independent of the chart. A tangent
+:::{prf:proposition} Curve velocities define a tangent space
+:label: prop-euclidean-to-manifold-curve-tangents
+
+Let $M$ be a smooth $d$-manifold and $q\in M$. Equality of the coordinate
+velocities at zero of two smooth curves through $q$ is independent of the
+chosen chart. Their equivalence classes form a vector space $T_qM$, and
+in every chart $\xi$ the velocity map $[c]\mapsto(\xi\circ c)'(0)$ is
+a linear isomorphism $T_qM\to\mathbb R^d$.
+:::
+
+:::{prf:proof}
+For a chart transition $\phi=f(\xi)$, the chain rule sends each velocity
+column $v$ to $Df(\xi(q))v$. Since this Jacobian is invertible, equality
+of velocities is equivalent in the two charts. A tangent
 vector is an equivalence class $v=[c]$ of such curves. Its components are
 $v^i=(\xi^i\circ c)'(0)$. Every column of $d$ real numbers is realized by a
 coordinate line $\xi(c(\lambda))=\xi(q)+\lambda v$ for sufficiently small
 $\lambda$. These components give the set of classes a $d$-dimensional
 vector-space structure, called $T_qM$; coordinate changes act linearly on that space.
+:::
 
 For normals,
 $v=v^\mu\partial_\mu+v^\sigma\partial_\sigma$ is represented by
@@ -187,6 +221,19 @@ $A:C^\infty(M)\to\mathbb R$ satisfying the pointwise Leibniz rule
 A(FH)=F(q)A(H)+H(q)A(F).
 ```
 
+:::{prf:proposition} Curve tangents and point derivations agree
+:label: prop-euclidean-to-manifold-derivations
+
+For a smooth $d$-manifold $M$ and $q\in M$, every $\mathbb R$-linear map
+$A:C^\infty(M)\to\mathbb R$ satisfying
+$A(FH)=F(q)A(H)+H(q)A(F)$ depends only on the germ of $F$ at $q$.
+In a chart $\xi$ it has the unique form
+$A(F)=v^i\partial_iF(q)$, where $v^i=A(\xi^i)$ is defined using local germs.
+The correspondence $[c]\mapsto[F\mapsto(F\circ c)'(0)]$ identifies
+$T_qM$ with these derivations, with basis $\partial_i|_q$.
+:::
+
+:::{prf:proof}
 It depends only on functions near $q$. Indeed, if $F$ vanishes near $q$,
 choose a smooth cutoff equal to one at $q$ and supported where $F=0$;
 applying the product rule to their zero product gives $A(F)=0$. Thus we can
@@ -216,6 +263,7 @@ Applying its product rule to this expansion gives
 $A(F)=A(\xi^i)\partial_iF(q)$. Hence $A=v^i\partial_i|_q$ with
 $v^i=A(\xi^i)$, represented by the coordinate line above. The two
 constructions are inverse, and $\{\partial_i|_q\}$ is a basis of $T_qM$.
+:::
 
 For example, the smooth function $F(P_\xi)=\mathbb E_\xi[X^2]
 =\mu^2+\sigma^2$ satisfies
@@ -235,7 +283,21 @@ Let $\phi=f(\xi)$ be a transition map and set
 $A^a{}_i=\partial\phi^a/\partial\xi^i$ and
 $B^i{}_a=\partial\xi^i/\partial\phi^a$, so $B=A^{-1}$. Write
 $\partial'_a=\partial/\partial\phi^a$ for the new coordinate basis.
-The chain rule gives
+
+:::{prf:proposition} Transformation of tangent bases and components
+:label: prop-euclidean-to-manifold-tangent-charts
+
+For a smooth chart transition $\phi=f(\xi)$, write
+$A^a{}_i=\partial\phi^a/\partial\xi^i$, $B=A^{-1}$, and
+$\partial'_a=\partial/\partial\phi^a$. At each point of the overlap,
+$\partial_i=A^a{}_i\partial'_a$ and a tangent vector has components
+$v'^a=A^a{}_iv^i$, or $v_\phi=Df(\xi)v_\xi$.
+:::
+
+:::{prf:proof}
+Apply $\partial_i$ to a smooth function expressed in the $\phi$ chart;
+the chain rule gives $\partial_iF=A^a{}_i\partial'_aF$. Then expand
+$v=v^i\partial_i$ in the primed basis to obtain
 
 ```{math}
 :label: ig-tangent-coordinate-change
@@ -243,6 +305,7 @@ The chain rule gives
 v'^a=A^a{}_i v^i,\qquad
 v_\phi=Df(\xi)v_\xi.
 ```
+:::
 
 The basis and components change together, leaving the derivation $v$ fixed.
 For the variance chart, [](#ig-normal-chart-jacobians) gives
@@ -266,10 +329,27 @@ df_q([c])=[f\circ c],\qquad
 (df_qv)[H]=v[H\circ f],\quad H\in C^\infty(N).
 ```
 
-In source coordinates $\xi$ and target coordinates $\phi$, its matrix is the
+:::{prf:proposition} The differential has the coordinate Jacobian
+:label: prop-euclidean-to-manifold-pushforward
+
+For a smooth map $f:M\to N$ and $q\in M$, the map
+$df_q([c])=[f\circ c]$ is well-defined and linear. In charts $\xi$ at $q$
+and $\phi$ at $f(q)$ its matrix is $D(\phi\circ f\circ\xi^{-1})(\xi(q))$;
+equivalently, $(df_qv)[H]=v[H\circ f]$ for every smooth $H$ on $N$.
+:::
+
+:::{prf:proof}
+The chain rule gives
+$(\phi\circ f\circ c)'(0)=D(\phi\circ f\circ\xi^{-1})(\xi(q))(\xi\circ c)'(0)$.
+This depends only on the curve class and linearly on its velocity. Applying
+the same rule to $H\circ f\circ c$ proves the action on functions.
+Thus in source coordinates $\xi$ and target coordinates $\phi$, its matrix is the
 Jacobian of $\phi\circ f\circ\xi^{-1}$, denoted $Df(\xi)$. Its entries are
 $\partial f^a/\partial\xi^i$, and
-$(df_qv)^a=(\partial f^a/\partial\xi^i)v^i$. Unlike a coordinate change, a
+$(df_qv)^a=(\partial f^a/\partial\xi^i)v^i$.
+:::
+
+Unlike a coordinate change, a
 smooth map need not be invertible or preserve dimension. The variance map
 $f:M\to(0,\infty)$, $f(P_\xi)=\sigma^2$, has
 $df_qv=2\sigma v^\sigma\partial_\tau$: it discards the location direction.
@@ -286,16 +366,40 @@ $d\xi^i(\partial_j)=\delta^i{}_j$. Thus
 dF=(\partial_iF)\,d\xi^i.
 ```
 
-Under the same transition map,
+:::{prf:proposition} The dual coordinate transformation
+:label: prop-euclidean-to-manifold-covectors
+
+For a chart transition $\phi=f(\xi)$ with Jacobian $A$ and inverse $B$,
+the dual bases obey $d\phi^a=A^a{}_i d\xi^i$. If
+$\omega=\omega_i d\xi^i=\omega'_a d\phi^a$, then
+$\omega'_a=B^i{}_a\omega_i$ and $\omega'_av'^a=\omega_iv^i$.
+:::
+
+:::{prf:proof}
+Differentiate the coordinate functions $\phi^a(\xi)$ and use the chain
+rule. Equating coefficients in $\omega=\omega'_aA^a{}_i d\xi^i$ and
+multiplying by $B$ gives the component rule. Thus
 $d\phi^a=A^a{}_i d\xi^i$ and $\omega'_a=B^i{}_a\omega_i$. This inverse
 transformation is what makes $\omega(v)$ independent of coordinates.
+:::
 
 A smooth vector field $V$ assigns $V_q\in T_qM$ at every point, with smooth
 components $V^i$ in every chart. It differentiates functions by
-$V[F]=V^i\partial_iF$. On the normal family, $V=\sigma\partial_\sigma$
-describes relative scale change. Its integral curves satisfy
-$\dot\mu=0$, $\dot\sigma=\sigma$, so $\sigma(\lambda)=\sigma(0)e^\lambda$.
-In the variance chart this same field is $2\tau\partial_\tau$.
+$V[F]=V^i\partial_iF$.
+
+:::{prf:proposition} Integral curves of relative scale change
+:label: prop-euclidean-to-manifold-scale-field
+
+On the normal family, the field $V=\sigma\partial_\sigma$ has integral
+curves $\mu(\lambda)=\mu(0)$, $\sigma(\lambda)=\sigma(0)e^\lambda$.
+In the variance chart $\tau=\sigma^2$, the same field is $2\tau\partial_\tau$.
+:::
+
+:::{prf:proof}
+The integral-curve equations are $\dot\mu=0$, $\dot\sigma=\sigma$;
+integrating them gives the stated curves. The identity
+$\partial_\sigma=2\sigma\partial_\tau$ gives the variance-chart field.
+:::
 
 ## Metrics and Fisher information
 
@@ -303,7 +407,19 @@ In the variance chart this same field is $2\tau\partial_\tau$.
 
 A Riemannian metric $g$ assigns a smooth positive definite symmetric bilinear
 form $g_q$ to every tangent space. Its components are
-$g_{ij}=g(\partial_i,\partial_j)$. Substituting
+$g_{ij}=g(\partial_i,\partial_j)$.
+
+:::{prf:proposition} Metric components under a change of chart
+:label: prop-euclidean-to-manifold-metric-charts
+
+Let $g$ be a Riemannian metric and let $\phi=f(\xi)$ be a smooth chart
+transition with inverse Jacobian $B^i{}_a=\partial\xi^i/\partial\phi^a$.
+Then $g'_{ab}=B^i{}_aB^j{}_bg_{ij}$, or
+$G(\phi)=Df(\xi)^{-\mathsf T}G(\xi)Df(\xi)^{-1}$.
+:::
+
+:::{prf:proof}
+Substituting
 $v^i=B^i{}_a v'^a$ and $w^j=B^j{}_b w'^b$ gives
 
 ```{math}
@@ -315,18 +431,34 @@ G(\phi)&=B^{\mathsf T}G(\xi)B
 \qquad \phi=f(\xi).
 \end{aligned}
 ```
+:::
 
 Every Riemannian metric has this covariance. It does not by itself select
 Fisher information. Even a Euclidean metric acquires nonconstant coefficients
-in nonlinear coordinates. On an angular sector of the Euclidean plane, write
+in nonlinear coordinates.
+
+:::{prf:proposition} Euclidean metrics in polar and variance coordinates
+:label: prop-euclidean-to-manifold-coordinate-metrics
+
+On a plane sector with $\rho>0$, the coordinates
+$x=\rho\cos\varphi$, $y=\rho\sin\varphi$ give
+$dx^2+dy^2=d\rho^2+\rho^2d\varphi^2$.
+On the normal parameter domain, $\tau=\sigma^2$ gives
+$d\mu^2+d\tau^2=d\mu^2+4\sigma^2d\sigma^2$; this is different from
+the metric $d\mu^2+d\sigma^2$.
+:::
+
+:::{prf:proof}
+Differentiating the polar map gives
+$dx=\cos\varphi\,d\rho-\rho\sin\varphi\,d\varphi$ and
+$dy=\sin\varphi\,d\rho+\rho\cos\varphi\,d\varphi$.
+Squaring and adding cancels the cross terms. On an angular sector, write
 $x=\rho\cos\varphi$, $y=\rho\sin\varphi$, with radius $\rho>0$. Then
 
 ```{math}
 :label: ig-polar-metric
 ds^2=dx^2+dy^2=d\rho^2+\rho^2d\varphi^2.
 ```
-
-Thus nonconstant metric coefficients alone do not establish curvature.
 
 For normals, choosing $d\mu^2+d\sigma^2$ in the scale chart and choosing
 $d\mu^2+d\tau^2$ afresh in the variance chart gives incompatible metrics:
@@ -335,6 +467,10 @@ $d\mu^2+d\tau^2$ afresh in the variance chart gives incompatible metrics:
 d\mu^2+d\tau^2=d\mu^2+4\sigma^2d\sigma^2.
 ```
 
+The second identity follows from $d\tau=2\sigma\,d\sigma$.
+:::
+
+Thus nonconstant metric coefficients alone do not establish curvature.
 At $\sigma=2$, the same unit scale velocity has squared lengths $1$ and $16$.
 A Euclidean metric chosen in one chart is legitimate, but must then be
 transformed by [](#ig-metric-coordinate-change). A statistical principle is
@@ -361,6 +497,25 @@ scores, and local integrable bounds allowing differentiation of the normalizer
 and the expectations used below. We will specify the additional Taylor and
 third-moment assumptions where they are needed.
 
+:::{prf:proposition} Centered scores and the Fisher quadratic form
+:label: prop-euclidean-to-manifold-score-metric
+
+Let $p_\xi>0$ be smooth densities on a fixed support relative to a fixed
+measure $\nu$. Assume square-integrable scores
+$s_{\xi,i}=\partial_i\log p_\xi$ and local integrable bounds permitting
+differentiation of $\int p_\xi\,d\nu=1$. Then
+$\partial_i p_\xi=p_\xi s_{\xi,i}$ and $\mathbb E_\xi s_{\xi,i}=0$.
+The quadratic form
+$g_\xi(v,w)=\mathbb E_\xi[(s_{\xi,i}v^i)(s_{\xi,j}w^j)]$
+is positive semidefinite, with $g_\xi(v,v)=0$ exactly when
+$v^i\partial_i p_\xi=0$ almost everywhere. Under a smooth invertible chart
+change with inverse Jacobian $B$, its matrix transforms as
+$I(\phi)=B^{\mathsf T}I(\xi)B$. A parameter-independent smooth invertible
+change of observation coordinates also preserves this form when the usual
+density change-of-variables formula applies.
+:::
+
+:::{prf:proof}
 Differentiating the density and its normalization gives
 
 ```{math}
@@ -382,16 +537,32 @@ I(\xi)&=\mathbb E_\xi[s_\xi(X)s_\xi(X)^{\mathsf T}].
 \end{aligned}
 ```
 
-It is positive semidefinite; our regularity assumption requires positive
-definiteness. A zero length direction would have zero first-order density
-change almost everywhere. Under reparameterization the score obeys
+Its value on $(v,v)$ is the expectation of a square. It vanishes exactly
+when $s_{\xi,i}v^i=0$ almost surely, equivalently
+$v^i\partial_i p_\xi=0$ almost everywhere by positivity of $p_\xi$. Under reparameterization the score obeys
 $s_{\phi,a}(x)=B^i{}_a s_{\xi,i}(x)$, so its covariance obeys exactly the
 metric transformation law. Invertible, parameter-independent changes of the
 observed variable also preserve Fisher information: their density Jacobian
 contributes a term to the log density whose parameter derivative is zero.
+:::
+
+We restrict to regions where this form is smooth and positive definite,
+so that it is a Riemannian metric.
 
 ### Computing the normal metric
 
+:::{prf:proposition} Fisher metric of a normal location-scale law
+:label: prop-euclidean-to-manifold-normal-metric
+
+For one observation from $N(\mu,\sigma^2)$, $\mu\in\mathbb R$, $\sigma>0$,
+the Fisher metric in $\xi=(\mu,\sigma)$ is
+$I(\xi)=\operatorname{diag}(\sigma^{-2},2\sigma^{-2})$, so
+$ds^2=(d\mu^2+2d\sigma^2)/\sigma^2$ and it is positive definite.
+In $\phi=(\mu,\tau)$, $\tau=\sigma^2$, its matrix is
+$I(\phi)=\operatorname{diag}(\tau^{-1},(2\tau^2)^{-1})$.
+:::
+
+:::{prf:proof}
 Set $Z=(X-\mu)/\sigma\sim N(0,1)$. Differentiating [](#ig-normal-density),
 
 ```{math}
@@ -417,9 +588,7 @@ ds^2&=\frac{d\mu^2+2d\sigma^2}{\sigma^2}.
 
 This is positive definite for every $\sigma>0$. On compact parameter
 neighborhoods with scale bounded away from zero, Gaussian tail bounds justify
-the differentiations and moments used here and later. A fixed location
-velocity has smaller Fisher length at a larger scale, because its change in
-log density is smaller in mean square.
+the differentiations and moments used here and later.
 
 Using $B=\operatorname{diag}(1,1/(2\sigma))$ in the variance chart gives
 
@@ -432,9 +601,37 @@ ds^2=\frac{d\mu^2+2d\sigma^2}{\sigma^2}
 ```
 
 Substitution of $v^\tau=2\sigma v^\sigma$ recovers the same squared length.
+:::
+
+A fixed location
+velocity has smaller Fisher length at a larger scale, because its change in
+log density is smaller in mean square.
 
 ### Natural and expectation coordinates
 
+:::{prf:proposition} Hessian metrics in the normal dual charts
+:label: prop-euclidean-to-manifold-normal-dual-metrics
+
+For the normal family in the natural and expectation charts above,
+$I(\theta)=\nabla^2\psi(\theta)=\operatorname{Cov}_\theta(t(X))$, namely
+
+$$
+I(\theta)=\begin{pmatrix}\sigma^2&2\mu\sigma^2\\
+2\mu\sigma^2&4\mu^2\sigma^2+2\sigma^4\end{pmatrix}.
+$$
+
+On $\eta^2>(\eta^1)^2$, the Legendre transform is
+$\psi^*(\eta)=-\tfrac12\log(2\pi e[\eta^2-(\eta^1)^2])$.
+Writing $\mu=\eta^1$ and $\tau=\eta^2-(\eta^1)^2$, the metric there is
+
+$$
+I(\eta)=\nabla^2\psi^*(\eta)=I(\theta(\eta))^{-1}
+=\begin{pmatrix}\tau^{-1}+2\mu^2\tau^{-2}&-\mu\tau^{-2}\\
+-\mu\tau^{-2}&(2\tau^2)^{-1}\end{pmatrix}.
+$$
+:::
+
+:::{prf:proof}
 In natural coordinates $s_\theta(X)=t(X)-\eta(\theta)$, so differentiating the
 normalizer in [](#ig-normal-natural-chart) gives the matrix identities
 
@@ -462,6 +659,8 @@ The expression for $\psi^*$ is the Legendre transform, attained at the natural
 parameter $\theta=\theta(\eta)$ corresponding to $\eta$. Indeed,
 $d\eta=I(\theta)\,d\theta$, whence $d\theta=I(\theta)^{-1}d\eta$;
 the metric transformation law gives $I(\eta)$.
+:::
+
 Here $[I(\theta)]_{ij}=\partial^2\psi/(\partial\theta^i\partial\theta^j)$
 and $[I(\eta)]_{ab}=\partial^2\psi^*/(\partial\eta^a\partial\eta^b)$.
 The inverse of one coordinate matrix supplies the components in the other
@@ -480,6 +679,30 @@ the uniqueness theorem is cited with its finite-space hypotheses.
 
 ### The Hessian of KL at the diagonal
 
+:::{prf:proposition} The local KL Hessian is Fisher information
+:label: prop-euclidean-to-manifold-kl-hessian
+
+Let $p_\xi>0$ be densities on a common support relative to a fixed measure,
+smooth in an open parameter domain. Suppose scores are square integrable
+and local integrable bounds permit twice differentiating normalization and
+differentiating $\mathbb E_\xi\ell_\zeta$ with the first law fixed, where
+$\ell_\zeta=\log p_\zeta$. Assume this expectation is finite near
+$\zeta=\xi$ and has a second-order Taylor expansion there. Then
+
+$$
+\mathbb E_\xi[\partial_i\partial_j\ell_\xi]=-g_{ij}(\xi),\qquad
+D(p_\xi\|p_{\xi+\delta\xi})
+=\tfrac12g_{ij}(\xi)\delta\xi^i\delta\xi^j+o(\|\delta\xi\|^2),
+$$
+
+where $D(p\|q)=\mathbb E_p\log(p/q)$ and
+$g_{ij}=\mathbb E_\xi[s_{\xi,i}s_{\xi,j}]$. If the Taylor remainder
+of $\zeta\mapsto\mathbb E_\xi\ell_\zeta$ is $O(\|\zeta-\xi\|^3)$,
+the displayed remainder is $O(\|\delta\xi\|^3)$.
+The Hessian in the second argument at equality is therefore the Fisher metric.
+:::
+
+:::{prf:proof}
 Use the direction
 $D(p_\xi\|p_\zeta)=\mathbb E_\xi[\ell_\xi(X)-\ell_\zeta(X)]$, holding the first
 law fixed. Differentiating normalization twice yields
@@ -491,12 +714,7 @@ law fixed. Differentiating normalization twice yields
 \end{aligned}
 ```
 
-Assume in addition that $\zeta\mapsto\mathbb E_\xi[\ell_\zeta(X)]$ has a
-third-order Taylor remainder bounded by a constant times
-$\lVert\zeta-\xi\rVert^3$ locally. For example, an integrable log density at
-$\xi$, together with locally bounded integrable third derivatives of the log
-density under $P_\xi$, suffices under the preceding regularity assumptions.
-Taylor expansion then gives
+Under the stated bound on the third-order Taylor remainder, expansion gives
 
 ```{math}
 :label: ig-kl-diagonal-hessian
@@ -510,9 +728,34 @@ argument at equality is therefore $g_{ij}$; because the first derivative
 vanishes there, this Hessian transforms tensorially. With only a second-order
 Taylor expansion, the remainder is $o(\lVert\delta\xi\rVert^2)$, as in the
 [Fisher-versus-$L^2$ note](./information-geometry-fisher-vs-l2.md#local-kl-divergence-gives-the-same-quadratic-form).
-Finite KL remains asymmetric and is not half the squared Fisher–Rao distance.
+:::
 
-For normals the exact expression is
+Finite KL remains asymmetric and is not half the squared Fisher–Rao distance.
+An integrable log density at $\xi$, together with locally bounded integrable
+third derivatives of the log density under $P_\xi$, suffices for the cubic
+remainder under the preceding regularity assumptions.
+
+:::{prf:proposition} KL divergence between two normal laws
+:label: prop-euclidean-to-manifold-normal-kl
+
+For $\mu,\widetilde\mu\in\mathbb R$ and $\sigma,\widetilde\sigma>0$,
+
+$$
+D\!\left(N(\mu,\sigma^2)\middle\|N(\widetilde\mu,\widetilde\sigma^2)\right)
+=\log\frac{\widetilde\sigma}{\sigma}-\frac12
+ +\frac{\sigma^2+(\mu-\widetilde\mu)^2}{2\widetilde\sigma^2}.
+$$
+
+For a fixed velocity $v=(v^\mu,v^\sigma)$, replacing the second law's
+parameters by $(\mu+\varepsilon v^\mu,\sigma+\varepsilon v^\sigma)$
+gives $\varepsilon^2((v^\mu)^2+2(v^\sigma)^2)/(2\sigma^2)+O(\varepsilon^3)$
+as $\varepsilon\to0$.
+:::
+
+:::{prf:proof}
+Subtract the two log densities and take expectation under
+$N(\mu,\sigma^2)$. Use $\mathbb E(X-\mu)^2=\sigma^2$ and
+$\mathbb E(X-\widetilde\mu)^2=\sigma^2+(\mu-\widetilde\mu)^2$ to obtain
 
 ```{math}
 D\!\left(N(\mu,\sigma^2)\middle\|N(\widetilde\mu,\widetilde\sigma^2)\right)
@@ -525,24 +768,64 @@ Putting $(\widetilde\mu,\widetilde\sigma)
 $v$ at $\sigma>0$ gives
 $\varepsilon^2((v^\mu)^2+2(v^\sigma)^2)/(2\sigma^2)+O(\varepsilon^3)$, in agreement with
 [](#ig-normal-fisher-metric).
+:::
 
 ### Coarse-graining, monotonicity, and sufficiency
 
+:::{prf:lemma} Scores after a parameter-independent kernel
+:label: lem-euclidean-to-manifold-score-conditioning
+
+Let $X\sim P_\xi$ have positive smooth densities on a fixed support and
+square-integrable score column $s^X_\xi$. Pass $X$ through a fixed Markov
+kernel $K(dy\mid x)$ to obtain $Y$. Suppose the output has smooth densities
+on a common support and differentiation can pass through the kernel integral.
+Then its score satisfies
+$s^Y_\xi(Y)=\mathbb E_\xi[s^X_\xi(X)\mid Y]$ almost surely.
+:::
+
+:::{prf:proof}
 Let an observation $X$ pass through a parameter-independent Markov kernel
-$K(dy\mid x)$, giving $Y$. A deterministic statistic $Y=S(X)$ is a special
-case. Assume the transformed model admits densities and differentiation under
+$K(dy\mid x)$, giving $Y$. Assume the transformed model admits densities and differentiation under
 the kernel integral, and that the original scores are square integrable.
 Denote the two score covectors by their component columns $s^X_\xi$ and
 $s^Y_\xi$, with components $s^X_{\xi,i}$ and $s^Y_{\xi,i}$. Differentiating
-the marginal density of $Y$ gives
+the marginal law gives, for bounded measurable $b$,
+$\partial_i\mathbb E_\xi b(Y)=\mathbb E_\xi[b(Y)s^X_{\xi,i}(X)]$.
+Computing the same derivative from the output density gives
+$\mathbb E_\xi[b(Y)s^Y_{\xi,i}(Y)]$. The defining property of conditional
+expectation therefore gives
 
 ```{math}
 :label: ig-score-under-statistic
 s^Y_{\xi,i}(Y)=\mathbb E_\xi[s^X_{\xi,i}(X)\mid Y].
 ```
+:::
 
-Thus the new directional score is the conditional expectation of the old one.
-The conditional-variance identity proves information monotonicity:
+A deterministic statistic $Y=S(X)$ is a special case of the kernel construction.
+
+:::{prf:corollary} Information loss and equality under a kernel
+:label: cor-euclidean-to-manifold-information-monotonicity
+
+Under the hypotheses of [](#lem-euclidean-to-manifold-score-conditioning),
+let $I_X=\mathbb E_\xi[s^X_\xi(s^X_\xi)^{\mathsf T}]$ and define $I_Y$
+similarly. At every parameter and for every tangent column $v$,
+
+$$
+I_X-I_Y=\mathbb E_\xi[\operatorname{Cov}_\xi(s^X_\xi\mid Y)]\succeq0,
+\qquad
+v^{\mathsf T}(I_X-I_Y)v
+=\mathbb E_\xi\operatorname{Var}_\xi(v^{\mathsf T}s^X_\xi\mid Y).
+$$
+
+Equality for $v$ holds exactly when $v^{\mathsf T}s^X_\xi(X)$ is determined
+by $Y$ almost surely. Matrix equality holds exactly when every score
+component is determined by $Y$ almost surely. The output matrix may be singular.
+:::
+
+:::{prf:proof}
+By [](#lem-euclidean-to-manifold-score-conditioning), the output score is
+the conditional expectation of the input score. Orthogonality of conditional
+expectation, applied componentwise and to $v^{\mathsf T}s^X_\xi$, gives
 
 ```{math}
 :label: ig-fisher-monotonicity
@@ -554,21 +837,46 @@ I_X(\xi)-I_Y(\xi)
  &=\mathbb E_\xi[\operatorname{Cov}_\xi(s^X_\xi(X)\mid Y)]\succeq0.
 \end{aligned}
 ```
+The expected conditional variance is zero exactly when the directional score
+equals its conditional expectation almost surely; applying this to each
+coordinate gives the matrix equality criterion.
+:::
 
 The superscripts $X,Y$ identify experiments; they are not tensor indices.
-The output information can be singular. Equality for one vector at one
-parameter means exactly that its directional score is determined by $Y$
-almost surely. Equality of the matrices at that parameter means this for
-every score component. This is a statement about first-order information at
-that point.
+This is a statement about first-order information at that point.
 
 A statistic is **sufficient for the family** if the conditional distribution
 of $X$ given the statistic can be chosen independently of the parameter.
 Equivalently in the regular dominated setting, the density factors into a
 parameter-dependent function of the statistic and a parameter-independent
-factor. Its scores are functions of the statistic, so sufficiency implies
-equality of Fisher information throughout the family.
+factor.
 
+:::{prf:proposition} Sufficiency preserves Fisher information
+:label: prop-euclidean-to-manifold-sufficient-information
+
+In a regular dominated model satisfying
+[](#lem-euclidean-to-manifold-score-conditioning) for $Y=S(X)$, suppose
+$p_\xi(x)=a_\xi(S(x))b(x)$ is a sufficient factorization, with
+$a_\xi>0$ differentiable in $\xi$ and $b$ parameter-independent.
+Then $I_S(\xi)=I_X(\xi)$ throughout the parameter domain.
+:::
+
+:::{prf:proof}
+Differentiating the log factorization gives
+$s^X_{\xi,i}(x)=\partial_i\log a_\xi(S(x))$, a function of the statistic.
+Apply the equality criterion in [](#cor-euclidean-to-manifold-information-monotonicity).
+:::
+
+:::{prf:proposition} Information preservation characterizes finite-model sufficiency
+:label: prop-euclidean-to-manifold-finite-sufficiency
+
+Let $X$ take values in a finite set, with strictly positive smooth probabilities
+$p_\xi(x)$ for $\xi$ in a connected open subset of $\mathbb R^d$.
+For a fixed statistic $S$, $I_S(\xi)=I_X(\xi)$ at every parameter if and
+only if the conditional law of $X$ given $S$ is parameter-independent.
+:::
+
+:::{prf:proof}
 For a precise converse, take a finite sample space with strictly positive
 smooth probabilities on a connected open parameter domain, and a fixed
 statistic $S$. Equality of Fisher information at **every** parameter is then
@@ -581,11 +889,27 @@ equivalent to sufficiency. To prove the converse, equality in
 ```
 
 Connectedness makes each conditional probability constant in the parameter,
-which proves sufficiency. Equality at one parameter, or in one direction,
+which proves sufficiency. Conversely, factor the finite positive joint
+probabilities into the marginal probability of $S$ and the parameter-independent
+conditional probability, then apply [](#prop-euclidean-to-manifold-sufficient-information).
+:::
+
+Equality at one parameter, or in one direction,
 is insufficient for this conclusion. Extensions beyond this finite positive
 setting need corresponding regularity assumptions; see
 [Ay, Jost, Lê, and Schwachhöfer on sufficient statistics](https://arxiv.org/abs/1207.6736).
 
+:::{prf:proposition} A sufficient normal sample statistic and the loss from signs
+:label: prop-euclidean-to-manifold-normal-coarsening
+
+For $n\ge1$ independent $N(\mu,\sigma^2)$ observations, $\sigma>0$,
+$S=(\sum_{a=1}^nX_a,\sum_{a=1}^nX_a^2)$ is sufficient and has information
+$nI(\mu,\sigma)$, where $I=\operatorname{diag}(\sigma^{-2},2\sigma^{-2})$.
+For one observation, $Y=\mathbf1_{\{X>0\}}$ instead has, at $\mu=0$,
+$I_Y(0,\sigma)=\operatorname{diag}(2/(\pi\sigma^2),0)$.
+:::
+
+:::{prf:proof}
 The normal family illustrates both preservation and loss. For independent
 observations $X_1,\ldots,X_n$, the statistic
 $S=(\sum_a X_a,\sum_a X_a^2)$ is sufficient by the factorization in
@@ -593,12 +917,15 @@ $S=(\sum_a X_a,\sum_a X_a^2)$ is sufficient by the factorization in
 namely $nI(\xi)$: independent zero-mean scores add and their cross-covariances
 vanish. By contrast, retaining only $Y=\mathbf 1_{\{X>0\}}$ gives a Bernoulli
 probability $q=\Phi(\mu/\sigma)$, where $\Phi$ is the standard-normal cdf.
-At $\mu=0$, $\partial_\mu q=1/(\sqrt{2\pi}\sigma)$ and
+The Bernoulli score is $(Y-q)\nabla q/[q(1-q)]$, whose second moment
+is $(\nabla q)(\nabla q)^{\mathsf T}/[q(1-q)]$.
+At $\mu=0$, $q=1/2$, $\partial_\mu q=1/(\sqrt{2\pi}\sigma)$ and
 $\partial_\sigma q=0$, so
 
 ```{math}
 I_Y(0,\sigma)=\begin{pmatrix}2/(\pi\sigma^2)&0\\0&0\end{pmatrix}.
 ```
+:::
 
 The sign loses all local scale information and retains only a fraction
 $2/\pi$ of the location information there.
@@ -640,14 +967,30 @@ not prove it: see Čencov's
 and the explicit finite-simplex formulation in Theorem 2 of
 [Montúfar, Rauh, and Ay (2014)](https://www.mdpi.com/1099-4300/16/6/3207).
 
+:::{prf:corollary} Pullback and reversible Markov embeddings
+:label: cor-euclidean-to-manifold-finite-pullback
+
+For a regular positive smooth finite model $p_\xi(a)$, the pullback of the simplex
+form $h_p(u,w)=c\sum_a u(a)w(a)/p(a)$, $c>0$, is $c$ times the Fisher
+form. If a family of metrics is monotone under Markov maps and $K$ has
+a Markov left inverse $L$ with $LK=\mathrm{id}$, with both maps acting
+on the relevant simplex interiors, then $K$ is an isometry for that family.
+:::
+
+:::{prf:proof}
 Pulling [](#ig-chentsov-finite) back along a regular finite statistical model,
 with $u(a)=\partial_i p_\xi(a)v^i=p_\xi(a)s_{\xi,i}(a)v^i$, gives $cg_\xi(v,w)$.
+For the second assertion, monotonicity in both directions gives
+$h_p(v,v)\ge h_{Kp}(Kv,Kv)\ge h_{LKp}(LKv,LKv)=h_p(v,v)$.
+Thus the squared lengths agree; polarization gives equality of the bilinear
+forms. This explains why monotonicity implies the embedding invariance in
+the cited Čencov classification.
+:::
+
 We choose $c=1$ for information per observation. General Markov maps are
 contractions by [](#ig-fisher-monotonicity), whereas sufficient transformations
 preserve information. Requiring invariance under *every* Markov map would be
-wrong: a kernel can discard the observation completely. Equivalently, demanding
-monotonicity for a family of metrics under all such maps forces the isometries
-above, since $K$ and its Markov left inverse give opposite inequalities.
+wrong: a kernel can discard the observation completely.
 
 For general sample spaces, @ay2017information
 develop invariance and uniqueness results for suitable integrable models and
@@ -662,6 +1005,25 @@ directly cover densities on $\mathbb R$.
 
 ### Density $L^2$ and square-root densities
 
+:::{prf:proposition} Raw density distances depend on observation scale
+:label: prop-euclidean-to-manifold-raw-density
+
+Let $p_X,q_X$ be Lebesgue densities on $\mathbb R$ with $p_X-q_X\in L^2$.
+For $Y=aX$, $a>0$, let $p_Y,q_Y$ be the corresponding transformed densities.
+Then $\int(p_Y-q_Y)^2\,dy=a^{-1}\int(p_X-q_X)^2\,dx$.
+For a parameterized model differentiable into $L^2(\nu)$, the form
+$g^{\mathrm{raw}}_{ij}=\int(\partial_i p_\xi)(\partial_j p_\xi)\,d\nu$
+nevertheless obeys the covariant metric transformation law under smooth
+invertible parameter changes.
+:::
+
+:::{prf:proof}
+Use $p_Y(y)=a^{-1}p_X(y/a)$, and likewise for $q_Y$, then substitute
+$y=ax$ in the integral. For parameter changes,
+$\partial_{\phi^a}p=B^i{}_a\partial_{\xi^i}p$; inserting this in the
+inner product gives $g'_{ab}=B^i{}_aB^j{}_bg_{ij}$.
+:::
+
 The raw density metric, when finite,
 $g^{\mathrm{raw}}_{ij}=\int(\partial_i p_\xi)(\partial_j p_\xi)\,d\nu$, also
 transforms correctly under parameter changes. It depends on the reference
@@ -670,12 +1032,36 @@ $a>0$, $\int(p_Y-q_Y)^2\,dy=a^{-1}\int(p_X-q_X)^2\,dx$.
 It therefore differs from Fisher geometry even though both constructions are
 covariant under reparameterization.
 
+:::{prf:proposition} Square-root densities induce Fisher geometry
+:label: prop-euclidean-to-manifold-square-root
+
+Let $p_\xi>0$ be smooth densities relative to a fixed measure $\nu$, with
+square-integrable scores $s_{\xi,i}=\partial_i\log p_\xi$.
+Assume $\xi\mapsto2\sqrt{p_\xi}$ is differentiable into $L^2(\nu)$.
+Its derivative is $\partial_i(2\sqrt{p_\xi})=\sqrt{p_\xi}s_{\xi,i}$.
+Its pullback of the $L^2$ inner product is
+$g_{ij}=\mathbb E_\xi[s_{\xi,i}s_{\xi,j}]$. For
+$H^2(p,q)=\tfrac12\int(\sqrt p-\sqrt q)^2\,d\nu$,
+
+$$
+H^2(p_\xi,p_{\xi+\delta\xi})
+=\tfrac18g_{ij}(\xi)\delta\xi^i\delta\xi^j+o(\|\delta\xi\|^2).
+$$
+:::
+
+:::{prf:proof}
 Assuming differentiability into $L^2(\nu)$, the map $p\mapsto2\sqrt p$
 has derivative $\partial_i(2\sqrt{p_\xi})=\sqrt{p_\xi}\,s_{\xi,i}$.
-Its pullback of the $L^2$ inner product is exactly $g_{ij}$. With
+Taking inner products of the derivatives gives
+$\int p_\xi s_{\xi,i}s_{\xi,j}\,d\nu=g_{ij}$.
+Differentiability gives an $L^2$ remainder $o(\|\delta\xi\|)$; squaring
+the norm of the linear term plus this remainder gives the quadratic
+expansion. With
 $H^2(p,q)=\tfrac12\int(\sqrt p-\sqrt q)^2\,d\nu$, this gives
 $H^2(p_\xi,p_{\xi+\delta\xi})=\tfrac18g_{ij}\delta\xi^i\delta\xi^j
 +o(\lVert\delta\xi\rVert^2)$.
+:::
+
 The [Fisher-versus-$L^2$ note](./information-geometry-fisher-vs-l2.md#three-different-uses-of-l2)
 explains the distinct roles of parameter norms, scores in $L^2(P_\xi)$, and
 densities in $L^2(\nu)$. A square-root embedding preserves tangent lengths;
@@ -713,12 +1099,28 @@ Define the Christoffel symbols in a coordinate basis by
 \nabla_{\partial_i}\partial_j=\Gamma_{ij}^k\partial_k.
 ```
 
+:::{prf:lemma} Coordinate form of a covariant derivative
+:label: lem-euclidean-to-manifold-connection-coordinates
+
+For an affine connection with $\nabla_{\partial_i}\partial_j=
+\Gamma_{ij}^k\partial_k$ and smooth fields $U=U^i\partial_i$,
+$V=V^j\partial_j$,
+$\nabla_UV=U^i(\partial_iV^k+\Gamma_{ij}^kV^j)\partial_k$.
+Conversely, any smooth coefficients $\Gamma_{ij}^k$ define an affine
+connection on the chart by this formula.
+:::
+
+:::{prf:proof}
 Expanding $U=U^i\partial_i$ and $V=V^j\partial_j$ with the axioms gives
 
 ```{math}
 :label: ig-covariant-derivative-coordinates
 \nabla_UV=U^i\bigl(\partial_iV^k+\Gamma_{ij}^kV^j\bigr)\partial_k.
 ```
+Conversely, the displayed expression is bilinear over $\mathbb R$,
+linear over smooth functions in $U$, and obeys the Leibniz rule in $V$,
+so it defines a connection.
+:::
 
 The second term accounts for the change of the coordinate basis under the
 connection. Prescribing smooth $\Gamma_{ij}^k$ defines a connection on a
@@ -726,6 +1128,21 @@ chart; prescriptions on overlapping charts must satisfy the next law.
 
 ### Why Christoffel symbols are not a tensor
 
+:::{prf:proposition} Transformation law for Christoffel symbols
+:label: prop-euclidean-to-manifold-connection-transformation
+
+For a smooth chart transition $\phi=f(\xi)$, let
+$A^a{}_i=\partial\phi^a/\partial\xi^i$ and
+$B^i{}_a=\partial\xi^i/\partial\phi^a$. The coefficients of any affine
+connection satisfy
+
+$$
+\Gamma'{}^c_{ab}=A^c{}_kB^i{}_aB^j{}_b\Gamma_{ij}^k
+ +A^c{}_k\frac{\partial^2\xi^k}{\partial\phi^a\partial\phi^b}.
+$$
+:::
+
+:::{prf:proof}
 Use $\phi=f(\xi)$, $A^a{}_i=\partial\phi^a/\partial\xi^i$, and
 $B^i{}_a=\partial\xi^i/\partial\phi^a$ as before. Apply the connection
 axioms to $\nabla_{B^i{}_a\partial_i}(B^j{}_b\partial_j)$ to obtain
@@ -736,6 +1153,7 @@ axioms to $\nabla_{B^i{}_a\partial_i}(B^j{}_b\partial_j)$ to obtain
 =A^c{}_k B^i{}_a B^j{}_b\Gamma_{ij}^k
  +A^c{}_k\frac{\partial^2\xi^k}{\partial\phi^a\partial\phi^b}.
 ```
+:::
 
 A $(1,2)$-tensor has only the first term. The inhomogeneous second derivative
 is why coefficients that vanish in one chart need not vanish in another.
@@ -751,10 +1169,24 @@ This is a coordinate-flat connection chosen on the parameter domain; it is
 not yet the Fisher Levi-Civita connection. The example isolates the effect of
 the second term in [](#ig-christoffel-transformation).
 
-The difference of two connections *is* a $(1,2)$-tensor: their inhomogeneous
-terms cancel. Equivalently, the Leibniz terms cancel in
+:::{prf:corollary} The difference of connections is a tensor
+:label: cor-euclidean-to-manifold-connection-difference
+
+For two affine connections $\nabla,\widetilde\nabla$ on the same smooth
+manifold, $(U,V)\mapsto\nabla_UV-\widetilde\nabla_UV$ is a smooth
+$(1,2)$-tensor: it is linear over smooth functions in both arguments.
+:::
+
+:::{prf:proof}
+Subtracting the transformation laws in
+[](#prop-euclidean-to-manifold-connection-transformation) cancels their
+inhomogeneous terms, giving the $(1,2)$-tensor transformation law.
+Equivalently, the Leibniz terms cancel in
 $\nabla_UV-\widetilde\nabla_UV$, leaving an expression linear over functions
-in both $U$ and $V$. We will use this fact to compare statistical connections.
+in both $U$ and $V$.
+:::
+
+We will use this fact to compare statistical connections.
 
 ### Along a curve: parallel transport and geodesics
 
@@ -769,12 +1201,30 @@ on all of $M$. Its covariant derivative is
  +\Gamma_{ij}^k(\xi(c(\lambda)))\dot\xi^i V^j\right)\partial_k.
 ```
 
-The transformation law makes this independent of coordinates. A field is
-**parallel** when $DV/d\lambda=0$. Given an initial vector, this linear ODE has a
-unique solution along a smooth curve on a compact parameter interval. It
-defines a linear isomorphism between the endpoint tangent spaces, called
-parallel transport. Reversing the curve gives its inverse. Transport generally
-depends on the path, not just its endpoints.
+:::{prf:proposition} Parallel transport along a fixed curve
+:label: prop-euclidean-to-manifold-parallel-transport
+
+Let $\nabla$ be a smooth affine connection and let $c:[a,b]\to M$ be a
+smooth curve. The coordinate expression
+$(DV/d\lambda)^k=\dot V^k+\Gamma_{ij}^k(c)\dot\xi^iV^j$
+defines a coordinate-independent derivative of fields along $c$.
+For each initial vector at $c(a)$, the equation $DV/d\lambda=0$ has a
+unique solution on $[a,b]$. Its endpoint map is a linear isomorphism
+$T_{c(a)}M\to T_{c(b)}M$, inverted by transport along the reversed curve.
+:::
+
+:::{prf:proof}
+Differentiate $V'^a=A^a{}_i(c)V^i$ along the curve and insert
+[](#prop-euclidean-to-manifold-connection-transformation). The derivatives
+of the transition Jacobians cancel, leaving $(DV/d\lambda)'=A(DV/d\lambda)$,
+so the derivative is coordinate-independent. A field is
+**parallel** when $DV/d\lambda=0$. Smooth coefficients give existence and uniqueness
+for linear ODEs on each compact chart segment; patch finitely many such
+segments along the curve. Linearity follows from the homogeneous equation,
+and uniqueness identifies reversed transport as its inverse.
+:::
+
+Transport generally depends on the path, not just its endpoints.
 
 An affinely parameterized **geodesic** has parallel velocity:
 
@@ -802,8 +1252,20 @@ T(\partial_i,\partial_j)
 =(\Gamma_{ij}^k-\Gamma_{ji}^k)\partial_k.
 ```
 
-It is a tensor. A connection is torsion-free exactly when its lower
-Christoffel indices are symmetric in a coordinate basis.
+:::{prf:proposition} Torsion is a tensor
+:label: prop-euclidean-to-manifold-torsion
+
+For an affine connection, $T(U,V)=\nabla_UV-\nabla_VU-[U,V]$ is a
+$(1,2)$-tensor. It vanishes exactly when $\Gamma_{ij}^k=\Gamma_{ji}^k$
+in a coordinate basis.
+:::
+
+:::{prf:proof}
+In coordinates, the derivative terms in the two covariant derivatives
+cancel those in the Lie bracket, leaving
+$T(U,V)^k=(\Gamma_{ij}^k-\Gamma_{ji}^k)U^iV^j$.
+This is linear over functions in both fields and gives the vanishing criterion.
+:::
 
 A connection is **metric-compatible**, written $\nabla g=0$, when
 
@@ -812,15 +1274,31 @@ A connection is **metric-compatible**, written $\nabla g=0$, when
 U[g(V,W)]=g(\nabla_UV,W)+g(V,\nabla_UW).
 ```
 
-Equivalently,
+:::{prf:proposition} Metric compatibility and preservation under transport
+:label: prop-euclidean-to-manifold-metric-transport
+
+An affine connection is compatible with a Riemannian metric $g$ if and only if
+$\partial_i g_{jk}=\Gamma_{ij}^{\ell}g_{\ell k}
++\Gamma_{ik}^{\ell}g_{j\ell}$ in every chart. For such a connection,
+parallel fields $V,W$ along the same smooth curve have constant $g(V,W)$,
+and every affinely parameterized geodesic has constant speed.
+:::
+
+:::{prf:proof}
+Apply the compatibility identity to the coordinate fields and expand
+general fields by the product rule. This proves the equivalence with
 $\partial_i g_{jk}=\Gamma_{ij}^{\ell}g_{\ell k}
 +\Gamma_{ik}^{\ell}g_{j\ell}$. Along a curve this product rule shows that
 parallel transport preserves inner products. In particular, a geodesic for
 a metric-compatible connection has constant speed.
+:::
 
-The **Levi-Civita connection** $\nabla^{\mathrm{LC}}$ is the unique
-connection that is both torsion-free and compatible with $g$. The identity
-that determines it is the Koszul formula:
+:::{prf:theorem} Existence and uniqueness of the Levi-Civita connection
+:label: thm-euclidean-to-manifold-levi-civita
+
+Every smooth Riemannian metric $g$ on a smooth manifold has a unique
+torsion-free, metric-compatible affine connection $\nabla^{\mathrm{LC}}$.
+For all smooth fields $U,V,W$, it is determined by the Koszul formula:
 
 ```{math}
 :label: ig-koszul-formula
@@ -831,6 +1309,12 @@ that determines it is the Koszul formula:
 \end{aligned}
 ```
 
+Its coordinate coefficients are
+$\Gamma^{(0)k}_{ij}=\tfrac12g^{k\ell}
+(\partial_i g_{j\ell}+\partial_j g_{i\ell}-\partial_\ell g_{ij})$.
+:::
+
+:::{prf:proof}
 To see why this determines the connection, write the compatibility identity
 for the three cyclic choices of $U,V,W$, add the first two and subtract the
 third, and replace $\nabla_UV-\nabla_VU$ by $[U,V]$. This gives
@@ -850,8 +1334,11 @@ vanish, yielding the computable formula
              -\partial_\ell g_{ij}\right).
 ```
 
+:::
+
 We write $(0)$ for Levi-Civita because it will be the $\alpha=0$ statistical
-connection. We use the standard Riemannian result that its geodesics minimize
+connection. We cite, without proving here, the standard Riemannian result
+that its geodesics minimize
 length on sufficiently short segments. It does not say every geodesic segment
 is globally minimizing on every manifold. For background on this result and
 the connection framework, see §2 of
@@ -861,6 +1348,24 @@ the connection framework, see §2 of
 
 ### Christoffel symbols and parallel transport
 
+:::{prf:proposition} Normal Levi-Civita coefficients and fixed-mean transport
+:label: prop-euclidean-to-manifold-normal-lc
+
+For the normal Fisher metric $ds^2=(d\mu^2+2d\sigma^2)/\sigma^2$ on
+$\mu\in\mathbb R$, $\sigma>0$, the only nonzero Levi-Civita coefficients are
+
+$$
+\Gamma^{(0)\mu}_{\mu\sigma}=\Gamma^{(0)\mu}_{\sigma\mu}=-1/\sigma,
+\qquad\Gamma^{(0)\sigma}_{\mu\mu}=1/(2\sigma),
+\qquad\Gamma^{(0)\sigma}_{\sigma\sigma}=-1/\sigma.
+$$
+
+Along a smooth fixed-mean curve from scale $\sigma_0$ to $\sigma_1$,
+parallel transport multiplies both coordinate components by $\sigma_1/\sigma_0$
+and preserves Fisher inner products.
+:::
+
+:::{prf:proof}
 Substituting [](#ig-normal-fisher-metric) into
 [](#ig-levi-civita-christoffels) gives exactly these nonzero coefficients:
 
@@ -878,9 +1383,6 @@ For example,
 $\Gamma^{(0)\sigma}_{\mu\mu}
 =-\tfrac12 g^{\sigma\sigma}\partial_\sigma g_{\mu\mu}
 =-\tfrac12(\sigma^2/2)(-2/\sigma^3)=1/(2\sigma)$.
-This coefficient already shows why a horizontal line with constant scale
-and changing mean is not a Levi-Civita geodesic in the full family.
-
 Along any fixed-mean curve $c(\lambda)=(\mu_0,\sigma(\lambda))$, the parallel
 equations reduce to
 
@@ -892,11 +1394,44 @@ equations reduce to
 
 Thus a vector transported from scale $\sigma_0$ to scale $\sigma_1$ has
 components multiplied by $\sigma_1/\sigma_0$. Its Fisher squared length
-$( (V^\mu)^2+2(V^\sigma)^2 )/\sigma^2$ stays fixed. Constant coordinate
-components would not give parallel transport along this curve.
+$( (V^\mu)^2+2(V^\sigma)^2 )/\sigma^2$ stays fixed.
+:::
+
+This coefficient already shows why a horizontal line with constant scale
+and changing mean is not a Levi-Civita geodesic in the full family.
+
+Constant coordinate components would not give parallel transport along
+a changing-scale curve.
 
 ### Hyperbolic curvature and geodesics
 
+:::{prf:proposition} Curvature and geodesics of the normal Fisher metric
+:label: prop-euclidean-to-manifold-normal-hyperbolic
+
+On the full normal family with Fisher metric, put $u=\mu/\sqrt2$.
+Then $ds^2=2(du^2+d\sigma^2)/\sigma^2$, and the Gaussian curvature is
+$-1/2$, using $R(U,V)W=\nabla_U\nabla_VW-\nabla_V\nabla_UW-\nabla_{[U,V]}W$.
+The affinely parameterized Levi-Civita geodesics satisfy
+
+$$
+\ddot\mu-2\dot\mu\dot\sigma/\sigma=0,\qquad
+\ddot\sigma+\dot\mu^2/(2\sigma)-\dot\sigma^2/\sigma=0.
+$$
+
+They are precisely the vertical solutions
+$\mu=c$, $\sigma(\lambda)=\sigma(0)e^{b\lambda}$ with
+$\sigma(0)>0$, $b\in\mathbb R$, and the nonvertical solutions
+
+$$
+\mu(\lambda)=c+\sqrt2 R\tanh(b\lambda+a),\qquad
+\sigma(\lambda)=R\operatorname{sech}(b\lambda+a),
+\quad c,a\in\mathbb R,\ R>0,\ b\ne0.
+$$
+
+Both forms have constant squared speed $2b^2$.
+:::
+
+:::{prf:proof}
 Make the local coordinate substitution $\mu=\sqrt2\,u$. Then
 
 ```{math}
@@ -957,9 +1492,32 @@ $c=\mu+2\sigma\dot\sigma/\dot\mu$, then choose $R,a,b$ to match the point
 and velocity. Local uniqueness for the geodesic ODE identifies the solution.
 The images are half-ellipses in $(\mu,\sigma)$ and semicircles in
 $(u,\sigma)$; their parameterizations are not linear in the angle.
+:::
 
-For endpoints $(\mu_0,\sigma_0)$ and $(\mu_1,\sigma_1)$ with different
-means, the center and radius are
+:::{prf:corollary} Geodesic segments joining normal parameters
+:label: cor-euclidean-to-manifold-normal-geodesic-endpoints
+
+For endpoints $(\mu_0,\sigma_0)$, $(\mu_1,\sigma_1)$ with positive scales
+and $\mu_0\ne\mu_1$, put
+
+$$
+c=\frac{\mu_1^2-\mu_0^2+2(\sigma_1^2-\sigma_0^2)}{2(\mu_1-\mu_0)},
+\quad R^2=\frac{(\mu_0-c)^2}{2}+\sigma_0^2,
+$$
+
+and set $a=\operatorname{artanh}((\mu_0-c)/(\sqrt2R))$,
+$b=\operatorname{artanh}((\mu_1-c)/(\sqrt2R))-a$.
+The nonvertical geodesic in [](#prop-euclidean-to-manifold-normal-hyperbolic)
+then joins these endpoints over $0\le\lambda\le1$.
+For $\mu_0=\mu_1$, the corresponding geodesic is
+$\mu=\mu_0$, $\sigma(\lambda)=\sigma_0^{1-\lambda}\sigma_1^\lambda$.
+:::
+
+:::{prf:proof}
+Use the half-ellipse equation in
+[](#prop-euclidean-to-manifold-normal-hyperbolic) at the two endpoints.
+Subtracting the equations determines $c$; either equation then determines
+$R>0$. Thus the center and radius are
 
 ```{math}
 c=\frac{\mu_1^2-\mu_0^2+2(\sigma_1^2-\sigma_0^2)}{2(\mu_1-\mu_0)},
@@ -972,13 +1530,37 @@ $a=\operatorname{artanh}((\mu_0-c)/(\sqrt2R))$ and
 $b=\operatorname{artanh}((\mu_1-c)/(\sqrt2R))-a$ in
 [](#ig-normal-lc-geodesic-solutions) to join them over $0\leq \lambda\leq1$.
 For equal means the corresponding segment is
-$\sigma(\lambda)=\sigma_0^{1-\lambda}\sigma_1^\lambda$. In this complete
-hyperbolic plane, these segments are the unique minimizing paths up to
-reparameterization.
+$\sigma(\lambda)=\sigma_0^{1-\lambda}\sigma_1^\lambda$.
+:::
+
+In this complete hyperbolic plane, these segments are the unique minimizing
+paths up to reparameterization. This global minimizing property is cited,
+not proved here; see the Costa–Santos–Strapasson source in the next section.
 
 ### Fisher–Rao distance between two normals
 
-The upper-half-plane distance satisfies
+:::{prf:corollary} Fisher–Rao distance within the normal family
+:label: cor-euclidean-to-manifold-normal-distance
+
+For normal laws with $\mu_0,\mu_1\in\mathbb R$ and $\sigma_0,\sigma_1>0$,
+the intrinsic Fisher distance within the full normal family is
+
+$$
+d_{\mathrm{FR}}(N(\mu_0,\sigma_0^2),N(\mu_1,\sigma_1^2))
+=\sqrt2\,\operatorname{arcosh}\!\left(
+1+\frac{(\mu_1-\mu_0)^2+2(\sigma_1-\sigma_0)^2}{4\sigma_0\sigma_1}
+\right).
+$$
+
+For equal means it is $\sqrt2|\log(\sigma_1/\sigma_0)|$.
+For equal scales $\sigma$ and distinct means it is strictly smaller than
+$|\mu_1-\mu_0|/\sigma$, the distance restricted to the fixed-scale subfamily.
+:::
+
+:::{prf:proof}
+By [](#prop-euclidean-to-manifold-normal-hyperbolic), lengths are
+$\sqrt2$ times those in the upper-half-plane metric with $u=\mu/\sqrt2$.
+Use the cited hyperbolic distance formula, which satisfies
 $\cosh d_H=1+((u_1-u_0)^2+(\sigma_1-\sigma_0)^2)/(2\sigma_0\sigma_1)$.
 Rescaling by [](#ig-normal-hyperbolic-metric) gives
 
@@ -1008,9 +1590,14 @@ the same expression. In particular,
 ```
 
 In the fixed-scale one-dimensional subfamily, the distance is instead
-$|\mu_1-\mu_0|/\sigma$. The full-family minimizing path can increase scale
-while changing location, then decrease it again. For distinct means it is
-strictly shorter than the horizontal fixed-scale path.
+$|\mu_1-\mu_0|/\sigma$. For distinct means put $z=|\mu_1-\mu_0|/(\sqrt2\sigma)>0$.
+Then $\operatorname{arcosh}(1+z^2/2)=2\operatorname{arsinh}(z/2)<z$
+because the derivative of $\operatorname{arsinh}(t)$ is less than one for
+$t>0$. Multiplying by $\sqrt2$ proves the strict comparison.
+:::
+
+The full-family minimizing path can increase scale
+while changing location, then decrease it again.
 
 ## Statistical connections and duality
 
@@ -1032,8 +1619,7 @@ C_{ijk}=\mathbb E_\xi[s_{\xi,i}(X)s_{\xi,j}(X)s_{\xi,k}(X)],\qquad
 C(U,V,W)=C_{ijk}U^iV^jW^k.
 ```
 
-It is a symmetric covariant tensor because each score transforms as a
-covector. Raising the last index defines
+Raising the last index defines
 $(C^\sharp(U,V))^k=g^{k\ell}C_{ij\ell}U^iV^j$.
 
 For $\alpha\in\mathbb R$, the statistical **$\alpha$-connection** has
@@ -1051,13 +1637,35 @@ coefficients with the output index lowered
 ```
 
 The comma separates the lowered output index; these coefficients themselves
-are not a covariant tensor. Under a change of chart, the second derivative
-of $\ell_\xi$ contributes the inhomogeneous term in
-[](#ig-christoffel-transformation). The coefficients are symmetric in $i,j$,
-so all these connections are torsion-free. We use the convention
+are not a covariant tensor. We use the convention
 $\nabla^{(e)}=\nabla^{(1)}$ and $\nabla^{(m)}=\nabla^{(-1)}$.
 
-We can identify their relation to Levi-Civita directly. For a function
+:::{prf:proposition} The cubic tensor and the Levi-Civita relation
+:label: prop-euclidean-to-manifold-alpha-connection
+
+Let $p_\xi>0$ be a smooth model on a fixed support with smooth positive
+definite Fisher metric. Assume the expectations defining $C$ and the
+connection coefficients are smooth, finite absolute third score moments,
+integrability of $(\partial_i\partial_j\ell_\xi)s_{\xi,k}$, and local
+integrable bounds permitting differentiation of the expectations defining
+the Fisher metric. Then $C_{ijk}=\mathbb E_\xi[s_{\xi,i}s_{\xi,j}s_{\xi,k}]$
+defines a symmetric covariant tensor. For every $\alpha\in\mathbb R$, the
+coefficients in [](#ig-alpha-expectation-definition) define a torsion-free
+connection and satisfy
+
+$$
+\Gamma^{(0)}_{ij,k}
+=\mathbb E_\xi[(\partial_i\partial_j\ell_\xi)s_{\xi,k}]+\tfrac12C_{ijk},
+\qquad
+\nabla^{(\alpha)}_UV=\nabla^{\mathrm{LC}}_UV-\tfrac\alpha2 C^\sharp(U,V),
+$$
+
+where $(C^\sharp(U,V))^k=g^{k\ell}C_{ij\ell}U^iV^j$.
+:::
+
+:::{prf:proof}
+Each score transforms as a covector, so its third product expectation is a
+symmetric covariant tensor. To identify the connection, for a function
 $F=F(\xi,X)$ smooth in the parameters, the stated differentiation assumptions give
 $\partial_i\mathbb E_\xi[F]=\mathbb E_\xi[\partial_iF+Fs_{\xi,i}(X)]$.
 Applying it to $g_{jk}$ gives
@@ -1082,7 +1690,10 @@ terms cancel, leaving
 ```
 
 This proves that the $\alpha=0$ connection is Levi-Civita and expresses the
-difference of connections as a tensor.
+difference of connections as a tensor. Subtracting a smooth $(1,2)$-tensor
+from a connection preserves the connection axioms. Symmetry in $i,j$
+preserves torsion-freeness and gives the claimed connections in all charts.
+:::
 
 ### Dual connections
 
@@ -1093,13 +1704,32 @@ Two connections $\nabla$ and $\nabla^*$ are **dual with respect to $g$** when
 U[g(V,W)]=g(\nabla_UV,W)+g(V,\nabla^*_UW).
 ```
 
+:::{prf:corollary} Duality of opposite alpha-connections
+:label: cor-euclidean-to-manifold-alpha-duality
+
+Under [](#prop-euclidean-to-manifold-alpha-connection),
+$\nabla^{(\alpha)}$ and $\nabla^{(-\alpha)}$ are dual with respect to $g$:
+
+$$
+U[g(V,W)]=g(\nabla^{(\alpha)}_UV,W)+g(V,\nabla^{(-\alpha)}_UW).
+$$
+
+Along any smooth curve, a pair of fields parallel for these respective
+connections has constant inner product. Moreover,
+$(\nabla^{(\alpha)}_U g)(V,W)=\alpha C(U,V,W)$.
+:::
+
+:::{prf:proof}
 Substitute [](#ig-alpha-lc-relation) on the right, once with $\alpha$ and
 once with $-\alpha$. The cubic terms cancel by symmetry, and Levi-Civita
 compatibility supplies the left side. Thus $\nabla^{(\alpha)}$ and
 $\nabla^{(-\alpha)}$ are dual, including the e/m pair. If $V$ is parallel
 for one connection and $W$ for its dual along the same curve, $g(V,W)$ is
-constant. Neither transport separately needs to preserve $g(V,V)$.
-Indeed, $(\nabla^{(\alpha)}_U g)(V,W)=\alpha C(U,V,W)$, so nonzero $\alpha$
+constant. Subtracting the two terms with the same $\alpha$ connection from
+$U[g(V,W)]$ instead leaves $\alpha C(U,V,W)$, proving the last identity.
+:::
+
+Neither transport separately needs to preserve $g(V,V)$; nonzero $\alpha$
 generally breaks metric compatibility.
 
 These definitions and the sign convention agree with
@@ -1110,6 +1740,33 @@ regularity assumptions.
 
 ### The normal alpha-connections
 
+:::{prf:proposition} Normal cubic tensor, alpha-geodesics, and transport
+:label: prop-euclidean-to-manifold-normal-alpha
+
+On the normal family $N(\mu,\sigma^2)$, $\sigma>0$, the only nonzero cubic
+components are $C_{\mu\mu\sigma}=C_{\mu\sigma\mu}=C_{\sigma\mu\mu}=2/\sigma^3$
+and $C_{\sigma\sigma\sigma}=8/\sigma^3$. For every $\alpha\in\mathbb R$,
+the only nonzero coefficients, apart from values that vanish at special
+$\alpha$, are
+
+$$
+\Gamma^{(\alpha)\mu}_{\mu\sigma}=\Gamma^{(\alpha)\mu}_{\sigma\mu}
+=-\frac{1+\alpha}{\sigma},\quad
+\Gamma^{(\alpha)\sigma}_{\mu\mu}=\frac{1-\alpha}{2\sigma},\quad
+\Gamma^{(\alpha)\sigma}_{\sigma\sigma}=-\frac{1+2\alpha}{\sigma}.
+$$
+
+Its affinely parameterized geodesics satisfy
+$\ddot\mu-2(1+\alpha)\dot\mu\dot\sigma/\sigma=0$ and
+$\ddot\sigma+(1-\alpha)\dot\mu^2/(2\sigma)
+-(1+2\alpha)\dot\sigma^2/\sigma=0$.
+Along a fixed-mean curve from scale $\sigma_0$ to $\sigma(\lambda)$,
+parallel transport multiplies the $\mu$ component by
+$(\sigma(\lambda)/\sigma_0)^{1+\alpha}$ and the $\sigma$ component by
+$(\sigma(\lambda)/\sigma_0)^{1+2\alpha}$.
+:::
+
+:::{prf:proof}
 For the scores $Z/\sigma$ and $(Z^2-1)/\sigma$, use
 $\mathbb E[Z^6]=15$. The only nonzero cubic components are
 
@@ -1146,14 +1803,17 @@ geodesic equations become
              -\frac{1+2\alpha}{\sigma}\dot\sigma^2=0.
 ```
 
-There is also an explicit transport comparison. Along a fixed-mean curve,
-$\alpha$-parallel transport from scale $\sigma_0$ to $\sigma(\lambda)$ gives
+Along a fixed-mean curve, the parallel ODEs are
+$\dot V^\mu=(1+\alpha)(\dot\sigma/\sigma)V^\mu$ and
+$\dot V^\sigma=(1+2\alpha)(\dot\sigma/\sigma)V^\sigma$.
+Solving these scalar linear equations gives
 
 ```{math}
 V^\mu(\lambda)=V^\mu(0)\left(\frac{\sigma(\lambda)}{\sigma_0}\right)^{1+\alpha},
 \qquad
 V^\sigma(\lambda)=V^\sigma(0)\left(\frac{\sigma(\lambda)}{\sigma_0}\right)^{1+2\alpha}.
 ```
+:::
 
 For the dual connection the exponents have the opposite $\alpha$ terms.
 The paired inner product stays constant, although a vector's own Fisher norm
@@ -1161,6 +1821,18 @@ generally changes when $\alpha\ne0$.
 
 ### Natural and expectation coordinates make different connections flat
 
+:::{prf:proposition} Flat exponential and mixture charts for normals
+:label: prop-euclidean-to-manifold-normal-dual-flatness
+
+For the full normal family, the exponential connection $\nabla^{(1)}$ has
+zero coefficients in the natural chart $\theta$, and the mixture connection
+$\nabla^{(-1)}$ has zero coefficients in the expectation chart
+$\eta=\nabla\psi(\theta)$. In natural coordinates,
+$C_{ijk}=\partial_i\partial_j\partial_k\psi$.
+Both connections have zero curvature.
+:::
+
+:::{prf:proof}
 In this paragraph, use $\partial_i=\partial/\partial\theta^i$ and take the
 connection and cubic-tensor components in the natural chart. Then
 $\partial_i\partial_j\ell_\theta(x)=-\partial_i\partial_j\psi$ is independent
@@ -1188,18 +1860,25 @@ $\nabla^{(e)}_UE_i=0$, we obtain
 $g(E_i,\nabla^{(m)}_UF_a)=0$ for every $i$, hence
 $\nabla^{(m)}_UF_a=0$. In particular, all m-Christoffel symbols vanish in
 the $\eta$ chart.
+In a chart where all connection coefficients vanish, their derivatives
+and the quadratic terms in the curvature also vanish.
+:::
 
-Both connections therefore have zero curvature. This **dual flatness**
+This **dual flatness**
 coexists with the curvature $-1/2$ of $\nabla^{\mathrm{LC}}$. Curvature is
 attached to a specified connection; the vanishing of the e- or m-coefficients
 in their affine charts does not make the Fisher metric Euclidean.
 
 ### Three geodesics between two normal laws
 
-Let $P_0=N(\mu_0,\sigma_0^2)$ and $P_1=N(\mu_1,\sigma_1^2)$ with positive
-scales and natural coordinates $\theta_0,\theta_1$, and let $0\leq \lambda\leq1$.
-A straight natural-coordinate segment is an affinely parameterized e-geodesic.
-In location-scale coordinates it is
+The two affine charts give different interpolations between the same laws.
+
+:::{prf:corollary} Exponential and mixture geodesics between normal laws
+:label: cor-euclidean-to-manifold-normal-em-geodesics
+
+Let $P_0=N(\mu_0,\sigma_0^2)$ and $P_1=N(\mu_1,\sigma_1^2)$ have positive
+scales and natural coordinates $\theta_0,\theta_1$. For $0\le\lambda\le1$,
+the affinely parameterized e-geodesic is
 
 ```{math}
 :label: ig-normal-e-geodesic
@@ -1213,10 +1892,7 @@ In location-scale coordinates it is
 \end{aligned}
 ```
 
-It interpolates precision and precision-weighted mean. Its density is
-proportional to $p_{\theta_0}^{1-\lambda}p_{\theta_1}^\lambda$, as follows by
-interpolating the natural form. The precision stays positive, so the whole
-segment belongs to the family.
+Its density is proportional to $p_{\theta_0}^{1-\lambda}p_{\theta_1}^\lambda$.
 
 A straight expectation-coordinate segment is an affinely parameterized
 m-geodesic of the connection on this normal family:
@@ -1231,13 +1907,27 @@ m-geodesic of the connection on this normal family:
 \end{aligned}
 ```
 
-The last term follows by subtracting the square of the interpolated mean
-from the interpolated second raw moment. It keeps variance positive. This
-normal has the same first two moments as $(1-\lambda)P_0+\lambda P_1$, but is generally
-not that literal mixture: a mixture of two distinct normals need not be
-normal. Thus m-flatness of this family does not assert closure under density
-mixtures. Differentiating the two displayed paths verifies
-[](#ig-normal-alpha-geodesic-odes) at $\alpha=1$ and $\alpha=-1$ respectively.
+Both paths stay in the normal family, and the m-geodesic has the same
+first two moments as $(1-\lambda)P_0+\lambda P_1$.
+:::
+
+:::{prf:proof}
+By [](#prop-euclidean-to-manifold-normal-dual-flatness), straight segments
+in $\theta$ and $\eta$ solve the respective geodesic equations.
+Inverting the natural coordinates gives the e-path formulas and positive
+precision. Substitution in the natural log density gives the stated density
+product. For the m-path, subtract the square of the interpolated mean from
+the interpolated second raw moment to obtain its variance formula.
+The variance is positive because the endpoint variances are positive.
+The moment identities follow from linearity of expectation under a mixture.
+Differentiation also verifies [](#ig-normal-alpha-geodesic-odes) at
+$\alpha=1$ and $\alpha=-1$, respectively.
+:::
+
+The e-path interpolates precision and precision-weighted mean. The m-path
+normal is generally not the literal mixture: a mixture of two distinct
+normals need not be normal. Thus m-flatness does not assert closure under
+density mixtures.
 
 For comparison, the Levi-Civita segment is the vertical path or half-ellipse
 in [](#ig-normal-lc-geodesic-solutions), with endpoints chosen as above. It

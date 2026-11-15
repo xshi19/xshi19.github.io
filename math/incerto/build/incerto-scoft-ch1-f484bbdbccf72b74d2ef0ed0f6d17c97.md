@@ -41,20 +41,43 @@ $$
 K=\frac{\mathbb E[(X-\mathbb E X)^4]}{\operatorname{Var}(X)^2}.
 $$
 
-This is kurtosis, not excess kurtosis $K-3$. A standard Gaussian has $K=3$:
-integration by parts with $\phi'(z)=-z\phi(z)$ gives
+This is kurtosis, not excess kurtosis $K-3$.
+
+:::{prf:proposition} Gaussian kurtosis reference
+:label: prop-scoft-ch1-gaussian-kurtosis
+
+For $Z\sim N(0,1)$, $\mathbb EZ^4=3$ and its Pearson kurtosis is $K=3$.
+:::
+
+:::{prf:proof}
+The mean and variance are zero and one, respectively. Integration by parts
+with $\phi'(z)=-z\phi(z)$ gives
 $\int z^4\phi(z)\,dz=3\int z^2\phi(z)\,dz=3$, where both integrals run
 over $\mathbb R$ and $\phi$ is the standard normal density.
+:::
 
 We prove that arbitrarily large kurtosis is compatible with bounded support
-and finite exponential moments. Fix a local probability $0<\varepsilon\le1$
-and give $X$ the three-point law
+and finite exponential moments.
+
+:::{prf:proposition} Bounded laws with arbitrarily large kurtosis
+:label: prop-scoft-ch1-bounded-kurtosis
+
+Fix $0<\varepsilon\le1$ and give $X$ the law
 
 $$
 P(X=0)=1-\varepsilon,\qquad
 P(X=\varepsilon^{-1/2})=P(X=-\varepsilon^{-1/2})=\frac{\varepsilon}{2}.
 $$
 
+Then $\mathbb EX=0$, $\operatorname{Var}(X)=1$, and its Pearson kurtosis
+is $K=\varepsilon^{-1}$. For every $\theta\in\mathbb R$,
+$\mathbb E e^{\theta X}=1-\varepsilon+\varepsilon\cosh(\theta/\sqrt\varepsilon)<\infty$.
+For each fixed $\varepsilon$, $|X|\le\varepsilon^{-1/2}$ almost surely;
+thus these bounded laws have unbounded kurtosis as $\varepsilon\downarrow0$,
+but none has an unbounded regularly varying or subexponential right tail.
+:::
+
+:::{prf:proof}
 Symmetry gives $\mathbb E X=0$. Summing over the three atoms gives
 
 $$
@@ -73,7 +96,11 @@ $$
 For each fixed $\varepsilon$ the right tail ends at
 $\varepsilon^{-1/2}$. It therefore cannot have a regularly varying tail
 with positive exponent, or belong to the unbounded-support subexponential
-class used here. Choosing smaller $\varepsilon$ produces a *different*
+class used here. The formula $K=\varepsilon^{-1}$ gives divergence as
+$\varepsilon\downarrow0$.
+:::
+
+Choosing smaller $\varepsilon$ produces a *different*
 bounded law with larger kurtosis. It does not turn any one of these laws
 into a power-tailed distribution. For example, $\varepsilon=0.01$ gives
 variance $1$, kurtosis $100$, and support $\{-10,0,10\}$.

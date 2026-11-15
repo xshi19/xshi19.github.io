@@ -146,6 +146,29 @@ theorems are cited from van der Vaart
 [1998](https://www.cambridge.org/core/books/asymptotic-statistics/A3C7DAD3F7E66A1FA60E9C8FE132EE1D), Chapters 2–3;
 the stable limit for the sample mean is cited above.
 
+:::{prf:proposition} Known-cutoff Pareto fit and finite-fit normal limit
+:label: prop-plug-in-tail-estimation-fit-normal-limit
+
+Let $X_1,X_2,\ldots$ be iid exact Pareto Type I variables with known
+cutoff $x_m>0$ and true exponent $\alpha>1$. Put $\xi=1/\alpha$,
+$\mu=\alpha x_m/(\alpha-1)$, and
+$\widehat\xi_n=n^{-1}\sum_{i=1}^n\log(X_i/x_m)$.
+Whenever the log-excess sum is positive, the unique likelihood maximizer
+over exponents in $(0,\infty)$ is $\widehat\alpha_n=1/\widehat\xi_n$.
+If all observations equal $x_m$, there is no finite maximizer; use the
+limiting mean $x_m$ as the plug-in convention.
+Define $\widehat\mu_n=x_m/(1-\widehat\xi_n)$ for
+$\widehat\xi_n<1$, and $\widehat\mu_n=\infty$ otherwise. Then
+$P(\widehat\xi_n<1)\to1$ and
+
+$$
+\mathcal L\!\left(\sqrt n(\widehat\mu_n-\mu)
+\mid\widehat\xi_n<1\right)
+\Rightarrow\mathcal N\!\left(0,\frac{x_m^2\alpha^2}{(\alpha-1)^4}\right).
+$$
+:::
+
+:::{prf:proof}
 Set $Y_i=\log(X_i/x_m)$. For $y\ge0$,
 
 $$
@@ -161,6 +184,9 @@ the log likelihood is $n\log\alpha-\alpha\sum_iY_i$. Its derivative vanishes
 at $\widehat\alpha_n=n/\sum_iY_i$, and its second derivative is
 $-n/\alpha^2<0$. This proves the fit formula when $\sum_iY_i>0$, an event
 of probability one under the continuous model.
+If the sum is zero, the log likelihood is $n\log\alpha$ plus a constant
+and increases without bound; the fitted mean tends to $x_m$ as
+$\alpha\to\infty$.
 
 The law of large numbers gives $\widehat\xi_n\to1/\alpha<1$ almost surely.
 The central limit theorem gives
@@ -181,7 +207,12 @@ $$
 $$
 
 Because $\mathbb P(\widehat\xi_n<1)\to1$, conditioning on finite fits does
-not change this weak limit. The gain comes from averaging exponential
+not change this weak limit. Formally, apply the delta method to a smooth
+extension of $h$ from a neighborhood of $\xi<1$; with probability tending
+to one it agrees with the finite-fit formula.
+:::
+
+The gain comes from averaging exponential
 log-excesses and using the assumed Pareto shape to extrapolate the mean.
 It depends on that shape being correct.
 
@@ -216,20 +247,35 @@ complements; every sample is counted. Only the true $\alpha=1.5$ law has
 a finite target mean. These are fit-status frequencies, not error bars.
 ```
 
-For any true $\alpha>0$, the earlier logarithmic transformation gives
-$n\widehat\xi_n=\sum_i\log(X_i/x_m)\sim\mathrm{Gamma}(n,\text{rate }\alpha)$.
-The fit is infinite exactly when $\widehat\xi_n\ge1$. Thus
+:::{prf:proposition} Exact probability of an infinite Pareto mean fit
+:label: prop-plug-in-tail-estimation-infinite-fit-probability
+
+For $n\ge1$ iid exact Pareto observations with $x_m>0$ and true
+$\alpha>0$, set $\widehat\xi_n=n^{-1}\sum_i\log(X_i/x_m)$ and use
+the finite-fit convention $\widehat\mu_n=x_m/(1-\widehat\xi_n)$ when
+$\widehat\xi_n<1$, and infinity otherwise. Then
+$n\widehat\xi_n\sim\mathrm{Gamma}(n,\text{rate }\alpha)$ and
 
 $$
 P(\widehat\mu_n=\infty)=P(\widehat\xi_n\ge1).
 $$
 
+This probability is strictly between zero and one for every finite $n$.
+When $\alpha=1$, it tends to $1/2$ as $n\to\infty$.
+:::
+
+:::{prf:proof}
+The log-excesses are iid exponential with rate $\alpha$ for every $\alpha>0$.
 The Gamma law follows by multiplying the exponential MGFs
 $(\alpha/(\alpha-t))^n$ for $t<\alpha$; the boundary event has probability zero.
-This derives the exact probability used in the figure. A finite estimate
-can occur even when the true mean is infinite. At the boundary $\alpha=1$,
+The gamma density is positive on $(0,\infty)$, so both fit events have
+positive probability. At the boundary $\alpha=1$,
 the ordinary CLT for the log-excesses gives an infinite-fit probability
 tending to $1/2$.
+:::
+
+This is the exact probability used in the figure. A finite estimate
+can occur even when the true mean is infinite.
 
 Use [`pareto_plugin_nonfinite_probability`](incerto-api-reference.md#api-pareto-plugin-nonfinite-probability).
 
@@ -257,6 +303,9 @@ tests whether an empirical dataset is Pareto.
 (plugin-tail-body)=
 ## When only the tail is modeled
 
+:::{prf:proposition} Mean decomposition with an exact Pareto conditional tail
+:label: prop-plug-in-tail-estimation-body-tail-mean
+
 Let $X\ge0$ have CDF $F$ and fix a threshold $u>0$ with tail probability
 $\bar F(u)=\mathbb P(X>u)>0$. Suppose the conditional tail is exactly Pareto:
 
@@ -267,9 +316,7 @@ x\ge u,\quad \alpha>1.
 \end{gathered}
 $$
 
-The [mean-excess formula](./incerto-mean-excess-function.md) gives
-$\mathbb E[X\mid X>u]=u+e(u)=u\alpha/(\alpha-1)$, where
-$e(u)=\mathbb E[X-u\mid X>u]$. Splitting the expectation at $u$ yields
+Then the finite mean $\mu=\mathbb E X$ is
 
 $$
 \begin{aligned}
@@ -277,6 +324,15 @@ $$
 &\quad+\bar F(u)\frac{u\alpha}{\alpha-1}.
 \end{aligned}
 $$
+:::
+
+:::{prf:proof}
+The [mean-excess formula](./incerto-mean-excess-function.md) gives
+$\mathbb E[X\mid X>u]=u+e(u)=u\alpha/(\alpha-1)$, where
+$e(u)=\mathbb E[X-u\mid X>u]$. Splitting the expectation at $u$ yields
+the displayed identity. The body term is bounded by $u$ and the tail
+term is finite because $\alpha>1$.
+:::
 
 For an iid sample, let $k=\sum_i\mathbf1_{\{X_i>u\}}$ be the exceedance count.
 Estimate $\bar F(u)$ by $k/n$ and fit $\widehat\alpha_u$ from those exceedances.
@@ -334,38 +390,69 @@ $$
 Replacing $\alpha$ by an estimate turns this into a model-based tail
 contribution. It does not make the true population's unobserved tail
 empirical. With a tail-only model, its fitted mass and body contribution
-must also be included, as in the preceding decomposition. In particular,
-with $M_n=\max_iX_i$ and $X$ an independent draw from the same parent,
-adding the true-model $T_1(M_n)$ to a sample mean
-produces upward bias:
-a finite-mean iid sample mean is already unbiased, and the added term has
-a strictly positive expectation.
+must also be included, as in the preceding decomposition.
+
+:::{prf:proposition} Adding the model tail beyond the sample maximum biases the mean upward
+:label: prop-plug-in-tail-estimation-added-tail-bias
+
+Let $X_1,\ldots,X_n$ be iid exact Pareto observations with $x_m>0$,
+$\alpha>1$, and $n\ge1$. Set $M_n=\max_iX_i$ and
+$\bar X_n=n^{-1}\sum_iX_i$. For an independent draw $X$ from that law,
+let $T_1(u)=\mathbb E[X\mathbf1_{\{X>u\}}]$. Then
+$\mathbb E[\bar X_n+T_1(M_n)]>\mathbb E X$, with both expectations finite.
+:::
+
+:::{prf:proof}
+The sample mean is unbiased. The displayed Pareto tail formula gives
+$0<T_1(M_n)\le\mathbb E X<\infty$ almost surely, so the added term
+has a strictly positive finite expectation.
+:::
 
 (plugin-exponent-truncation)=
 ## Debiasing, conditional selection, and clipping
 
 The [inverse-gamma law](incerto-hill-estimator.md#hill-sampling-law)
-provides exact calibration for a known Pareto cutoff. For $m>1$ iid
-observations from that exact model, first write the known-cutoff estimate as
-$\widehat\alpha=m/\sum_{i=1}^m\log(X_i/x_m)$, with positive denominator
-almost surely. Debias it by
-$\widehat\alpha\leftarrow(m-1)\widehat\alpha/m$; in this subsection,
-$\widehat\alpha$ now denotes the corrected estimate. Fix $h>1$.
-Its density $f_{\widehat\alpha}$ has inverse-gamma shape $m$ and scale
-$(m-1)\alpha$. Conditional on $\widehat\alpha>h$, the density is
+provides exact calibration for a known Pareto cutoff.
+
+:::{prf:proposition} Conditional selection and clipping of a corrected Pareto exponent
+:label: prop-plug-in-tail-estimation-selection-clipping
+
+For an integer $m>1$, take iid exact Pareto observations with known
+$x_m>0$ and $\alpha>0$, and define the corrected estimate
+$\widehat\alpha=(m-1)/\sum_{i=1}^m\log(X_i/x_m)$, whose denominator
+is positive almost surely.
+Fix $h>1$. The estimate is unbiased and has inverse-gamma density
+$f_{\widehat\alpha}$ with shape $m$ and scale $(m-1)\alpha$.
+Conditional on $\widehat\alpha>h$, its density is
+$f_{\widehat\alpha}(a)/P(\widehat\alpha>h)$ for $a>h$.
+Clipping to $\max(\widehat\alpha,h)$ instead gives an atom
+$P(\widehat\alpha\le h)$ at $h$ and density $f_{\widehat\alpha}$ above $h$.
+The corresponding plug-in mean, obtained by applying $a\mapsto x_ma/(a-1)$
+to the selected or clipped exponent, is at most $x_mh/(h-1)$ in either case;
+clipping attains the bound at its atom.
+:::
+
+:::{prf:proof}
+The corrected estimate is $(m-1)/m$ times the known-cutoff maximum-likelihood
+estimate $m/\sum_i\log(X_i/x_m)$. The cited inverse-gamma law gives
+shape $m$ and scale $(m-1)\alpha$ after this rescaling.
+Conditional on $\widehat\alpha>h$, the density is
 
 $$
 \frac{f_{\widehat\alpha}(a)}{P(\widehat\alpha>h)},\qquad a>h.
 $$
 
-This is a conditional law, not the corrected estimator's unconditional
-sampling law. Clipping $\widehat\alpha$ to $\max(\widehat\alpha,h)$ instead
+The cited inverse-gamma mean is $(m-1)\alpha/(m-1)=\alpha$.
+Clipping $\widehat\alpha$ to $\max(\widehat\alpha,h)$ instead
 gives an atom of size $P(\widehat\alpha\le h)$ at $h$ and retains the
-unconditional density above it. Either choice changes the estimator or
-the samples being reported. Under
-conditioning, the plug-in mean is bounded above by $x_mh/(h-1)$;
-clipping attains this bound at its atom. Neither operation preserves
-unbiasedness or establishes mean-squared-error superiority.
+unconditional density above it. The function $a\mapsto x_ma/(a-1)$ is
+decreasing on $a>1$, giving the bound and its attainment at $h$.
+:::
+
+The conditional law differs from the corrected estimator's unconditional
+sampling law. Either choice changes the estimator or the samples being
+reported. Neither operation preserves unbiasedness or establishes
+mean-squared-error superiority.
 
 Use [`pareto_exponent_sampling`](incerto-api-reference.md#api-pareto-exponent-sampling)
 to expose the selection mass instead of silently omitting estimates.
@@ -398,21 +485,48 @@ unregularized plug-in mean, even when central error quantiles look small.
 (plugin-caveats)=
 ## Caveats
 
-The moment boundary is also an estimation boundary. Differentiating the
-population mean with respect to the exponent gives
+The moment boundary is also an estimation boundary.
+
+:::{prf:proposition} Sensitivity of the Pareto mean to its exponent
+:label: prop-plug-in-tail-estimation-mean-sensitivity
+
+For fixed $x_m>0$ and $\alpha>1$, the exact Pareto mean
+$\mu(\alpha)=\alpha x_m/(\alpha-1)$ satisfies
 
 $$
 \frac{d\mu}{d\alpha}=-\frac{x_m}{(\alpha-1)^2}.
 $$
+:::
+
+:::{prf:proof}
+Differentiate $\mu(\alpha)=x_m+x_m/(\alpha-1)$.
+:::
 
 Small exponent errors can therefore produce large mean errors near $\alpha=1$.
 An uncertainty interval for $\alpha$ that reaches 1 cannot be mapped to a finite
 upper bound for this Pareto mean. The fixed-$\alpha$ normal approximation above
 is not uniform as $\alpha\downarrow1$.
 
-There is a stronger finite-sample warning: even conditional on a finite fit,
-the unregularized plug-in estimator has infinite first and second moments.
-To see this under the exact iid model, $\widehat\xi_n$ has a gamma density
+There is a stronger finite-sample warning.
+
+:::{prf:proposition} Infinite moments of the unregularized finite-fit mean
+:label: prop-plug-in-tail-estimation-finite-fit-singularity
+
+Let $n\ge1$ observations be iid exact Pareto with $x_m>0$ and any
+$\alpha>0$. Set $\widehat\xi_n=n^{-1}\sum_i\log(X_i/x_m)$, and
+$\widehat\mu_n=x_m/(1-\widehat\xi_n)$ on $\widehat\xi_n<1$, with
+infinity otherwise. For $r=1,2$,
+
+$$
+\mathbb E[\widehat\mu_n^r\mid\widehat\xi_n<1]=\infty.
+$$
+
+Also $P(\widehat\mu_n=\infty)>0$ at every finite $n$.
+:::
+
+:::{prf:proof}
+By [](#prop-plug-in-tail-estimation-infinite-fit-probability),
+$\widehat\xi_n$ has a gamma density
 $f_n(t)=(n\alpha)^n t^{n-1}e^{-n\alpha t}/\Gamma(n)$ for $t>0$, obtained by
 averaging $n$ independent exponential log-excesses. Here $\Gamma$ is the gamma
 function. The density is continuous and strictly positive at $t=1$.
@@ -425,7 +539,10 @@ $$
 replacing $x_m/(1-t)$ by its square gives a divergent second-moment integral.
 Conditioning on $t<1$ only divides these integrals by a positive probability.
 Moreover, $\mathbb P(\widehat\xi_n
-\ge1)>0$ for every finite $n$. Finite simulations can easily miss the
+\ge1)>0$ for every finite $n$.
+:::
+
+Finite simulations can easily miss the
 singularity. Clipping or constraining the exponent away from 1 changes the
 estimator and must be disclosed, with its bias and any risk claim assessed
 separately.

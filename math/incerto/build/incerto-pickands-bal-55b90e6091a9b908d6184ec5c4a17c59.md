@@ -16,6 +16,12 @@ options:
 
 ## Statement
 
+The full theorem is cited, not proved here
+[@balkema1974residual; @pickands1975statistical].
+
+:::{prf:theorem} Pickands–Balkema–de Haan excess limit (cited)
+:label: thm-pickands-balkema-de-haan-excess-limit
+
 Let $F$ be the distribution function of $X$, with survival $\bar F=1-F$
 and finite or infinite right endpoint $x_F=\sup\{x:F(x)<1\}$.
 For a high threshold $u<x_F$, define the conditional excess distribution
@@ -58,16 +64,20 @@ $$
 G_{0,\beta}(y)=1-e^{-y/\beta}
 $$
 
-for $\xi=0$.  The theorem is the asymptotic justification for the
-peaks-over-threshold model: sufficiently high threshold exceedances are modeled
-by a [generalized Pareto distribution](./incerto-generalized-pareto.md).
+for $\xi=0$.
 
 $X$ denotes a draw from $F$, $u$ the threshold, $x_F$ its right endpoint,
 $\xi$ the extreme-value index, and $\beta(u)>0$ the excess scale.
 The maximum-domain-of-attraction assumption means that for iid draws,
 some $a_n>0$ and $b_n$ give $(M_n-b_n)/a_n\Rightarrow H_{\xi,0,1}$.
 Here $M_n$ is the sample maximum and $\Rightarrow$ is convergence in
-distribution. The GEV page defines $H$. See [Shared notation](https://xshi19.github.io/math/notation/).
+distribution. The [GEV page](incerto-generalized-extreme-value.md) defines $H$.
+:::
+
+The theorem is the asymptotic justification for the peaks-over-threshold
+model: sufficiently high threshold exceedances are modeled by a
+[generalized Pareto distribution](./incerto-generalized-pareto.md).
+See [Shared notation](https://xshi19.github.io/math/notation/).
 
 ## Threshold intuition
 
@@ -99,13 +109,15 @@ normalized maxima and convergence of normalized threshold excesses.  We
 record the statement and use exact Pareto algebra as a checkable special
 case.
 
+:::{prf:proposition} Exact Pareto threshold excesses
+:label: prop-pickands-balkema-de-haan-pareto-excess
+
 If $X$ is Pareto Type I with lower cutoff $x_m$ and tail exponent $\alpha$,
 then for $u\ge x_m>0$, $\alpha>0$, and $y\ge0$,
 
 $$
 \begin{gathered}
 P(X-u>y\mid X>u)\\
-=\frac{P(X>u+y)}{P(X>u)}\\
 =\left(1+\frac{y}{u}\right)^{-\alpha}.
 \end{gathered}
 $$
@@ -117,6 +129,13 @@ $$
 \qquad
 \beta(u)=\frac{u}{\alpha}.
 $$
+:::
+
+:::{prf:proof}
+The conditional survival is $P(X>u+y)/P(X>u)$.
+Substituting $(x_m/(u+y))^\alpha$ and $(x_m/u)^\alpha$ gives
+$(1+y/u)^{-\alpha}$, the GPD survival at the stated shape and scale.
+:::
 
 Thus exact Pareto tails do not merely approach the generalized Pareto form;
 they have it at every threshold above $x_m$.
@@ -150,9 +169,12 @@ The full theorem is cited from @balkema1974residual and
 @pickands1975statistical; this page proves only special cases and consequences.
 
 For a standard normal parent, excesses also have a limit, but on a shrinking
-scale. For $u\to\infty$ and fixed $y\ge0$, the normal-tail bounds in the
-[Gaussian maxima proof](incerto-generalized-extreme-value.md#gev-gaussian-maxima)
-give
+scale.
+
+:::{prf:proposition} Scaled normal excesses have an exponential limit
+:label: prop-pickands-balkema-de-haan-normal-excess
+
+Let $X$ be standard normal with CDF $\Phi$. For every fixed $y\ge0$,
 
 $$
 \begin{gathered}
@@ -161,10 +183,34 @@ P(u(X-u)>y\mid X>u)\\
 \end{gathered}
 $$
 
-Thus $\xi=0$ with asymptotic excess scale $1/u$, whereas exact Pareto
-has $\xi=1/\alpha$ and scale $u/\alpha$. A bounded example is uniform
-on $[0,b]$, $b>0$: above $0\le u<b$ its excess is exactly uniform on $[0,b-u]$,
-a GPD with $\xi=-1$ and $\beta(u)=b-u$.
+The limit is as $u\to\infty$ and has GPD shape $\xi=0$ with excess
+scale $1/u$.
+:::
+
+:::{prf:proof}
+The normal-tail bounds in the
+[Gaussian maxima proof](incerto-generalized-extreme-value.md#gev-gaussian-maxima)
+give $\bar\Phi(t)\sim e^{-t^2/2}/(t\sqrt{2\pi})$. Thus the ratio is
+asymptotic to
+$[u/(u+y/u)]\exp\{-y-y^2/(2u^2)\}$, which tends to $e^{-y}$.
+:::
+
+Exact Pareto instead has $\xi=1/\alpha$ and scale $u/\alpha$.
+The following bounded example has a negative shape.
+
+:::{prf:proposition} Uniform threshold excesses
+:label: prop-pickands-balkema-de-haan-uniform-excess
+
+If $X$ is uniform on $[0,b]$ with $b>0$, then for $0\le u<b$ the law
+of $X-u$ conditional on $X>u$ is uniform on $[0,b-u]$, a GPD with
+$\xi=-1$ and $\beta(u)=b-u$.
+:::
+
+:::{prf:proof}
+For $0\le y<b-u$, the conditional survival is
+$(b-u-y)/(b-u)=1-y/(b-u)$, and it is zero at and beyond $b-u$.
+This is both the uniform and the stated GPD survival.
+:::
 
 These three cases can be compared with
 [`generalized_pareto`](incerto-api-reference.md#api-generalized-pareto).
@@ -201,7 +247,10 @@ $\xi<1$. This gives the following stronger conclusion.
 (pbdh-mean-excess-corollary)=
 ## Corollary: convergence of the mean excess
 
-Let $F\in\operatorname{MDA}(H_{\xi,0,1})$ with $\xi<1$, and let
+:::{prf:corollary} Mean excess relative to the PBdH scale
+:label: cor-pickands-balkema-de-haan-mean-excess
+
+Let $X$ have CDF $F\in\operatorname{MDA}(H_{\xi,0,1})$ with $\xi<1$, and let
 $x_F=\sup\{x:F(x)<1\}$ be its finite or infinite right endpoint. Assume
 $\mathbb E[(X-u_0)_+]<\infty$ for some finite $u_0<x_F$, where
 $r_+=\max(r,0)$. For $u_0\le u<x_F$, we have $\bar F(u)>0$ and
@@ -212,20 +261,13 @@ e(u)=\frac{\mathbb E[(X-u)_+]}{\bar F(u)}.
 $$
 
 For any positive PBdH scale $\beta(u)$ giving the GPD limit of shape
-$\xi$ in the statement above,
+$\xi$ in [](#thm-pickands-balkema-de-haan-excess-limit),
 
 $$
 \frac{e(u)}{\beta(u)}\longrightarrow\frac{1}{1-\xi},
 \qquad u\uparrow x_F.
 $$
-
-No continuity, density, or differentiability of $F$ is required beyond
-the domain-of-attraction assumption. That assumption excludes an atom at
-the right endpoint. For $0<\xi<1$, $x_F=\infty$ and
-$\beta(u)\sim\xi u$. For $\xi<0$, $x_F<\infty$ and
-$\beta(u)\sim-\xi(x_F-u)$. The case $\xi=0$ is included, with limit 1;
-its endpoint may be finite or infinite. The excess-integrability condition
-concerns only the right tail, not the existence of a two-sided mean of $X$.
+:::
 
 ### Proof of the mean-excess corollary
 
@@ -233,6 +275,10 @@ We prove the corollary using the domain-of-attraction characterizations
 and Gumbel tail representation cited from @embrechts1997modelling.
 Those general representation results are not proved here. The integrations
 below explain how their tail control gives convergence of means.
+
+:::{prf:proof}
+We establish [](#cor-pickands-balkema-de-haan-mean-excess) from those
+representations and Karamata's integral theorem.
 
 By survival integration,
 
@@ -288,6 +334,15 @@ Thus $I(u)\sim a(u)g(u)$. Tail equivalence bounds $\bar F/g$ uniformly
 between $1-\varepsilon$ and $1+\varepsilon$ beyond sufficiently high $u$,
 so it also gives equivalence of their tail integrals. Hence
 $e(u)\sim a(u)\sim\beta(u)$, proving the zero-shape case.
+:::
+
+No continuity, density, or differentiability of $F$ is required beyond
+the domain-of-attraction assumption. That assumption excludes an atom at
+the right endpoint. For $0<\xi<1$, $x_F=\infty$ and
+$\beta(u)\sim\xi u$. For $\xi<0$, $x_F<\infty$ and
+$\beta(u)\sim-\xi(x_F-u)$. The case $\xi=0$ is included, with limit 1;
+its endpoint may be finite or infinite. The excess-integrability condition
+concerns only the right tail, not the existence of a two-sided mean of $X$.
 
 The result concerns the population scale and a threshold tending to the
 endpoint. A fitted shape below 1 at a chosen finite threshold does not

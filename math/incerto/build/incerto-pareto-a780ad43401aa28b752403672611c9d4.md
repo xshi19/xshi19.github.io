@@ -79,9 +79,21 @@ Above its lower cutoff, the Pareto law has no characteristic upper scale.  Once
 both thresholds lie in the Pareto tail, multiplying the threshold by a fixed factor changes the exceedance
 probability by a fixed power:
 
+:::{prf:proposition} Exact Pareto survival scaling
+:label: prop-pareto-survival-scaling
+
+Let $X$ have a Pareto Type I law with $x_m>0$ and $\alpha>0$, and write
+$\bar F(x)=P(X>x)$. For every $t>0$ and $x\ge x_m$ with $tx\ge x_m$,
+
 $$
 \frac{\bar F(tx)}{\bar F(x)}=t^{-\alpha},\qquad t>0,\; x\ge x_m,\; tx\ge x_m.
 $$
+:::
+
+:::{prf:proof}
+Substitute $\bar F(tx)=(x_m/(tx))^\alpha$ and
+$\bar F(x)=(x_m/x)^\alpha$, and cancel the common positive factor.
+:::
 
 Smaller $\alpha$ gives a larger exceedance probability at every $x>x_m$.
 The consequences for sums depend on whether the sample size or the exceedance
@@ -147,7 +159,7 @@ an exact power. The heaviest tail has the shallowest line.
 
 The same scaling appears numerically. For a fixed multiplier $t>0$, the
 ratio $\bar F(tx)/\bar F(x)$ depends only on $t$, provided both
-$x\ge x_m$ and $tx\ge x_m$. The identity follows by canceling $(x_m/x)^\alpha$.
+$x\ge x_m$ and $tx\ge x_m$, as proved in [](#prop-pareto-survival-scaling).
 
 (pareto-survival-ratio-check)=
 For example, with $\alpha=1.16$, doubling any threshold in the support
@@ -207,33 +219,48 @@ extends the tail construction to signed observations.
 (pareto-threshold-quantities)=
 ## Exceedance probability and exceedance size
 
-For $u\ge x_m$ and $y\ge0$, cancellation of Pareto survival probabilities
-proves the conditional excess law:
+:::{prf:proposition} Exact Pareto excess law and conditional means
+:label: prop-pareto-threshold-excess
+
+Let $X$ have a Pareto Type I law with $x_m>0$ and $\alpha>0$.
+For every $u\ge x_m$ and $y\ge0$,
 
 $$
-P(X-u>y\mid X>u)=\frac{\bar F(u+y)}{\bar F(u)}
-=\left(1+\frac yu\right)^{-\alpha}.
+P(X-u>y\mid X>u)=\left(1+\frac yu\right)^{-\alpha}.
 $$
 
-This is an exact [generalized Pareto](incerto-generalized-pareto.md) survival
-with shape $\xi=1/\alpha$ and scale $u/\alpha$. It holds at every threshold
-$u\ge x_m$ for this model; no limiting approximation is required.
-Integrating the nonnegative excess survival gives
+This is a generalized Pareto survival with shape $\xi=1/\alpha$ and
+scale $u/\alpha$. If $\alpha>1$, its conditional means are
 
 $$
 e(u)=\mathbb E[X-u\mid X>u]=\frac{u}{\alpha-1},\qquad
 \mathbb E[X\mid X>u]=\frac{\alpha u}{\alpha-1},\quad \alpha>1.
 $$
 
-Both expectations are infinite for $0<\alpha\le1$, since the integral of
-$(1+y/u)^{-\alpha}$ diverges. The first expectation is the
+Both expectations are infinite for $0<\alpha\le1$.
+:::
+
+:::{prf:proof}
+Cancellation gives
+$P(X-u>y\mid X>u)=\bar F(u+y)/\bar F(u)=(1+y/u)^{-\alpha}$.
+Integrating this survival over $y\ge0$ gives $u/(\alpha-1)$ when
+$\alpha>1$ and infinity otherwise. Adding $u$ gives the conditional mean.
+:::
+
+The [generalized Pareto](incerto-generalized-pareto.md) law here is exact at
+every $u\ge x_m$; no limiting approximation is required.
+The first expectation is the
 [mean excess](incerto-mean-excess-function.md); the second includes the
 threshold itself. In particular, their ratio to $u$ is different.
 
 We also prove the distinction between tail probability and tail contribution
-to the mean. For any nonnegative $X$ and $u\ge0$, the pointwise identity
-$X\mathbf1_{\{X>u\}}=u\mathbf1_{\{X>u\}}+(X-u)_+$ and Tonelli's theorem
-give
+to the mean.
+
+:::{prf:proposition} Tail contribution to a nonnegative mean
+:label: prop-pareto-tail-contribution
+
+For any nonnegative random variable $X$ and $u\ge0$, with
+$\bar F(v)=P(X>v)$,
 
 $$
 \mathbb E[X\mathbf1_{\{X>u\}}]
@@ -241,7 +268,16 @@ $$
 $$
 
 The equality holds in the extended nonnegative reals, including atoms at
-$u$. For Pareto with $\alpha>1$ and $u\ge x_m$ it becomes
+$u$.
+:::
+
+:::{prf:proof}
+Use the pointwise identity
+$X\mathbf1_{\{X>u\}}=u\mathbf1_{\{X>u\}}+(X-u)_+$ and apply
+Tonelli's theorem to $(X-u)_+=\int_u^\infty\mathbf1_{\{X>v\}}\,dv$.
+:::
+
+For Pareto with $\alpha>1$ and $u\ge x_m$ it becomes
 $\bar F(u)\alpha u/(\alpha-1)$. For $\alpha=3/2$, $x_m=1$, and $u=4$,
 the probability is $1/8$, the mean excess is $8$, the conditional mean is
 $12$, and the tail contribution is $3/2$. Replacing that contribution by
@@ -292,9 +328,23 @@ the infinite-mean cases without replacing infinity by a finite cutoff.
 (pareto-known-cutoff-likelihood)=
 ## Why the known-cutoff likelihood formula needs conditions
 
-We prove the estimator stated above for $n\ge1$ iid exact Pareto observations,
-known $x_m>0$, and observed $x_i\ge x_m$. Up to terms independent of
-$\alpha$, the log likelihood $\ell$ and its derivatives are
+We prove the estimator stated above with its support and boundary conditions.
+
+:::{prf:proposition} Maximum likelihood with a known Pareto cutoff
+:label: prop-pareto-known-cutoff-likelihood
+
+In the iid Pareto Type I model with known $x_m>0$ and parameter
+$\alpha\in(0,\infty)$, let $n\ge1$ and let the observed values satisfy
+$x_i\ge x_m$. If $\sum_{i=1}^n\log(x_i/x_m)>0$, the unique likelihood
+maximizer is
+$\widehat\alpha=n/\sum_{i=1}^n\log(x_i/x_m)$.
+If the sum is zero, all observations equal $x_m$ and there is no finite
+maximizer: the likelihood increases without bound as $\alpha\to\infty$.
+:::
+
+:::{prf:proof}
+Up to terms independent of $\alpha$, the log likelihood $\ell$ and its
+derivatives are
 
 $$
 \begin{aligned}
@@ -306,9 +356,12 @@ $$
 
 If $\sum_{i=1}^n\log(x_i/x_m)>0$, the unique maximizer is
 $n/\sum_{i=1}^n\log(x_i/x_m)$. If the sum is zero, every observation equals
-$x_m$ and $\ell$ increases without bound as $\alpha\to\infty$. Observations
-below $x_m$ are outside this model's support. A threshold estimated from the
-same sample changes the problem; this proof supplies no guarantee for that fit.
+$x_m$ and $\ell$ increases without bound as $\alpha\to\infty$.
+:::
+
+Observations below $x_m$ are outside this model's support. A threshold
+estimated from the same sample changes the problem; this proof supplies
+no guarantee for that fit.
 
 ## Sums and moment orders
 
@@ -352,6 +405,24 @@ $\mathbb E[X^p]<\infty$ if and only if $p<\alpha$, for $p>0$, as proved in
 ### Exact-Pareto boundary calculation
 
 We prove the two normalizations used above for $\alpha=1$.
+
+:::{prf:proposition} Maximum and sum at Pareto exponent one
+:label: prop-pareto-exponent-one-boundary
+
+Let $X_1,X_2,\ldots$ be iid Pareto Type I variables with cutoff $x_m>0$
+and exponent $\alpha=1$. Set $S_n=\sum_{i=1}^nX_i$ and
+$M_n=\max_{1\le i\le n}X_i$. Then, for every $z>0$,
+
+$$
+P\!\left(\frac{M_n}{x_m n}\le z\right)\longrightarrow e^{-1/z},
+\qquad
+\frac{S_n}{x_m n\log n}\xrightarrow{P}1,
+\qquad
+\frac{M_n}{S_n}\xrightarrow{P}0.
+$$
+:::
+
+:::{prf:proof}
 Without loss of generality, assume $x_m=1$ within this calculation:
 divide each observation by the positive cutoff $x_m$, and let
 $X_i$, $S_n$, and $M_n$ now denote the rescaled observations, sum, and
@@ -383,11 +454,28 @@ normalized maximum by this normalized sum and by $\log n$ proves
 $M_n/S_n\to0$ in probability. Returning to the original units restores
 the normalizations $M_n/(x_m n)$ and $S_n/(x_m n\log n)$; from here on,
 $X_i$, $S_n$, and $M_n$ again denote the original, unscaled quantities.
+:::
 
 ### Fixed-size rare-event calculation
 
 We extend the two-summand bound on the subexponentiality page to prove the
-displayed fixed-$n$ result. The case $n=1$ is immediate. For fixed $n\ge2$,
+displayed fixed-$n$ result.
+
+:::{prf:proposition} A fixed Pareto sum exceeds high thresholds by one large term
+:label: prop-pareto-fixed-size-tail
+
+For a fixed integer $n\ge1$, let $X_1,\ldots,X_n$ be iid Pareto Type I
+variables with cutoff $x_m>0$ and exponent $\alpha>0$. With
+$S_n=\sum_{i=1}^nX_i$, $M_n=\max_{1\le i\le n}X_i$, and
+$\bar F(x)=P(X_1>x)$,
+
+$$
+P(S_n>x)\sim P(M_n>x)\sim n\bar F(x),\qquad x\to\infty.
+$$
+:::
+
+:::{prf:proof}
+The case $n=1$ is immediate. For fixed $n\ge2$,
 choose $h=x_m(x/x_m)^\gamma$ with $1/2<\gamma<1$. If $S_n>x$ but
 $M_n\le x$, either one observation lies in $(x-(n-1)h,x]$, or at least two
 observations exceed $h$. Otherwise the sum is at most $x$. Thus
@@ -404,6 +492,7 @@ $(x/x_m)^{\alpha(1-2\gamma)}\to0$.
 Finally, $\mathbb P(M_n>x)=1-(1-\bar F(x))^n\sim n\bar F(x)$.
 Nonnegativity makes $\{M_n>x\}$ a subset of $\{S_n>x\}$, and the
 negligible residual probability proves the sum-tail equivalence.
+:::
 
 (pareto-sums-products)=
 ## Positive sums and independent products
@@ -412,38 +501,65 @@ The sum and product discussions in SCoFT v4 §§5.2.1–5.2.2, pp. 98–100
 [@taleb2025scoftv4], require different assumptions. Here we prove a bounded
 claim about sums and exact formulas for independent Pareto products.
 
-Fix $n<\infty$, positive weights $w_i$, and nonnegative $X_i$ with
+:::{prf:proposition} Logarithmic tail exponent of a finite positive sum
+:label: prop-pareto-positive-sum-exponent
+
+Fix an integer $1\le n<\infty$, positive weights $w_i$, and nonnegative
+$X_i$ with
 $P(X_i>x)=x^{-\alpha_i}L_i(x)$ eventually, where $\alpha_i>0$
 and each $L_i$ is slowly varying.
-Dependence is unrestricted. For $S=\sum_{i=1}^n w_iX_i$,
+Dependence is unrestricted. For $S=\sum_{i=1}^n w_iX_i$ and every $x>0$,
 
 $$
 \max_i P(X_i>x/w_i)\le P(S>x)
 \le\sum_{i=1}^nP(X_i>x/(nw_i)).
 $$
 
+Consequently, $\log P(S>x)/\log x\to-\min_i\alpha_i$ as $x\to\infty$.
+:::
+
+:::{prf:proof}
 The lower bound uses nonnegativity; the upper bound holds because a sum
 above $x$ has some term above $x/n$.
 The [logarithmic regular-variation consequence](incerto-regular-variation.md#regular-variation-representation)
 makes both bounds $x^{-\min_i\alpha_i+o(1)}$, so
-$\log P(S>x)/\log x\to-\min_i\alpha_i$. These bounds establish a logarithmic
+$\log P(S>x)/\log x\to-\min_i\alpha_i$.
+:::
+
+These bounds establish a logarithmic
 exponent, not a limiting survival constant or full regular variation of
 every dependent sum. If one allows signed variables, take a symmetric
 power-tailed $V$ and $(X_1,X_2)=(V,-V)$: both have right power tails but
 their sum is identically zero.
 
 (pareto-independent-products)=
-For products, let $X_1,X_2$ be **independent** unit-cutoff Pareto variables
+For products, the exact formula requires independence.
+
+:::{prf:proposition} Survival of an independent Pareto product
+:label: prop-pareto-independent-products
+
+Let $X_1,X_2$ be **independent** unit-cutoff Pareto variables
 with exponents $a,b>0$. The symbols $a,b$ are local exponents in this
-two-law calculation. For $z\ge1$, condition on $X_1$ to obtain
+two-law calculation. For $z\ge1$,
 
 $$
-P(X_1X_2>z)=z^{-a}+a z^{-b}\int_1^z t^{b-a-1}\,dt
-=\begin{cases}
+P(X_1X_2>z)=\begin{cases}
 \dfrac{b z^{-a}-a z^{-b}}{b-a},&a\ne b,\\[6pt]
 z^{-a}(1+a\log z),&a=b.
 \end{cases}
 $$
+:::
+
+:::{prf:proof}
+Conditioning on $X_1$ and using independence gives
+
+$$
+P(X_1X_2>z)=z^{-a}+a z^{-b}\int_1^z t^{b-a-1}\,dt.
+$$
+
+For $a\ne b$, the integral is $(z^{b-a}-1)/(b-a)$; for $a=b$ it is
+$\log z$. Substitution gives the two formulas.
+:::
 
 For unequal exponents the smaller one determines the leading power.
 Equal exponents introduce a logarithmic factor, which is slowly varying
@@ -502,19 +618,33 @@ the earlier three max-to-sum regimes remain unchanged.
 
 The regime question in SCoFT v4 appendix A, §A.1, pp. 122–124
 [@taleb2025scoftv4], does not by itself specify a Pareto law.
-Here is an example that does. With probability
+Here is an example that does.
+
+:::{prf:proposition} A Pareto component determines the mixture's moment boundary
+:label: prop-pareto-regime-mixture
+
+With probability
 $w\in(0,1]$, draw a Pareto variable with cutoff $x_m>0$ and exponent
 $\alpha>0$; otherwise draw a uniform variable on $[0,x_m]$.
-For $u\ge x_m$, conditioning on the regime proves
+For the resulting variable $X$ and $u\ge x_m$,
 
 $$
 P(X>u)=w(x_m/u)^\alpha.
 $$
 
+For every $q>0$, $\mathbb E[X^q]<\infty$ exactly when $q<\alpha$.
+:::
+
+:::{prf:proof}
+Conditioning on the regime gives the displayed survival, since the uniform
+component cannot exceed $u\ge x_m$.
 For every positive order $q$, the mixture moment is
 $(1-w)x_m^q/(q+1)+w\mathbb E[X_{\rm Pareto}^q]$.
 The [existing moment proof](incerto-pareto-moment-existence.md) therefore
-implies finiteness exactly when $q<\alpha$. A small positive mixture
+implies finiteness exactly when $q<\alpha$.
+:::
+
+A small positive mixture
 weight changes the survival constant but not the exponent or moment gate.
 At $w=0$ the model becomes bounded and all positive moments exist.
 

@@ -30,6 +30,9 @@ through time under one law and an increasing information set.
 (conflation-score-gap)=
 ## A binary score does not identify a payoff mean
 
+:::{prf:lemma} Brier regret depends only on the event probability
+:label: lem-probability-conflation-brier-regret
+
 Let $X\ge0$ be a loss, $u>0$ a fixed threshold, and $q\in[0,1]$
 a constant probability report for the strict event $X>u$. Use the
 [shared survival notation](https://xshi19.github.io/math/notation/)
@@ -44,20 +47,30 @@ $$
 \end{aligned}
 $$
 
+The excess expected loss above the true report $q=\bar F(u)$ is
+$\{q-\bar F(u)\}^2$.
+:::
+
+:::{prf:proof}
 Expanding the square and using
 $\mathbf1_{\{X>u\}}^2=\mathbf1_{\{X>u\}}$ proves the identity.
-The excess expected loss above the true report is therefore
-$\{q-\bar F(u)\}^2$. It measures an error in an event probability and
+Subtracting its value at $q=\bar F(u)$ gives the regret.
+:::
+
+The regret measures an error in an event probability and
 contains no conditional severity. In particular, a calibrated report
 $q=\bar F(u)$ need not have a small raw Brier score: the term
 $\bar F(u)\{1-\bar F(u)\}$ is the outcome's irreducible variation.
 
 We now prove that even the complete iid binary-score sampling law cannot
-bound expected excess-payoff error. Fix $0<p<1$ and $u>0$. For each
+bound expected excess-payoff error.
+
+:::{prf:proposition} Identical binary-score laws with unbounded excess means
+:label: prop-probability-conflation-binary-nonidentification
+
+Fix $0<p<1$ and $u>0$. For each
 $\alpha>1$, take an exact Pareto loss with minimum
-$x_m=u p^{1/\alpha}$. The existing
-[tail-payoff derivation](incerto-calibration-payoff.md#calibration-tail-models)
-then gives
+$x_m=u p^{1/\alpha}$. Then
 
 $$
 \begin{gathered}
@@ -66,21 +79,31 @@ P(X>u)=p,\\
 \end{gathered}
 $$
 
-Every model yields the same Bernoulli law for $\mathbf1_{\{X>u\}}$,
-hence the same score law for any fixed report and any iid sample size.
-Yet $\mathbb E[(X-u)_+]$ can be arbitrarily large as $\alpha\downarrow1$.
-An amount estimate
-based only on $p$ therefore has unbounded possible error across these
-models, even with zero Brier regret. All means in this comparison are
-finite; an infinite mean is not needed for the counterexample.
-With the same fixed $p$ and $u$, the threshold-scaled tail-level mean is
+For every fixed report $q\in[0,1]$ and iid sample size $n\ge1$, the
+joint law of the $n$ Brier scores for $X>u$ is the same for all
+$\alpha>1$, while the finite excess means are unbounded as
+$\alpha\downarrow1$. Also
 
 $$
 \frac{\mathbb E[X\mathbf1_{\{X>u\}}]}{up}
 =1+\frac1{\alpha-1}.
 $$
+:::
 
-This ratio increases as the exponent decreases toward one. It states
+:::{prf:proof}
+Substitute $x_m=u p^{1/\alpha}$ into the Pareto survival and the
+[tail-payoff formula](incerto-calibration-payoff.md#calibration-tail-models).
+Every model yields the same Bernoulli law for $\mathbf1_{\{X>u\}}$,
+hence the same score law for any fixed report and any iid sample size.
+Yet $\mathbb E[(X-u)_+]$ can be arbitrarily large as $\alpha\downarrow1$.
+Adding $uP(X>u)=up$ gives the stated tail-level ratio.
+:::
+
+An amount estimate
+based only on $p$ therefore has unbounded possible error across these
+models, even with zero Brier regret. All means in this comparison are
+finite; an infinite mean is not needed for the counterexample.
+The tail-level ratio increases as the exponent decreases toward one. It states
 precisely what is held fixed when we say that thicker tails enlarge the
 binary/continuous payoff gap. Across arbitrary families with changing
 scales, means, or caps, there is no universal ordering by a tail label.
@@ -125,15 +148,29 @@ comparable scores. No sample or fit enters these curves.
 ## Even uniformly small probability errors need tail control
 
 One threshold loses information. The entire survival function determines
-the mean of a nonnegative loss through Tonelli's theorem:
+the mean of a nonnegative loss.
+
+:::{prf:lemma} A nonnegative mean is the survival integral
+:label: lem-probability-conflation-survival-mean
+
+For a nonnegative random variable $X$ with $\bar F(v)=P(X>v)$,
+including infinite expectations,
 
 $$
 \mathbb E X=\int_0^\infty\bar F(v)\,dv.
 $$
+:::
+
+:::{prf:proof}
+Apply Tonelli's theorem to $X=\int_0^\infty\mathbf1_{\{X>v\}}\,dv$.
+:::
 
 Knowing every probability exactly is therefore sufficient. Approximating
 every probability to a small *absolute* error is a different claim.
 We prove the distinction with a finite-support sequence.
+
+:::{prf:proposition} Uniformly accurate probabilities with diverging means
+:label: prop-probability-conflation-uniform-error-counterexample
 
 Let the reference loss be identically zero. For each integer $n\ge2$,
 let $X_n=n^2$ with probability $1/n$, and zero otherwise. If $F_0$
@@ -146,16 +183,33 @@ $$
 \end{gathered}
 $$
 
+At each threshold $v\in\mathbb R$, report the reference exceedance
+probability $P(0>v)$. Its Brier regret under $X_n$ is $1/n^2$ for
+$0\le v<n^2$ and zero otherwise. Hence the thresholdwise regrets
+vanish uniformly while the means diverge.
+:::
+
+:::{prf:proof}
 Indeed, the CDF difference equals $1/n$ on $[0,n^2)$ and zero
 elsewhere. Multiplying the only positive value by its probability gives
-the mean. For every nonnegative threshold below $n^2$, reporting the
-reference exceedance probability zero has Brier regret $1/n^2$ under
-the $X_n$ model. Thus even uniformly vanishing thresholdwise regret
+the mean. The exceedance probabilities differ by $1/n$ on that interval
+and agree elsewhere. For $v>0$, [](#lem-probability-conflation-brier-regret)
+gives the stated regrets. At $v=0$, the same Bernoulli calculation gives
+$(0-1/n)^2$; at $v<0$, both strict exceedance indicators are one and
+the reference report is one.
+:::
+
+Thus even uniformly vanishing thresholdwise regret
 does not control a mean over this class. Each individual law is bounded;
 the class has no common cap or uniform tail-integrability bound.
 
-The relevant extra assumption can be seen directly. For two nonnegative
-laws $F,G$ with finite means and any $H>0$, split the mean integrals at $H$:
+The relevant extra assumption can be seen directly.
+
+:::{prf:proposition} Tail control turns CDF accuracy into mean accuracy
+:label: prop-probability-conflation-tail-control
+
+For two nonnegative laws $F,G$ with finite means and any $H>0$, let
+$\|F-G\|_\infty=\sup_v|F(v)-G(v)|$. Then
 
 $$
 \begin{aligned}
@@ -166,10 +220,20 @@ $$
 \end{aligned}
 $$
 
-The first term bounds the integral on $[0,H]$; positivity bounds the
-remaining difference by the two tails. If the tail terms tend uniformly
-to zero in a model class, uniform CDF convergence does imply convergence
-of means. A common finite cap supplies this control immediately.
+In particular, if $F_n$ and $F$ belong to a class $\mathcal C$ with
+$\sup_{G\in\mathcal C}\mathbb E_G[(X-H)_+]\to0$ as $H\to\infty$,
+then $\|F_n-F\|_\infty\to0$ implies convergence of their means.
+:::
+
+:::{prf:proof}
+Split the survival integrals from [](#lem-probability-conflation-survival-mean)
+at $H$. The first term bounds the integral on $[0,H]$; positivity bounds
+the remaining difference by the two tails. For the convergence assertion,
+first make both tail terms small by choosing $H$, then let $n\to\infty$
+with that $H$ fixed.
+:::
+
+A common finite cap supplies this control immediately.
 See [moment estimation](incerto-moment-estimation.md) for why a finite
 sample alone does not establish the needed population moments.
 
@@ -194,6 +258,9 @@ n=1000: CDF error=0.001, mean=1000.0
 (conflation-inverse-probability)=
 ## A bounded probability can produce an unbounded quantile
 
+:::{prf:proposition} Sensitivity of the Pareto inverse survival
+:label: prop-probability-conflation-quantile-sensitivity
+
 For an exact Pareto loss with fixed $x_m>0$ and $\alpha>0$, the
 threshold associated with tail probability $p\in(0,1)$ is
 $K(p)=x_m p^{-1/\alpha}$. Its derivatives are
@@ -206,7 +273,17 @@ K''(p)=\frac{\alpha+1}{\alpha^2p^2}K(p)>0,\\
 \end{gathered}
 $$
 
-These follow by differentiating the power. At the same cutoff and
+Thus $K$ is decreasing and strictly convex, and its first and second
+absolute derivatives diverge as $p\downarrow0$.
+:::
+
+:::{prf:proof}
+Differentiate $x_m p^{-1/\alpha}$ once and twice, and divide
+$pK'(p)$ by $K(p)$ for the logarithmic derivative. The signs and
+divergences follow from $x_m,\alpha>0$.
+:::
+
+At the same cutoff and
 probability, decreasing $\alpha$ increases both the quantile and its
 relative sensitivity. Absolute derivatives diverge near $p=0$ even
 when $\alpha>1$. The inverse survival function in this model is
@@ -220,7 +297,34 @@ fixed event. The transform applies to $F(X)$ for a continuous CDF,
 not to the constant $\bar F(u)$ at a fixed threshold.
 
 We derive the positive moments of $K$ directly from the beta density.
-Write $\mathrm B$ for the beta function. For order $r>0$,
+
+:::{prf:proposition} Moments and density of a beta-transformed Pareto quantile
+:label: prop-probability-conflation-beta-quantile
+
+Let $\Pi\sim\mathrm{Beta}(a,b)$ with $a,b>0$, and let
+$K=x_m\Pi^{-1/\alpha}$ with $x_m>0$ and $\alpha>0$.
+Write $\mathrm B$ for the beta function. For every $r>0$,
+
+$$
+\mathbb E K^r=
+\begin{cases}
+x_m^r\mathrm B(a-r/\alpha,b)/\mathrm B(a,b),&r<a\alpha,\\
+\infty,&r\ge a\alpha.
+\end{cases}
+$$
+
+Its density is
+
+$$
+f_K(k)=\frac{\alpha x_m^{a\alpha}}{\mathrm B(a,b)}
+k^{-a\alpha-1}[1-(x_m/k)^\alpha]^{b-1},\qquad k>x_m,
+$$
+
+and its survival is regularly varying with exponent $a\alpha$.
+:::
+
+:::{prf:proof}
+For order $r>0$, integration against the beta density gives
 
 $$
 \begin{aligned}
@@ -242,9 +346,7 @@ r<a\alpha.
 $$
 
 At and above $r=a\alpha$, the nonnegative moment is infinite;
-continuing a gamma-function expression beyond this domain cannot produce
-a moment. The source's additional condition involving $a+b$ is redundant
-when $b>0$. Changing variables $p=(x_m/k)^\alpha$ also gives
+changing variables $p=(x_m/k)^\alpha$ also gives
 
 $$
 \begin{gathered}
@@ -256,7 +358,14 @@ k>x_m.
 $$
 
 Since the bracket tends to one, the density has tail power
-$a\alpha+1$ and the survival has exponent $a\alpha$.
+$a\alpha+1$. Bounding the bracket between $1-\varepsilon$ and
+$1+\varepsilon$ for sufficiently large $k$ and integrating gives
+$P(K>k)\sim x_m^{a\alpha}k^{-a\alpha}/[a\mathrm B(a,b)]$.
+:::
+
+Continuing a gamma-function expression beyond the moment domain cannot
+produce a moment. The source's additional condition involving $a+b$ is
+redundant when $b>0$.
 The report $\Pi$ has every positive moment, while $K$ may have neither
 a finite mean nor a finite second moment. If $1<a\alpha\le2$, the
 mean exists but the variance is infinite. If $a\alpha\le1$, ordinary

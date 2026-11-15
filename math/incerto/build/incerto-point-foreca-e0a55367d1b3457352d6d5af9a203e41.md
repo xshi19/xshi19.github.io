@@ -33,22 +33,36 @@ law. Estimating that law from observations is a further problem.
 ## Which point minimizes expected loss?
 
 We prove the squared- and absolute-loss claims at their finite-risk scope.
-If $\mathbb E X^2<\infty$, expansion around $\mu=\mathbb E X$ gives
+
+:::{prf:proposition} The mean uniquely minimizes finite expected squared loss
+:label: prop-point-forecast-squared-loss
+
+Let $X$ be real with $\mathbb E X^2<\infty$ and $\mu=\mathbb E X$.
+For every fixed $d\in\mathbb R$,
 
 $$
 \mathbb E[(X-d)^2]
 =\operatorname{Var}(X)+(d-\mu)^2.
 $$
 
-The cross term vanishes because $\mathbb E(X-\mu)=0$. The mean is the
-unique minimizing forecast. Finite variance of the *sample mean* is not
+The unique minimizing forecast is $d=\mu$.
+:::
+
+:::{prf:proof}
+Expand $X-d=(X-\mu)+(\mu-d)$. The cross term vanishes because
+$\mathbb E(X-\mu)=0$. The remaining square $(d-\mu)^2$ is nonnegative
+and vanishes exactly at $d=\mu$.
+:::
+
+Finite variance of the *sample mean* is not
 needed to define a population median, and existence of a population mean
 alone does not make the squared-loss objective finite.
 
-For absolute loss, assume $\mathbb E|X|<\infty$. For $d_2>d_1$,
-integrate the pointwise slopes of $|x-d|$ in $d$. Their magnitude is at
-most one, so interchanging expectation and this finite integral is valid.
-With $F$ the CDF, the result is
+:::{prf:proposition} Medians minimize finite expected absolute loss
+:label: prop-point-forecast-absolute-loss
+
+Let $X$ be real with CDF $F$ and $\mathbb E|X|<\infty$.
+For any $d_2>d_1$,
 
 $$
 \begin{aligned}
@@ -57,9 +71,18 @@ $$
 \end{aligned}
 $$
 
+The minimizing points are precisely the medians
+$F(d-)\le1/2\le F(d)$, including atoms and nonunique medians.
+:::
+
+:::{prf:proof}
+Integrate the pointwise slopes of $|x-d|$ in $d$. Their magnitude is at
+most one, so interchanging expectation and this finite integral is valid.
 The value of a slope exactly at an atom does not affect the integral.
 Monotonicity of $F$ shows that the minimizing points are precisely the
 medians: $F(d-)\le1/2\le F(d)$. This covers nonunique medians and atoms.
+:::
+
 A median is a property of any real probability distribution; the preceding
 finite-expected-loss optimization requires the additional integrability
 assumption.
@@ -67,9 +90,14 @@ assumption.
 (point-forecast-moments)=
 ## A finite point does not remove an infinite expected loss
 
-For exact Pareto $X$ with $x_m>0$, the
-[moment theorem](incerto-pareto-moment-existence.md) gives a sharp
-boundary. For each fixed finite $d$,
+The [moment theorem](incerto-pareto-moment-existence.md) gives a sharp
+boundary for exact Pareto losses.
+
+:::{prf:proposition} Moment boundaries for Pareto forecast errors
+:label: prop-point-forecast-pareto-loss-moments
+
+Let $X$ be exact Pareto Type I with $x_m>0$ and $\alpha>0$.
+For each fixed $d\in\mathbb R$,
 
 $$
 \begin{gathered}
@@ -80,31 +108,46 @@ $$
 \end{gathered}
 $$
 
+:::
+
+:::{prf:proof}
 To prove necessity, for $X>2|d|$ the absolute error is at least $X/2$.
 The tail integral of the corresponding power diverges at and below the
 moment boundary. For sufficiency use $|X-d|\le X+|d|$ and
-$(X-d)^2\le2X^2+2d^2$. Thus every finite point has infinite squared
+$(X-d)^2\le2X^2+2d^2$.
+:::
+
+Thus every finite point has infinite squared
 risk when $1<\alpha\le2$, even though a finite mean exists.
 One can compare suitable differences of losses under weaker conditions,
 but that is a different optimization formulation; it is not a finite
 minimum of the ordinary squared-risk objective.
 
-For $\alpha>1$ the exact Pareto mean and median are
+:::{prf:proposition} Exact absolute risk under a Pareto law
+:label: prop-point-forecast-pareto-absolute-risk
+
+For exact Pareto $X$ with $x_m>0$ and $\alpha>1$, the mean and median are
 
 $$
 \mu=\frac{\alpha x_m}{\alpha-1},
 \qquad \operatorname{median}(X)=x_m2^{1/\alpha}.
 $$
 
-The median formula follows from $F(x_m2^{1/\alpha})=1/2$.
-For $d\ge x_m$, use $|X-d|=d-X+2(X-d)_+$ and the
-[excess-mean formula](incerto-calibration-payoff.md#calibration-tail-models)
-to obtain
+For $d\ge x_m$,
 
 $$
 \mathbb E|X-d|
 =d-\mu+\frac{2x_m^\alpha d^{1-\alpha}}{\alpha-1}.
 $$
+:::
+
+:::{prf:proof}
+The mean is the Pareto moment formula, and the median satisfies
+$F(x_m2^{1/\alpha})=1/2$. Apply the identity
+$|X-d|=d-X+2(X-d)_+$ and the
+[excess-mean formula](incerto-calibration-payoff.md#calibration-tail-models)
+to obtain the expected absolute loss.
+:::
 
 This finite expression permits an exact comparison; a finite Monte Carlo
 average cannot prove that an expected loss exists.
@@ -155,8 +198,13 @@ errors can be consistent even when their sampling variance is infinite.
 ## Normalization changes the score's tail
 
 Absolute error, squared error, MASE, and sMAPE are different functions of
-the same forecast and outcome. For a fixed finite $d$ and sufficiently
-large $t$, exact Pareto $X$ satisfies
+the same forecast and outcome.
+
+:::{prf:proposition} Tails of Pareto absolute and squared forecast errors
+:label: prop-point-forecast-error-tails
+
+Let $X$ be exact Pareto Type I with $x_m>0$, $\alpha>0$, and fix
+$d\in\mathbb R$. Write $\bar F(t)=P(X>t)$. For sufficiently large $t$,
 
 $$
 \begin{gathered}
@@ -165,10 +213,20 @@ P((X-d)^2>t)=\bar F(\sqrt t+d).
 \end{gathered}
 $$
 
+The absolute and squared errors have regularly varying tails with
+exponents $\alpha$ and $\alpha/2$, respectively. For any fixed
+$s_0>0$, $|X-d|/s_0$ also has tail exponent $\alpha$.
+:::
+
+:::{prf:proof}
 For the first identity, $t>|d|$ eliminates the lower branch $X<d-t$;
 for the second use $\sqrt t>|d|$. Once the remaining thresholds exceed
 $x_m$, the Pareto formula applies. Taking ratios as $t\to\infty$
 shows tail exponents $\alpha$ and $\alpha/2$, respectively.
+Replacing $t$ by $s_0t$ in the absolute-error survival preserves its
+regular-variation exponent.
+:::
+
 Squaring the error changes its moment requirements.
 
 MASE divides absolute error by a positive training-sample scale $s_0$
@@ -193,8 +251,20 @@ $$
 $$
 
 with score zero when $d=x=0$.
-The triangle inequality proves that the score lies in $[0,2]$. A percentage
-presentation multiplies this by 100. Thus this normalized score is bounded
+
+:::{prf:proposition} Boundedness of the stated sMAPE score
+:label: prop-point-forecast-smape-bound
+
+For every $x,d\in\mathbb R$, the score $2|x-d|/(|x|+|d|)$, defined
+as zero when $x=d=0$, lies in $[0,2]$.
+:::
+
+:::{prf:proof}
+When the denominator is positive, use $|x-d|\le|x|+|d|$.
+The zero-denominator convention also lies in the stated interval.
+:::
+
+A percentage presentation multiplies this by 100. Thus this normalized score is bounded
 even for unbounded $X$. A statement that every M4-style score has the
 same tail class as the underlying amount would be false for this sMAPE.
 The source's §11.4 formula also needs absolute values in its numerator to
@@ -260,13 +330,17 @@ is finite. These are separate statements with separate domains.
 (point-forecast-scaling)=
 ## Estimating a mean and predicting an outcome
 
-Let $X_1,\ldots,X_n$ be iid training observations, with sample mean
-$\bar X_n$. An independent future amount is denoted locally by $X_{n+1}$.
 Even when the training mean consistently estimates $\mu$, the future
-amount remains random. For a nondegenerate integrable law, Slutsky's theorem
-gives $X_{n+1}-\bar X_n\Rightarrow X-\mu$: convergence of the estimate
-does not collapse the predictive distribution. In the finite-variance case,
-independence gives the exact comparison
+amount remains random.
+
+:::{prf:proposition} Estimation and prediction have different errors
+:label: prop-point-forecast-estimation-prediction
+
+Let $X_1,X_2,\ldots$ be iid with a nondegenerate real law $X$ satisfying
+$\mathbb E|X|<\infty$. Set $\mu=\mathbb E X$ and
+$\bar X_n=n^{-1}\sum_{i=1}^nX_i$; $X_{n+1}$ is independent of the
+training sample. Then $X_{n+1}-\bar X_n\Rightarrow X-\mu$.
+If also $\sigma^2=\operatorname{Var}(X)<\infty$,
 
 $$
 \begin{gathered}
@@ -275,22 +349,47 @@ $$
 =\sigma^2(1+1/n).
 \end{gathered}
 $$
+:::
+
+:::{prf:proof}
+The iid law of large numbers gives $\bar X_n\to\mu$ in probability.
+Slutsky's theorem, applied to the unchanged marginal law of $X_{n+1}$,
+gives the distributional limit. In the finite-variance case, independence
+makes the variance of the sum of the $n$ observations equal to $n\sigma^2$.
+Dividing by $n^2$ gives the first variance. Independence of $X_{n+1}$
+and $\bar X_n$ gives the second by adding their variances.
+:::
 
 The distinction matters before choosing a heavy-tail model. More training
 data can reduce estimation error while leaving substantial outcome risk.
 
-For an exact scaling benchmark, take iid symmetric stable observations
-with location $\mu$, scale $\sigma>0$, and index $0<\alpha\le2$:
+For an exact scaling benchmark, take symmetric stable observations.
+
+:::{prf:proposition} Exact scale of an iid symmetric stable average
+:label: prop-point-forecast-stable-average-scale
+
+Let $X_1,\ldots,X_n$ be iid with $n\ge1$, location $\mu\in\mathbb R$,
+scale $\sigma>0$, and index $0<\alpha\le2$, specified by
 
 $$
-\mathbb E e^{it(X-\mu)}
-=e^{-|\sigma t|^\alpha}.
+\mathbb E e^{it(X_i-\mu)}
+=e^{-|\sigma t|^\alpha},\qquad t\in\mathbb R.
 $$
 
-Here $\mu$ denotes a location, and is a population mean only for
-$\alpha>1$. At $\alpha=2$ the variance is $2\sigma^2$.
-We prove the average-scale identity by multiplying characteristic
-functions at $t/n$:
+With $\bar X_n=n^{-1}\sum_iX_i$ and $Z_\alpha$ the zero-location
+unit-scale law, whose characteristic function is $e^{-|t|^\alpha}$,
+
+$$
+\bar X_n-\mu\ \overset d=\ s_n Z_\alpha,
+\qquad s_n=\sigma n^{1/\alpha-1}.
+$$
+
+For every $0<r<s<1$, the difference between the $s$- and $r$-quantiles
+of $\bar X_n$ is $s_n$ times the corresponding width of $Z_\alpha$.
+:::
+
+:::{prf:proof}
+Multiply characteristic functions at $t/n$:
 
 $$
 \begin{gathered}
@@ -301,8 +400,15 @@ s_n=\sigma n^{1/\alpha-1},\\
 \end{gathered}
 $$
 
-$Z_\alpha$ is the zero-location unit-scale law. Every fixed interquantile
-width scales by $s_n$, including when moments do not exist. For
+Equality of characteristic functions gives the distributional identity.
+Quantiles shift by $\mu$ and scale by the positive number $s_n$, so
+their differences have the stated scaling.
+:::
+
+Here $\mu$ denotes a location, and is a population mean only for
+$\alpha>1$. At $\alpha=2$ the variance is $2\sigma^2$.
+Every fixed interquantile width scales by $s_n$, including when moments
+do not exist. For
 $1<\alpha<2$ the width shrinks more slowly than $n^{-1/2}$; for the
 Cauchy case $\alpha=1$ it stays constant; below one it increases.
 Symmetric stable variables can be negative, so this benchmark is an error
@@ -335,7 +441,37 @@ alpha=2: scale=0.100, MAD=0.113, kappa=0.000
 ```
 
 The exact identity applies to stable parents. For iid exact positive
-Pareto observations with $1<\alpha<2$, the
+Pareto observations, the attraction normalization requires a separate calculation.
+
+:::{prf:lemma} Pareto constants in truncated-mean stable normalization
+:label: lem-point-forecast-pareto-normalization
+
+Let $X$ be exact Pareto Type I with cutoff $x_m>0$ and exponent
+$0<\alpha<2$. For integers $n\ge2$, define
+$a_n=\inf\{x>0:P(|X|>x)\le1/n\}$ and
+$b_n=n\mathbb E[X\mathbf1_{\{|X|\le a_n\}}]$.
+Then $a_n=x_m n^{1/\alpha}$, and
+
+$$
+\begin{cases}
+(n\mu-b_n)/a_n=\alpha/(\alpha-1),&1<\alpha<2,\\
+b_n/a_n=\dfrac{\alpha}{1-\alpha}(1-n^{1-1/\alpha}),&0<\alpha<1,\\
+b_n=x_m n\log n,&\alpha=1.
+\end{cases}
+$$
+
+Here $\mu=\mathbb E X$ in the finite-mean case $1<\alpha<2$.
+:::
+
+:::{prf:proof}
+Invert $(x_m/a_n)^\alpha=1/n$ for $a_n$, then use
+$b_n=n\alpha x_m^\alpha\int_{x_m}^{a_n}x^{-\alpha}\,dx$.
+For $\alpha\ne1$, evaluate the power integral and, when $\alpha>1$,
+subtract it from $n\mu=n\alpha x_m/(\alpha-1)$.
+For $\alpha=1$, the logarithmic integral gives $x_m n\log n$.
+:::
+
+For $1<\alpha<2$, the
 [stable-attraction theorem](incerto-generalized-central-limit-theorem.md#generalized-clt-statement)
 instead gives the asymptotic statement
 
@@ -370,12 +506,30 @@ coverage nor convergence of mean absolute errors.
 
 For a nonnegative Pareto law with $0<\alpha<1$, use zero centering;
 $\bar X_n/(x_m n^{1/\alpha-1})$ has a nondegenerate positive stable limit.
-Here $b_n/a_n\to\alpha/(1-\alpha)$, so removing Durrett's truncated
+By [](#lem-point-forecast-pareto-normalization),
+$b_n/a_n\to\alpha/(1-\alpha)$, so removing Durrett's truncated
 centering shifts his limit upward by $\alpha/(1-\alpha)$.
-There is no finite mean to forecast. In fact $\bar X_n\to\infty$ almost
-surely when $\alpha\le1$: apply the bounded iid strong law to
-$\min(X_i,b)$ for every integer $b$, then let its expectation increase
-without bound. At the exact Pareto boundary $\alpha=1$, Durrett's constants
+There is no finite mean to forecast. The following supporting result also
+applies to the nonnegative scores considered below.
+
+:::{prf:lemma} Iid averages of nonnegative variables with infinite mean
+:label: lem-point-forecast-infinite-mean-averages
+
+Let $X_1,X_2,\ldots$ be iid nonnegative random variables with
+$\mathbb E X_1=\infty$. Then $n^{-1}\sum_{i=1}^nX_i\to\infty$
+almost surely.
+:::
+
+:::{prf:proof}
+Apply the bounded iid strong law to $\min(X_i,b)$ for every positive
+integer $b$. On the intersection of these countably many probability-one
+events, the liminf of the original averages is at least
+$\mathbb E\min(X_1,b)$ for every $b$. Monotone convergence sends these
+expectations to infinity.
+:::
+
+Thus exact Pareto sample means diverge almost surely when $\alpha\le1$.
+At the exact Pareto boundary $\alpha=1$, Durrett's constants
 are $a_n=x_m n$ and $b_n=x_m n\log n$. His centered stable limit thus
 applies to $\bar X_n/x_m-\log n$. The separate
 [truncation argument](incerto-pareto.md#exact-pareto-boundary-calculation)
@@ -409,9 +563,14 @@ Finite simulation illustrates the cited limit and does not prove it.
 ## Why a forecast leaderboard can move
 
 Evaluate a fixed forecast $d$ on iid test observations using the average
-of the losses at $(d,X_i)$. The earlier tail calculation gives exact Pareto
-loss exponents $\alpha$ for absolute error and $\alpha/2$ for squared error.
-Consequently:
+of the losses at $(d,X_i)$.
+
+:::{prf:corollary} Moment thresholds for Pareto forecast scores
+:label: cor-point-forecast-score-moments
+
+Let $X$ be exact Pareto Type I with $x_m>0$, $\alpha>0$, and fix
+$d\in\mathbb R$. The finite-moment conditions for the indicated scores
+are exactly those in the table, using the sMAPE convention above.
 
 | Score | Finite expected score | Finite score variance |
 | --- | --- | --- |
@@ -419,9 +578,20 @@ Consequently:
 | Squared error | $\alpha>2$ | $\alpha>4$ |
 | Our sMAPE convention | Every $\alpha>0$ | Every $\alpha>0$ |
 
-These boundaries follow by applying the Pareto moment test to the loss
-and its square. If a nonnegative score has infinite expectation, its iid
-average diverges almost surely by the same truncation argument. If its
+:::
+
+:::{prf:proof}
+The comparison in [](#prop-point-forecast-pareto-loss-moments) applies to
+the first, second, and fourth powers of $|X-d|$: for sufficiently large
+$X$, $X/2\le|X-d|\le X+|d|$. The Pareto moment test therefore gives
+the boundaries for each loss and its square. The sMAPE conclusion follows
+from [](#prop-point-forecast-smape-bound).
+:::
+
+The earlier tail calculation gives exponents $\alpha$ for absolute error
+and $\alpha/2$ for squared error. If a nonnegative score has infinite
+expectation, its iid average diverges almost surely by
+[](#lem-point-forecast-infinite-mean-averages). If its
 mean is finite but its variance infinite, the strong law still applies;
 the usual variance-based standard error lacks its population justification.
 In particular, finite variance of $X$ is insufficient for a conventional
@@ -429,17 +599,31 @@ CLT for the **squared score**. An RMSE transformation does not restore a
 missing population MSE.
 
 Paired comparisons can behave better than either score separately.
-For fixed finite forecasts $d_1,d_2$, the reverse triangle inequality gives
+
+:::{prf:proposition} Bounded paired differences of absolute losses
+:label: prop-point-forecast-paired-absolute-loss
+
+For any real random variable $X$ and fixed $d_1,d_2\in\mathbb R$,
 
 $$
 \bigl||X-d_1|-|X-d_2|\bigr|
 \le |d_1-d_2|.
 $$
 
-Thus their paired absolute-score difference is bounded even when both
-expected absolute scores are infinite. Under iid evaluation it has the
-ordinary finite-variance CLT, with a possible degenerate variance. For
-squared losses, cancellation gives
+Consequently the paired difference has finite mean and variance even
+when both expected absolute scores are infinite. Its iid sample average
+satisfies the ordinary finite-variance CLT, allowing zero variance.
+:::
+
+:::{prf:proof}
+The reverse triangle inequality gives the bound. Boundedness supplies
+the moments required by the iid CLT.
+:::
+
+:::{prf:proposition} Paired differences of squared losses
+:label: prop-point-forecast-paired-squared-loss
+
+For any real random variable $X$ and fixed $d_1,d_2\in\mathbb R$,
 
 $$
 \begin{aligned}
@@ -448,8 +632,18 @@ $$
 \end{aligned}
 $$
 
-For $d_1\ne d_2$, its mean exists under exact Pareto when $\alpha>1$,
-and its variance is finite only when $\alpha>2$. A consistent strict paired
+If $X$ is exact Pareto with $x_m>0$, $\alpha>0$, and $d_1\ne d_2$,
+the difference has a finite mean exactly when $\alpha>1$ and finite
+variance exactly when $\alpha>2$.
+:::
+
+:::{prf:proof}
+Expand both squares and cancel $X^2$. When $d_1\ne d_2$, the result
+is a nonconstant affine function of $X$. The Pareto first- and
+second-moment criteria give the stated boundaries.
+:::
+
+A consistent strict paired
 ranking is therefore possible when the expected loss difference is nonzero,
 even when individual MSEs are infinite; it compares an integrable difference,
 not two finite expected scores. For either paired comparison, a zero expected
@@ -517,8 +711,30 @@ $$
 =(\tau-\mathbf1_{\{x<d\}})(x-d).
 $$
 
-When $\mathbb E|X|<\infty$, the same slope argument used for absolute
-loss proves
+:::{prf:proposition} Quantile loss and its paired differences
+:label: prop-point-forecast-quantile-loss
+
+Let $X$ be real with CDF $F$, fix $0<\tau<1$, and define
+$\ell_\tau(d,x)=(\tau-\mathbf1_{\{x<d\}})(x-d)$.
+For $d_2>d_1$, the paired difference is bounded in absolute value by
+$|d_2-d_1|$ and satisfies
+
+$$
+\mathbb E[\ell_\tau(d_2,X)-\ell_\tau(d_1,X)]
+=\int_{d_1}^{d_2}\{F(t)-\tau\}\,dt.
+$$
+
+If $\mathbb E|X|<\infty$, each expected loss is finite, the left side
+also equals the difference of expectations, and the minimizers are precisely
+the $\tau$-quantiles $F(d-)\le\tau\le F(d)$.
+:::
+
+:::{prf:proof}
+The pointwise slope in $d$ is $\mathbf1_{\{x<d\}}-\tau$ away from
+$d=x$, with absolute value at most one. Integrate the slopes and use
+Fubini on the finite interval. Atom values do not affect the integral,
+so $F(t-)$ may be replaced by $F(t)$. If $\mathbb E|X|<\infty$,
+both expected losses are finite and
 
 $$
 \begin{aligned}
@@ -529,18 +745,31 @@ $$
 $$
 
 The minimizers are precisely the $\tau$-quantiles satisfying
-$F(d-)\le\tau\le F(d)$. Without integrability, quantiles still exist,
+$F(d-)\le\tau\le F(d)$ by monotonicity of $F$.
+:::
+
+Without integrability, quantiles still exist,
 and expected **paired differences** remain finite because their magnitude
 is at most $|d_2-d_1|$. The same integral then describes those differences;
 it must not be read as subtraction of two infinite expectations.
 A strict preference requires a nonzero expected paired loss difference;
 zero means a tie in expectation, whatever the sample averages show.
 
-For exact Pareto $X$, solving $F(q_\tau)=\tau$ gives
+:::{prf:proposition} Finite quantiles of an exact Pareto law
+:label: prop-point-forecast-pareto-quantiles
+
+Let $X$ be exact Pareto with $x_m>0$ and $\alpha>0$.
+For every $0<\tau<1$, its unique $\tau$-quantile is
 
 $$
 q_\tau=x_m(1-\tau)^{-1/\alpha}.
 $$
+:::
+
+:::{prf:proof}
+Solve $1-(x_m/q_\tau)^\alpha=\tau$; the CDF is continuous and strictly
+increasing on $[x_m,\infty)$.
+:::
 
 For $\alpha=0.8,x_m=1$, both a median and a 99th percentile are finite
 despite the infinite mean. The interval between any two specified
@@ -569,15 +798,29 @@ observed losses: 0.20, 0.00, 15.30
 ```
 
 One quantile or one event probability still omits severity beyond the
-threshold. For $X\ge0$, Tonelli's theorem gives, with infinite values allowed,
+threshold.
+
+:::{prf:proposition} Expected excess integrates the whole survival tail
+:label: prop-point-forecast-expected-excess
+
+For a nonnegative random variable $X$, $u\in\mathbb R$, and
+$\bar F(t)=P(X>t)$, with infinite values allowed,
 
 $$
 \mathbb E[(X-u)_+]
 =\int_u^\infty\bar F(t)\,dt.
 $$
+:::
+
+:::{prf:proof}
+Apply Tonelli's theorem to
+$(X-u)_+=\int_u^\infty\mathbf1_{\{X>t\}}\,dt$.
+:::
 
 Thus the **whole survival curve** determines expected excess; its value
-at one threshold does not. For $n$ iid observations and a fixed threshold
+at one threshold does not. The
+[counting-exceedances result](incerto-counting-exceedances.md), cited here,
+gives the following comparison: for $n$ iid observations and a fixed threshold
 $u$, the empirical fraction exceeding $u$ has variance
 $\bar F(u)\{1-\bar F(u)\}/n$, where $\bar F(u)=P(X>u)$, regardless
 of the amount's moments. Its RMSE is of order $n^{-1/2}$ when
@@ -597,10 +840,13 @@ but an exponent below one cannot establish an infinite physical mean under
 that bound. Pooling events across changing populations also changes the model.
 
 A cap alone need not make a sample informative about rare, severe losses.
+
+:::{prf:proposition} Mean of a capped Pareto variable
+:label: prop-point-forecast-capped-pareto-mean
+
 Let $V$ be an unbounded exact Pareto variable with exponent $\alpha>0$
 and minimum $x_m>0$. In this capped model, $X$ now denotes $\min(V,H)$,
-with $x_m\le H<\infty$. The survival-integral
-calculation in the [LLN note](incerto-lln-failure.md#lln-failure-truncated-mean-check) gives
+with $x_m\le H<\infty$. Then
 
 $$
 \mathbb E X
@@ -615,22 +861,48 @@ $$
 $$
 
 At $\alpha=1$ it is $x_m\{1+\log(H/x_m)\}$.
+:::
+
+:::{prf:proof}
+The survival-integral calculation in the
+[LLN note](incerto-lln-failure.md#lln-failure-truncated-mean-check) integrates
+one below $x_m$ and $(x_m/t)^\alpha$ from $x_m$ to $H$.
+Evaluate that integral as a power when $\alpha\ne1$ and a logarithm
+when $\alpha=1$.
+:::
 
 For $\alpha<1$ this mean grows as a power of the remote cap. The iid
 bounded strong law holds at every fixed $H$; no cap-independent sample
 size follows. Capping creates an atom at $H$, and differs from conditioning
 $V$ to fall below $H$.
 
-Two logarithms have different purposes. If $V$ is exact Pareto, then
-$\log(V/x_m)$ is exponential with rate $\alpha$, since its survival at
-$z\ge0$ is $e^{-\alpha z}$. This explains why log spacings can support
+Two logarithms have different purposes.
+
+:::{prf:proposition} Logarithmic excesses of an exact Pareto variable
+:label: prop-point-forecast-pareto-log-transform
+
+If $V$ is exact Pareto with $x_m>0$ and $\alpha>0$, then
+$\log(V/x_m)$ is exponential with rate $\alpha$.
+:::
+
+:::{prf:proof}
+For $z\ge0$,
+$P(\log(V/x_m)>z)=P(V>x_m e^z)=e^{-\alpha z}$.
+:::
+
+This explains why log spacings can support
 [Hill estimation](incerto-hill-estimator.md) while the raw sample mean
 is erratic. It does not recover raw expected harm by exponentiating a log
 mean; nonlinear expectations require the full law.
 
 For any bounded variable $0\le X\le H$ with $0<H<\infty$, an
 endpoint-removing *dual transform* is a separate modeling device.
-At lower endpoint zero, write
+
+:::{prf:proposition} Bounded-to-dual transformation and its inverse
+:label: prop-point-forecast-bounded-dual-transform
+
+Fix $0<H<\infty$. The increasing map from $[0,H]$ to $[0,\infty]$
+and its inverse are
 
 $$
 \begin{gathered}
@@ -639,12 +911,23 @@ X=H(1-e^{-Z/H}).
 \end{gathered}
 $$
 
+Use $Z=\infty$ at $X=H$ and $e^{-\infty}=0$. As $X/H\to0$,
+$Z=X+X^2/(2H)+O(X^3/H^2)$. For every law of $Z$ on $[0,\infty]$,
+the inverse has mean $\mathbb E[H(1-e^{-Z/H})]\le H$, regardless of
+whether $\mathbb E Z$ is finite.
+:::
+
+:::{prf:proof}
 The forward map is increasing on $0\le X<H$, maps zero to zero,
 and tends to infinity at $H$. Solving the equation gives its inverse.
 For $X/H\to0$, Taylor expansion gives
-$Z=X+X^2/(2H)+O(X^3/H^2)$, so ordinary-scale observations move little.
+$Z=X+X^2/(2H)+O(X^3/H^2)$.
 At $X=H$, use the extended dual value $Z=\infty$.
-An endpoint atom remains an atom at infinity; finite dual-tail modeling
+The inverse takes values in $[0,H]$, so its expectation is bounded by $H$.
+:::
+
+Ordinary-scale observations move little. An endpoint atom remains an atom
+at infinity; finite dual-tail modeling
 requires handling it explicitly.
 
 An increasing transformation preserves quantiles, not means. To obtain
@@ -716,9 +999,18 @@ in §II and Table I. We do not import, redistribute, or refit that table.
 Every numerical example on this page is synthetic.
 
 Multiplicative growth can amplify parameter uncertainty without proving
-a power law. For a deliberately simple model, fix $t>0$ and $x_0>0$,
-and set $X=x_0e^{tR}$. If $R$ is exponential with rate $\lambda$,
-then for $x\ge x_0$,
+a power law. The following calculation uses a deliberately simple rate model.
+
+:::{prf:proposition} Exponential growth with an exponential random rate
+:label: prop-point-forecast-random-rate-growth
+
+Fix $t>0$, $x_0>0$, and let $R$ be exponential with rate $\lambda>0$.
+Then $X=x_0e^{tR}$ is exact Pareto with cutoff $x_0$ and exponent
+$\alpha=\lambda/t$: $P(X>x)=(x/x_0)^{-\lambda/t}$ for $x\ge x_0$.
+:::
+
+:::{prf:proof}
+For $x\ge x_0$,
 
 $$
 \begin{aligned}
@@ -728,8 +1020,10 @@ P(X>x)
 \end{aligned}
 $$
 
-This proves a Pareto law with $\alpha=\lambda/t$ under the stated rate
-model. A normal $R$ gives a lognormal amount instead; deterministic
+Also $R\ge0$ ensures $X\ge x_0$.
+:::
+
+A normal $R$ gives a lognormal amount instead; deterministic
 exponential growth is not by itself mathematical chaos. The uncapped
 model cannot remain a physical fatality law past a population endpoint.
 Convexity gives $\mathbb E e^{tR}\ge e^{t\mathbb E R}$ when the
@@ -738,28 +1032,44 @@ specified ordering, such as a mean-preserving spread. Variance alone
 does not order arbitrary models, and a saturation cap changes convexity.
 
 The decision question can be asked before one can estimate an average
-accurately. Return to the capped model $X=\min(V,H)$, with excess harm
-$(X-u)_+$ for $x_m\le u<H$. Pointwise subtraction of two caps gives
+accurately.
+
+:::{prf:proposition} A decision rule for reducing bounded excess harm
+:label: prop-point-forecast-bounded-harm-decision
+
+Let $V$ be exact Pareto with $x_m>0$ and $\alpha>0$, take
+$x_m\le u<H<\infty$, and put $X=\min(V,H)$. Then
 
 $$
 (X-u)_+=\min(V,H)-\min(V,u).
 $$
 
 Suppose an action costs $c\ge0$ in the same loss units and, by assumption,
-reduces this harm by a known fraction $r\in[0,1]$. Its expected total
-loss is $c+(1-r)\mathbb E[(X-u)_+]$, compared with
-$\mathbb E[(X-u)_+]$ without action. Since $0\le(X-u)_+\le H-u<\infty$,
-both expected harms are finite. Subtraction proves the decision rule
+reduces this harm by a known fraction $r\in[0,1]$. The action has strictly
+smaller expected total loss exactly when
 
 $$
 c<r\,\mathbb E[(X-u)_+].
 $$
 
+For any nonempty set $\mathcal P$ of such loss models with the same
+$u,H,c,r$, the sufficient condition
+$c<r\inf_{P\in\mathcal P}\mathbb E_P[(X-u)_+]$ makes the action
+preferable under every model in the set.
+:::
+
+:::{prf:proof}
+Check $V\le u$, $u<V<H$, and $V\ge H$ to obtain the cap identity.
+Since $0\le(X-u)_+\le H-u$, both expected harms are finite.
+Subtract the no-action loss $\mathbb E[(X-u)_+]$ from
+$c+(1-r)\mathbb E[(X-u)_+]$. This gives
+$c-r\mathbb E[(X-u)_+]$ and hence the decision rule.
+The infimum condition implies the strict inequality for every model.
+:::
+
 This is a model-specific precaution calculation. It includes action costs
 and effectiveness; the word “uncertainty” alone does not determine either.
-Under a set of credible models, the sufficient condition
-$c<r\inf\mathbb E[(X-u)_+]$ makes the action preferable in every model in
-that set. A catastrophe-probability constraint is another possible
+A catastrophe-probability constraint is another possible
 criterion; it requires an explicitly chosen tolerance.
 
 Use the existing [`pareto_capped_mean`](incerto-api-reference.md#api-pareto-capped-mean).

@@ -43,9 +43,14 @@ fraction of an atom at the quantile. Consequently the strict conditional
 mean $\mathbb E[X\mid X>q_\tau]$ is not a general definition of ES.
 
 We prove the equivalent excess-payoff formula, which also handles atoms.
-Represent the loss by its quantile function evaluated at a uniform random
-variable; this has CDF $F$. Monotonicity gives $q_s\le q_\tau$ below
-$\tau$ and $q_s\ge q_\tau$ above $\tau$, so
+
+:::{prf:proposition} Expected shortfall as a quantile plus expected excess
+:label: prop-risk-measures-excess-representation
+
+Let $X\ge0$ be finite almost surely, let $0<\tau<1$ and $p=1-\tau$,
+and let $q_s=\inf\{x:F(x)\ge s\}$ for its CDF $F$.
+The quantile-defined $\operatorname{ES}_\tau(X)=p^{-1}\int_\tau^1q_s\,ds$
+satisfies
 
 $$
 \begin{gathered}
@@ -54,12 +59,7 @@ $$
 \end{gathered}
 $$
 
-These are nonnegative integrals and remain valid with infinity. If the
-law is continuous at $q_\tau$ with $P(X>q_\tau)=p$, ES equals the
-conditional tail mean. The unconditional tail-level quantity from the
-[calibration note](incerto-calibration-payoff.md#calibration-contract) is
-then $\mathbb E[X\mathbf1_{\{X>q_\tau\}}]=p\operatorname{ES}_\tau(X)$,
-not ES itself. At an atom, the exact expression is
+These identities hold in the extended nonnegative reals. The atom correction is
 
 $$
 \begin{aligned}
@@ -68,6 +68,28 @@ p\operatorname{ES}_\tau(X)
 &\quad+q_\tau\{p-P(X>q_\tau)\}.
 \end{aligned}
 $$
+
+If $P(X>q_\tau)=p$, then
+$\operatorname{ES}_\tau(X)=\mathbb E[X\mid X>q_\tau]$.
+:::
+
+:::{prf:proof}
+Represent the loss by its quantile function evaluated at a uniform random
+variable; this has CDF $F$. Monotonicity gives $q_s\le q_\tau$ below
+$\tau$ and $q_s\ge q_\tau$ above $\tau$. Hence
+$\mathbb E[(X-q_\tau)_+]=\int_\tau^1(q_s-q_\tau)\,ds$.
+Adding $pq_\tau$ proves the excess formula, including infinite integrals.
+The identity
+$(X-q_\tau)_+=X\mathbf1_{\{X>q_\tau\}}-q_\tau\mathbf1_{\{X>q_\tau\}}$
+gives the atom correction. When $P(X>q_\tau)=p$, the correction vanishes
+and division by $p>0$ gives the conditional mean.
+:::
+
+For a law continuous at $q_\tau$, $P(X>q_\tau)=p$. The unconditional
+tail-level quantity from the
+[calibration note](incerto-calibration-payoff.md#calibration-contract) is
+then $\mathbb E[X\mathbf1_{\{X>q_\tau\}}]=p\operatorname{ES}_\tau(X)$,
+not ES itself.
 
 Use [`discrete_risk`](incerto-api-reference.md#api-discrete-risk).
 Here the worst tenth of the law includes all the losses of 20 and some
@@ -115,24 +137,66 @@ threshold=20: expected quantile loss=1.85
 (risk-subadditivity)=
 ## A quantile can fail subadditivity
 
-Consider mutually exclusive losses: $(X,Y)$ takes $(0,0)$ with
+:::{prf:proposition} A finite counterexample to VaR subadditivity
+:label: prop-risk-measures-var-nonsubadditivity
+
+Suppose $(X,Y)$ takes $(0,0)$ with
 probability $0.92$, $(10,0)$ with probability $0.04$, and $(0,10)$
 with probability $0.04$. At confidence $0.95$, each marginal has VaR
-zero, while $X+Y$ has VaR 10. This finite example proves that VaR is
-not subadditive over all joint loss laws. It is not a claim that every
-portfolio violates subadditivity.
+zero, while $X+Y$ has VaR 10, so
+$\operatorname{VaR}_{0.95}(X+Y)>
+\operatorname{VaR}_{0.95}(X)+\operatorname{VaR}_{0.95}(Y)$.
+:::
+
+:::{prf:proof}
+Each marginal has mass $0.96$ at zero. The sum has mass $0.92$ at zero
+and $0.08$ at ten, so its CDF first reaches $0.95$ at ten.
+:::
+
+This is not a claim that every portfolio violates subadditivity.
 
 The quantile definition also applies to real integrable losses. On that
 domain, ES is subadditive regardless of dependence. We prove this from
-the excess formula. Within this proof, for any real $t$, let
+the excess formula.
+
+:::{prf:lemma} Expected shortfall minimizes an excess-payoff objective
+:label: lem-risk-measures-es-minimization
+
+For a real random variable $X$ with $\mathbb E|X|<\infty$, fix
+$0<\tau<1$ and $p=1-\tau$. Define its quantiles $q_s$ and ES by the
+same quantile formulas above, and for $t\in\mathbb R$ let
 
 $$
 J_X(t)=t+\frac{\mathbb E[(X-t)_+]}p.
 $$
 
+Then $\operatorname{ES}_\tau(X)=\min_{t\in\mathbb R}J_X(t)=J_X(q_\tau)$.
+:::
+
+:::{prf:proof}
 Integrating $q_s-t\le(q_s-t)_+$ over the upper slice gives
 $\operatorname{ES}_\tau(X)\le J_X(t)$. Equality holds at
-$t=q_\tau$, so ES is the minimum of $J_X$. The pointwise inequality
+$t=q_\tau$ by the quantile argument in
+[](#prop-risk-measures-excess-representation), which also applies to real
+integrable $X$: all relevant integrals are finite.
+:::
+
+:::{prf:proposition} Expected shortfall is subadditive
+:label: prop-risk-measures-es-subadditivity
+
+Let $X,Y$ be real random variables on the same probability space with
+$\mathbb E|X|+\mathbb E|Y|<\infty$, under arbitrary dependence.
+For every $0<\tau<1$,
+
+$$
+\operatorname{ES}_\tau(X+Y)
+\le\operatorname{ES}_\tau(X)+\operatorname{ES}_\tau(Y).
+$$
+:::
+
+:::{prf:proof}
+Use the objectives in [](#lem-risk-measures-es-minimization).
+The pointwise inequality
 
 $$
 (X+Y-t-s)_+
@@ -146,9 +210,25 @@ $$
 \operatorname{ES}_\tau(X+Y)
 \le\operatorname{ES}_\tau(X)+\operatorname{ES}_\tau(Y).
 $$
+:::
 
-Monotonicity, positive homogeneity, and translation by a constant follow
-directly from the quantile definition, within the integrable loss domain.
+:::{prf:proposition} Order, scale, and translation properties of expected shortfall
+:label: prop-risk-measures-es-order-scale-translation
+
+Fix $0<\tau<1$. For integrable real losses $X,Y$, $X\le Y$ almost
+surely implies $\operatorname{ES}_\tau(X)\le\operatorname{ES}_\tau(Y)$.
+For $c\ge0$ and $b\in\mathbb R$,
+$\operatorname{ES}_\tau(cX)=c\operatorname{ES}_\tau(X)$ and
+$\operatorname{ES}_\tau(X+b)=\operatorname{ES}_\tau(X)+b$.
+:::
+
+:::{prf:proof}
+Almost-sure order implies the same order of quantiles. Positive scaling
+scales every quantile, and translation adds $b$ to every quantile.
+Integrate these identities over the upper slice; the case $c=0$ is the
+constant zero law.
+:::
+
 These properties explain the coherence of ES. They do not bound the
 sampling error of an estimated ES, nor make an infinite ES finite.
 
@@ -171,8 +251,11 @@ X+Y: VaR=10.0, ES=10.0
 (risk-pareto)=
 ## Exact Pareto risk and its moment boundary
 
+:::{prf:proposition} Pareto VaR and expected shortfall
+:label: prop-risk-measures-pareto-risk
+
 For $X\sim\operatorname{Pareto}(\alpha,x_m)$ with $\alpha>0$,
-$x_m>0$, inversion of $\bar F(x)=(x_m/x)^\alpha$ gives
+$x_m>0$, fix $0<\tau<1$ and $p=1-\tau$. Then
 
 $$
 \begin{gathered}
@@ -183,10 +266,18 @@ q_\tau=x_m p^{-1/\alpha},\\
 \end{gathered}
 $$
 
-To prove the second line, integrate the Pareto survival above $q_\tau$:
+For $0<\alpha\le1$, ES is infinite at every such confidence level,
+while VaR remains finite.
+:::
+
+:::{prf:proof}
+Invert $\bar F(x)=(x_m/x)^\alpha$ to get $q_\tau$.
+For $\alpha>1$, integrate the Pareto survival above $q_\tau$:
 $\mathbb E[(X-q_\tau)_+]=pq_\tau/(\alpha-1)$, then substitute into the
 excess formula. For $0<\alpha\le1$ this integral diverges, hence ES is
 infinite at every interior confidence level, while VaR remains finite.
+:::
+
 These are exact-Pareto statements. The equality case for a general
 regularly varying law can depend on its slowly varying factor; see
 [moment existence](incerto-pareto-moment-existence.md).
@@ -215,8 +306,22 @@ alpha=3: VaR=4.64, ES=6.96
 ## Random exponents: averaging model risk
 
 Hold the cutoff $x_m$ and tail mass $p\in(0,1)$ fixed. View the quantile
-as the function $v(a)=x_m p^{-1/a}$ of an exponent $a>0$.
-Since $\log p<0$, direct differentiation proves
+as a function of the exponent.
+
+:::{prf:proposition} Convexity of Pareto model risk in the exponent
+:label: prop-risk-measures-exponent-convexity
+
+Fix $x_m>0$ and $p\in(0,1)$. The function $v(a)=x_m p^{-1/a}$ is
+decreasing and strictly convex on $a>0$, and
+$h(a)=a v(a)/(a-1)$ is strictly convex on $a>1$.
+For a positive random exponent $A$ with finite mean $a_0$,
+$\mathbb E v(A)\ge v(a_0)$. If also $A>1$ almost surely, then
+$\mathbb E h(A)\ge h(a_0)$. Each inequality allows an infinite left
+side, and equality holds exactly when $A$ is almost surely constant.
+:::
+
+:::{prf:proof}
+Since $\log p<0$, direct differentiation gives
 
 $$
 \begin{gathered}
@@ -225,14 +330,7 @@ v'(a)=\frac{\log p}{a^2}v(a),\\
 \end{gathered}
 $$
 
-Thus $v$ is decreasing and strictly convex. If a positive random
-exponent $A$ has finite mean $a_0$, Jensen gives
-$\mathbb E[v(A)]\ge v(a_0)$, allowing an infinite left side.
-Equality holds exactly when $A$ is almost surely constant, a degenerate
-exponent with no parameter uncertainty. This averages the quantiles of
-conditional models. It does not yet compute a predictive
-mixture quantile, and it is not a bias claim about an arbitrary estimator:
-if $A$ represents an estimator, its mean need not equal the true exponent.
+Thus $v$ is decreasing and strictly convex.
 
 For $a>1$, the model ES is $h(a)=a v(a)/(a-1)$.
 Its curvature follows by logarithmic differentiation:
@@ -247,14 +345,41 @@ $$
 
 Therefore averaging model ES is at least ES at the mean exponent
 when $A>1$ almost surely and $\mathbb E A<\infty$, with equality exactly
-when $A$ is almost surely constant. Each component can have finite ES
-while its average is infinite: for $A$ uniform on
-$(1,2)$, $h(A)\ge x_m/(A-1)$ has infinite expectation. Positive
-probability on $A\le1$ makes the average infinite immediately.
+when $A$ is almost surely constant. The same Jensen argument applies to
+$v$. In either case, the tangent at $a_0$ has an integrable affine part
+and a nonnegative remainder, strictly positive away from $a_0$; this
+justifies Jensen and its equality condition even if the expectation is infinite.
+:::
 
-For a small perturbation $A=a_0+\varepsilon Z$, assume
-$Z$ is bounded with mean zero. Taylor's theorem, on a compact interval
-inside the relevant domain, proves for $f=v$ or $f=h$
+This averages the quantiles or ES of conditional models. It does not yet
+compute predictive mixture risk, and it is not a bias claim about an
+arbitrary estimator: if $A$ represents an estimator, its mean need not
+equal the true exponent.
+
+:::{prf:proposition} Finite component shortfalls can have an infinite average
+:label: prop-risk-measures-infinite-average-es
+
+Fix $x_m>0$ and $p\in(0,1)$, and let $h(a)=a x_m p^{-1/a}/(a-1)$
+for $a>1$, extended by infinity for $0<a\le1$.
+If $A$ is uniform on $(1,2)$, every component ES is finite but
+$\mathbb E h(A)=\infty$. For any positive random $A$ with
+$P(A\le1)>0$, the average is also infinite.
+:::
+
+:::{prf:proof}
+For the uniform case, $h(a)\ge x_m/(a-1)$ on $(1,2)$ and the integral
+of this lower bound diverges. In the second case, $h(A)=\infty$ on an
+event of positive probability.
+:::
+
+:::{prf:proposition} Small bounded perturbations of the Pareto exponent
+:label: prop-risk-measures-exponent-perturbation
+
+Fix $x_m>0$ and $p\in(0,1)$. Let $f(a)=x_m p^{-1/a}$ on $a>0$ or
+$f(a)=a x_m p^{-1/a}/(a-1)$ on $a>1$. Take $a_0$ in the chosen
+domain and a bounded random variable $Z$ with $\mathbb E Z=0$.
+For $A=a_0+\varepsilon Z$ and $\varepsilon\to0$ small enough that
+$A$ stays in a fixed compact interval inside that domain,
 
 $$
 \begin{aligned}
@@ -264,8 +389,17 @@ $$
 \end{aligned}
 $$
 
+:::
+
+:::{prf:proof}
+Taylor-expand $f(a_0+\varepsilon Z)$ through second order and take
+expectations. The linear term vanishes because $\mathbb E Z=0$.
+The third derivative is bounded on the compact interval.
 The remainder is bounded by a constant times
-$|\varepsilon|^3\mathbb E|Z|^3$. The ES expansion needs $a_0>1$
+$|\varepsilon|^3\mathbb E|Z|^3$.
+:::
+
+The ES expansion needs $a_0>1$
 and a perturbation that stays above one. A variance alone, without these
 support and remainder conditions, does not justify the approximation.
 For comparisons between two uncertainty laws, convex order is sufficient;
@@ -274,10 +408,12 @@ larger variance alone is not.
 (risk-alpha-mixture)=
 ## Mixing distributions is a different operation
 
-Now specify $X\mid A\sim\operatorname{Pareto}(A,x_m)$ with the
+:::{prf:proposition} Common-cutoff exponent mixtures dominate the mean-exponent law
+:label: prop-risk-measures-exponent-mixture-order
+
+Specify $X\mid A\sim\operatorname{Pareto}(A,x_m)$ with the
 same fixed $x_m$ in every component, $A>0$ almost surely, and finite
-$a_0=\mathbb E A$. For $x>x_m$, convexity of
-$a\mapsto(x_m/x)^a$ proves
+$a_0=\mathbb E A$, where $x_m>0$. For $x>x_m$,
 
 $$
 \begin{gathered}
@@ -286,25 +422,50 @@ $$
 \end{gathered}
 $$
 
-This is first-order stochastic dominance over the Pareto law at $a_0$.
-It implies larger or equal quantiles at every confidence level, and
-larger or equal ES by integration of quantiles. For nonconstant $A$,
-strict Jensen and continuous strictly decreasing mixture survival give
-a strict quantile increase at every interior confidence level. The
-inequality is specific to this common-cutoff exponent mixture. Holding
+The mixture has finite quantiles at every interior confidence level,
+each at least the corresponding quantile of the Pareto law with exponent
+$a_0$, and strictly larger if $A$ is nonconstant. Its ES is also at
+least that of the mean-exponent law, allowing infinity.
+:::
+
+:::{prf:proof}
+Condition on $A$ for the survival formula and apply Jensen to
+$a\mapsto(x_m/x)^a$, a strictly convex function for $x>x_m$.
+This gives first-order stochastic dominance and hence the quantile order.
+Dominated convergence makes the mixture survival continuous, with value
+one at $x_m$ and limit zero at infinity. It is strictly decreasing because
+every component survival is. Strict Jensen therefore implies strict
+quantile order for nonconstant $A$. Integrating quantiles gives the ES order.
+:::
+
+The inequality is specific to this common-cutoff exponent mixture. Holding
 a median or mean fixed by changing $x_m$ is a different comparison.
 
-The mixture's VaR is finite: dominated convergence gives
-$\mathbb E[(x_m/x)^A]\to0$ as $x\to\infty$. Its mean and ES can
-still be infinite. With $A$ uniform on $(1,2)$, Tonelli gives an
-infinite mixture mean, hence infinite ES; truncating the loss below any
-finite quantile cannot remove that infinite tail mean.
+:::{prf:proposition} Finite mixture quantiles with infinite averaged risk
+:label: prop-risk-measures-mixture-infinite-risk
 
-There is also a sharp distinction between mixture VaR and average model
-VaR. With $A$ uniform on $(0,1)$, $\mathbb E[p^{-1/A}]=\infty$
-for every $0<p<1$, while mixture VaR stays finite. The first claim follows
+Fix $x_m>0$ and let $X\mid A\sim\operatorname{Pareto}(A,x_m)$.
+If $A$ is uniform on $(1,2)$, the mixture mean and ES are infinite,
+while its VaR is finite at every $0<\tau<1$.
+If $A$ is uniform on $(0,1)$, then for every $p=1-\tau\in(0,1)$,
+the average model VaR $\mathbb E[x_m p^{-1/A}]$ is infinite while
+the mixture VaR remains finite.
+:::
+
+:::{prf:proof}
+Finite mixture quantiles follow from [](#prop-risk-measures-exponent-mixture-order).
+With $A$ uniform on $(1,2)$, Tonelli gives an
+infinite mixture mean, hence infinite ES; truncating the loss below any
+finite quantile cannot remove that infinite tail mean. Explicitly,
+$\mathbb E[X\mid A]=x_m A/(A-1)\ge x_m/(A-1)$ has divergent integral.
+
+With $A$ uniform on $(0,1)$, $\mathbb E[p^{-1/A}]=\infty$
+for every $0<p<1$. This follows
 by substituting $z=1/A$: the resulting integral of $p^{-z}/z^2$
-diverges. No identity interchanges averaging a quantile with mixing laws.
+diverges.
+:::
+
+No identity interchanges averaging a quantile with mixing laws.
 
 Use [`pareto_mixture_risk`](incerto-api-reference.md#api-pareto-mixture-risk)
 for the predictive mixture and

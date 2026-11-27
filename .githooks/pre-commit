@@ -37,10 +37,15 @@ fi
 # The default config must not be merged into .gitleaks.toml: its global
 # allowlist would ignore every /home/... path. The second pass needs an
 # explicit --config, or gitleaks would auto-load .gitleaks.toml again.
+# Run both passes even if the first fails, then fail if either did.
+status=0
 "$GITLEAKS" git --pre-commit --staged --no-banner --redact \
-  --config "$CONFIG" "$ROOT"
+  --config "$CONFIG" "$ROOT" || status=1
 "$GITLEAKS" git --pre-commit --staged --no-banner --redact \
-  --config "$SECRETS_CONFIG" "$ROOT"
+  --config "$SECRETS_CONFIG" "$ROOT" || status=1
+if [[ $status -ne 0 ]]; then
+  exit 1
+fi
 
 # Chain to a hook that was in the default hook dir before hooksPath was set.
 COMMON_DIR="$(git rev-parse --git-common-dir)"

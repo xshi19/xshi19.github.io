@@ -63,7 +63,7 @@ for i, chunk in enumerate(pd.read_json("goodreads_reviews_dedup.json", orient="r
 
 Finally, I computed the SVD for each book, considering those with at least 50 reviews. To ensure fairness, I sampled 50 reviews per book for entropy calculation, as books with larger numbers of reviews (for example 1000) could inherently have higher entropy then the ones with 50-100 reviews.
 ```python
-embed = pd.read_parquet('C:/Users/soars/Downloads/goodreads/book_review_embeddings')
+embed = pd.read_parquet('goodreads/book_review_embeddings')
 output = pd.DataFrame({'review_count': embed.index.value_counts()})
 output = output.loc[output'review_count']>=50]
 

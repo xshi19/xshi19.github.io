@@ -126,3 +126,17 @@ description = "Build config published from the incerto-wiki source repository; t
 paths = [
   '''^incerto-wiki/config\.json$''',
 ]
+
+[[allowlists]]
+targetRules = ["windows-user-path"]
+description = "Bundled third-party npm package metadata (_where field of a dependency's package.json); the Windows path belongs to the package's upstream build, not to this site."
+paths = [
+  '''^incerto-wiki/build/_shared/chunk-SHVDI3JB\.js$''',
+]
+
+[[allowlists]]
+targetRules = ["windows-user-path"]
+description = "Bundled third-party npm package metadata (_where field of a dependency's package.json); the Windows path belongs to the package's upstream build, not to this site."
+paths = [
+  '''^incerto-wiki/build/_shared/chunk-HGWUN434\.js$''',
+]
